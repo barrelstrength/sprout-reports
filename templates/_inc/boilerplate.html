@@ -1,0 +1,10 @@
+{% extends "_layouts/cp" %}
+
+
+{% set title = "CraftDiscover"|t %}
+
+{% set tabs = {
+    home: { label: "Home"|t, url: url('craftdiscover') },
+    newquery:    { label: "Run a Query"|t, url: url('craftdiscover/reports/query') },
+    element:    { label: "Get Element Type"|t, url: url('craftdiscover/reports/element') }
+} %}

@@ -1,0 +1,73 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "84f46e3f6da9fc1117ba55f4ce091e77",
+    "packages": [
+        {
+            "name": "paste/pre",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paste/Pre.php.git",
+                "reference": "bf47c87c8fd8f1f75d6b2a3235ee072bb45a5842"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paste/Pre.php/zipball/bf47c87c8fd8f1f75d6b2a3235ee072bb45a5842",
+                "reference": "bf47c87c8fd8f1f75d6b2a3235ee072bb45a5842",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Paste": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aaron Oxborrow",
+                    "email": "aaron@pastelabs.com",
+                    "homepage": "http://pastelabs.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A handsome replacement for print_r & var_dump. Debugging output with understated style.",
+            "homepage": "https://github.com/paste/Pre.php",
+            "keywords": [
+                "debug",
+                "dump",
+                "pre",
+                "pretty",
+                "print",
+                "print_r",
+                "var_dump"
+            ],
+            "time": "2013-06-12 03:56:57"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "paste/pre": 20
+    },
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
+}

@@ -9,19 +9,27 @@ class CraftDiscover_ReportsController extends BaseController
         $this->requirePostRequest();
         $queryText = craft()->request->getPost('queryText');
         $elementType = craft()->request->getPost('elementType');
+        $sectionName = craft()->request->getPost('sectionName');
 
         if($queryText) {
             $query = craft()->db->createCommand($queryText)->queryAll();
-            echo Paste\Pre::render($query); die();
+
             }
 
-        elseif($elementType) {
+        elseif($elementType || $sectionName) {
             $criteria = craft()->elements->getCriteria($elementType);
             $elements = craft()->elements->findElements($criteria);
-            echo Paste\Pre::render($elements); die();
+
             }
 
-        return $this->redirectToPostedUrl(array('queryText' =>$queryText, 'test' => 'hi'));
+
+        craft()->urlManager->setRouteVariables(array('queryText' =>$queryText));
+
+        foreach(craft()->sections->getAllSections() as $section) {
+            echo Paste\Pre::render( $section );
+        }
+
+         die();
 
     }
 

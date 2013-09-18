@@ -16,18 +16,24 @@ class CraftDiscover_ReportsController extends BaseController
 
             }
 
-        elseif($elementType || $sectionName) {
+        elseif($elementType) {
             $criteria = craft()->elements->getCriteria($elementType);
             $elements = craft()->elements->findElements($criteria);
+
+            }
+
+        elseif($sectionName) {
+
 
             }
 
 
         craft()->urlManager->setRouteVariables(array('queryText' =>$queryText));
 
-        foreach(craft()->sections->getAllSections() as $section) {
-            echo Paste\Pre::render( $section );
-        }
+        echo Paste\Pre::render( craft()->fields->getAllGroups() );
+        echo Paste\Pre::render( craft()->fields->getAllFields() );
+
+
 
          die();
 

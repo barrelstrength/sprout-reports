@@ -23,12 +23,29 @@ class CraftDiscover_ReportsController extends BaseController
             $criteria = craft()->sections->getSectionById($sectionName);
             $sectionid = $criteria->id;
 
+            $combination = craft()->request->getPost('combination');
+            $fieldname = craft()->request->getPost('fieldname');
+            $operation = craft()->request->getPost('operation');
+            $comparevalue = craft()->request->getPost('comparevalue');
+
+     $mystuff = array();
+
+            foreach($fieldname as $key => $item) {
+                if($item && $item != '') {
+                    if($combination[$key] != 'not' && $combination[$key] != '') {
+                            $mystuff[] = array($combination[$key], "{$fieldname[$key]} {$operation[$key]}", "{$comparevalue[$key]}" );
+                        }
+                    }
+                }
+
             $myentries = craft()->db->createCommand()
                 ->select('c.*')
                 ->from('entries e')
                 ->join('content c', 'e.id = c.elementId')
-                ->where('sectionId=:id', array(':id'=>$sectionid))
+                ->where( "sectionId = $sectionid" )
+                ->where($mystuff)
                 ->queryAll();
+
             if(sizeof($myentries) > 0) {
                 $tableCols = array_keys($myentries[0]);
                 }

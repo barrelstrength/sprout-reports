@@ -27,7 +27,7 @@ public function allSections() {
  public function allFields() {
     $fgroups = array();
     $allfields = array();
-    foreach( craft()->fields->getAllGroups() as $group ) {
+  /*  foreach( craft()->fields->getAllGroups() as $group ) {
         $mykey = $group->id;
         $fgroups[$mykey] = $group->name;
         }
@@ -36,7 +36,14 @@ public function allSections() {
         $mykey = $field->id;
         $fgroups[$mykey] = $group->name;
         }
+*/
 
+$fields = array();
+foreach( craft()->fields->getAllFields() as $field ) {
+        $mykey = $field->id;
+        $fields[$mykey] = $field->name;
+        }
+return $fields;
     }
 
 }

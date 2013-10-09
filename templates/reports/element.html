@@ -18,12 +18,67 @@
                 <option value="{{ sname.id }}">{{ sname.name }}</option>
             {% endfor %}
         </select>
+<hr />
+        <select name="combination[]">
+            <option value="">select a Combinator</option>
+            <option>AND</option>
+            <option>OR</option>
+            <option>NOT</option>
+        </select>
 
+        <select name="fieldname[]">
+            <option value="">Select a Field</option>
+            {% for key, sname in craft.craftdiscover.allFields()  %}
+                <option value="{{ key }}">{{ sname }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="operation[]">
+            <option value="">Select a Comparison</option>
+            <option value="=">EQUALS</option>
+            <option value="like">CONTAINS</option>
+            <option value="&gt;">GREATER THAN</option>
+            <option value="&gt;=">GREATER THAN OR EQUALS</option>
+            <option value="&lt;">LESS THAN</option>
+            <option value="&lt;=">LESS THAN OR EQUALS</option>
+        </select>
+
+        <input type="text" value="" name="comparevalue[]" />
+
+        <hr />
+        <select name="combination[]">
+            <option value="">select a Combinator</option>
+            <option>AND</option>
+            <option>OR</option>
+            <option>NOT</option>
+        </select>
+
+        <select name="fieldname[]">
+            <option value="">Select a Field</option>
+            {% for key, sname in craft.craftdiscover.allFields()  %}
+                <option value="{{ key }}">{{ sname }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="operation[]">
+            <option value="">Select a Comparison</option>
+            <option>EQUALS</option>
+            <option>CONTAINS</option>
+            <option>GREATER THAN</option>
+            <option>GREATER THAN OR EQUALS</option>
+            <option>LESS THAN</option>
+            <option>LESS THAN OR EQUALS</option>
+        </select>
+
+        <input type="text" value="" name="comparevalue[]" />
+
+<hr />
         <div class="buttons">
             <input type="submit" class="btn submit" value="{{ 'Save'|t }}">
         </div>
     </form>
 
+<hr />
 <div class="tableview">
     <table class="data">
         <thead>

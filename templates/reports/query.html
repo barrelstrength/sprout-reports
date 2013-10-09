@@ -6,6 +6,8 @@
 
 {% import "_includes/forms" as forms %}
 {% if queryText is not defined %}{% set queryText = null %}{% endif %}
+{% if myEntries is not defined %}{% set myEntries = null %}{% endif %}
+{% if tableCols is not defined %}{% set tableCols = null %}{% endif %}
 
 <form method="post" action="" accept-charset="UTF-8">
         <input type="hidden" name="action" value="craftDiscover/reports/createQuery" />
@@ -22,4 +24,25 @@
             <input type="submit" class="btn submit" value="{{ 'Save'|t }}">
         </div>
     </form>
+
+    <table>
+        <thead>
+            <tr>
+        {% for item in tableCols %}
+        <th>{{ item }}</th>
+        {% endfor %}
+    </tr>
+</thead>
+<tbody>
+        {% for item in myEntries %}
+        {% for row in myEntries %}
+        <tr>
+            {% for keyname in tableCols %}
+                <td>{{ row[keyname] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        {% endfor %}
+    </table>
+
 {% endset %}

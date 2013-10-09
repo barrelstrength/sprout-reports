@@ -5,18 +5,13 @@
 {% set content %}
 
 {% import "_includes/forms" as forms %}
+{% if myEntries is not defined %}{% set myEntries = null %}{% endif %}
+{% if tableCols is not defined %}{% set tableCols = null %}{% endif %}
 
 <form method="post" action="" accept-charset="UTF-8">
         <input type="hidden" name="action" value="craftDiscover/reports/createQuery" />
 
 
-        <select name="elementType">
-            <option value="">Select an Element Type</option>
-            {% for key, etype in craft.craftdiscover.allElementTypes()  %}
-                <option>{{ key }}</option>
-            {% endfor %}
-        </select>
-        &nbsp;&nbsp;OR&nbsp;&nbsp;
         <select name="sectionName">
             <option value="">Select a Section</option>
             {% for key, sname in craft.craftdiscover.allSections()  %}
@@ -28,4 +23,24 @@
             <input type="submit" class="btn submit" value="{{ 'Save'|t }}">
         </div>
     </form>
+
+<div class="tableview">
+    <table class="data">
+        <thead>
+            <tr>
+        {% for item in tableCols %}
+        <th>{{ item }}</th>
+        {% endfor %}
+    </tr>
+</thead>
+<tbody>
+        {% for item in myEntries %}
+        <tr>
+            {% for keyname in tableCols %}
+                <td>{{ item[keyname] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 {% endset %}

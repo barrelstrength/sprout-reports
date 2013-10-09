@@ -5,7 +5,7 @@ class CraftDiscoverPlugin extends BasePlugin
 {
     function init()
     {
-        require 'vendor/autoload.php';
+        require CRAFT_PLUGINS_PATH.'craftdiscover/vendor/autoload.php';
     }
 
     function getName()

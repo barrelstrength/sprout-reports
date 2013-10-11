@@ -10,6 +10,7 @@ class CraftDiscover_ReportsController extends BaseController
         $queryText = craft()->request->getPost('queryText');
         $elementType = craft()->request->getPost('elementType');
         $sectionName = craft()->request->getPost('sectionName');
+        $isUsersQuery = craft()->request->getPost('isUsersQuery');
         $tableCols = array();
 
         if($queryText) {
@@ -18,6 +19,21 @@ class CraftDiscover_ReportsController extends BaseController
                 $tableCols = array_keys($myentries[0]);
                 }
             }
+
+        elseif($isUsersQuery) {
+            $myentries = craft()->db->createCommand()
+                ->select('photo, id, username, firstName, lastName, email, admin AS isAdmin')
+                ->from('users u')
+                ->order("lastName ASC, firstName ASC")
+                ->queryAll();
+            if(sizeof($myentries) > 0) {
+                $tableCols = array_keys($myentries[0]);
+                foreach($myentries as $key=>$item) {
+                    $temp_photo = UrlHelper::getResourceUrl('userphotos/'.$item['username'].'/100/'.$item['photo']);
+                    $myentries[$key]['photo'] = '<img src="'.$temp_photo.'" width="100" height="100" />';
+                    }
+                }
+        }
 
         elseif($sectionName) {
             $criteria = craft()->sections->getSectionById($sectionName);
@@ -28,7 +44,7 @@ class CraftDiscover_ReportsController extends BaseController
             $operation = craft()->request->getPost('operation');
             $comparevalue = craft()->request->getPost('comparevalue');
 
-     $mystuff = array();
+    $mystuff = array();
 
             foreach($fieldname as $key => $item) {
                 if($item && $item != '') {
@@ -43,7 +59,6 @@ class CraftDiscover_ReportsController extends BaseController
                 ->from('entries e')
                 ->join('content c', 'e.id = c.elementId')
                 ->where( "sectionId = $sectionid" )
-                ->where($mystuff)
                 ->queryAll();
 
             if(sizeof($myentries) > 0) {
@@ -52,7 +67,7 @@ class CraftDiscover_ReportsController extends BaseController
             }
 
 
-       return craft()->urlManager->setRouteVariables(array('queryText' =>$queryText, 'sectionName' => $sectionName, 'myEntries' => $myentries, 'tableCols' => $tableCols));
+     return craft()->urlManager->setRouteVariables(array('queryText' =>$queryText, 'sectionName' => $sectionName, 'myEntries' => $myentries, 'tableCols' => $tableCols));
 
   //      echo Paste\Pre::render( craft()->fields->getAllGroups() );
   //      echo Paste\Pre::render( craft()->fields->getAllFields() );

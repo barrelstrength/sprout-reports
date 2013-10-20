@@ -16,7 +16,8 @@
 
 
         <div class="buttons">
-            <input type="submit" class="btn submit" value="{{ 'Get User Data'|t }}">
+            <input type="submit" class="btn submit" name="show" value="{{ 'Get User Data'|t }}">
+            <label style="display: inline-block; width: auto; margin-left: 1em;"><input type="checkbox" name="exportData" value="Y" /> Export as CSV?</label>
         </div>
     </form>
 

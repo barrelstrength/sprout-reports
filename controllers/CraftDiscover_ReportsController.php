@@ -6,6 +6,83 @@ use SimpleExcel\Spreadsheet\Worksheet;
 
 class CraftDiscover_ReportsController extends BaseController
 {
+
+    public function actionSavedQuery()
+    {
+        $this->requirePostRequest();
+        $exportData = craft()->request->getPost('exportData');
+        $qType = craft()->request->getPost('queryType');
+
+        $sql = "SELECT 1 AS NA";
+        if($qType == 'papersSubmitted') {
+            $sql = "SELECT  c.title, c.field_jobTitle, c.field_documentType, c.field_city,
+                            c.field_state, c.field_postalCode, c.field_countryCode,
+                            c.field_paperSummary, c.field_AuthorNameSubmitted, c.field_coAuthorsSubmitted,
+                            c.field_department, c.field_organization,
+                            c.dateCreated, c.dateUpdated
+                FROM
+                    craft_entries e
+                    LEFT JOIN craft_content c ON c.elementId = e.id
+                WHERE
+                    e.sectionId = 7";
+            }
+        elseif($qType == "paperOwners") {
+            $sql = "SELECT  u.firstName, u.lastName, u.email,
+                            e.dateCreated AS paperSubmittedDate, e.dateUpdated AS paperUpdatedDate
+                    FROM
+                        craft_entries e
+                    LEFT JOIN craft_users u ON e.authorId = u.id
+                    WHERE
+                        e.sectionId = 7";
+            }
+        elseif($qType == "paidReg") {
+            $sql = "SELECT  u.firstName, u.lastName, u.email,
+                            p.title, o.reference AS referenceNumber, o.`data` AS extraNotes,
+                            o.dateCreated AS purchaseDate
+                    FROM
+                        craft_commerce_orders o
+                        LEFT JOIN craft_commerce_orders_products p ON o.id = p.orderId
+                        LEFT JOIN craft_users u ON o.userId = u.id";
+            }
+
+        $myentries = craft()->db->createCommand($sql)->queryAll();
+            if(sizeof($myentries) > 0) {
+                $tableCols = array_keys($myentries[0]);
+                }
+
+        if($qType == "paidReg") {
+            foreach($myentries as $key=>$item) {
+                $mynotes = json_decode($item['extraNotes'],TRUE);
+                $noteoutput = "";
+                foreach($mynotes as $nitem) {
+                    $noteoutput .= ($nitem['content'] == 1) ? "* {$nitem['label']}\n" : '';
+                    }
+                $myentries[$key]['extraNotes'] = $noteoutput;
+                }
+            }
+
+        if($exportData == 'Y') {
+        $worksheet = new Worksheet();
+
+        foreach($myentries as $key=>$row) {
+            unset($row['photo']);
+            if($key == 0) {
+                $mycolnames = array_keys($row);
+                $worksheet->insertRecord($mycolnames);
+                }
+            $worksheet->insertRecord($row);
+            }
+
+        $excel = new SimpleExcel();
+        $excel->insertWorksheet($worksheet);
+
+        $filename = 'export'.$qType.time().'.csv';
+        $excel->exportFile(CRAFT_STORAGE_PATH.$filename, 'CSV');
+        $excel->exportFile('php://output', 'CSV', array('filename' => $filename));
+        }
+    return craft()->urlManager->setRouteVariables(array('myEntries' => $myentries, 'tableCols' => $tableCols));
+    }
+
     public function actionCreateQuery()
     {
         $this->requirePostRequest();

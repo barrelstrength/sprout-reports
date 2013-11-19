@@ -1,4 +1,4 @@
-{% extends "craftdiscover/_inc/boilerplate" %}
+{% extends "discover/_inc/boilerplate" %}
 
 {% set selectedTab = 'element' %}
 
@@ -9,12 +9,12 @@
 {% if tableCols is not defined %}{% set tableCols = null %}{% endif %}
 
 <form method="post" action="" accept-charset="UTF-8">
-        <input type="hidden" name="action" value="craftDiscover/reports/createQuery" />
+        <input type="hidden" name="action" value="discover/reports/createQuery" />
 
 
         <select name="sectionName">
             <option value="">Select a Section</option>
-            {% for key, sname in craft.craftdiscover.allSections()  %}
+            {% for key, sname in craft.discover.allSections()  %}
                 <option value="{{ sname.id }}">{{ sname.name }}</option>
             {% endfor %}
         </select>
@@ -28,7 +28,7 @@
 
         <select name="fieldname[]">
             <option value="">Select a Field</option>
-            {% for key, sname in craft.craftdiscover.allFields()  %}
+            {% for key, sname in craft.discover.allFields()  %}
                 <option value="{{ key }}">{{ sname }}</option>
             {% endfor %}
         </select>
@@ -56,7 +56,7 @@
 
         <select name="fieldname[]">
             <option value="">Select a Field</option>
-            {% for key, sname in craft.craftdiscover.allFields()  %}
+            {% for key, sname in craft.discover.allFields()  %}
                 <option value="{{ key }}">{{ sname }}</option>
             {% endfor %}
         </select>

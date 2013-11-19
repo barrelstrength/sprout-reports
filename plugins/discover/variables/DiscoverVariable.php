@@ -2,7 +2,7 @@
 
 namespace Craft;
 
-class CraftDiscoverVariable
+class DiscoverVariable
 {
 
 public function allElementTypes() {

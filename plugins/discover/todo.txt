@@ -1,0 +1,7 @@
+
+How can we use:
+sparklines?
+
+are there any paid visualization libraries that will set us apart and help us provide a useful, premium product?
+
+Could we integrate with mixpanel.com?

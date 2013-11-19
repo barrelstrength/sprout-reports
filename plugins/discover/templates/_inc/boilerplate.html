@@ -1,10 +1,10 @@
 {% extends "_layouts/cp" %}
 
 
-{% set title = "CraftDiscover"|t %}
+{% set title = "Discover"|t %}
 
 {% set tabs = {
-    home: { label: "Home"|t, url: url('craftdiscover') }
+    home: { label: "Home"|t, url: url('discover') }
 } %}
 
 
@@ -32,8 +32,8 @@ $('.table_row').hover(
 
 
 
-{% includeJsResource "craftdiscover/js/fade.js" %}
+{% includeJsResource "discover/js/fade.js" %}
 
-{% includeCssResource "craftdiscover/css/styles.css" %}
+{% includeCssResource "discover/css/styles.css" %}
 
 {% includeJs hoverScript %}

@@ -1,16 +1,16 @@
 <?php
 namespace Craft;
 
-class CraftDiscoverPlugin extends BasePlugin
+class DiscoverPlugin extends BasePlugin
 {
     function init()
     {
-        require CRAFT_PLUGINS_PATH.'craftdiscover/vendor/autoload.php';
+        require CRAFT_PLUGINS_PATH.'discover/vendor/autoload.php';
     }
 
     function getName()
     {
-        return Craft::t('CraftDiscover');
+        return Craft::t('Discover');
     }
 
     function getVersion()
@@ -20,7 +20,7 @@ class CraftDiscoverPlugin extends BasePlugin
 
     function getDeveloper()
     {
-        return 'StraightUpCraft';
+        return 'Barrel Strength Design';
     }
 
     function getDeveloperUrl()
@@ -42,7 +42,7 @@ class CraftDiscoverPlugin extends BasePlugin
 
     public function getSettingsHtml()
     {
-        return craft()->templates->render('craftdiscover/settings', array(
+        return craft()->templates->render('discover/settings', array(
             'settings' => $this->getSettings()
         ));
     }
@@ -51,7 +51,7 @@ class CraftDiscoverPlugin extends BasePlugin
     public function hookRegisterCpRoutes()
     {
         return array(
-            'craftdiscover\/query' => 'craftdiscover/reports/query',
+            'discover\/query' => 'discover/reports/query',
         );
     }
 

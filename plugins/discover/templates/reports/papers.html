@@ -1,31 +1,31 @@
-{% extends "craftdiscover/_inc/boilerplate" %}
+{% extends "discover/_inc/boilerplate" %}
 
-{% set selectedTab = 'newquery' %}
+{% set selectedTab = 'papers' %}
 
 {% set content %}
 
 {% import "_includes/forms" as forms %}
-{% if queryText is not defined %}{% set queryText = null %}{% endif %}
 {% if myEntries is not defined %}{% set myEntries = null %}{% endif %}
 {% if tableCols is not defined %}{% set tableCols = null %}{% endif %}
-
+<h1>Get Submitted Papers</h1>
 <form method="post" action="" accept-charset="UTF-8">
-        <input type="hidden" name="action" value="craftDiscover/reports/createQuery" />
-        {{ forms.textAreaField({
-            label: 'Query'|t,
-            required: true,
-            name: 'queryText',
-            value: queryText ? queryText : null,
-            errors: null,
-        }) }}
+        <input type="hidden" name="action" value="discover/reports/savedQuery" />
+        <input type="hidden" name="queryType" value="papersSubmitted" />
 
+
+
+<hr />
         <div class="buttons">
-            <input type="submit" class="btn submit" value="{{ 'Run Query'|t }}">
+            <input type="submit" class="btn submit" name="show" value="{{ 'Display Data'|t }}">
             <label style="display: inline-block; width: auto; margin-left: 1em;"><input type="checkbox" name="exportData" value="Y" /> Export as CSV?</label>
         </div>
     </form>
 
+<hr />
+
 <div class="tableview">
+	<div class="tablefade"></div>
+	<div class="tablecontent">
     <table class="data">
         <thead>
             <tr>
@@ -36,14 +36,14 @@
 </thead>
 <tbody>
         {% for item in myEntries %}
-        {% for row in myEntries %}
-        <tr>
+        <tr class="table_row">
             {% for keyname in tableCols %}
-                <td>{{ row[keyname] }}</td>
+                <td><div class="item_content">{{ item[keyname] }}</div></td>
             {% endfor %}
         </tr>
         {% endfor %}
-        {% endfor %}
     </table>
 </div>
+</div>
+
 {% endset %}

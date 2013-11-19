@@ -4,7 +4,7 @@ use Paste;
 use SimpleExcel\SimpleExcel;
 use SimpleExcel\Spreadsheet\Worksheet;
 
-class CraftDiscover_ReportsController extends BaseController
+class Discover_ReportsController extends BaseController
 {
 
     public function actionSavedQuery()

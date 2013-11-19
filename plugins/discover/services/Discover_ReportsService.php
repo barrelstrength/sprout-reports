@@ -1,7 +1,7 @@
 <?php
 namespace Craft;
 
-class CraftDiscover_ReportsService extends BaseApplicationComponent
+class Discover_ReportsService extends BaseApplicationComponent
 {
 
 

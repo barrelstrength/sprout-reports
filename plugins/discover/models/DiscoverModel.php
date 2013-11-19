@@ -1,7 +1,7 @@
 <?php
 namespace Craft;
 
-class CraftDiscoverModel extends BaseModel
+class DiscoverModel extends BaseModel
 {
     protected function defineAttributes()
     {

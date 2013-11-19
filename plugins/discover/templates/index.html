@@ -1,4 +1,4 @@
-{% extends "craftdiscover/_inc/boilerplate" %}
+{% extends "discover/_inc/boilerplate" %}
 
 {% set content %}
     <p>Hello!</p>
@@ -21,7 +21,7 @@ dl dd { width: 67%;}
 <dl>
 <dt>Authors with Submitted Papers</dt>
 <dd><form method="post" action="" accept-charset="UTF-8">
-    <input type="hidden" name="action" value="craftDiscover/reports/savedQuery" />
+    <input type="hidden" name="action" value="discover/reports/savedQuery" />
         <input type="hidden" name="queryType" value="paperOwners" />
         <div>
             <input type="submit" class="btn submit" name="show" value="{{ 'Display Data'|t }}">
@@ -32,7 +32,7 @@ dl dd { width: 67%;}
 
 <dt>Papers Submitted</dt>
 <dd><form method="post" action="" accept-charset="UTF-8">
-    <input type="hidden" name="action" value="craftDiscover/reports/savedQuery" />
+    <input type="hidden" name="action" value="discover/reports/savedQuery" />
         <input type="hidden" name="queryType" value="papersSubmitted" />
         <div>
             <input type="submit" class="btn submit" name="show" value="{{ 'Display Data'|t }}">
@@ -42,7 +42,7 @@ dl dd { width: 67%;}
 </dd>
 <dt>Paid Registrations</dt>
 <dd><form method="post" action="" accept-charset="UTF-8">
-        <input type="hidden" name="action" value="craftDiscover/reports/savedQuery" />
+        <input type="hidden" name="action" value="discover/reports/savedQuery" />
         <input type="hidden" name="queryType" value="paidReg" />
 
         <div>
@@ -53,12 +53,12 @@ dl dd { width: 67%;}
 </dd>
 <dt>Section</dt>
 <dd><form method="post" action="" accept-charset="UTF-8">
-        <input type="hidden" name="action" value="craftDiscover/reports/createQuery" />
+        <input type="hidden" name="action" value="discover/reports/createQuery" />
 
 
         <div><select name="sectionName">
             <option value="">Select a Section</option>
-            {% for key, sname in craft.craftdiscover.allSections()  %}
+            {% for key, sname in craft.discover.allSections()  %}
                 {% if sname.type != 'single' %}
                 <option value="{{ sname.id }}">{{ sname.name }}</option>
                 {% endif %}
@@ -71,7 +71,7 @@ dl dd { width: 67%;}
 </dd>
 <dt>User Data (CSV Only)</dt>
 <dd><form method="post" action="" accept-charset="UTF-8">
-        <input type="hidden" name="action" value="craftDiscover/reports/savedQuery" />
+        <input type="hidden" name="action" value="discover/reports/savedQuery" />
         <input type="hidden" name="queryType" value="allUsers" />
 
         <div>

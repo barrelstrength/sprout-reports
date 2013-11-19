@@ -7,33 +7,7 @@
     home: { label: "Home"|t, url: url('craftdiscover') }
 } %}
 
-
-{% set hoverScript %}
-
-
-$('.tablecontent').hover(
-	function() {
-		$('.tablefade').fadeOut( 500 ).addClass('hide-fade');
-	}, function() {
-		$('.tablefade').fadeIn( 500 ).removeClass('hide-fade');
-});
-
-$('.table_row').hover(
-	function(){
-		$(this).children().find(".item_content").animateAutoHeight();
-		$(this).css({backgroundColor : '#fafafa'});
-	}, function(){
-		$(this).children().find(".item_content").animate({ height : '100px'}, {queue: false});
-		$(this).css({backgroundColor : 'transparent'});
-	}
-);
-
-{% endset %}
-
-
-
 {% includeJsResource "craftdiscover/js/fade.js" %}
 
 {% includeCssResource "craftdiscover/css/styles.css" %}
 
-{% includeJs hoverScript %}

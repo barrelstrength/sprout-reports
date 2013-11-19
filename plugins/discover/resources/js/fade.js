@@ -44,15 +44,9 @@ $(document).ready(function() {
 	$('.table_row').click(function () {
 		if($(this).hasClass('expanded')) {
 			$(this).children().find(".item_content").animate({ height : '40px'}, {queue: false});
-			setTimeout(function() {
-				$(this).css({backgroundColor : 'transparent'})
-			}, 500);
 			$(this).removeClass('expanded');
 		} else {
 			$(this).children().find(".item_content").animateAutoHeight();
-			setTimeout(function() {
-				$(this).css({backgroundColor : '#fafafa'})
-			}, 500);
 			$(this).addClass('expanded');
 		}
 	});

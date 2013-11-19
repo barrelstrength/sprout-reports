@@ -32,6 +32,13 @@ td {
 	background-position: 4px 10px;
 }
 
+.table_row.expanded {
+	background-color: #fafafa;
+}
+
+.table_row.expanded:hover {
+}
+
 td:hover {
 }
 
@@ -69,6 +76,7 @@ tr {
 	height: 40px;
 	overflow: hidden;
 	padding: 10px 15px 0 25px;
+	display: block;
 }
 
 #content {

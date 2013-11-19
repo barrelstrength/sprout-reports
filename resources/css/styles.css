@@ -3,6 +3,10 @@ table.data tbody td {
 	vertical-align: top;
 }
 
+table.data thead th {
+	padding: 10px 15px;
+}
+
 td, th {
 	min-width: 180px;
 }
@@ -39,7 +43,6 @@ tr {
 }
 
 .tablecontent {
-	padding: 10px;
 	overflow: auto;
 }
 
@@ -57,7 +60,7 @@ tr {
 	min-height: 200px;
 	height: 200px;
 	overflow: hidden;
-	padding: 5px;
+	padding: 10px 15px;
 }
 
 #content {

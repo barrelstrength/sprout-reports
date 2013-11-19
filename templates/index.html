@@ -8,8 +8,15 @@
 {% set content %}
 {% if myEntries is not defined %}{% set myEntries = null %}{% endif %}
 {% if tableCols is not defined %}{% set tableCols = null %}{% endif %}
+{% if reportName is not defined %}{% set reportName = null %}{% endif %}
 {% import "_includes/forms" as forms %}
 
+<style type="text/css">
+dl { clear: both; padding-bottom: 2em;}
+dl dt { font-weight: bold; font-size: 1.2em; width: 30%; text-align: right; margin-right: 1%; }
+dl dt, dl dd { display: inline-block;  min-height: 2em; padding-bottom: 1em;}
+dl dd { width: 67%;}
+</style>
 <div class="selectreport">
 <dl>
 <dt>Authors with Submitted Papers</dt>
@@ -44,12 +51,41 @@
         </div>
     </form>
 </dd>
+<dt>Section</dt>
+<dd><form method="post" action="" accept-charset="UTF-8">
+        <input type="hidden" name="action" value="craftDiscover/reports/createQuery" />
+
+
+        <div><select name="sectionName">
+            <option value="">Select a Section</option>
+            {% for key, sname in craft.craftdiscover.allSections()  %}
+                {% if sname.type != 'single' %}
+                <option value="{{ sname.id }}">{{ sname.name }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+            <input type="submit" class="btn submit" name="show" value="{{ 'Display Data'|t }}">
+            <label style="display: inline-block; width: auto; margin-left: 1em;"><input type="checkbox" name="exportData" value="Y" /> Export as CSV?</label>
+        </div>
+    </form>
+</dd>
+<dt>User Data (CSV Only)</dt>
+<dd><form method="post" action="" accept-charset="UTF-8">
+        <input type="hidden" name="action" value="craftDiscover/reports/savedQuery" />
+        <input type="hidden" name="queryType" value="allUsers" />
+
+        <div>
+            <input type="submit" class="btn submit" name="show" value="{{ 'Export Data as CSV'|t }}"><input type="hidden" name="exportData" value="Y" />
+        </div>
+    </form>
+</dd>
 
 </dl>
 </div>
 
 
 <div class="tableview">
+    <h1>{{ reportName }}</h1>
     <table class="data">
         <thead>
             <tr>

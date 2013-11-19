@@ -31,3 +31,29 @@
 		return this;
 	}
 })(jQuery);
+
+
+$(document).ready(function() {
+	$('.tablecontent').hover(
+		function() {
+			$('.tablefade').fadeOut( 500 ).addClass('hide-fade');
+		}, function() {
+			$('.tablefade').fadeIn( 500 ).removeClass('hide-fade');
+	});
+	
+	$('.table_row').click(function () {
+		if($(this).hasClass('expanded')) {
+			$(this).children().find(".item_content").animate({ height : '40px'}, {queue: false});
+			setTimeout(function() {
+				$(this).css({backgroundColor : 'transparent'})
+			}, 500);
+			$(this).removeClass('expanded');
+		} else {
+			$(this).children().find(".item_content").animateAutoHeight();
+			setTimeout(function() {
+				$(this).css({backgroundColor : '#fafafa'})
+			}, 500);
+			$(this).addClass('expanded');
+		}
+	});
+});

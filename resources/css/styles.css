@@ -1,0 +1,68 @@
+table.data tbody th,
+table.data tbody td {
+	vertical-align: top;
+}
+
+td, th {
+	min-width: 180px;
+}
+
+td {
+	border-right: 1px solid #eee;
+	padding: 0 !important;
+}
+
+.table_row {
+	
+	-webkit-transition: background linear 0.5s;
+	   -moz-transition: background linear 0.5s;
+	     -o-transition: background linear 0.5s;
+	        transition: background linear 0.5s;
+}
+
+td:hover {
+}
+
+td:last-child  {
+	border-right: 0px solid transparent;
+}
+
+tr {
+	max-height: 50px;
+	overflow: hidden;
+}
+
+.tableview {
+	background: #f5f5f5;
+	border: 1px solid #eee;
+	
+}
+
+.tablecontent {
+	padding: 10px;
+	overflow: auto;
+}
+
+.tablefade {
+	height: 100%;
+	width: 60px;
+	right: 30px;
+	margin-bottom: 30px;
+	position: absolute;
+	z-index: 100;
+	background: url("../img/fade.png") right top repeat-y transparent;
+}
+
+.item_content {
+	min-height: 200px;
+	height: 200px;
+	overflow: hidden;
+	padding: 5px;
+}
+
+#content {
+}
+
+#main {
+	overflow: hidden;
+}

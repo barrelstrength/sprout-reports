@@ -47,19 +47,20 @@ class CraftDiscover_ReportsController extends BaseController
 
         $myentries = craft()->db->createCommand($sql)->queryAll();
             if(sizeof($myentries) > 0) {
-                $tableCols = array_keys($myentries[0]);
-                }
+
 
         if($qType == "paidReg") {
             foreach($myentries as $key=>$item) {
                 $mynotes = json_decode($item['extraNotes'],TRUE);
                 $noteoutput = "";
                 foreach($mynotes as $nitem) {
-                    $noteoutput .= ($nitem['content'] == 1) ? "* {$nitem['label']}\n" : '';
+                    $myentries[$key]["{$nitem['label']}"] = ($nitem['content'] == 1) ? "Y" : "N";
                     }
-                $myentries[$key]['extraNotes'] = $noteoutput;
                 }
             }
+
+             $tableCols = array_keys($myentries[0]);
+                }
 
         if($exportData == 'Y') {
         $worksheet = new Worksheet();

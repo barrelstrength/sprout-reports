@@ -1,7 +1,7 @@
 <?php
 namespace Craft;
 
-class Discover_ElementModel extends BaseModel
+class SproutReports_ElementModel extends BaseModel
 {
     protected function defineAttributes()
     {

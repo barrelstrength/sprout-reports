@@ -1,10 +1,10 @@
 {% extends "_layouts/cp" %}
 
 
-{% set title = "Discover"|t %}
+{% set title = "Reports"|t %}
 
 {% set tabs = {
-    home: { label: "Reports"|t, url: url('discover') }
+    home: { label: "Reports"|t, url: url('reports') }
 } %}
 
 {% set hoverScript %}
@@ -31,6 +31,6 @@ $('.table_row').hover(
 
 
 
-{% includeJsResource "discover/js/fade.js" %}
-{% includeCssResource "discover/css/styles.css" %}
+{% includeJsResource "reports/js/fade.js" %}
+{% includeCssResource "reports/css/styles.css" %}
 

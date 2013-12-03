@@ -1,4 +1,4 @@
-{% extends "discover/_inc/boilerplate" %}
+{% extends "reports/_inc/boilerplate" %}
 
 {% set selectedTab = 'papers' %}
 
@@ -9,7 +9,7 @@
 {% if tableCols is not defined %}{% set tableCols = null %}{% endif %}
 <h1>Get Submitted Papers</h1>
 <form method="post" action="" accept-charset="UTF-8">
-        <input type="hidden" name="action" value="discover/reports/savedQuery" />
+        <input type="hidden" name="action" value="reports/reports/savedQuery" />
         <input type="hidden" name="queryType" value="papersSubmitted" />
 
 

@@ -1,4 +1,4 @@
-{% extends "discover/_inc/boilerplate" %}
+{% extends "reports/_inc/boilerplate" %}
 
 {% set selectedTab = 'newquery' %}
 
@@ -10,7 +10,7 @@
 {% if tableCols is not defined %}{% set tableCols = null %}{% endif %}
 
 <form method="post" action="" accept-charset="UTF-8">
-        <input type="hidden" name="action" value="discover/reports/createQuery" />
+        <input type="hidden" name="action" value="reports/reports/createQuery" />
         {{ forms.textAreaField({
             label: 'Query'|t,
             required: true,

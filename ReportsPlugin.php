@@ -1,21 +1,21 @@
 <?php
 namespace Craft;
 
-class DiscoverPlugin extends BasePlugin
+class SproutReportsPlugin extends BasePlugin
 {
     function init()
     {
-        require CRAFT_PLUGINS_PATH.'discover/vendor/autoload.php';
+        require CRAFT_PLUGINS_PATH.'reports/vendor/autoload.php';
     }
 
     function getName()
     {
-        return Craft::t('Discover');
+        return Craft::t('Reports');
     }
 
     function getVersion()
     {
-        return '0.3.0';
+        return '0.3.1';
     }
 
     function getDeveloper()
@@ -42,7 +42,7 @@ class DiscoverPlugin extends BasePlugin
 
     public function getSettingsHtml()
     {
-        return craft()->templates->render('discover/settings', array(
+        return craft()->templates->render('reports/settings', array(
             'settings' => $this->getSettings()
         ));
     }
@@ -51,7 +51,7 @@ class DiscoverPlugin extends BasePlugin
     public function hookRegisterCpRoutes()
     {
         return array(
-            'discover\/query' => 'discover/reports/query',
+            'reports/query' => 'reports/reports/query',
         );
     }
 

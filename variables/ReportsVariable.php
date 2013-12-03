@@ -2,7 +2,7 @@
 
 namespace Craft;
 
-class DiscoverVariable
+class SproutReportsVariable
 {
 
 public function allElementTypes() {

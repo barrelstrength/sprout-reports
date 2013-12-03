@@ -5,7 +5,7 @@ class SproutReportsPlugin extends BasePlugin
 {
     function init()
     {
-        require CRAFT_PLUGINS_PATH.'reports/vendor/autoload.php';
+        require CRAFT_PLUGINS_PATH.'sproutreports/vendor/autoload.php';
     }
 
     function getName()
@@ -42,7 +42,7 @@ class SproutReportsPlugin extends BasePlugin
 
     public function getSettingsHtml()
     {
-        return craft()->templates->render('reports/settings', array(
+        return craft()->templates->render('sproutreports/settings', array(
             'settings' => $this->getSettings()
         ));
     }
@@ -51,7 +51,7 @@ class SproutReportsPlugin extends BasePlugin
     public function hookRegisterCpRoutes()
     {
         return array(
-            'reports/query' => 'reports/reports/query',
+            'sproutreports/query' => 'sproutreports/reports/query',
         );
     }
 

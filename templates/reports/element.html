@@ -1,4 +1,4 @@
-{% extends "reports/_inc/boilerplate" %}
+{% extends "sproutreports/_inc/boilerplate" %}
 
 {% set selectedTab = 'element' %}
 
@@ -9,7 +9,7 @@
 {% if tableCols is not defined %}{% set tableCols = null %}{% endif %}
 
 <form method="post" action="" accept-charset="UTF-8">
-        <input type="hidden" name="action" value="reports/reports/createQuery" />
+        <input type="hidden" name="action" value="sproutreports/reports/createQuery" />
 
 
         <select name="sectionName">

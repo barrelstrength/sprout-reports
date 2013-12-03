@@ -1,4 +1,4 @@
-{% extends "reports/_inc/boilerplate" %}
+{% extends "sproutreports/_inc/boilerplate" %}
 
 {% set content %}
     <p>Hello!</p>
@@ -21,7 +21,7 @@ dl dd { width: 67%;}
 <dl>
 <dt>Authors with Submitted Papers</dt>
 <dd><form method="post" action="" accept-charset="UTF-8">
-    <input type="hidden" name="action" value="reports/reports/savedQuery" />
+    <input type="hidden" name="action" value="sproutreports/reports/savedQuery" />
         <input type="hidden" name="queryType" value="paperOwners" />
         <div>
             <input type="submit" class="btn submit" name="show" value="{{ 'Display Data'|t }}">
@@ -32,7 +32,7 @@ dl dd { width: 67%;}
 
 <dt>Papers Submitted</dt>
 <dd><form method="post" action="" accept-charset="UTF-8">
-    <input type="hidden" name="action" value="reports/reports/savedQuery" />
+    <input type="hidden" name="action" value="sproutreports/reports/savedQuery" />
         <input type="hidden" name="queryType" value="papersSubmitted" />
         <div>
             <input type="submit" class="btn submit" name="show" value="{{ 'Display Data'|t }}">
@@ -42,7 +42,7 @@ dl dd { width: 67%;}
 </dd>
 <dt>Paid Registrations</dt>
 <dd><form method="post" action="" accept-charset="UTF-8">
-        <input type="hidden" name="action" value="reports/reports/savedQuery" />
+        <input type="hidden" name="action" value="sproutreports/reports/savedQuery" />
         <input type="hidden" name="queryType" value="paidReg" />
 
         <div>
@@ -53,7 +53,7 @@ dl dd { width: 67%;}
 </dd>
 <dt>Section</dt>
 <dd><form method="post" action="" accept-charset="UTF-8">
-        <input type="hidden" name="action" value="reports/reports/createQuery" />
+        <input type="hidden" name="action" value="sproutreports/reports/createQuery" />
 
 
         <div><select name="sectionName">
@@ -71,7 +71,7 @@ dl dd { width: 67%;}
 </dd>
 <dt>User Data (CSV Only)</dt>
 <dd><form method="post" action="" accept-charset="UTF-8">
-        <input type="hidden" name="action" value="reports/reports/savedQuery" />
+        <input type="hidden" name="action" value="sproutreports/reports/savedQuery" />
         <input type="hidden" name="queryType" value="allUsers" />
 
         <div>

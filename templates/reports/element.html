@@ -1,4 +1,4 @@
-{% extends "sproutreports/_inc/boilerplate" %}
+{% extends "sproutreports/_layouts/base" %}
 
 {% set selectedTab = 'element' %}
 
@@ -14,7 +14,7 @@
 
         <select name="sectionName">
             <option value="">Select a Section</option>
-            {% for key, sname in craft.reports.allSections()  %}
+            {% for key, sname in craft.sproutReports.allSections()  %}
                 <option value="{{ sname.id }}">{{ sname.name }}</option>
             {% endfor %}
         </select>
@@ -28,7 +28,7 @@
 
         <select name="fieldname[]">
             <option value="">Select a Field</option>
-            {% for key, sname in craft.reports.allFields()  %}
+            {% for key, sname in craft.sproutReports.allFields()  %}
                 <option value="{{ key }}">{{ sname }}</option>
             {% endfor %}
         </select>
@@ -56,7 +56,7 @@
 
         <select name="fieldname[]">
             <option value="">Select a Field</option>
-            {% for key, sname in craft.reports.allFields()  %}
+            {% for key, sname in craft.sproutReports.allFields()  %}
                 <option value="{{ key }}">{{ sname }}</option>
             {% endfor %}
         </select>

@@ -33,21 +33,6 @@ class SproutReportsPlugin extends BasePlugin
         return true;
     }
 
-    protected function defineSettings()
-    {
-        return array(
-            'asetting'   => array(AttributeType::String, 'required' => true, 'label' => 'A Setting'),
-        );
-    }
-
-    public function getSettingsHtml()
-    {
-        return craft()->templates->render('sproutreports/settings', array(
-            'settings' => $this->getSettings()
-        ));
-    }
-
-
     public function hookRegisterCpRoutes()
     {
         return array(

@@ -1,22 +1,92 @@
-table.data tbody th,
-table.data tbody td {
-	vertical-align: top;
-}
+/* BASE STYLES
+-----------------------------------*/
 
-table.data thead th {
-	padding: 10px 15px 10px 10px;
+tr {
+	max-height: 50px;
+	overflow: hidden;
 }
 
 td, th {
 	min-width: 180px;
-	width: auto;
 }
 
 td {
 	border-right: 1px solid #eee;
-	font-size: 12px;
-	padding: 10px;
 }
+
+td:last-child  {
+	border-right: 0px solid transparent;
+}
+
+
+/* SELECT REPORT HEADING
+-----------------------------------*/
+
+.selectreport {
+	margin-left: -25px;
+}
+
+.selectreport h3,
+.selectreport form {
+	margin-left: 25px;
+}
+
+.selectreport form {
+	margin-bottom: 20px;
+}
+
+.selectreport td {
+	min-width: 220px;
+}
+
+
+/* RESULTS DATA
+-----------------------------------*/
+
+.tableview {
+	border-top: 1px solid #eee;
+	margin: 0 -30px -31px;
+}
+
+.tableview h1 {
+	padding: 35px 0 0 25px;
+}
+
+.tablefade {
+	height: 100%;
+	width: 60px;
+	right: 0;
+	margin-bottom: 30px;
+	position: absolute;
+	z-index: 100;
+	background: url("../img/fade.png") right top repeat-y transparent;
+}
+
+
+.tablecontent {
+	overflow: auto;
+}
+
+table.results {
+	border-top: 1px dotted #e3e5e8;
+}
+
+table.results tbody th,
+table.results tbody td {
+	vertical-align: top;
+	border-top: 1px dotted #e3e5e8;
+}
+
+table.results tbody tr:last-child th,
+table.results tbody tr:last-child td {
+	border-bottom: 1px dotted #e3e5e8;
+}
+
+
+table.results thead th {
+	padding: 10px 15px 10px 25px;
+}
+
 
 .table_row {
 	background-image: url("../img/arrows.png");
@@ -38,54 +108,13 @@ td {
 	background-color: #fafafa;
 }
 
-.table_row.expanded:hover {
-}
-
-td:hover {
-}
-
-td:last-child  {
-	border-right: 0px solid transparent;
-}
-
-tr {
-	max-height: 50px;
-	overflow: hidden;
-}
-
-.tableview {
-	background: #fff;
-	border: 1px solid #eee;
-	margin: 0 -30px -30px;
-}
-
-.tablecontent {
-	overflow: auto;
-}
-
-.tableview h1 {
-	padding: 50px 20px 0;
-}
-
-.tablefade {
-	height: 100%;
-	width: 60px;
-	right: 0;
-	margin-bottom: 30px;
-	position: absolute;
-	z-index: 100;
-	background: url("../img/fade.png") right top repeat-y transparent;
-}
 
 .item_content {
-	min-height: 40px;
-	height: 40px;
+	min-height: 38px;
+	height: 38px;
 	overflow: hidden;
 	padding: 10px 15px 0 25px;
 	display: block;
-}
-
-#content {
 }
 
 #main {

@@ -34,20 +34,29 @@
 
 
 $(document).ready(function() {
-	$('.tablecontent').hover(
-		function() {
-			$('.tablefade').fadeOut( 500 ).addClass('hide-fade');
-		}, function() {
-			$('.tablefade').fadeIn( 500 ).removeClass('hide-fade');
+	
+	
+	$('.tablecontent').jScrollPane({
+		showArrows: true,
+		hideFocus: true
 	});
+	
+	
+	var api = $('.tablecontent').data('jsp');
+	
 	
 	$('.table_row').click(function () {
 		if($(this).hasClass('expanded')) {
 			$(this).children().find(".item_content").animate({ height : '40px'}, {queue: false});
 			$(this).removeClass('expanded');
+			
+			
 		} else {
 			$(this).children().find(".item_content").animateAutoHeight();
 			$(this).addClass('expanded');
 		}
+			setTimeout(function(){api.reinitialise()}, 400);
 	});
+	
+	
 });

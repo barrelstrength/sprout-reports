@@ -100,10 +100,9 @@
 
 	<h1>{{ reportName }}</h1>
 
-  <div class="tablefade"></div>
   <div class="tablecontent">
     
-    <table class="data">
+    <table class="results">
       <thead>
        	<tr>
 					{% for item in tableCols %}
@@ -113,9 +112,9 @@
 			</thead>
 			<tbody>
       {% for item in myEntries %}
-      <tr>
+      <tr class="table_row">
         {% for keyname in tableCols %}
-          <td>{{ item[keyname] }}</td>
+          <td><div class="item_content">{{ item[keyname] }}</div></td>
         {% endfor %}
       </tr>
       {% endfor %}

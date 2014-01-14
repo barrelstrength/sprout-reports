@@ -2,30 +2,10 @@
 
 {% set title = "Reports"|t %}
 
-{% set hoverScript %}
 
-
-$('.tablecontent').hover(
-	function() {
-		$('.tablefade').fadeOut( 500 ).addClass('hide-fade');
-	}, function() {
-		$('.tablefade').fadeIn( 500 ).removeClass('hide-fade');
-});
-
-$('.table_row').hover(
-	function(){
-		$(this).children().find(".item_content").animateAutoHeight();
-		$(this).css({backgroundColor : '#fafafa'});
-	}, function(){
-		$(this).children().find(".item_content").animate({ height : '100px'}, {queue: false});
-		$(this).css({backgroundColor : 'transparent'});
-	}
-);
-
-{% endset %}
-
-
-
-{% includeJsResource "sproutreports/js/fade.js" %}
+{% includeCssResource "sproutreports/css/jquery.jscrollpane.css" %}
 {% includeCssResource "sproutreports/css/styles.css" %}
 
+{% includeJsResource "sproutreports/js/jquery.jscrollpane.min.js" %}
+{% includeJsResource "sproutreports/js/jquery.mousewheel.js" %}
+{% includeJsResource "sproutreports/js/scripts.js" %}

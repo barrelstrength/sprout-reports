@@ -1,22 +1,91 @@
-table.data tbody th,
-table.data tbody td {
-	vertical-align: top;
-}
+/* BASE STYLES
+-----------------------------------*/
 
-table.data thead th {
-	padding: 10px 15px 10px 10px;
+tr {
+	max-height: 50px;
+	overflow: hidden;
 }
 
 td, th {
 	min-width: 180px;
-	width: auto;
 }
 
 td {
 	border-right: 1px solid #eee;
-	font-size: 12px;
-	padding: 10px;
 }
+
+td:last-child  {
+	border-right: 0px solid transparent;
+}
+
+
+/* SELECT REPORT HEADING
+-----------------------------------*/
+
+.selectreport {
+	margin-left: -25px;
+}
+
+.selectreport h3,
+.selectreport form {
+	margin-left: 25px;
+}
+
+.selectreport form {
+	margin-bottom: 20px;
+}
+
+.selectreport td {
+	min-width: 220px;
+}
+
+
+/* RESULTS DATA
+-----------------------------------*/
+
+.tableview {
+	border-top: 1px solid #eee;
+	margin: 0 -30px -31px;
+}
+
+.tableview h1 {
+	padding: 35px 0 0 25px;
+}
+
+.tablefade {
+	height: 100%;
+	width: 60px;
+	right: 0;
+	margin-bottom: 30px;
+	position: absolute;
+	z-index: 100;
+	background: url("../img/fade.png") right top repeat-y transparent;
+}
+
+
+.tablecontent {
+	overflow: auto;
+	max-height: 600px;
+	border-top: 1px dotted #e3e5e8;
+}
+
+
+table.results tbody th,
+table.results tbody td {
+	vertical-align: top;
+	border-top: 1px dotted #e3e5e8;
+}
+
+table.results tbody tr:last-child th,
+table.results tbody tr:last-child td {
+	border-bottom: 1px dotted #e3e5e8;
+}
+
+
+table.results thead th {
+	padding: 10px 15px 10px 25px;
+}
+
 
 .table_row {
 	background-image: url("../img/arrows.png");
@@ -38,56 +107,146 @@ td {
 	background-color: #fafafa;
 }
 
-.table_row.expanded:hover {
-}
-
-td:hover {
-}
-
-td:last-child  {
-	border-right: 0px solid transparent;
-}
-
-tr {
-	max-height: 50px;
-	overflow: hidden;
-}
-
-.tableview {
-	background: #fff;
-	border: 1px solid #eee;
-	margin: 0 -30px -30px;
-}
-
-.tablecontent {
-	overflow: auto;
-}
-
-.tableview h1 {
-	padding: 50px 20px 0;
-}
-
-.tablefade {
-	height: 100%;
-	width: 60px;
-	right: 0;
-	margin-bottom: 30px;
-	position: absolute;
-	z-index: 100;
-	background: url("../img/fade.png") right top repeat-y transparent;
-}
 
 .item_content {
-	min-height: 40px;
-	height: 40px;
+	min-height: 38px;
+	height: 38px;
 	overflow: hidden;
 	padding: 10px 15px 0 25px;
 	display: block;
 }
 
-#content {
-}
-
 #main {
 	overflow: hidden;
+}
+
+
+/* SCROLLBAR DESIGN
+-----------------------------------*/
+.jspVerticalBar,
+.jspHorizontalBar {
+	background: transparent;
+}
+	
+.jspTrack {
+	background-color: rgba( 245, 245, 245, 0.7 );
+	-webkit-transition: background linear 0.2s, box-shadow linear 0.2s;
+	   -moz-transition: background linear 0.2s, box-shadow linear 0.2s;
+	     -o-transition: background linear 0.2s, box-shadow linear 0.2s;
+	        transition: background linear 0.2s, box-shadow linear 0.2s;
+	-webkit-box-shadow: inset 0 0 1px #aaa;
+	   -moz-box-shadow: inset 0 0 1px #aaa; 
+	        box-shadow: inset 0 0 1px #aaa;
+	
+		
+}
+
+.jspTrack:hover,
+.jspTrack:active {
+	background-color: rgba( 235, 235, 235, 0.7 );
+	-webkit-box-shadow: inset 0 0 1px #777;
+	   -moz-box-shadow: inset 0 0 1px #777; 
+	        box-shadow: inset 0 0 1px #777;
+	
+}
+
+.jspDrag {
+	background-color: rgba( 220, 220, 220, 0.7 );
+	-webkit-transition: background linear 0.2s, box-shadow linear 0.2s;
+	   -moz-transition: background linear 0.2s, box-shadow linear 0.2s;
+	     -o-transition: background linear 0.2s, box-shadow linear 0.2s;
+	        transition: background linear 0.2s, box-shadow linear 0.2s;
+	-webkit-box-shadow: inset 0 0 1px #aaa;
+	   -moz-box-shadow: inset 0 0 1px #aaa; 
+	        box-shadow: inset 0 0 1px #aaa;
+}
+
+.jspTrack:hover .jspDrag,
+.jspDrag:active {
+	background-color: rgba( 200, 200, 200, 0.8 );
+	-webkit-box-shadow: inset 0 0 1px #888;
+	   -moz-box-shadow: inset 0 0 1px #888; 
+	        box-shadow: inset 0 0 1px #888;
+}
+
+.jspCorner {
+	background-color: #fff;
+}
+
+.jspArrow,
+.jspArrow.jspDisabled {
+	background-image: url('../img/scroll-arrows.png');
+	background-color: #fff;
+	
+	-webkit-transition: background-color linear 0.1s;
+	   -moz-transition: background-color linear 0.1s;
+	     -o-transition: background-color linear 0.1s;
+	        transition: background-color linear 0.1s;
+	
+		
+	
+}
+
+.jspActive {
+	background-color: #eee;
+}
+
+
+.jspArrowUp {
+	background-position: -16px 0;
+}
+
+.jspArrowUp.jspDisabled,
+.jspArrowUp.jspActive.jspDisabled {
+	background-position: 0 0;
+}
+
+.jspArrowUp.jspActive {
+	background-position: -32px 0;
+}
+
+
+.jspArrowDown {
+	background-position: -16px -16px;
+}
+
+.jspArrowDown.jspDisabled,
+.jspArrowDown.jspActive.jspDisabled {
+	background-position: 0 -16px;
+}
+
+
+.jspArrowDown.jspActive {
+	background-position: -32px -16px;
+}
+
+
+
+
+.jspArrowLeft {
+	background-position: -16px -32px;
+}
+
+.jspArrowLeft.jspDisabled,
+.jspArrowLeft.jspActive.jspDisabled {
+	background-position: 0 -32px;
+}
+
+.jspArrowLeft.jspActive {
+	background-position: -32px -32px;
+}
+
+
+.jspArrowRight {
+	background-position: -16px -48px;
+}
+
+.jspArrowRight.jspDisabled,
+.jspArrowRight.jspActive.jspDisabled {
+	background-position: 0 -48px;
+}
+
+
+.jspArrowRight.jspActive {
+	background-position: -32px -48px;
 }

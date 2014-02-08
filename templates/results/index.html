@@ -1,0 +1,51 @@
+{% extends "sproutreports/_layouts/base" %}
+
+{% set report = craft.sproutReports.reportById(reportId) %}
+{% set results = craft.sproutReports.runReport(report.customQuery) %}
+
+{% set title = report.name %}
+
+{% set crumbs = [
+	{ label: "Reports"|t, url: url('sproutreports') },
+	{ label: "View Results"|t, url: "" }
+] %}
+
+{% block content %}
+
+<style type="text/css">
+.csv { display: inline-block; width: auto; }	
+</style>
+
+<div class="tableview">
+
+  <div class="tablecontent">
+    
+  {% for row in results %}
+  	{% if loop.first %}
+    <table class="results">
+      <thead>
+       	<tr>
+					{% for columnName, value in row %}
+					<th>{{ columnName }}</th>
+					{% endfor %}
+		    </tr>
+			</thead>
+			<tbody>
+		{% endif %}
+
+      <tr class="table_row">
+        {% for value in row %}
+          <td><div class="item_content">{{ value }}</div></td>
+        {% endfor %}
+      </tr>
+
+    {% if loop.last %}
+  	</table>
+  	{% endif %}
+
+  {% endfor %}
+
+	</div>
+</div>
+
+{% endblock %}

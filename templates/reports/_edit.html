@@ -1,0 +1,69 @@
+{% extends "sproutreports/_layouts/base" %}
+{% import "_includes/forms" as forms %}
+
+{% set title = "Edit Report" %}
+
+{% set crumbs = [
+	{ label: "Reports"|t, url: url('sproutreports') },
+	{ label: "Edit Report"|t, url: "" }
+] %}
+
+{% set report = craft.sproutReports.reportById(reportId) %}
+
+{% block content %}
+	
+	<form method="post" action="" accept-charset="UTF-8">
+		<input type="hidden" name="action" value="sproutReports/reports/saveReport">
+		<input type="hidden" name="redirect" value="sproutreports">
+
+		{% if reportId is defined %}
+		<input type="hidden" name="id" value="{{ reportId }}">
+		{% endif %}
+
+		{{ forms.textField({
+			label: "Name"|t,
+			name: 'name',
+			value: (report.name is defined) ? report.name : "",
+			errors: "",
+			required: true,
+			first: true
+		}) }}
+
+		{{ forms.textField({
+			label: "Handle"|t,
+			name: 'handle',
+			value: (report.handle is defined) ? report.handle : "",
+			errors: "",
+			required: true,
+			first: true
+		}) }}
+
+		{{ forms.textareaField({
+			label: "Description"|t,
+			name: 'description',
+			class: 'nicetext',
+			rows: 4,
+			value: (report.description is defined) ? report.description : ""
+		}) }}
+
+		{{ forms.textareaField({
+			label: "Custom Query"|t,
+			name: 'customQuery',
+			class: 'nicetext',
+			value: (report.customQuery is defined) ? report.customQuery : "",
+			rows: 10
+		}) }}
+
+		<div class="buttons">
+			<input class="btn submit" type="submit" value="Save Report">
+		</div>
+
+		{% if reportId is defined %}
+		<input type="button" class="btn small formsubmit" value="Delete" data-action="sproutReports/reports/deleteReport" data-confirm="Are you sure you want to delete this report?" data-redirect="sproutreports" tabindex="0">
+		{% endif %}
+
+	</form>
+
+	
+
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends "sproutreports/_layouts/base" %}
+{% import "_includes/forms" as forms %}
+
+{% if myEntries is not defined %}
+    {% set myEntries = null %}
+{% endif %}
+
+{% if tableCols is not defined %}
+    {% set tableCols = null %}
+{% endif %}
+
+{% if reportName is not defined %}
+    {% set reportName = null %}
+{% endif %}
+
+{% set content %}
+
+<style type="text/css">
+.csv { display: inline-block; width: auto; }	
+</style>
+
+<div class="selectreport">
+
+<table>
+	<tr>
+		<td>
+			<h3>Submitted Papers</h3>
+
+			<form method="post" action="" accept-charset="UTF-8">
+				<input type="hidden" name="action" value="sproutReports/reports/savedQuery" />
+				<input type="hidden" name="queryType" value="papersSubmitted" />
+				<div>
+					<p><input type="submit" class="btn submit" name="show" value="{{ 'Display Data'|t }}"></p>
+					<label class="csv"><input type="checkbox" name="exportData" value="Y" />&nbsp;Export as CSV</label>
+				</div>
+			</form>
+		</td>
+		{# <td>
+			<h3></h3>
+
+			<form method="post" action="" accept-charset="UTF-8">
+				<input type="hidden" name="action" value="sproutReports/reports/savedQuery" />
+				<input type="hidden" name="queryType" value="paperOwners" />
+				<div>
+			    <p><input type="submit" class="btn submit" name="show" value="{{ 'Display Data'|t }}"></p>
+			    <label class="csv"><input type="checkbox" name="exportData" value="Y" />&nbsp;Export as CSV</label>
+				</div>
+			</form>
+		</td> #}
+		<td>
+			<h3>Paid Registrations</h3>
+			<form method="post" action="" accept-charset="UTF-8">
+				<input type="hidden" name="action" value="sproutReports/reports/savedQuery" />
+			  <input type="hidden" name="queryType" value="paidReg" />
+			  <div>
+			    <p><input type="submit" class="btn submit" name="show" value="{{ 'Display Data'|t }}"></p>
+			    <label class="csv"><input type="checkbox" name="exportData" value="Y" />&nbsp;Export as CSV</label>
+			  </div>
+			</form>
+		</td>
+		<td>
+			<h3>Section</h3>
+			<form method="post" action="" accept-charset="UTF-8">
+				<input type="hidden" name="action" value="sproutReports/reports/createQuery" />
+
+				<div>
+					<p>
+					<select name="sectionName">
+						<option value="">Select a Section</option>
+						{% for key, sname in craft.sproutReports.allSections()  %}
+							{% if sname.type != 'single' %}
+							<option value="{{ sname.id }}">{{ sname.name }}</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+					</p>
+					<p><input type="submit" class="btn submit" name="show" value="{{ 'Display Data'|t }}"></p>
+					<label class="csv"><input type="checkbox" name="exportData" value="Y" />&nbsp;Export as CSV</label>
+				</div>
+			</form>
+		</td>
+		<td>
+			<h3>User Data</h3>
+			<form method="post" action="" accept-charset="UTF-8">
+				<input type="hidden" name="action" value="sproutReports/reports/savedQuery" />
+				<input type="hidden" name="queryType" value="allUsers" />
+
+				<div>
+					<p><input type="submit" class="btn submit" name="show" value="{{ 'Export Data'|t }}"><input type="hidden" name="exportData" value="Y" /></p>
+					<label class="csv">CSV Only</label>
+				</div>
+			</form>
+		</td>
+	</tr>
+</table>
+
+</div>
+
+<div class="tableview">
+
+	<h1>{{ reportName }}</h1>
+
+  <div class="tablecontent">
+    
+    <table class="results">
+      <thead>
+       	<tr>
+					{% for item in tableCols %}
+					<th>{{ item }}</th>
+					{% endfor %}
+		    </tr>
+			</thead>
+			<tbody>
+      {% for item in myEntries %}
+      <tr class="table_row">
+        {% for keyname in tableCols %}
+          <td><div class="item_content">{{ item[keyname] }}</div></td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+  	</table>
+
+	</div>
+</div>
+
+{% endset %}

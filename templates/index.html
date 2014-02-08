@@ -1,126 +1,98 @@
 {% extends "sproutreports/_layouts/base" %}
-{% import "_includes/forms" as forms %}
 
-{% if myEntries is not defined %}
-    {% set myEntries = null %}
-{% endif %}
+{% set title = craft.sproutReports.name|t %}
 
-{% if tableCols is not defined %}
-    {% set tableCols = null %}
-{% endif %}
+{% block content %}
+	
+	<style type="text/css">
+	.report-row:hover {
+		background-color: #fafafa;
+		/*cursor: pointer;*/
+	}
+	.data th.first, 
+	.data td.first {
+		padding-left: 10px;
+	}
+	</style>
 
-{% if reportName is not defined %}
-    {% set reportName = null %}
-{% endif %}
+	{% set reports = craft.sproutReports.allReports() %}
 
-{% set content %}
+	{% if reports|length %}
+		{% for report in reports %}
+			{% if loop.first %}
+			<div class="tableview">
+				<table class="data">
+					<thead>
+						<tr>
+							<th scope="col" data-attribute="title" class="first">Title</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+			{% endif %}
 
-<style type="text/css">
-.csv { display: inline-block; width: auto; }	
-</style>
+					<tr class="report-row">
+						<td class="first">
+							<a href="{{ url('sproutreports/results/' ~ report.id) }}">
+								{{ report.name }}
+							</a>
+						</td>
+						<td style="text-align:right;">
 
-<div class="selectreport">
+							<a href="{{ url( 'sproutreports/reports/edit/' ~ report.id ) }}" class="btn small" style="float:right;display:inline-block;margin-right:10px;">
+								Edit
+							</a>
 
-<table>
-	<tr>
-		<td>
-			<h3>Submitted Papers</h3>
+							<form action="" method="post" accept-charset="UTF-8" style="float:right;margin-right:10px;">
+								<input type="hidden" name="action" value="sproutReports/reports/runReport">
+								<input type="hidden" name="reportId" value="{{ report.id }}">
+								<input type="hidden" name="exportData" value="1">
+								<input type="button" value="Export CSV" class="btn small formsubmit">
+							</form>
 
-			<form method="post" action="" accept-charset="UTF-8">
-				<input type="hidden" name="action" value="sproutReports/reports/savedQuery" />
-				<input type="hidden" name="queryType" value="papersSubmitted" />
-				<div>
-					<p><input type="submit" class="btn submit" name="show" value="{{ 'Display Data'|t }}"></p>
-					<label class="csv"><input type="checkbox" name="exportData" value="Y" />&nbsp;Export as CSV</label>
-				</div>
-			</form>
-		</td>
-		{# <td>
-			<h3>Authors with Submitted Papers</h3>
+							<a href="{{ url( 'sproutreports/results/' ~ report.id ) }}" class="btn small" style="float:right;display:inline-block;margin-right:10px;">
+								Run Report
+							</a>
+						</td>
+					</tr>
 
-			<form method="post" action="" accept-charset="UTF-8">
-				<input type="hidden" name="action" value="sproutReports/reports/savedQuery" />
-				<input type="hidden" name="queryType" value="paperOwners" />
-				<div>
-			    <p><input type="submit" class="btn submit" name="show" value="{{ 'Display Data'|t }}"></p>
-			    <label class="csv"><input type="checkbox" name="exportData" value="Y" />&nbsp;Export as CSV</label>
-				</div>
-			</form>
-		</td> #}
-		<td>
-			<h3>Paid Registrations</h3>
-			<form method="post" action="" accept-charset="UTF-8">
-				<input type="hidden" name="action" value="sproutReports/reports/savedQuery" />
-			  <input type="hidden" name="queryType" value="paidReg" />
-			  <div>
-			    <p><input type="submit" class="btn submit" name="show" value="{{ 'Display Data'|t }}"></p>
-			    <label class="csv"><input type="checkbox" name="exportData" value="Y" />&nbsp;Export as CSV</label>
-			  </div>
-			</form>
-		</td>
-		<td>
-			<h3>Section</h3>
-			<form method="post" action="" accept-charset="UTF-8">
-				<input type="hidden" name="action" value="sproutReports/reports/createQuery" />
+			{% if loop.last %}
+					</tbody>
+				</table>
+			</div>
+			{% endif %}
+		{% endfor %}
 
-				<div>
-					<p>
-					<select name="sectionName">
-						<option value="">Select a Section</option>
-						{% for key, sname in craft.sproutReports.allSections()  %}
-							{% if sname.type != 'single' %}
-							<option value="{{ sname.id }}">{{ sname.name }}</option>
-							{% endif %}
-						{% endfor %}
-					</select>
-					</p>
-					<p><input type="submit" class="btn submit" name="show" value="{{ 'Display Data'|t }}"></p>
-					<label class="csv"><input type="checkbox" name="exportData" value="Y" />&nbsp;Export as CSV</label>
-				</div>
-			</form>
-		</td>
-		<td>
-			<h3>User Data</h3>
-			<form method="post" action="" accept-charset="UTF-8">
-				<input type="hidden" name="action" value="sproutReports/reports/savedQuery" />
-				<input type="hidden" name="queryType" value="allUsers" />
+	{% else %}
+	    <p>Create your first report!</p>
+	{% endif %}
 
-				<div>
-					<p><input type="submit" class="btn submit" name="show" value="{{ 'Export Data'|t }}"><input type="hidden" name="exportData" value="Y" /></p>
-					<label class="csv">CSV Only</label>
-				</div>
-			</form>
-		</td>
-	</tr>
-</table>
+{% endblock %}	
 
-</div>
+{% block sidebar %}
 
-<div class="tableview">
-
-	<h1>{{ reportName }}</h1>
-
-  <div class="tablecontent">
-    
-    <table class="results">
-      <thead>
-       	<tr>
-					{% for item in tableCols %}
-					<th>{{ item }}</th>
-					{% endfor %}
-		    </tr>
-			</thead>
-			<tbody>
-      {% for item in myEntries %}
-      <tr class="table_row">
-        {% for keyname in tableCols %}
-          <td><div class="item_content">{{ item[keyname] }}</div></td>
-        {% endfor %}
-      </tr>
-      {% endfor %}
-  	</table>
-
+	<div class="buttons">
+		<a href="{{ url('sproutreports/reports/new') }}" class="btn submit add icon">New Report</a>
 	</div>
-</div>
 
-{% endset %}
+	{# {% if newEntrySections|length %}
+		<div class="buttons">
+			{% if newEntrySections|length > 1 %}
+				<div class="btn submit menubtn add icon">{{ "New Entry"|t }}</div>
+				<div class="menu">
+					<ul>
+						{% for section in newEntrySections %}
+							<li><a href="{{ url('entries/'~section.handle~'/new') }}">{{ section.name|t }}</a></li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% else %}
+				<a class="btn submit add icon" href="{{ url('entries/'~newEntrySections[0].handle~'/new') }}">{{ "New Entry"|t }}</a>
+			{% endif %}
+		</div>
+	{% endif %}
+
+	{{ parent() }} #}
+{% endblock %}
+
+

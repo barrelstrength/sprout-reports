@@ -59,12 +59,7 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	}
 
 	public function runReport($query)
-	{
-		echo "<pre>";
-		print_r($query);
-		echo "</pre>";
-		die('fin');
-		
+	{	
 		$results = craft()->db->createCommand($query)->query();		
 		return $results;
 	}

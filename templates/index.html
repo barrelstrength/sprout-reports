@@ -24,7 +24,7 @@
 				<table class="data">
 					<thead>
 						<tr>
-							<th scope="col" data-attribute="title" class="first">Title</th>
+							<th scope="col" data-attribute="title" class="first">Report Name</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -39,9 +39,11 @@
 						</td>
 						<td style="text-align:right;">
 
+							{% if currentUser.can('editReports') %}
 							<a href="{{ url( 'sproutreports/reports/edit/' ~ report.id ) }}" class="btn small" style="float:right;display:inline-block;margin-right:10px;">
 								Edit
 							</a>
+							{% endif %}
 
 							<form action="" method="post" accept-charset="UTF-8" style="float:right;margin-right:10px;">
 								<input type="hidden" name="action" value="sproutReports/reports/runReport">
@@ -67,9 +69,13 @@
 	    <p>Create your first report!</p>
 	{% endif %}
 
+	{{ parent() }}
+
 {% endblock %}	
 
+
 {% block sidebar %}
+	{% if currentUser.can('editReports') %}
 
 	<div class="buttons">
 		<a href="{{ url('sproutreports/reports/new') }}" class="btn submit add icon">New Report</a>
@@ -93,6 +99,5 @@
 	{% endif %}
 
 	{{ parent() }} #}
+	{% endif %}
 {% endblock %}
-
-

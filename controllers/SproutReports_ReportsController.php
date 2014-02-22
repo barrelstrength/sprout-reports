@@ -56,7 +56,7 @@ class SproutReports_ReportsController extends BaseController
       // Trigger data Export to CSV
       if (craft()->request->getPost('exportData'))
       {
-        $this->_exportData($results);
+        $this->_exportData($report, $results);
 
         // This doesn't do anything.
         // craft()->userSession->setNotice(Craft::t('Report Exported.'));
@@ -99,7 +99,7 @@ class SproutReports_ReportsController extends BaseController
      * @param  object $results Results from SQL query
      * @return file            csv file
      */
-    private function _exportData($results)
+    private function _exportData($report, $results)
     {
       $worksheet = new Worksheet();
 
@@ -116,8 +116,9 @@ class SproutReports_ReportsController extends BaseController
 
       $excel = new SimpleExcel();
       $excel->insertWorksheet($worksheet);
-
-      $filename = 'SproutReports-Export-'.time().'.csv';
+      
+      $reportName = str_replace(' ', '', $report['name']);
+      $filename = $reportName . '-'. date('Ymd-hms') . '.csv';
       // $excel->exportFile( CRAFT_STORAGE_PATH . $filename , 'CSV');
       $excel->exportFile('php://output', 'CSV', array('filename' => $filename));
     }
@@ -208,7 +209,7 @@ class SproutReports_ReportsController extends BaseController
 		  // Trigger data Export to CSV
       if (craft()->request->getPost('exportData'))
       {
-        $this->_exportData($results);
+        // $this->_exportData($report, $results);
       }
 		  
 		  return craft()->urlManager->setRouteVariables(array(

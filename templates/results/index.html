@@ -10,9 +10,19 @@
 	{ label: "View Results"|t, url: "" }
 ] %}
 
+{# {% set extraPageHeaderHtml %}
+<form action="" method="post" accept-charset="UTF-8">
+  <input type="hidden" name="action" value="sproutReports/reports/runReport">
+  <input type="hidden" name="reportId" value="{{ reportId }}">
+  <input type="hidden" name="exportData" value="1">
+  <input type="button" value="Export CSV" class="btn small">
+</form>
+{% endset %}   #}
+
 {% block content %}
 
 <style type="text/css">
+#main.centered { padding-top: 0; }
 .csv { display: inline-block; width: auto; }	
 </style>
 

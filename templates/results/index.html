@@ -22,7 +22,6 @@
 {% block content %}
 
 <style type="text/css">
-#main.centered { padding-top: 0; }
 .csv { display: inline-block; width: auto; }	
 </style>
 
@@ -35,15 +34,19 @@
     <table class="results">
       <thead>
        	<tr>
-					{% for columnName, value in row %}
-					<th>{{ columnName }}</th>
-					{% endfor %}
+				<th class="left-border"><div></div></th>
+				<th class="padding"><div></div></th>
+				{% for columnName, value in row %}
+					<th><div {% if loop.index == "1" %}class="first"{% endif %}><h3>{{ columnName }}</h3></div></th>
+				{% endfor %}
 		    </tr>
 			</thead>
 			<tbody>
 		{% endif %}
 
       <tr class="table_row">
+      	<td class="left-border"><div></div></td>
+		<td class="padding"></td>	
         {% for value in row %}
           <td><div class="item_content">{{ value }}</div></td>
         {% endfor %}
@@ -57,5 +60,5 @@
 
 	</div>
 </div>
-
+{{ parent() }}
 {% endblock %}

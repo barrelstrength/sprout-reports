@@ -8,7 +8,7 @@
 	{ label: "Edit Report"|t, url: "" }
 ] %}
 
-{% set report = craft.sproutReports.reportById(reportId) %}
+{% set report = craft.sproutReports.reportById(reportId is defined ? reportId : null) %}
 
 {% block content %}
 	

@@ -4,78 +4,72 @@ namespace Craft;
 
 class SproutReportsVariable
 {
-	/**
-	 * Plugin Name
-	 * Make your plugin name available as a variable 
-	 * in your templates as {{ craft.yourPlugin.name }}
-	 * 
-	 * @return string
-	 */
-	public function getName()
+	protected $plugin;
+
+	public function __construct()
 	{
-		$plugin = craft()->plugins->getPlugin('sproutreports');
-	  return $plugin->getName();
+		$this->plugin = craft()->plugins->getPlugin('sproutreports');
 	}
 
-	/**
-	 * Get plugin version
-	 * 
-	 * @return string
-	 */
+	public function getName()
+	{
+		return $this->plugin->getName();
+	}
+
 	public function getVersion()
 	{
-		$plugin = craft()->plugins->getPlugin('sproutreports');
-	  return $plugin->getVersion();
+		return $this->plugin->getVersion();
 	}
 	
 	public function getAllReports() 
 	{
-	  return craft()->sproutReports_reports->getAllReports();
+		return craft()->sproutReports_reports->getAllReports();
 	}	
 
 	public function getReportById($reportId) 
 	{
-	  return craft()->sproutReports_reports->getReportById($reportId);
+		return craft()->sproutReports_reports->getReportById($reportId);
 	}	
 
-	public function runReport($query) 
+	public function runReport($query, $report=null) 
 	{
-	  return craft()->sproutReports_reports->runReport($query);
+		return craft()->sproutReports_reports->runReport($query, $report);
 	}
-	
 
 	public function allElementTypes() 
 	{
-	  return craft()->elements->getAllElementTypes();
+		return craft()->elements->getAllElementTypes();
 	}
 
 	public function allSections() 
 	{
-    $myarray = array();
+		$sections		= array();
+		$Allsections	= craft()->sections->getAllSections();
 
-    foreach(craft()->sections->getAllSections() as $section) {
-			$mykey = $section->handle;
-			$myarray[$mykey] = array(
-			    'name' => $section->name,
-			    'handle' => $section->handle,
-			    'id' => $section->id,
-			    'type' => $section->type
-			    );
-    }
+		foreach($Allsections as $section)
+		{
+			$sections[$section->handle] = array(
+				'id'		=> $section->id,
+				'type'		=> $section->type,
+				'name'		=> $section->name,
+				'handle'	=> $section->handle,
+			);
+		}
 
-    return $myarray;
-  }
+		return $sections;
+	}
 
 	public function allFields() 
 	{
-		$fgroups = array();
-		$allfields = array();
+		$fields		= array();
+		$groups		= array();
+		$allFields	= craft()->fields->getAllFields();
 
-		$fields = array();
-		foreach( craft()->fields->getAllFields() as $field ) {
-		        $mykey = $field->id;
-		        $fields[$mykey] = $field->name;
-		        }
+		foreach ($allFields  as $field)
+		{
+			$fields[$field->id]	= $field->name;
+		}
+
 		return $fields;
 	}
 }

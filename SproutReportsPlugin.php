@@ -37,7 +37,7 @@ class SproutReportsPlugin extends BasePlugin
 
   function getDeveloperUrl()
   {
-    return 'http://straightupcraft.com';
+    return 'http://barrelstrengthdesign.com';
   }
 
   public function hasCpSection()

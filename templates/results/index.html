@@ -1,7 +1,7 @@
 {% extends "sproutreports/_layouts/base" %}
 
 {% set report = craft.sproutReports.reportById(reportId) %}
-{% set results = craft.sproutReports.runReport(report.customQuery) %}
+{% set results = craft.sproutReports.runReport(report.customQuery, report) %}
 
 {% set title = report.name %}
 
@@ -12,50 +12,53 @@
 
 {# {% set extraPageHeaderHtml %}
 <form action="" method="post" accept-charset="UTF-8">
-  <input type="hidden" name="action" value="sproutReports/reports/runReport">
-  <input type="hidden" name="reportId" value="{{ reportId }}">
-  <input type="hidden" name="exportData" value="1">
-  <input type="button" value="Export CSV" class="btn small">
+	<input type="hidden" name="action" value="sproutReports/reports/runReport">
+	<input type="hidden" name="reportId" value="{{ reportId }}">
+	<input type="hidden" name="exportData" value="1">
+	<input type="button" value="Export CSV" class="btn small">
 </form>
 {% endset %}   #}
 
 {% block content %}
 
 <style type="text/css">
-#main.centered { padding-top: 0; }
-.csv { display: inline-block; width: auto; }	
+	.csv { display: inline-block; width: auto; }
 </style>
 
 <div class="tableview">
 
-  <div class="tablecontent">
-    
-  {% for row in results %}
-  	{% if loop.first %}
-    <table class="results">
-      <thead>
-       	<tr>
-					{% for columnName, value in row %}
-					<th>{{ columnName }}</th>
-					{% endfor %}
-		    </tr>
+	<div class="tablecontent">
+		
+	{% for row in results %}
+		{% if loop.first %}
+		<table class="results">
+			<thead>
+				<tr>
+				<th class="left-border"><div></div></th>
+				<th class="padding"><div></div></th>
+				{% for columnName, value in row %}
+					<th><div {% if loop.index == "1" %}class="first"{% endif %}><h3>{{ columnName }}</h3></div></th>
+				{% endfor %}
+				</tr>
 			</thead>
 			<tbody>
 		{% endif %}
 
-      <tr class="table_row">
-        {% for value in row %}
-          <td><div class="item_content">{{ value }}</div></td>
-        {% endfor %}
-      </tr>
+			<tr class="table_row">
+				<td class="left-border"><div></div></td>
+		<td class="padding"></td>	
+				{% for value in row %}
+					<td><div class="item_content">{{ value }}</div></td>
+				{% endfor %}
+			</tr>
 
-    {% if loop.last %}
-  	</table>
-  	{% endif %}
+		{% if loop.last %}
+		</table>
+		{% endif %}
 
-  {% endfor %}
+	{% endfor %}
 
 	</div>
 </div>
-
+{{ parent() }}
 {% endblock %}

@@ -8,16 +8,36 @@
 	{ label: "Edit Report"|t, url: "" }
 ] %}
 
-{% set report = craft.sproutReports.reportById(reportId) %}
+{# From Route #}
+{% if reportId is defined %}
+	{% set previouslySavedReport = craft.sproutReports.reportById(reportId) %}
+{% endif %}
+
+{# From failed POST request #}
+{% if unsavedReport is defined and unsavedReport is not empty %}
+	{% set report = unsavedReport %}
+{% else %}
+	{% set report = previouslySavedReport %}
+{% endif %}
+
+{% set response = craft.session.getFlash('response') %}
 
 {% block content %}
-	
+
+	{% if response is not empty %}
+	<h2 class="error">{{ response.message }}</h2>
+	<p class="code notice">{{ response.dbMessage }}</p>
+	{% endif %}
+
+	{% if errorMessage is defined %}
+	<h2 style="color: #d00;">{{ errorMessage }}</h2>
+	{% endif %}
+
 	<form method="post" action="" accept-charset="UTF-8">
 		<input type="hidden" name="action" value="sproutReports/reports/saveReport">
-		<input type="hidden" name="redirect" value="sproutreports">
 
 		{% if reportId is defined %}
-		<input type="hidden" name="id" value="{{ reportId }}">
+			<input type="hidden" name="id" value="{{ reportId }}">
 		{% endif %}
 
 		{{ forms.textField({
@@ -49,7 +69,7 @@
 		{{ forms.textareaField({
 			label: "Custom Query"|t,
 			name: 'customQuery',
-			class: 'nicetext',
+			class: 'code',
 			value: (report.customQuery is defined) ? report.customQuery : "",
 			rows: 10
 		}) }}

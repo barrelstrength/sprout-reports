@@ -2,6 +2,7 @@
 -----------------------------------*/
 
 tr {
+	height: 50px;
 	max-height: 50px;
 	overflow: hidden;
 }
@@ -44,44 +45,50 @@ td:last-child  {
 -----------------------------------*/
 
 .tableview {
-	margin: 0 -30px -31px;
+	margin: -30px -30px 0 -30px;
 }
 
 .tableview h1 {
 	padding: 35px 0 0 25px;
 }
 
-.tablefade {
-	height: 100%;
-	width: 60px;
-	right: 0;
-	margin-bottom: 30px;
-	position: absolute;
-	z-index: 100;
-	background: url("../img/fade.png") right top repeat-y transparent;
-}
-
-
-.tablecontent {
+table.results {
 	overflow: auto;
-	max-height: 600px;
+	min-width: 100%;
 }
 
+table.results th h3 {
+	padding-top: 10px;
+}
 
 table.results tbody th,
 table.results tbody td {
 	vertical-align: top;
 	border-top: 1px dotted #e3e5e8;
+	border-right: none;
+}
+
+table.results th:not(:first-child),
+table.results td:not(:first-child) {
+	padding-left: 10px;
+}
+
+th div {
+	position: absolute;
+	top:0;
+	z-index: 20;
+	background-color: #fff;
+	border-bottom: 1px solid #eee;
+}
+
+th div.first {
+	padding-left: 10px;
+	margin-left: -10px;
 }
 
 table.results tbody tr:last-child th,
 table.results tbody tr:last-child td {
 	border-bottom: 1px dotted #e3e5e8;
-}
-
-
-table.results thead th {
-	padding: 10px 15px 10px 25px;
 }
 
 
@@ -91,18 +98,20 @@ table.results thead th {
 	background-position: 4px -50px;
 	padding-left: 30px;
 	cursor: pointer;
-	-webkit-transition: background-color linear 0.5s;
-	   -moz-transition: background-color linear 0.5s;
-	     -o-transition: background-color linear 0.5s;
-	        transition: background-color linear 0.5s;
+	-webkit-transition: background-color linear 0.2s;
+	   -moz-transition: background-color linear 0.2s;
+	     -o-transition: background-color linear 0.2s;
+	        transition: background-color linear 0.2s;
 }
 
 .table_row:hover {
-	background-position: 4px 10px;
+	background-position: right 10px;
+	background-color: #fafafa;
 }
 
-.table_row.expanded {
-	background-color: #fafafa;
+.table_row.expanded,
+.table_row.expanded .left-border {
+	background-color: #eee;
 }
 
 
@@ -110,7 +119,7 @@ table.results thead th {
 	min-height: 38px;
 	height: 38px;
 	overflow: hidden;
-	padding: 10px 15px 0 25px;
+	padding: 10px 25px 0 0;
 	display: block;
 }
 
@@ -118,14 +127,47 @@ table.results thead th {
 	overflow: hidden;
 }
 
+.left-border {
+	width: 3px;
+	min-width: 3px;
+	height: 50px;
+	position: absolute;
+	left: 0;
+	background-color: #fff;
+	z-index: 10;
+	-webkit-transition: background-color linear 0.2s;
+	   -moz-transition: background-color linear 0.2s;
+	     -o-transition: background-color linear 0.2s;
+	        transition: background-color linear 0.2s;
+}
+
+table.results th.padding,
+table.results td.padding {
+	width: 3px;
+	min-width: 3px;
+	padding: 0;
+}
+
+tr:hover td.left-border,
+.expanded:hover td.left-border {
+	background-color: #0d78f2;
+}
 
 /* SCROLLBAR DESIGN
 -----------------------------------*/
 .jspVerticalBar,
 .jspHorizontalBar {
+	z-index: 200;
+}
+
+.jspVerticalBar {
+	background-color: #fff;
+}
+
+.jspHorizontalBar {
 	background: transparent;
 }
-	
+
 .jspTrack {
 	background-color: rgba( 245, 245, 245, 0.7 );
 	-webkit-transition: background linear 0.2s, box-shadow linear 0.2s;
@@ -181,8 +223,6 @@ table.results thead th {
 	     -o-transition: background-color linear 0.1s;
 	        transition: background-color linear 0.1s;
 	
-		
-	
 }
 
 .jspActive {
@@ -203,7 +243,6 @@ table.results thead th {
 	background-position: -32px 0;
 }
 
-
 .jspArrowDown {
 	background-position: -16px -16px;
 }
@@ -213,13 +252,9 @@ table.results thead th {
 	background-position: 0 -16px;
 }
 
-
 .jspArrowDown.jspActive {
 	background-position: -32px -16px;
 }
-
-
-
 
 .jspArrowLeft {
 	background-position: -16px -32px;
@@ -233,7 +268,6 @@ table.results thead th {
 .jspArrowLeft.jspActive {
 	background-position: -32px -32px;
 }
-
 
 .jspArrowRight {
 	background-position: -16px -48px;

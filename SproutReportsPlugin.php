@@ -28,7 +28,7 @@ class SproutReportsPlugin extends BasePlugin
 
 	function getVersion()
 	{
-		return '0.4.1';
+		return '0.4.2';
 	}
 
 	function getDeveloper()
@@ -36,10 +36,10 @@ class SproutReportsPlugin extends BasePlugin
 		return 'Barrel Strength Design';
 	}
 
-  function getDeveloperUrl()
-  {
-    return 'http://barrelstrengthdesign.com';
-  }
+	function getDeveloperUrl()
+	{
+		return 'http://barrelstrengthdesign.com';
+	}
 
 	public function hasCpSection()
 	{
@@ -73,6 +73,11 @@ class SproutReportsPlugin extends BasePlugin
 	public function registerCpRoutes()
 	{
 		return array(
+
+			// Adjust output to account for selected group
+			'sproutreports/(?P<groupId>\d+)' =>
+			'sproutreports',
+
 			'sproutreports/reports/(?P<newReport>new)' => 
 			'sproutreports/reports/_edit',
 
@@ -83,5 +88,4 @@ class SproutReportsPlugin extends BasePlugin
 			'sproutreports/results/index',
 		);
 	}
-
 }

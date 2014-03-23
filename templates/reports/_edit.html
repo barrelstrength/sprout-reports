@@ -9,6 +9,7 @@
 ] %}
 
 {# From Route #}
+{% set previouslySavedReport = '' %}
 {% if reportId is defined %}
 	{% set previouslySavedReport = craft.sproutReports.reportById(reportId) %}
 {% endif %}
@@ -18,6 +19,20 @@
 	{% set report = unsavedReport %}
 {% else %}
 	{% set report = previouslySavedReport %}
+{% endif %}
+
+{% set groups = craft.sproutReports.getAllReportGroups('id') %}
+
+{% if groups | length %}
+	{% set groupId = craft.request.getQuery('groupId') %}
+
+	{% if not groupId %}
+		{% set groupId = groups|keys[0] %}
+	{% endif %}
+
+	{% if groups[groupId] is not defined %}
+		{% exit 404 %}
+	{% endif %}
 {% endif %}
 
 {% set response = craft.session.getFlash('response') %}
@@ -35,9 +50,29 @@
 
 	<form method="post" action="" accept-charset="UTF-8">
 		<input type="hidden" name="action" value="sproutReports/reports/saveReport">
+		<input type="hidden" name="redirect" value="sproutreports">
 
 		{% if reportId is defined %}
 			<input type="hidden" name="id" value="{{ reportId }}">
+		{% endif %}
+
+		{% if groups | length %}
+
+			{% set groupOptions = [] %}
+			{% for group in groups %}
+				{% set groupOptions = groupOptions|merge([{ label: group.name, value: group.id }]) %}
+			{% endfor %}
+
+			{{ forms.selectField({
+				first: true,
+				label: "Group"|t,
+				instructions: "Which group should this report be displayed in?"|t,
+				id: 'groupId',
+				name: 'groupId',
+				options: groupOptions,
+				value: groupId
+			}) }}
+
 		{% endif %}
 
 		{{ forms.textField({

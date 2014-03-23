@@ -1,5 +1,4 @@
 <?php
-
 namespace Craft;
 
 class SproutReportsVariable
@@ -25,6 +24,16 @@ class SproutReportsVariable
 	{
 		return craft()->sproutReports_reports->getAllReports();
 	}	
+
+	public function getAllReportGroups($id = null)
+	{
+		return craft()->sproutReports_reports->getAllReportGroups($id);
+	}
+
+	public function getReportsByGroupId($groupId)
+	{
+		return craft()->sproutReports_reports->getReportsByGroupId($groupId);
+	}
 
 	public function getReportById($reportId) 
 	{

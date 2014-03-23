@@ -2,6 +2,18 @@
 
 {% set title = craft.sproutReports.name|t %}
 
+{% set groups = craft.sproutReports.getAllReportGroups('id') %}
+
+{% if groupId is defined %}
+	{% if groups[groupId] is not defined %}
+		{% exit 404 %}
+	{% endif %}
+
+	{% set reports = craft.sproutReports.getReportsByGroupId(groupId) %}
+{% else %}
+	{% set reports = craft.sproutReports.getAllReports() %}
+{% endif %}
+
 {% block content %}
 	
 	<style type="text/css">
@@ -14,8 +26,6 @@
 		padding-left: 10px;
 	}
 	</style>
-
-	{% set reports = craft.sproutReports.allReports() %}
 
 	{% if reports|length %}
 		{% for report in reports %}
@@ -69,6 +79,12 @@
 	    <p>Create your first report!</p>
 	{% endif %}
 
+	{% if currentUser.can('editReports') %}
+	<div class="buttons">
+		<a href="{{ url('sproutreports/reports/new') }}" class="btn submit add icon">New Report</a>
+	</div>
+	{% endif %}
+
 	{{ parent() }}
 
 {% endblock %}	
@@ -77,27 +93,33 @@
 {% block sidebar %}
 	{% if currentUser.can('editReports') %}
 
+	<nav>
+		<ul id="groups">
+			
+		 	<li><a href="{{ url('sproutreports') }}"{% if groupId is not defined %} class="sel"{% endif %}>{{ "All Reports"|t }}</a></li>
+
+			{% for group in groups %}
+				<li><a href="{{ url('sproutreports/'~group.id) }}"{% if groupId is defined and group.id == groupId %} class="sel"{% endif %} data-id="{{ group.id }}">{{ group.name }}</a></li>
+			{% endfor %} 
+
+		</ul>
+	</nav>
+
 	<div class="buttons">
-		<a href="{{ url('sproutreports/reports/new') }}" class="btn submit add icon">New Report</a>
+		<div id="newgroupbtn" class="btn add icon">{{ "New Group"|t }}</div>
+
+		{% if groupId is defined %}
+			<div id="groupsettingsbtn" class="btn settings icon menubtn" title="{{ 'Settings' }}"></div>
+			<div class="menu">
+				<ul>
+					<li><a data-action="rename" role="button">{{ "Rename selected group"|t }}</a></li>
+					<li><a data-action="delete" role="button">{{ "Delete selected group"|t }}</a></li>
+				</ul>
+			</div>
+		{% endif %}
 	</div>
 
-	{# {% if newEntrySections|length %}
-		<div class="buttons">
-			{% if newEntrySections|length > 1 %}
-				<div class="btn submit menubtn add icon">{{ "New Entry"|t }}</div>
-				<div class="menu">
-					<ul>
-						{% for section in newEntrySections %}
-							<li><a href="{{ url('entries/'~section.handle~'/new') }}">{{ section.name|t }}</a></li>
-						{% endfor %}
-					</ul>
-				</div>
-			{% else %}
-				<a class="btn submit add icon" href="{{ url('entries/'~newEntrySections[0].handle~'/new') }}">{{ "New Entry"|t }}</a>
-			{% endif %}
-		</div>
-	{% endif %}
-
-	{{ parent() }} #}
 	{% endif %}
 {% endblock %}
+
+{% includeJsResource "sproutreports/js/groups.js" %}

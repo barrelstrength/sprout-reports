@@ -11,11 +11,12 @@ class SproutReports_ReportRecord extends BaseRecord
 	protected function defineAttributes()
 	{
 		return array(
-			'groupId' => array(AttributeType::Number),
-			'name' => array(AttributeType::String, 'required' => true),
-			'handle' => array(AttributeType::String, 'required' => true),
-			'description'	=> array(AttributeType::String),
-			'customQuery'	=> array(AttributeType::Mixed),
+			'groupId'				=> array(AttributeType::Number),
+			'name'					=> array(AttributeType::String, 'required' => true),
+			'handle'				=> array(AttributeType::String, 'required' => true),
+			'description'			=> AttributeType::String,
+			'customQuery'			=> AttributeType::Mixed,
+			'returnsSingleNumber'	=> AttributeType::Bool,
 		);
 	}
 

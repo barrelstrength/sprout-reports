@@ -48,7 +48,7 @@
 	<h2 style="color: #d00;">{{ errorMessage }}</h2>
 	{% endif %}
 
-	<form method="post" action="" accept-charset="UTF-8">
+	<form method="post" action="" data-saveshortcut="1" data-saveshortcut-redirect="sproutreports/reports/edit/{id}" accept-charset="UTF-8">
 		<input type="hidden" name="action" value="sproutReports/reports/saveReport">
 		<input type="hidden" name="redirect" value="sproutreports">
 
@@ -108,13 +108,28 @@
 			value: (report.customQuery is defined) ? report.customQuery : "",
 			rows: 10
 		}) }}
-
-		<div class="buttons">
-			<input class="btn submit" type="submit" value="Save Report">
-		</div>
+		{{ forms.checkboxField({
+			label:		"This reports returns a single number"|t,
+			name:		"returnsSingleNumber",
+			checked:	report.returnsSingleNumber is defined and report.returnsSingleNumber,
+		}) }}
 
 		{% if reportId is defined %}
-		<input type="button" class="btn small formsubmit" value="Delete" data-action="sproutReports/reports/deleteReport" data-confirm="Are you sure you want to delete this report?" data-redirect="sproutreports" tabindex="0">
+		<div class="button">
+			<div class="btngroup">
+				<input type="submit" class="btn submit" value="{{ 'Save Report'|t }}">
+
+				<div class="btn submit menubtn"></div>
+				<div class="menu">
+					<ul>
+						<li><a class="formsubmit" data-redirect="sproutreports/reports/edit/{id}">{{ "Save and continue editing"|t }}</a></li>
+					</ul>
+				</div>
+			</div>
+			<p>
+				<input type="button" class="btn small formsubmit" value="Delete" data-action="sproutReports/reports/deleteReport" data-confirm="Are you sure you want to delete this report?" data-redirect="sproutreports" tabindex="0">
+			</p>
+		</div>
 		{% endif %}
 
 	</form>

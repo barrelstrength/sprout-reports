@@ -28,7 +28,7 @@ class SproutReportsPlugin extends BasePlugin
 
 	function getVersion()
 	{
-		return '0.4.3';
+		return '0.4.4';
 	}
 
 	function getDeveloper()

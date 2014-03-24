@@ -134,6 +134,11 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 		return $q->queryAll();
 	}
 
+	public function getAllReportsByAttributes(array $attributes=array())
+	{
+		return $this->reportRecord->findAllByAttributes($attributes);
+	}
+
 	public function getReportsByGroupId($groupId)
 	{
 		$query = craft()->db->createCommand()

@@ -114,7 +114,6 @@
 			checked:	report.returnsSingleNumber is defined and report.returnsSingleNumber,
 		}) }}
 
-		{% if reportId is defined %}
 		<div class="button">
 			<div class="btngroup">
 				<input type="submit" class="btn submit" value="{{ 'Save Report'|t }}">
@@ -123,13 +122,16 @@
 				<div class="menu">
 					<ul>
 						<li><a class="formsubmit" data-redirect="sproutreports/reports/edit/{id}">{{ "Save and continue editing"|t }}</a></li>
+						<li><a class="formsubmit" data-redirect="sproutreports/reports/new">{{ "Save and add another report"|t }}</a></li>
 					</ul>
 				</div>
 			</div>
+		</div>
+
+		{% if reportId is defined %}
 			<p>
 				<input type="button" class="btn small formsubmit" value="Delete" data-action="sproutReports/reports/deleteReport" data-confirm="Are you sure you want to delete this report?" data-redirect="sproutreports" tabindex="0">
 			</p>
-		</div>
 		{% endif %}
 
 	</form>

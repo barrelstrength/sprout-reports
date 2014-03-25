@@ -6,7 +6,7 @@
     <property name="cssPath" value="../resources/css/" />
     <property name="pluginFileName" value="SproutReports" />
     <property name="pluginName" value="sproutreports" />
-    <property name="pluginVersion" value="0.4.0" />
+    <property name="pluginVersion" value="0.4.4" />
 
     <target name="clean">
         <echo msg="Running cleaning task..." />

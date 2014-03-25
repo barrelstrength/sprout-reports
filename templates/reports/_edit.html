@@ -108,8 +108,9 @@
 			value: (report.customQuery is defined) ? report.customQuery : "",
 			rows: 10
 		}) }}
+		
 		{{ forms.checkboxField({
-			label:		"This reports returns a single number"|t,
+			label:		"This report returns a single number"|t,
 			name:		"returnsSingleNumber",
 			checked:	report.returnsSingleNumber is defined and report.returnsSingleNumber,
 		}) }}

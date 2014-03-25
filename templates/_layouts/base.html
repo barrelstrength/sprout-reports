@@ -2,6 +2,7 @@
 
 {% block content %}
 
+  {% if craft.request.getSegment(2) != 'results' %}
   <br/>
   <footer class="bsd-branding">
     <p>
@@ -9,6 +10,7 @@
       Designed by <a href="http://barrelstrengthdesign.com" target="_blank">(Barrel Strength)</a>
     </p>
   </footer>
+  {% endif %}
 
 {% endblock %}
 

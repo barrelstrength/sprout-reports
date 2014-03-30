@@ -7,6 +7,10 @@ tr {
 	overflow: hidden;
 }
 
+thead tr {
+	height: 40px;
+}
+
 td, th {
 	min-width: 180px;
 }

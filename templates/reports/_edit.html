@@ -116,6 +116,13 @@
 			checked:	report.returnsSingleNumber is defined and report.returnsSingleNumber,
 		}) }}
 
+		{{ forms.checkboxField({
+			label:		"This report can be used as an email list"|t,
+			instructions: "An email list must have a column named 'email' which will be used when sending to the list.",
+			name:		"isEmailList",
+			checked:	report.isEmailList is defined and report.isEmailList,
+		}) }}
+
 		<div class="button">
 			<div class="btngroup">
 				<input type="submit" class="btn submit" value="{{ 'Save Report'|t }}">

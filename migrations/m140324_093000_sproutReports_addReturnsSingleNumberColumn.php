@@ -1,7 +1,7 @@
 <?php
 namespace Craft;
 
-class m140324_093000_sproutreRorts_add_returnsSingleNumber_column extends BaseMigration
+class m140324_093000_sproutReports_addReturnsSingleNumberColumn extends BaseMigration
 {
 	public function safeUp()
 	{
@@ -13,7 +13,7 @@ class m140324_093000_sproutreRorts_add_returnsSingleNumber_column extends BaseMi
 			{
 				Craft::log('Adding `returnsSingleNumber` column to the `sproutreports_reports` table.', LogLevel::Info, true);
 
-				$this->addColumnAfter('sproutreports_reports', 'returnsSingleNumber', array(AttributeType::String, 'required' => false), 'customQuery');
+				$this->addColumnAfter('sproutreports_reports', 'returnsSingleNumber', array('column' => ColumnType::Bool, 'default' => false, 'required' => true), 'customQuery');
 
 				Craft::log('Added `returnsSingleNumber` column to the `sproutreports_reports` table.', LogLevel::Info, true);
 			}

@@ -16,7 +16,8 @@ class SproutReports_ReportRecord extends BaseRecord
 			'handle'				=> array(AttributeType::String, 'required' => true),
 			'description'			=> AttributeType::String,
 			'customQuery'			=> AttributeType::Mixed,
-			'returnsSingleNumber'	=> AttributeType::Bool,
+			'returnsSingleNumber'	=> array(AttributeType::Bool, 'default' => false, 'required' => true),
+			'isEmailList'	=> array(AttributeType::Bool, 'default' => false, 'required' => true)
 		);
 	}
 

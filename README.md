@@ -14,13 +14,6 @@ Sprout Reports Updates
 http://sprout.barrelstrengthdesign.com/craft-plugins/reports/updates
 
 
-Sprout Reports Translations
-------------------------------------------------------------
-A default translation file is provided on GitHub and can be modified 
-as needed for your language requirements.
-https://github.com/BarrelStrength/Craft-SproutReports/blob/master/translations/en_us.php
-
-
 Sprout Reports Support
 ------------------------------------------------------------
 

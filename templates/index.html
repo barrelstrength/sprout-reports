@@ -97,7 +97,9 @@
 		<ul id="groups">
 			
 		 	<li><a href="{{ url('sproutreports') }}"{% if groupId is not defined %} class="sel"{% endif %}>{{ "All Reports"|t }}</a></li>
-
+            {% if 'sproutreports' in craft.plugins.plugins()|keys %}
+                        <li><a href="{{ url('sproutreports/reports/forms') }}">Forms</a></li>
+            {% endif %}
 			{% for group in groups %}
 				<li><a href="{{ url('sproutreports/'~group.id) }}"{% if groupId is defined and group.id == groupId %} class="sel"{% endif %} data-id="{{ group.id }}">{{ group.name }}</a></li>
 			{% endfor %} 

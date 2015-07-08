@@ -16,7 +16,7 @@ class SproutReportsPlugin extends BasePlugin
 	function getName()
 	{
 		$pluginName			= Craft::t('Sprout Reports');
-		$pluginNameOverride	= $this->getSettings()->getAttribute('pluginNameOverride');
+		$pluginNameOverride	= $this->getSettings()->pluginNameOverride;
 
 		if ($pluginNameOverride)
 		{

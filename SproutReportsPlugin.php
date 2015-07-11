@@ -5,7 +5,9 @@ class SproutReportsPlugin extends BasePlugin
 {
 	function init()
 	{
+		parent::init();
 		require CRAFT_PLUGINS_PATH.'sproutreports/vendor/autoload.php';
+		craft()->on('plugins.loadPlugins', array($this, 'onLoadPlugins'));
 	}
 
 	/**
@@ -87,5 +89,20 @@ class SproutReportsPlugin extends BasePlugin
 			'sproutreports/results/(?P<reportId>\d+)' => 
 			'sproutreports/results/index',
 		);
+	}
+
+	public function onLoadPlugins(){
+		$this->_registerSproutReports();
+	}
+	/*
+	 * Register 3rd party reports
+	 */
+	protected function _registerSproutReports(){
+		$reports=craft()->plugins->call('registerSproutReports');
+		foreach ($reports as $report) {
+			/*if ($report instanceof SproutReportsBaseReport) {
+				add reports
+			}*/
+		}
 	}
 }

@@ -22,7 +22,7 @@ abstract class SproutReportsBaseReport {
 	 * Define user options for report
 	 * @return array
 	 */
-	abstract public function userOptions();
+	abstract public function getUserOptions();
 
 	/*
 	 * List of available user options

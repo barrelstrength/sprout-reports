@@ -1,4 +1,6 @@
 <?php
+namespace Craft;
+
 abstract class SproutReportsBaseReport {
 	/*
 	 * Get report group
@@ -24,10 +26,4 @@ abstract class SproutReportsBaseReport {
 	 */
 	abstract public function getUserOptions();
 
-	/*
-	 * List of available user options
-	 */
-	private function _availableUserOptions() {
-		//restrict to predefined options
-	}
 }

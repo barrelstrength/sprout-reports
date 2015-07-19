@@ -91,48 +91,55 @@ class SproutReportsPlugin extends BasePlugin
 		);
 	}
 
-	public function onLoadPlugins(){
-		$this->registerReports();
-	}
+    public function onLoadPlugins()
+    {
+        $this->registerReports();
+    }
 
-	/**
-	 * @param SproutReportsSproutFormsIntegration $hookReport
-	 *
-	 * @return SproutReports_ReportModel
-	 */
-	protected function convertHookReportToNative($hookReport) {
+    /**
+     * @param SproutReportsSproutFormsIntegration $hookReport
+     * @return SproutReports_ReportModel
+     */
+    protected function convertHookReportToNative($hookReport)
+    {
 
-		$group=new SproutReports_ReportGroupModel;
-		$group->name='Sprout Forms';
-		craft()->sproutReports_reports->saveGroup($group);
-		$group=SproutReports_ReportGroupRecord::model()->findByAttributes(array('name'=>$group->name));
+        $group = new SproutReports_ReportGroupModel;
+        $group->name = 'Sprout Forms';
+        craft()->sproutReports_reports->saveGroup($group);
+        $group = SproutReports_ReportGroupRecord::model()->findByAttributes(array('name' => $group->name));
 
-		$report=new SproutReports_ReportModel;
-		//print_r($report->getAttributes());exit;
-		$report->name=$hookReport->getName();
-		$report->groupId=$group->id;
-		$report->handle='report_'.preg_replace('/^a-zA-Z0-9/','',$hookReport->getName()); //need to care about valid handle
-		$report->customQuery=$hookReport->getQuery();
-		$report->description=$hookReport->getDescription();
-		if (craft()->sproutReports_reports->saveReport($report))
-		{
+        $report = new SproutReports_ReportModel;
+        //print_r($report->getAttributes());exit;
+        $report->name = $hookReport->getName();
+        $report->groupId = $group->id;
+        $report->handle = 'report_' . preg_replace('/^a-zA-Z0-9/', '',
+                $hookReport->getName()); //need to care about valid handle
+        $report->customQuery = $hookReport->getQuery();
+        $report->description = $hookReport->getDescription();
+        if (craft()->sproutReports_reports->saveReport($report))
+        {
 
-		}
-		return $report;
-	}
-	/*
-	 * Register 3rd party reports
-	 */
-	protected function registerReports(){
-		$reports=craft()->plugins->call('registerSproutReports');
-		foreach ($reports as $report) {
-			if (is_array($report)) {
-				foreach ($report as $rep) {
-					$this->convertHookReportToNative($rep);
-				}
-			} else {
-				$this->convertHookReportToNative($report);
-			}
-		}
-	}
+        }
+        return $report;
+    }
+
+    /*
+     * Register 3rd party reports
+     * @return void
+     */
+    protected function registerReports()
+    {
+        $reports = craft()->plugins->call('registerSproutReports');
+        foreach ($reports as $report)
+        {
+            if (!is_array($report))
+            {
+                $report = array($report);
+            }
+            foreach ($report as $singleReport)
+            {
+                $this->convertHookReportToNative($singleReport);
+            }
+        }
+    }
 }

@@ -7,7 +7,7 @@
 {% if runReport is empty and report.settings|length %}
     {% set results = [] %}
 {% else %}
-    {% set results = craft.sproutReports.runReport(report.customQuery, report, craft.request.getPost('reportOptions')) %}
+    {% set results = craft.sproutReports.runReport(report, craft.request.getPost('reportOptions')) %}
 {% endif %}
 
 {% set title = report.name %}
@@ -29,20 +29,17 @@
         <div class="tab">
             <h2>Select options</h2>
             <form action="" method="post" accept-charset="UTF-8">
-                {% for option in report.settings %}
+                {% for optionName, option in report.settings %}
                     {# need to create chooseFormFieldByOptionType() function, someting like this #}
-
                     {{ forms.dateTimeField({
-                        id: 'reportOptions' ~ loop.index,
+                        id: optionName,
                         label: option.name,
-                        name: 'reportOption[' ~ option.name ~ ']',
+                        name: 'reportOptions[' ~ optionName ~ ']',
                         value: "",
                         errors: "",
                         required: false,
                     }) }}
                 {% endfor %}
-
-                <input type="hidden" name="reportId" value="{{ reportId }}">
                 <input type="hidden" name="runReport" value="1">
                 <input type="submit" value="Run Report" class="btn submit">
             </form>

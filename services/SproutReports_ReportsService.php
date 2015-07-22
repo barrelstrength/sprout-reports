@@ -152,18 +152,18 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 
 	public function getReportById($reportId)
 	{
-		$reports	= craft()->db->createCommand()
-					->from('sproutreports_reports')
-					->limit(1)
-					->where('id=:id', array('id' => $reportId))
-					->queryAll();
+        return SproutReports_ReportRecord::model()->findByPk($reportId);
+	}
 
-		if ($reports)
-		{
-			return array_shift($reports);
-		}
-		
-		return false;
+    public function getReportByUserOptions($reportId, $attributes)
+	{
+        $condition = '';
+        $params = '';
+        $id = array('id' => $reportId);
+        $attributes = (is_array($attributes)) ? array_merge($id, $attributes) : $id;
+        //TODO:
+
+        return SproutReports_ReportRecord::model()->findByAttributes($attributes /*$condition, $params*/);
 	}
 
 	public function getReportByHandle($handle) 

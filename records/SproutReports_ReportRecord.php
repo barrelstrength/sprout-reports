@@ -17,6 +17,7 @@ class SproutReports_ReportRecord extends BaseRecord
 			'description'			=> AttributeType::String,
 			'customQuery'			=> AttributeType::Mixed,
 			'returnsSingleNumber'	=> AttributeType::Bool,
+            'settings'              => AttributeType::String
 		);
 	}
 
@@ -34,5 +35,23 @@ class SproutReports_ReportRecord extends BaseRecord
 
 		return $record;
 	}
+
+    public function beforeSave()
+    {
+        if (empty($this->settings))
+        {
+            $this->settings = array();
+        }
+        $this->settings = JsonHelper::encode($this->settings);
+        parent::beforeSave();
+        return true;
+    }
+
+    public function afterFind()
+    {
+        $this->settings = JsonHelper::decode($this->settings);
+        parent::afterFind();
+        return true;
+    }
 
 }

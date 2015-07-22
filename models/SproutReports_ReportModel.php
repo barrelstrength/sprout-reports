@@ -13,6 +13,7 @@ class SproutReports_ReportModel extends BaseModel
 			'description'			=> AttributeType::String,
 			'customQuery'			=> AttributeType::Mixed,
 			'returnsSingleNumber'	=> AttributeType::Bool,
+            'settings'              => AttributeType::String
 		);
 	}
 }

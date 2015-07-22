@@ -1,7 +1,14 @@
+{% import "_includes/forms" as forms %}
 {% extends "sproutreports/_layouts/base" %}
 
+{% set runReport = craft.request.getPost('runReport') %}
 {% set report = craft.sproutReports.reportById(reportId) %}
-{% set results = craft.sproutReports.runReport(report.customQuery, report) %}
+{# TODO: need to do stuff in runReport function instead of #}
+{% if runReport is empty and report.settings|length %}
+    {% set results = [] %}
+{% else %}
+    {% set results = craft.sproutReports.runReport(report.customQuery, report, craft.request.getPost('reportOptions')) %}
+{% endif %}
 
 {% set title = report.name %}
 
@@ -10,15 +17,6 @@
 	{ label: "View Results"|t, url: "" }
 ] %}
 
-{# {% set extraPageHeaderHtml %}
-<form action="" method="post" accept-charset="UTF-8">
-	<input type="hidden" name="action" value="sproutReports/reports/runReport">
-	<input type="hidden" name="reportId" value="{{ reportId }}">
-	<input type="hidden" name="exportData" value="1">
-	<input type="button" value="Export CSV" class="btn small">
-</form>
-{% endset %}   #}
-
 {% block content %}
 
 <style type="text/css">
@@ -26,7 +24,31 @@
 </style>
 
 <div class="tableview">
+    {% if report.settings|length %}
+    <div class="pane">
+        <div class="tab">
+            <h2>Select options</h2>
+            <form action="" method="post" accept-charset="UTF-8">
+                {% for option in report.settings %}
+                    {# need to create chooseFormFieldByOptionType() function, someting like this #}
 
+                    {{ forms.dateTimeField({
+                        id: 'reportOptions' ~ loop.index,
+                        label: option.name,
+                        name: 'reportOption[' ~ option.name ~ ']',
+                        value: "",
+                        errors: "",
+                        required: false,
+                    }) }}
+                {% endfor %}
+
+                <input type="hidden" name="reportId" value="{{ reportId }}">
+                <input type="hidden" name="runReport" value="1">
+                <input type="submit" value="Run Report" class="btn submit">
+            </form>
+        </div>
+    </div>
+    {% endif %}
 	<div class="tablecontent">
 		
 	{% for row in results %}

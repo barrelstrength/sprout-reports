@@ -77,9 +77,9 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 		}
 	}
 
-	public function runReport($query, $report=null, $options=null)
+	public function runReport(SproutReports_ReportRecord $report, $options=null)
 	{
-		$query = $this->sanitizeQueryString($query);
+		$query = $this->sanitizeQueryString($report->customQuery);
 
 		if ($query === false)
 		{
@@ -87,10 +87,43 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 		}
 
 		$query	= $this->parseModifierFlag($query);
-
+        $queryParams = array();
 		try
 		{
-			$result	= craft()->db->createCommand($query)->query();
+            if (is_array($options) && count($options))
+            {
+                $whereCondition = array();
+
+                foreach ($options as $optionName => $optionValues)
+                {
+                    $optionValue = null;
+                    switch ($report->settings[$optionName]['type'])
+                    {
+                        case 'date':
+                            if (!empty($optionValues['date']) && !empty($optionValues['time']))
+                            {
+                                $date = DateTime::createFromFormat('n/j/Yg:i A', $optionValues['date'] . $optionValues['time']);
+                                $queryParams[$optionName] = $date->format('Y-m-d H:i:s');
+                                $whereCondition[] = $optionName.' '.$report->settings[$optionName]['comparisonOperator']. ' :'.$optionName;
+                            }
+                            break;
+                    }
+                }
+            }
+            if (count($queryParams))
+            {
+                $query .= ' WHERE '.implode(' AND ',$whereCondition);
+            }
+            $queryCommand = craft()->db->createCommand($query);
+
+            if (count($queryParams))
+            {
+                foreach ($queryParams as $paramName => $paramValue)
+                {
+                    $queryCommand->bindParam(':' . $paramName, $paramValue);
+                }
+            }
+            $result = $queryCommand->query();
 		}
 		catch (\CDbException $e)
 		{

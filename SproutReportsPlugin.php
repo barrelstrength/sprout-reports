@@ -109,17 +109,14 @@ class SproutReportsPlugin extends BasePlugin
         $group = SproutReports_ReportGroupRecord::model()->findByAttributes(array('name' => $group->name));
 
         $report = new SproutReports_ReportModel;
-        //print_r($report->getAttributes());exit;
         $report->name = $hookReport->getName();
         $report->groupId = $group->id;
-        $report->handle = 'report_' . preg_replace('/^a-zA-Z0-9/', '',
-                $hookReport->getName()); //need to care about valid handle
+        $report->handle = 'report_' . preg_replace('/^a-zA-Z0-9/', '', $hookReport->getName()); //need to care about valid handle
         $report->customQuery = $hookReport->getQuery();
         $report->description = $hookReport->getDescription();
-        if (craft()->sproutReports_reports->saveReport($report))
-        {
+        $report->settings = $hookReport->getUserOptions();
 
-        }
+        craft()->sproutReports_reports->saveReport($report);
         return $report;
     }
 

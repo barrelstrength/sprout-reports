@@ -77,7 +77,7 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 		}
 	}
 
-	public function runReport($query, $report=null)
+	public function runReport($query, $report=null, $options=null)
 	{
 		$query = $this->sanitizeQueryString($query);
 
@@ -155,15 +155,9 @@ class SproutReports_ReportsService extends BaseApplicationComponent
         return SproutReports_ReportRecord::model()->findByPk($reportId);
 	}
 
-    public function getReportByUserOptions($reportId, $attributes)
+    public function getReportByAttributes($attributes)
 	{
-        $condition = '';
-        $params = '';
-        $id = array('id' => $reportId);
-        $attributes = (is_array($attributes)) ? array_merge($id, $attributes) : $id;
-        //TODO:
-
-        return SproutReports_ReportRecord::model()->findByAttributes($attributes /*$condition, $params*/);
+        return SproutReports_ReportRecord::model()->findByAttributes($attributes);
 	}
 
 	public function getReportByHandle($handle) 

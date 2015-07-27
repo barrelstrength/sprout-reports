@@ -100,13 +100,23 @@ class SproutReports_ReportsService extends BaseApplicationComponent
                     switch ($report->settings[$optionName]['type'])
                     {
                         case 'date':
-                            if (!empty($optionValues['date']) && !empty($optionValues['time']))
+                            if (!empty($optionValues['date']))
                             {
-                                $date = DateTime::createFromFormat('n/j/Yg:i A', $optionValues['date'] . $optionValues['time']);
+                                if (!empty($optionValues['time']))
+                                {
+                                    $time = $optionValues['time'];
+                                } else
+                                {
+                                    $time = '0:00 AM';
+                                }
+                                $date = DateTime::createFromFormat('n/j/Yg:i A', $optionValues['date'] . $time);
                                 $queryParams[$optionName] = $date->format('Y-m-d H:i:s');
-                                $whereCondition[] = $optionName.' '.$report->settings[$optionName]['comparisonOperator']. ' :'.$optionName;
                             }
                             break;
+                    }
+                    if (isset($queryParams[$optionName]))
+                    {
+                        $whereCondition[] = $report->settings[$optionName]['column'].' '.$report->settings[$optionName]['comparisonOperator']. ' :'.$optionName;
                     }
                 }
             }
@@ -120,7 +130,7 @@ class SproutReports_ReportsService extends BaseApplicationComponent
             {
                 foreach ($queryParams as $paramName => $paramValue)
                 {
-                    $queryCommand->bindParam(':' . $paramName, $paramValue);
+                    $queryCommand->bindValue(':' . $paramName, $paramValue);
                 }
             }
             $result = $queryCommand->query();

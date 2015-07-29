@@ -96,7 +96,6 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 
                 foreach ($options as $optionName => $optionValues)
                 {
-                    $optionValue = null;
                     switch ($report->settings[$optionName]['type'])
                     {
                         case 'date':
@@ -111,6 +110,12 @@ class SproutReports_ReportsService extends BaseApplicationComponent
                                 }
                                 $date = DateTime::createFromFormat('n/j/Yg:i A', $optionValues['date'] . $time);
                                 $queryParams[$optionName] = $date->format('Y-m-d H:i:s');
+                            }
+                            break;
+                        case 'dropdown':
+                            if (!empty($optionValues))
+                            {
+                                $queryParams[$optionName] = $optionValues;
                             }
                             break;
                     }

@@ -29,16 +29,26 @@
         <div class="tab">
             <h2>Select options</h2>
             <form action="" method="post" accept-charset="UTF-8">
-                {% for optionName, option in report.settings %}
-                    {# need to create chooseFormFieldByOptionType() function, someting like this #}
-                    {{ forms.dateTimeField({
-                        id: optionName,
-                        label: option.name,
-                        name: 'reportOptions[' ~ optionName ~ ']',
-                        value: "",
-                        errors: "",
-                        required: false,
-                    }) }}
+                {% for optionName, option in report.settings %}{{craft.request.getPost('reportOptions.' ~ optionName ~ '.date')}}
+                    {% switch option.type %}
+                        {% case 'date' %}
+                            {{ forms.dateTimeField({
+                                id: optionName,
+                                label: option.name,
+                                name: 'reportOptions[' ~ optionName ~ ']',
+                                value: "",
+                                errors: "",
+                                required: false,
+                            }) }}
+                        {% case 'dropdown' %}
+                            {{ forms.selectField({
+                            label: option.name,
+                            id: optionName,
+                            name: 'reportOptions[' ~ optionName ~ ']',
+                            options: option.values|merge([{ label: "", value :"" }]),
+                            value: craft.request.getPost('reportOptions.' ~ optionName)
+                            }) }}
+                    {% endswitch %}
                 {% endfor %}
                 <input type="hidden" name="runReport" value="1">
                 <input type="submit" value="Run Report" class="btn submit">

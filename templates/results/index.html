@@ -32,14 +32,21 @@
                 {% for optionName, option in report.settings %}{{craft.request.getPost('reportOptions.' ~ optionName ~ '.date')}}
                     {% switch option.type %}
                         {% case 'date' %}
-                            {{ forms.dateTimeField({
+                            {% set dateFieldOptions = {
                                 id: optionName,
                                 label: option.name,
                                 name: 'reportOptions[' ~ optionName ~ ']',
                                 value: "",
                                 errors: "",
                                 required: false,
-                            }) }}
+                                } %}
+                            {% if option.showDate and option.showTime %}
+                                {{ forms.dateTimeField(dateFieldOptions) }}
+                            {% elseif option.showTime %}
+                                {{ forms.timeField(dateFieldOptions) }}
+                            {% else %}
+                                {{ forms.dateField(dateFieldOptions) }}
+                            {% endif %}
                         {% case 'dropdown' %}
                             {{ forms.selectField({
                             label: option.name,

@@ -157,6 +157,10 @@ tr:hover td.left-border,
     z-index:20 !important;
 }
 
+.report-message {
+    padding:0 25px;
+}
+
 /* SCROLLBAR DESIGN
 -----------------------------------*/
 .jspVerticalBar,

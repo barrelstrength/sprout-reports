@@ -64,7 +64,9 @@
     </div>
     {% endif %}
 	<div class="tablecontent">
-		
+    {% if results is empty and craft.request.getPost('runReport') is not empty %}
+        <div class="report-message">No results were found</div>
+    {% endif %}
 	{% for row in results %}
 		{% if loop.first %}
 		<table class="results">

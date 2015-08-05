@@ -17,7 +17,7 @@ class SproutReports_ReportRecord extends BaseRecord
 			'description'			=> AttributeType::String,
 			'customQuery'			=> AttributeType::Mixed,
 			'returnsSingleNumber'	=> AttributeType::Bool,
-            'settings'              => AttributeType::String
+            'settings'              => AttributeType::Mixed
 		);
 	}
 

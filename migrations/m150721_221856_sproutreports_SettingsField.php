@@ -21,7 +21,7 @@ class m150721_221856_sproutreports_SettingsField extends BaseMigration
             {
                 Craft::log('Adding `settings` column to the `sproutreports_reports` table.', LogLevel::Info, true);
 
-                $this->addColumnAfter('sproutreports_reports', 'settings', array(AttributeType::String, 'required' => false), 'uid');
+                $this->addColumnAfter('sproutreports_reports', 'settings', array(AttributeType::Mixed, 'required' => false), 'uid');
 
                 Craft::log('Added `settings` column to the `sproutreports_reports` table.', LogLevel::Info, true);
             }

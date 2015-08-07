@@ -43,7 +43,7 @@
 
 					<tr class="report-row">
 						<td class="first">
-							<a href="{{ url('sproutreports/results/' ~ report.id) }}">
+							<a href="{{ actionUrl('sproutReports/reports/results/' ~ report.id) }}">
 								{{ report.name }}
 							</a>
 						</td>
@@ -62,7 +62,7 @@
 								<input type="button" value="Export CSV" class="btn small formsubmit">
 							</form>
 
-							<a href="{{ url( 'sproutreports/results/' ~ report.id ) }}" class="btn small" style="float:right;display:inline-block;margin-right:10px;">
+							<a href="{{ actionUrl( 'sproutReports/reports/results/' ~ report.id ) }}" class="btn small" style="float:right;display:inline-block;margin-right:10px;">
 								Run Report
 							</a>
 						</td>

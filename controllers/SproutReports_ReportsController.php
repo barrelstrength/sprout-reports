@@ -35,6 +35,28 @@ class SproutReports_ReportsController extends BaseController
 		}
 	}
 
+    /*
+     * Process report query and display results
+     */
+    public function actionResults()
+    {
+        $reportId = craft()->request->getSegment(5);
+        $report = craft()->sproutReports_reports->getReportById($reportId);
+        $runReport = craft()->request->getParam('runReport');
+        if ($runReport)
+        {
+            $results = craft()->sproutReports_reports->runReport($report, craft()->request->getPost('reportOptions'));
+        } else
+        {
+            $results = array();
+        }
+
+        $this->renderTemplate('sproutreports/results/index', array(
+            'report' => $report,
+            'results' => $results
+        ));
+    }
+
 	/**
 	 * Runs a previously saved report query
 	 * 
@@ -42,10 +64,10 @@ class SproutReports_ReportsController extends BaseController
 	 */
 	public function actionRunReport()
 	{ 
-
+        $results = array();
 		$reportId	= craft()->request->getPost('reportId');
 		$report		= craft()->sproutReports_reports->getReportById($reportId);
-		$results	= craft()->sproutReports_reports->runReport($report['customQuery']);
+		$results	= craft()->sproutReports_reports->runReport($report);
 
 		if (false !== $results)
 		{
@@ -75,6 +97,10 @@ class SproutReports_ReportsController extends BaseController
 
 			$this->redirect('sproutreports/reports/edit/'.$reportId);
 		}
+        $this->renderTemplate('results/index', array(
+            'report' => $report,
+            'results' => $results
+        ));
 	}
 
 	public function actionDeleteReport()

@@ -1,15 +1,6 @@
 {% import "_includes/forms" as forms %}
 {% extends "sproutreports/_layouts/base" %}
 
-{% set runReport = craft.request.getPost('runReport') %}
-{% set report = craft.sproutReports.reportById(reportId) %}
-{# TODO: need to do stuff in runReport function instead of #}
-{% if runReport is empty and report.settings|length %}
-    {% set results = [] %}
-{% else %}
-    {% set results = craft.sproutReports.runReport(report, craft.request.getPost('reportOptions')) %}
-{% endif %}
-
 {% set title = report.name %}
 
 {% set crumbs = [
@@ -17,8 +8,13 @@
 	{ label: "View Results"|t, url: "" }
 ] %}
 
-{% block content %}
+{% set Js %}
+jQuery(function($){
+    $("#nav-sproutreports a").addClass("sel");
+});
+{% endset %}
 
+{% block content %}
 <style type="text/css">
 	.csv { display: inline-block; width: auto; }
 </style>
@@ -29,7 +25,7 @@
         <div class="tab">
             <h2>Select options</h2>
             <form action="" method="post" accept-charset="UTF-8">
-                {% for optionName, option in report.settings %}{{craft.request.getPost('reportOptions.' ~ optionName ~ '.date')}}
+                {% for optionName, option in report.settings %}
                     {% switch option.type %}
                         {% case 'date' %}
                             {% set dateFieldOptions = {
@@ -100,3 +96,4 @@
 </div>
 {{ parent() }}
 {% endblock %}
+{% includeJs Js %}

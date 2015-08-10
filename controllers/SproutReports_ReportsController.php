@@ -50,10 +50,21 @@ class SproutReports_ReportsController extends BaseController
         {
             $results = array();
         }
+        $userValues = array();
+        foreach ($report->settings as $optionName => $option)
+        {
+            $userValues[$optionName] = '';
+            if ($optionDate = craft()->request->getPost('reportOptions.' . $optionName . '.date'))
+            {
+                $optionTime = craft()->request->getPost('reportOptions.' . $optionName . '.time') ?: '0:00 AM';
+                $userValues[$optionName] = DateTime::createFromFormat('n/j/Yg:i A', $optionDate . $optionTime);
+            }
+        }
 
         $this->renderTemplate('sproutreports/results/index', array(
             'report' => $report,
-            'results' => $results
+            'results' => $results,
+            'userValues' => $userValues
         ));
     }
 

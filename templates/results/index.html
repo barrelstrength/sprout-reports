@@ -32,7 +32,7 @@ jQuery(function($){
                                 id: optionName,
                                 label: option.name,
                                 name: 'reportOptions[' ~ optionName ~ ']',
-                                value: "",
+                                value: attribute(userValues, optionName),
                                 errors: "",
                                 required: false,
                                 } %}

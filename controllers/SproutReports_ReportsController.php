@@ -28,57 +28,59 @@ class SproutReports_ReportsController extends BaseController
 
 			craft()->urlManager->setRouteVariables(
 				array(
-					'errorMessage'	=> $report->getError('customQuery'),
+					'errorMessage'  => $report->getError('customQuery'),
 					'unsavedReport' => $report
 				)
 			);
 		}
 	}
 
-    /*
-     * Process report query and display results
-     */
-    public function actionResults()
-    {
-        $reportId = craft()->request->getSegment(5);
-        $report = craft()->sproutReports_reports->getReportById($reportId);
-        $runReport = craft()->request->getParam('runReport');
-        if ($runReport)
-        {
-            $results = craft()->sproutReports_reports->runReport($report, craft()->request->getPost('reportOptions'));
-        } else
-        {
-            $results = array();
-        }
-        $userValues = array();
-        foreach ($report->settings as $optionName => $option)
-        {
-            $userValues[$optionName] = '';
-            if ($optionDate = craft()->request->getPost('reportOptions.' . $optionName . '.date'))
-            {
-                $optionTime = craft()->request->getPost('reportOptions.' . $optionName . '.time') ?: '0:00 AM';
-                $userValues[$optionName] = DateTime::createFromFormat('n/j/Yg:i A', $optionDate . $optionTime);
-            }
-        }
+	/*
+	 * Process report query and display results
+	 */
+	public function actionResults()
+	{
+		$reportId  = craft()->request->getSegment(5);
+		$report    = craft()->sproutReports_reports->getReportById($reportId);
+		$runReport = craft()->request->getParam('runReport');
 
-        $this->renderTemplate('sproutreports/results/index', array(
-            'report' => $report,
-            'results' => $results,
-            'userValues' => $userValues
-        ));
-    }
+		$results = array();
+
+		$userValues = array();
+		foreach ($report->settings as $optionName => $option)
+		{
+			$userValues[$optionName] = '';
+			if ($optionDate = craft()->request->getPost('reportOptions.' . $optionName . '.date'))
+			{
+				$optionTime = craft()->request->getPost('reportOptions.' . $optionName . '.time') ?: '0:00 AM';
+				$userValues[$optionName] = DateTime::createFromFormat('n/j/Yg:i A', $optionDate . $optionTime);
+			}
+		}
+
+		if ($runReport)
+		{
+			$reportOptions = craft()->request->getPost('reportOptions');
+			$results = craft()->sproutReports_reports->runReport($report, $reportOptions);
+		}
+
+		$this->renderTemplate('sproutreports/results/index', array(
+			'report'  => $report,
+			'results' => $results,
+			'userValues' => $userValues
+		));
+	}
 
 	/**
 	 * Runs a previously saved report query
-	 * 
-	 * @return mixed	Report output or report output as CSV
+	 *
+	 * @return mixed  Report output or report output as CSV
 	 */
 	public function actionRunReport()
-	{ 
-        $results = array();
-		$reportId	= craft()->request->getPost('reportId');
-		$report		= craft()->sproutReports_reports->getReportById($reportId);
-		$results	= craft()->sproutReports_reports->runReport($report);
+	{
+		$results  = array();
+		$reportId = craft()->request->getPost('reportId');
+		$report   = craft()->sproutReports_reports->getReportById($reportId);
+		$results  = craft()->sproutReports_reports->runReport($report);
 
 		if (false !== $results)
 		{
@@ -91,8 +93,8 @@ class SproutReports_ReportsController extends BaseController
 			{
 				craft()->urlManager->setRouteVariables(
 					array(
-						'report'	=> $report, 
-						'results'	=> $results
+						'report'  => $report,
+						'results' => $results
 					)
 				);
 			}
@@ -101,17 +103,17 @@ class SproutReports_ReportsController extends BaseController
 		{
 			craft()->userSession->setFlash(
 				'errorMessage',
-				'Report could not be ran, please [update query]sproutreports/reports/edit/'.$reportId
+				'Report could not be ran, please [update query]sproutreports/reports/edit/' . $reportId
 			);
 
 			craft()->userSession->setFlash('unsavedReport', $report);
 
-			$this->redirect('sproutreports/reports/edit/'.$reportId);
+			$this->redirect('sproutreports/reports/edit/' . $reportId);
 		}
-        $this->renderTemplate('results/index', array(
-            'report' => $report,
-            'results' => $results
-        ));
+		$this->renderTemplate('results/index', array(
+			'report'  => $report,
+			'results' => $results
+		));
 	}
 
 	public function actionDeleteReport()
@@ -126,17 +128,17 @@ class SproutReports_ReportsController extends BaseController
 
 	/**
 	 * Export Data as CSV
-	 * 
-	 * @param  object	$results	Results from SQL query
-	 * @return buffer				The CSV output
+	 *
+	 * @param  object $results Results from SQL query
+	 * @return buffer        The CSV output
 	 */
 	protected function exportDataToCsv($report, $results)
 	{
 		$worksheet = new Worksheet();
 
-		foreach($results as $key => $row) 
+		foreach ($results as $key => $row)
 		{
-			if($key == 0)
+			if ($key == 0)
 			{
 				$columnNames = array_keys($row);
 				$worksheet->insertRecord($columnNames);
@@ -148,8 +150,8 @@ class SproutReports_ReportsController extends BaseController
 		$excel = new SimpleExcel();
 		$excel->insertWorksheet($worksheet);
 
-		$reportName	= str_replace(' ', '', $report['name']);
-		$filename	= $reportName . '-'. date('Ymd-hms') . '.csv';
+		$reportName = str_replace(' ', '', $report['name']);
+		$filename   = $reportName . '-' . date('Ymd-hms') . '.csv';
 
 		$excel->exportFile('php://output', 'CSV', array('filename' => $filename));
 	}

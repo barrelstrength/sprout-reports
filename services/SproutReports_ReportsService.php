@@ -3,8 +3,8 @@ namespace Craft;
 
 class SproutReports_ReportsService extends BaseApplicationComponent
 {
-	protected $reportRecord			= null;
-	protected $commandsNotAllowed	= array('INSERT', 'UPDATE', 'DELETE', 'ALTER', 'DROP');
+	protected $reportRecord = null;
+	protected $commandsNotAllowed = array('INSERT', 'UPDATE', 'DELETE', 'ALTER', 'DROP');
 
 	// For retrieving groups
 	private $_groupsById;
@@ -13,8 +13,8 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	public function __construct($reportRecord = null)
 	{
 		$this->reportRecord = $reportRecord;
-		
-		if (is_null($this->reportRecord)) 
+
+		if (is_null($this->reportRecord))
 		{
 			$this->reportRecord = SproutReports_ReportRecord::model();
 		}
@@ -23,7 +23,7 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	/**
 	 * Get a new blank item
 	 *
-	 * @param  array               $attributes
+	 * @param  array $attributes
 	 * @return SproutReports_ReportModel
 	 */
 	public function newModel($attributes = array())
@@ -35,21 +35,21 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	}
 
 	public function saveReport(SproutReports_ReportModel &$model)
-	{	
-		if ($id = $model->getAttribute('id')) 
+	{
+		if ($id = $model->getAttribute('id'))
 		{
-			if (null === ($record = $this->reportRecord->findByPk($id))) 
+			if (null === ($record = $this->reportRecord->findByPk($id)))
 			{
 				throw new Exception(Craft::t('Can\'t find report with ID "{id}"', array('id' => $id)));
 			}
-		} 
-		else 
+		}
+		else
 		{
 			$record = $this->reportRecord->create();
 		}
 
 		// Simple validation on query string
-		
+
 		$customQuery = $this->sanitizeQueryString($model->getAttribute('customQuery'), false);
 
 		if ($customQuery === false)
@@ -63,21 +63,30 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 
 		$record->setAttributes($model->getAttributes(), false);
 
-		if ($record->validate() && $record->save()) {
+		if ($record->validate() && $record->save())
+		{
 			// update id on model (for new records)
 			$model->setAttribute('id', $record->getAttribute('id'));
-			
+
 			return true;
-		} 
-		else 
+		}
+		else
 		{
 			$model->addErrors($record->getErrors());
-			
+
 			return false;
 		}
 	}
 
-	public function runReport(SproutReports_ReportRecord $report, $options=null)
+	/**
+	 * Run the report query
+	 *
+	 * @param SproutReports_ReportRecord $report
+	 * @param null $options
+	 * @return bool
+	 * @throws \CDbException
+	 */
+	public function runReport(SproutReports_ReportRecord $report, $options = null)
 	{
 		$query = $this->sanitizeQueryString($report->customQuery);
 
@@ -86,59 +95,66 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 			return false;
 		}
 
-		$query	= $this->parseModifierFlag($query);
-        $queryParams = array();
+		$query = $this->parseModifierFlag($query);
+		$queryParams = array();
+
 		try
 		{
-            if (is_array($options) && count($options))
-            {
-                $whereCondition = array();
+			if (is_array($options) && count($options))
+			{
+				$whereCondition = array();
 
-                foreach ($options as $optionName => $optionValues)
-                {
-                    switch ($report->settings[$optionName]['type'])
-                    {
-                        case 'date':
-                            if (!empty($optionValues['date']))
-                            {
-                                if (!empty($optionValues['time']))
-                                {
-                                    $time = $optionValues['time'];
-                                } else
-                                {
-                                    $time = '0:00 AM';
-                                }
-                                $date = DateTime::createFromFormat('n/j/Yg:i A', $optionValues['date'] . $time);
-                                $queryParams[$optionName] = $date->format('Y-m-d H:i:s');
-                            }
-                            break;
-                        case 'dropdown':
-                            if (!empty($optionValues))
-                            {
-                                $queryParams[$optionName] = $optionValues;
-                            }
-                            break;
-                    }
-                    if (isset($queryParams[$optionName]))
-                    {
-                        $whereCondition[] = $report->settings[$optionName]['column'].' '.$report->settings[$optionName]['comparisonOperator']. ' :'.$optionName;
-                    }
-                }
-            }
-            if (count($queryParams))
-            {
-                $query .= ' WHERE '.implode(' AND ',$whereCondition);
-            }
-            $queryCommand = craft()->db->createCommand($query);
+				foreach ($options as $optionName => $optionValues)
+				{
+					switch ($report->settings[$optionName]['type'])
+					{
+						case 'date':
+							if (!empty($optionValues['date']))
+							{
+								$time = '0:00 AM';
 
-            if (count($queryParams))
-            {
-                foreach ($queryParams as $paramName => $paramValue)
-                {
-                    $queryCommand->bindValue(':' . $paramName, $paramValue);
-                }
-            }
-            $result = $queryCommand->query();
+								if (!empty($optionValues['time']))
+								{
+									$time = $optionValues['time'];
+								}
+
+								$date = DateTime::createFromFormat('n/j/Yg:i A', $optionValues['date'] . $time);
+								$queryParams[$optionName] = $date->format('Y-m-d H:i:s');
+							}
+							break;
+
+						case 'dropdown':
+							if (!empty($optionValues))
+							{
+								$queryParams[$optionName] = $optionValues;
+							}
+							break;
+					}
+
+					if (isset($queryParams[$optionName]))
+					{
+						$whereCondition[] = $report->settings[$optionName]['column'] . ' ' . $report->settings[$optionName]['comparisonOperator'] . ' :' . $optionName;
+					}
+				}
+			}
+
+			if (count($queryParams))
+			{
+				$query .= ' WHERE ' . implode(' AND ', $whereCondition);
+			}
+
+			$queryCommand = craft()->db->createCommand($query);
+
+			if (count($queryParams))
+			{
+				foreach ($queryParams as $paramName => $paramValue)
+				{
+					$queryCommand->bindValue(':' . $paramName, $paramValue);
+				}
+			}
+
+			$result = $queryCommand->query();
+
 		}
 		catch (\CDbException $e)
 		{
@@ -150,11 +166,10 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 			$reportEditUrl = sprintf('/%s/sproutreports/reports/edit/%s', craft()->config->get('cpTrigger'), $report['id']);
 
 			$response = array(
-				'message'	=> 'Report could not be ran, please update query.',
-				'dbMessage'	=> $e->getMessage()
+				'message'   => 'Report could not be run, please update query.',
+				'dbMessage' => $e->getMessage()
 			);
 
-			
 			craft()->userSession->setFlash('response', $response);
 
 			craft()->request->redirect($reportEditUrl);
@@ -175,14 +190,14 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 		return $report->deleteByPk($reportId);
 	}
 
-	public function getAllReports() 
+	public function getAllReports()
 	{
 		$q = craft()->db->createCommand()->from('sproutreports_reports');
 
 		return $q->queryAll();
 	}
 
-	public function getAllReportsByAttributes(array $attributes=array())
+	public function getAllReportsByAttributes(array $attributes = array())
 	{
 		return $this->reportRecord->findAllByAttributes($attributes);
 	}
@@ -190,25 +205,25 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	public function getReportsByGroupId($groupId)
 	{
 		$query = craft()->db->createCommand()
-							->from('sproutreports_reports')
-							->where('groupId=:groupId', array('groupId' => $groupId))
-							->order('name')
-							->queryAll();    
+			->from('sproutreports_reports')
+			->where('groupId=:groupId', array('groupId' => $groupId))
+			->order('name')
+			->queryAll();
 
 		return SproutReports_ReportModel::populateModels($query);
 	}
 
 	public function getReportById($reportId)
 	{
-        return SproutReports_ReportRecord::model()->findByPk($reportId);
+		return SproutReports_ReportRecord::model()->findByPk($reportId);
 	}
 
-    public function getReportByAttributes($attributes)
+	public function getReportByAttributes($attributes)
 	{
-        return SproutReports_ReportRecord::model()->findByAttributes($attributes);
+		return SproutReports_ReportRecord::model()->findByAttributes($attributes);
 	}
 
-	public function getReportByHandle($handle) 
+	public function getReportByHandle($handle)
 	{
 		if (!$handle)
 		{
@@ -218,7 +233,6 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 		return SproutReports_ReportRecord::model()->findByAttributes(array('handle' => $handle));
 	}
 
-
 	/**
 	 * Returns all report groups.
 	 *
@@ -227,31 +241,34 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	 */
 	public function getAllReportGroups($indexBy = null)
 	{
-			if (!$this->_fetchedAllGroups)
-			{
-					$groupRecords = SproutReports_ReportGroupRecord::model()->ordered()->findAll();
-					$this->_groupsById = SproutReports_ReportGroupModel::populateModels($groupRecords, 'id');
-					$this->_fetchedAllGroups = true;
-			}
+		if (!$this->_fetchedAllGroups)
+		{
+			$groupRecords            = SproutReports_ReportGroupRecord::model()->ordered()->findAll();
+			$this->_groupsById       = SproutReports_ReportGroupModel::populateModels($groupRecords, 'id');
+			$this->_fetchedAllGroups = true;
+		}
 
-			if ($indexBy == 'id')
+		if ($indexBy == 'id')
+		{
+			$groups = $this->_groupsById;
+		}
+		else
+		{
+			if (!$indexBy)
 			{
-					$groups = $this->_groupsById;
-			}
-			else if (!$indexBy)
-			{
-					$groups = array_values($this->_groupsById);
+				$groups = array_values($this->_groupsById);
 			}
 			else
 			{
-					$groups = array();
-					foreach ($this->_groupsById as $group)
-					{
-							$groups[$group->$indexBy] = $group;
-					}
+				$groups = array();
+				foreach ($this->_groupsById as $group)
+				{
+					$groups[$group->$indexBy] = $group;
+				}
 			}
+		}
 
-			return $groups;
+		return $groups;
 	}
 
 	/**
@@ -261,27 +278,28 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	 * @return bool
 	 */
 	public function saveGroup(SproutReports_ReportGroupModel $group)
-	{		
-			$groupRecord = $this->_getGroupRecord($group);
-			$groupRecord->name = $group->name;
+	{
+		$groupRecord       = $this->_getGroupRecord($group);
+		$groupRecord->name = $group->name;
 
-			if ($groupRecord->validate())
+		if ($groupRecord->validate())
+		{
+			$groupRecord->save(false);
+
+			// Now that we have an ID, save it on the model & models
+			if (!$group->id)
 			{
-					$groupRecord->save(false);
-
-					// Now that we have an ID, save it on the model & models
-					if (!$group->id)
-					{
-							$group->id = $groupRecord->id;
-					}
-
-					return true;
+				$group->id = $groupRecord->id;
 			}
-			else
-			{
-					$group->addErrors($groupRecord->getErrors());
-					return false;
-			}
+
+			return true;
+		}
+		else
+		{
+			$group->addErrors($groupRecord->getErrors());
+
+			return false;
+		}
 	}
 
 	/**
@@ -292,16 +310,16 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	 */
 	public function deleteGroupById($groupId)
 	{
-			$groupRecord = SproutReports_ReportGroupRecord::model()->findById($groupId);
+		$groupRecord = SproutReports_ReportGroupRecord::model()->findById($groupId);
 
-			if (!$groupRecord)
-			{
-					return false;
-			}
+		if (!$groupRecord)
+		{
+			return false;
+		}
 
-			$affectedRows = craft()->db->createCommand()->delete('sproutreports_reportgroups', array('id' => $groupId));
+		$affectedRows = craft()->db->createCommand()->delete('sproutreports_reportgroups', array('id' => $groupId));
 
-			return (bool) $affectedRows;
+		return (bool)$affectedRows;
 	}
 
 	/**
@@ -334,9 +352,9 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	/**
 	 * Validates a query string and attempts to make it as safe as possible
 	 *
-	 * @param	string	$query	The SQL string
+	 * @param  string $query The SQL string
 	 *
-	 * @return	mixed			The sanitized query string or false if not safe enough
+	 * @return  mixed      The sanitized query string or false if not safe enough
 	 */
 	public function sanitizeQueryString($query)
 	{
@@ -347,7 +365,6 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 			return false;
 		}
 
-		
 		// Must start with the SELECT command
 		if (stripos(trim($query), 'SELECT') !== 0)
 		{
@@ -358,14 +375,14 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 		// May escape command with @ (one at sign) if required
 		foreach ($this->commandsNotAllowed as $command)
 		{
-			if (preg_match('/\s?[^@]+\b'.$command.'\b\s+/i', $query))
+			if (preg_match('/\s?[^@]+\b' . $command . '\b\s+/i', $query))
 			{
 				return false;
 			}
 		}
 
 		// Remove possible CRLF injection
-		$query	= str_replace('\n', '', $query);
+		$query = str_replace('\n', '', $query);
 
 		return $query;
 	}
@@ -385,25 +402,24 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	 * Yields
 	 * > SELECT * FROM craft_actions WHERE action = 'execute delete command.' LIMIT 1
 	 */
-
 	public function parseModifierFlag($query)
 	{
 		if (stripos($query, '@') !== false)
 		{
 			if (stripos($query, '@_') !== false)
 			{
-				$query = str_replace('@_', craft()->config->getDbItem('tablePrefix').'_', $query);
+				$query = str_replace('@_', craft()->config->getDbItem('tablePrefix') . '_', $query);
 			}
 
 			foreach ($this->commandsNotAllowed as $command)
 			{
-				$foundAtposition = stripos($query, '@'.$command);
+				$foundAtposition = stripos($query, '@' . $command);
 
 				if ($foundAtposition !== false)
 				{
 					$commandAsWritten = substr($query, $foundAtposition + 1, strlen($command));
 
-					$query = str_replace('@'.$commandAsWritten, $commandAsWritten, $query);
+					$query = str_replace('@' . $commandAsWritten, $commandAsWritten, $query);
 				}
 			}
 		}

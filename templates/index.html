@@ -34,8 +34,9 @@
 				<table class="data fullwidth">
 					<thead>
 						<tr>
-							<th scope="col" data-attribute="title" class="first">Report Name</th>
-							<th></th>
+							<th scope="col" data-attribute="title" class="first">Name</th>
+							<th scope="col" data-attribute="description">Description</th>
+							<th class="thin"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -47,6 +48,7 @@
 								{{ report.name }}
 							</a>
 						</td>
+						<td>{{ report.description }}</td>
 						<td style="text-align:right;">
 
 							{% if currentUser.can('editReports') %}

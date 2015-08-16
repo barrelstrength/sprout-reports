@@ -40,7 +40,7 @@ class SproutReports_ReportsController extends BaseController
 	 */
 	public function actionResults()
 	{
-		$reportId  = craft()->request->getSegment(5);
+		$reportId  = craft()->request->getSegment(3);
 		$report    = craft()->sproutReports_reports->getReportById($reportId);
 		$runReport = craft()->request->getParam('runReport');
 

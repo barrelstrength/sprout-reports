@@ -14,90 +14,88 @@
 	  .csv { display: inline-block; width: auto; }
 	</style>
 
-	<div class="tableview">
 	    {% if report.settings|length %}
-	    <div class="pane">
-	        <div class="tab">
-	            <h2>Select options</h2>
-	            <form action="" method="post" accept-charset="UTF-8">
-	                {% for optionName, option in report.settings %}
-	                    {% switch option.type %}
-	                        {% case 'date' %}
-	                            {% set dateFieldOptions = {
-	                                id: optionName,
-	                                label: option.name,
-	                                name: 'reportOptions[' ~ optionName ~ ']',
-	                                value: attribute(userValues, optionName),
-	                                errors: "",
-	                                required: false,
-	                                } %}
-	                            {% if option.showDate and option.showTime %}
-	                                {{ forms.dateTimeField(dateFieldOptions) }}
-	                            {% elseif option.showTime %}
-	                                {{ forms.timeField(dateFieldOptions) }}
-	                            {% else %}
-	                                {{ forms.dateField(dateFieldOptions) }}
-	                            {% endif %}
-	                        {% case 'dropdown' %}
-	                            {{ forms.selectField({
-	                            label: option.name,
-	                            id: optionName,
-	                            name: 'reportOptions[' ~ optionName ~ ']',
-	                            options: option.values|merge([{ label: "", value :"" }]),
-	                            value: craft.request.getPost('reportOptions.' ~ optionName)
-	                            }) }}
-	                    {% endswitch %}
-	                {% endfor %}
-	                <input type="hidden" name="runReport" value="1">
-	                <input type="submit" value="Run Report" class="btn submit">
-	            </form>
-	        </div>
-	    </div>
+
+		      <h2>Select options</h2>
+		      <form action="" method="post" accept-charset="UTF-8">
+		          {% for optionName, option in report.settings %}
+		              {% switch option.type %}
+		                  {% case 'date' %}
+
+		                      {% set dateFieldOptions = {
+		                          id: optionName,
+		                          label: option.name,
+		                          name: 'reportOptions[' ~ optionName ~ ']',
+		                          value: attribute(userValues, optionName),
+		                          errors: "",
+		                          required: false,
+		                          } %}
+		                      {% if option.showDate and option.showTime %}
+		                          {{ forms.dateTimeField(dateFieldOptions) }}
+		                      {% elseif option.showTime %}
+		                          {{ forms.timeField(dateFieldOptions) }}
+		                      {% else %}
+		                          {{ forms.dateField(dateFieldOptions) }}
+		                      {% endif %}
+
+		                  {% case 'dropdown' %}
+
+		                       {{ forms.selectField({
+		                      label: option.name,
+		                      id: optionName,
+		                      name: 'reportOptions[' ~ optionName ~ ']',
+		                      options: option.values|merge([{ label: "", value :"" }]),
+		                      value: craft.request.getPost('reportOptions.' ~ optionName)
+		                      }) }}
+
+		              {% endswitch %}
+		          {% endfor %}
+		          <input type="hidden" name="runReport" value="1">
+		          <input type="submit" value="Run Report" class="btn submit">
+		      </form>
+
 	    {% endif %}
+
+		<hr>
+
+	<div class="tableview">
 	  <div class="tablecontent">
-	    {% if results is empty and craft.request.getPost('runReport') is not empty %}
+
+		  {% if results is empty and craft.request.getPost('runReport') is not empty %}
 	        <div class="report-message">No results were found</div>
 	    {% endif %}
-	  {% for row in results %}
-	    {% if loop.first %}
-	    <table class="results">
-	      <thead>
-	        <tr>
-	        <th class="left-border"><div></div></th>
-	        <th class="padding"><div></div></th>
-	        {% for columnName, value in row %}
-	          <th><div {% if loop.index == "1" %}class="first"{% endif %}><h3>{{ columnName }}</h3></div></th>
-	        {% endfor %}
-	        </tr>
-	      </thead>
-	      <tbody>
-	    {% endif %}
+
+		  {% for row in results %}
+
+		    {% if loop.first %}
+		    <table class="results">
+		      <thead>
+		        <tr>
+		        <th class="left-border"><div></div></th>
+		        <th class="padding"><div></div></th>
+		        {% for columnName, value in row %}
+		          <th><div {% if loop.index == "1" %}class="first"{% endif %}><h3>{{ columnName }}</h3></div></th>
+		        {% endfor %}
+		        </tr>
+		      </thead>
+		      <tbody>
+		    {% endif %}
 
 	      <tr class="table_row">
 	        <td class="left-border"><div></div></td>
-	    <td class="padding"></td>
+	        <td class="padding"></td>
 	        {% for value in row %}
 	          <td><div class="item_content">{{ value }}</div></td>
 	        {% endfor %}
 	      </tr>
 
-	    {% if loop.last %}
-	    </table>
-	    {% endif %}
+		    {% if loop.last %}
+		    </table>
+		    {% endif %}
 
-	  {% endfor %}
+	    {% endfor %}
 
 	  </div>
 	</div>
 
-	{{ parent() }}
-
 {% endblock %}
-
-{% set Js %}
-    jQuery(function($){
-    $("#nav-sproutreports a").addClass("sel");
-    });
-{% endset %}
-
-{% includeJs Js %}

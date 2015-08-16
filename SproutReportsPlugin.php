@@ -86,8 +86,9 @@ class SproutReportsPlugin extends BasePlugin
 			'sproutreports/reports/edit/(?P<reportId>\d+)' => 
 			'sproutreports/reports/_edit',
 
-			'sproutreports/results/(?P<reportId>\d+)' => 
-			'sproutreports/results/index',
+			'sproutreports/results/(?P<reportId>\d+)' => array(
+				'action' => 'sproutReports/reports/results'
+			)
 		);
 	}
 
@@ -102,7 +103,6 @@ class SproutReportsPlugin extends BasePlugin
      */
     protected function convertHookReportToNative($hookReport)
     {
-
         $group = new SproutReports_ReportGroupModel;
         $group->name = 'Sprout Forms';
         craft()->sproutReports_reports->saveGroup($group);

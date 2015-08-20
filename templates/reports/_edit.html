@@ -101,14 +101,21 @@
 			value: (report.description is defined) ? report.description : ""
 		}) }}
 
-		{{ forms.textareaField({
-			label: "Custom Query"|t,
-			name: 'customQuery',
-			class: 'code',
-			required: true,
-			value: (report.customQuery is defined) ? report.customQuery : "",
-			rows: 10
-		}) }}
+        {% if report.customQueryEditable %}
+            {{ forms.textareaField({
+                label: "Custom Query"|t,
+                name: 'customQuery',
+                class: 'code',
+                required: true,
+                value: (report.customQuery is defined) ? report.customQuery : "",
+                rows: 10
+            }) }}
+        {% else %}
+            {{ forms.hidden({
+            name: 'customQuery',
+            value: (report.customQuery is defined) ? report.customQuery : "",
+            }) }}
+        {% endif %}
 		
 		{{ forms.checkboxField({
 			label:		"This report returns a single number"|t,

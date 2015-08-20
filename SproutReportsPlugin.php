@@ -115,6 +115,7 @@ class SproutReportsPlugin extends BasePlugin
         $report->customQuery = $hookReport->getQuery();
         $report->description = $hookReport->getDescription();
         $report->settings = $hookReport->getUserOptions();
+        $report->customQueryEditable =  $hookReport->getIsCustomQueryEditable();
 
         craft()->sproutReports_reports->saveReport($report);
         return $report;

@@ -26,4 +26,10 @@ abstract class SproutReportsBaseReport {
 	 */
 	abstract public function getUserOptions();
 
+	/*
+	 * Is custom query editable or not
+	 * @return boolean
+	 */
+	abstract public function getIsCustomQueryEditable();
+
 }

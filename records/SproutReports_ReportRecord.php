@@ -18,6 +18,7 @@ class SproutReports_ReportRecord extends BaseRecord
 			'customQuery'			=> AttributeType::Mixed,
 			'settings'        => AttributeType::Mixed,
 			'returnsSingleNumber'	=> array(AttributeType::Bool, 'default' => false),
+			'customQueryEditable'	=> array(AttributeType::Bool, 'default' => true),
 			'isEmailList'	=> array(AttributeType::Bool, 'default' => false)
 		);
 	}

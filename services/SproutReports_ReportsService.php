@@ -41,7 +41,10 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 			if (null === ($record = $this->reportRecord->findByPk($id)))
 			{
 				throw new Exception(Craft::t('Can\'t find report with ID "{id}"', array('id' => $id)));
-			}
+			} else {
+                $model->customQueryEditable = $record->customQueryEditable;
+                $model->settings = $record->settings;
+            }
 		}
 		else
 		{

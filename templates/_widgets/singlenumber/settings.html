@@ -1,5 +1,5 @@
 {% import "_includes/forms" as forms %}
-
+{{ getCsrfInput() }}
 {{
 	forms.textField({
 		label:	"Heading"|t,

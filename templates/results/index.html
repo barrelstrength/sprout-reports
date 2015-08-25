@@ -21,6 +21,7 @@
 
 		<h2>Select options</h2>
 		<form action="" method="post" accept-charset="UTF-8">
+            {{ getCsrfInput() }}
 			<input type="hidden" name="runReport" value="1">
 
 			{% for optionName, option in report.settings %}

@@ -58,6 +58,7 @@
 							{% endif %}
 
 							<form action="" method="post" accept-charset="UTF-8" style="float:right;margin-right:10px;">
+                                {{ getCsrfInput() }}
 								<input type="hidden" name="action" value="sproutReports/reports/runReport">
 								<input type="hidden" name="reportId" value="{{ report.id }}">
 								<input type="hidden" name="exportData" value="1">

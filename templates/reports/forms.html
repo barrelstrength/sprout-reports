@@ -22,6 +22,7 @@
 {% endif %}
 
 <form method="post" action="" data-saveshortcut="1" data-saveshortcut-redirect="sproutreports/reports/save/{id}" accept-charset="UTF-8">
+    {{ getCsrfInput() }}
     <input type="hidden" name="action" value="sproutReports/reports/saveReport">
     <input type="hidden" name="redirect" value="sproutreports">
 

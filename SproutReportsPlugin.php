@@ -69,6 +69,7 @@ class SproutReportsPlugin extends BasePlugin
 	{
 		return array(
 			'editReports'	=> array('label' => Craft::t('Edit Reports')),
+			'singleNumberReports'	=> array('label' => Craft::t('Single Number Reports')),
 		);
 	}
 

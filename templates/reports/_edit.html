@@ -102,7 +102,7 @@
 			value: (report.description is defined) ? report.description : ""
 		}) }}
 
-        {% if report.customQueryEditable is defined %}
+        {% if (report.customQueryEditable is defined and report.customQueryEditable ==1) or report.id is not defined %}
             {{ forms.textareaField({
                 label: "Custom Query"|t,
                 name: 'customQuery',

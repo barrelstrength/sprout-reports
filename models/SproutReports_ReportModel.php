@@ -15,6 +15,7 @@ class SproutReports_ReportModel extends BaseModel
             'settings'              => AttributeType::Mixed,
 			'returnsSingleNumber'	=> array(AttributeType::Bool, 'default' => false),
 			'customQueryEditable'	=> array(AttributeType::Bool, 'default' => true),
+			'queryParamsHandler'	=> array(AttributeType::Mixed, 'default' => true),
 			'isEmailList'	=> array(AttributeType::Bool, 'default' => false)
 		);
 	}

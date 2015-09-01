@@ -47,14 +47,34 @@ class SproutReports_ReportsController extends BaseController
 		$results = array();
 
 		$userValues = array();
+        //prepare default values
 		foreach ($report->settings as $optionName => $option)
 		{
 			$userValues[$optionName] = '';
-			if ($optionDate = craft()->request->getPost('reportOptions.' . $optionName . '.date'))
-			{
-				$optionTime = craft()->request->getPost('reportOptions.' . $optionName . '.time') ?: '0:00 AM';
-				$userValues[$optionName] = DateTime::createFromFormat('n/j/Yg:i A', $optionDate . $optionTime);
-			}
+            if (!$runReport)
+            {
+                if (isset($option['defaultValue']['isSQL']) && ($option['defaultValue']['isSQL'] === true))
+                {
+                    $userValues[$optionName] = craft()->db->createCommand($option['defaultValue']['value'])->queryScalar();
+                } else
+                {
+                    $userValues[$optionName] = $option['defaultValue']['value'];
+                }
+                if (($option['type'] == 'date') && $userValues[$optionName])
+                {
+                    $userValues[$optionName] = DateTime::createFromFormat('Y-m-d H:i:s',$userValues[$optionName]);
+                }
+            } else
+            {
+                if ($optionDate = craft()->request->getPost('reportOptions.' . $optionName . '.date'))
+                {
+                    $optionTime = craft()->request->getPost('reportOptions.' . $optionName . '.time') ?: '0:00 AM';
+                    $userValues[$optionName] = DateTime::createFromFormat('n/j/Yg:i A', $optionDate . $optionTime);
+                } else
+                {
+                    $userValues[$optionName] = craft()->request->getPost('reportOptions.' . $optionName);
+                }
+            }
 		}
 
 		if ($runReport)
@@ -77,7 +97,6 @@ class SproutReports_ReportsController extends BaseController
 	 */
 	public function actionRunReport()
 	{
-		$results  = array();
 		$reportId = craft()->request->getPost('reportId');
 		$report   = craft()->sproutReports_reports->getReportById($reportId);
 		$results  = craft()->sproutReports_reports->runReport($report);

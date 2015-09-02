@@ -3,6 +3,7 @@ namespace Craft;
 
 class SproutReports_SingleNumberWidget extends BaseWidget
 {
+	protected $colspan = 4;
 
 	/**
 	 * Returns the type of widget this is.

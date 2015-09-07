@@ -60,9 +60,24 @@ class SproutReports_ReportsController extends BaseController
                 {
                     $userValues[$optionName] = $option['defaultValue']['value'];
                 }
-                if (($option['type'] == 'date') && $userValues[$optionName])
+                if ($option['type'] == 'date')
                 {
-                    $userValues[$optionName] = DateTime::createFromFormat('Y-m-d H:i:s',$userValues[$optionName]);
+                    if (!empty($userValues[$optionName]))
+                    {
+                        $dateValue = $userValues[$optionName];
+                    } elseif ($optionName == 'dateCreatedFrom')
+                    {
+                        $dateValue = date('Y-m-1 00:00:00');
+                    }
+                    elseif ($optionName == 'dateCreatedTill')
+                    {
+                        $dateValue = date('Y-m-t 23:59:59');
+                    }
+                    else
+                    {
+                        $dateValue = date('Y-m-d H:i:s');
+                    }
+                   $userValues[$optionName] = DateTime::createFromFormat('Y-m-d H:i:s', $dateValue);
                 }
             } else
             {

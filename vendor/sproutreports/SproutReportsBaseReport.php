@@ -32,4 +32,11 @@ abstract class SproutReportsBaseReport {
 	 */
 	abstract public function getIsCustomQueryEditable();
 
+	/*
+	 * Prepare query params to make it usable in sql query
+	 * @var $params array
+	 * @return array $params[$optionName] = $optionValue
+	 */
+	abstract public static function prepareQueryParams($params);
+
 }

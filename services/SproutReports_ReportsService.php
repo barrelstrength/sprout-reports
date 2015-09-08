@@ -106,34 +106,38 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 			if (is_array($options) && count($options))
 			{
 				$whereCondition = array();
-
+                $processedParams =  call_user_func(array($report->queryParamsHandler,'prepareQueryParams'), $options);
 				foreach ($options as $optionName => $optionValues)
-				{
-					switch ($report->settings[$optionName]['type'])
-					{
-						case 'date':
-							if (!empty($optionValues['date']))
-							{
-								$time = '0:00 AM';
+                {
+                    if (isset($processedParams[$optionName]))
+                    {
+                       $queryParams[$optionName] = $processedParams[$optionName];
+                    } else
+                    {
+                        switch ($report->settings[$optionName]['type'])
+                        {
+                            case 'date':
+                                if (!empty($optionValues['date']))
+                                {
+                                    $time = '0:00 AM';
 
-								if (!empty($optionValues['time']))
-								{
-									$time = $optionValues['time'];
-								}
+                                    if (!empty($optionValues['time']))
+                                    {
+                                        $time = $optionValues['time'];
+                                    }
+                                    $date = DateTime::createFromFormat('n/j/Yg:i A', $optionValues['date'] . $time);
+                                    $queryParams[$optionName] = $date->format('Y-m-d H:i:s');
+                                }
+                                break;
 
-								$date = DateTime::createFromFormat('n/j/Yg:i A', $optionValues['date'] . $time);
-								$queryParams[$optionName] = $date->format('Y-m-d H:i:s');
-							}
-							break;
-
-						case 'dropdown':
-							if (!empty($optionValues))
-							{
-								$queryParams[$optionName] = $optionValues;
-							}
-							break;
-					}
-
+                            case 'dropdown':
+                                if (!empty($optionValues))
+                                {
+                                    $queryParams[$optionName] = $optionValues;
+                                }
+                                break;
+                        }
+                    }
 					if (isset($queryParams[$optionName]))
 					{
 						$whereCondition[] = $report->settings[$optionName]['column'] . ' ' . $report->settings[$optionName]['comparisonOperator'] . ' :' . $optionName;

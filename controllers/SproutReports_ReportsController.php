@@ -39,18 +39,18 @@ class SproutReports_ReportsController extends BaseController
 	 * Process report query and display results
 	 */
 	public function actionResults()
-	{
-		$reportId  = craft()->request->getSegment(3);
-		$report    = craft()->sproutReports_reports->getReportById($reportId);
-		$runReport = craft()->request->getParam('runReport');
+    {
+        $reportId = craft()->request->getSegment(3);
+        $report = craft()->sproutReports_reports->getReportById($reportId);
+        $runReport = craft()->request->getParam('runReport');
 
-		$results = array();
+        $results = array();
 
-		$userValues = array();
+        $userValues = array();
         //prepare default values
-		foreach ($report->settings as $optionName => $option)
-		{
-			$userValues[$optionName] = '';
+        foreach ($report->settings as $optionName => $option)
+        {
+            $userValues[$optionName] = '';
             if (!$runReport)
             {
                 if (isset($option['defaultValue']['isSQL']) && ($option['defaultValue']['isSQL'] === true))
@@ -68,16 +68,14 @@ class SproutReports_ReportsController extends BaseController
                     } elseif ($optionName == 'dateCreatedFrom')
                     {
                         $dateValue = date('Y-m-1 00:00:00');
-                    }
-                    elseif ($optionName == 'dateCreatedTill')
+                    } elseif ($optionName == 'dateCreatedTill')
                     {
                         $dateValue = date('Y-m-t 23:59:59');
-                    }
-                    else
+                    } else
                     {
                         $dateValue = date('Y-m-d H:i:s');
                     }
-                   $userValues[$optionName] = DateTime::createFromFormat('Y-m-d H:i:s', $dateValue);
+                    $userValues[$optionName] = DateTime::createFromFormat('Y-m-d H:i:s', $dateValue);
                 }
             } else
             {
@@ -90,19 +88,23 @@ class SproutReports_ReportsController extends BaseController
                     $userValues[$optionName] = craft()->request->getPost('reportOptions.' . $optionName);
                 }
             }
-		}
+        }
 
-		if ($runReport)
-		{
-			$reportOptions = craft()->request->getPost('reportOptions');
-			$results = craft()->sproutReports_reports->runReport($report, $reportOptions);
-		}
+        if ($runReport)
+        {
+            $reportOptions = craft()->request->getPost('reportOptions');
+            $results = craft()->sproutReports_reports->runReport($report, $reportOptions);
+            if ($results->rowCount && craft()->request->getPost('exportCSV'))
+            {
+                $this->exportDataToCsv($report, $results);
+            }
+        }
 
-		$this->renderTemplate('sproutreports/results/index', array(
-			'report'  => $report,
-			'results' => $results,
-			'userValues' => $userValues
-		));
+        $this->renderTemplate('sproutreports/results/index', array(
+            'report' => $report,
+            'results' => $results,
+            'userValues' => $userValues
+        ));
 	}
 
 	/**

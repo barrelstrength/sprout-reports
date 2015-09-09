@@ -1,6 +1,6 @@
 {% import "_includes/forms" as forms %}
 {% extends "sproutreports/_layouts/base" %}
-
+{% includeJsResource "sproutreports/js/resultsForm.js" %}
 {% set title = report.name %}
 
 {% set crumbs = [
@@ -60,6 +60,8 @@
 			{% endfor %}
 
 			<input type="submit" value="Run Report" class="btn submit">
+			<input type="submit" value="Export CSV" id="exportCsvButton" class="btn submit">
+			<input type="hidden" value="0" name="exportCSV" id="exportCsvField">
 		</form>
 
 	{% endif %}

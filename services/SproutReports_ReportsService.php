@@ -114,9 +114,18 @@ class SproutReports_ReportsService extends BaseApplicationComponent
                        $queryParams[$optionName] = $processedParams[$optionName];
                     } else
                     {
+                        if (is_array($optionValues))
+                        {
+                            $optionValues = ArrayHelper::filterEmptyStringsFromArray($optionValues);
+                            if (count($optionValues) == 1)
+                            {
+                                $optionValues = implode('', $optionValues);
+                            }
+                        }
                         switch ($report->settings[$optionName]['type'])
                         {
                             case 'date':
+
                                 if (!empty($optionValues['date']))
                                 {
                                     $time = '0:00 AM';
@@ -128,19 +137,32 @@ class SproutReports_ReportsService extends BaseApplicationComponent
                                     $date = DateTime::createFromFormat('n/j/Yg:i A', $optionValues['date'] . $time);
                                     $queryParams[$optionName] = $date->format('Y-m-d H:i:s');
                                 }
-                                break;
-
+                            break;
                             case 'dropdown':
+                            case 'radiobuttons':
+                            case 'checkboxes':
                                 if (!empty($optionValues))
                                 {
                                     $queryParams[$optionName] = $optionValues;
                                 }
-                                break;
+                            break;
                         }
                     }
 					if (isset($queryParams[$optionName]))
 					{
-						$whereCondition[] = $report->settings[$optionName]['column'] . ' ' . $report->settings[$optionName]['comparisonOperator'] . ' :' . $optionName;
+
+                        if (count($queryParams[$optionName]) > 1)
+                        {
+                            $subQuery = array();
+                            foreach ($queryParams[$optionName] as $index => $value)
+                            {
+                                $subQuery[] = $report->settings[$optionName]['column'] . ' ' . $report->settings[$optionName]['comparisonOperator'] . ' :' . $optionName . '_' . $index;
+                            }
+                            $whereCondition[] = '(' . implode(' OR ', $subQuery) . ')';
+                        } else
+                        {
+                            $whereCondition[] = $report->settings[$optionName]['column'] . ' ' . $report->settings[$optionName]['comparisonOperator'] . ' :' . $optionName;
+                        }
 					}
 				}
 			}
@@ -152,16 +174,31 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 
 			$queryCommand = craft()->db->createCommand($query);
 
-			if (count($queryParams))
-			{
-				foreach ($queryParams as $paramName => $paramValue)
-				{
-					$queryCommand->bindValue(':' . $paramName, $paramValue);
-				}
-			}
-
+            if (count($queryParams))
+            {
+                foreach ($queryParams as $paramName => $paramValue)
+                {
+                    if (count($paramValue) > 1)
+                    {
+                        foreach ($paramValue as $index => $value)
+                        {
+                            if ($report->settings[$paramName]['comparisonOperator'] == 'LIKE')
+                            {
+                                $value = '%' . $value . '%';
+                            }
+                            $queryCommand->bindValue(':' . $paramName . '_' . $index, $value);
+                        }
+                    } else
+                    {
+                        if ($report->settings[$paramName]['comparisonOperator'] == 'LIKE')
+                        {
+                            $paramValue = '%' . $paramValue . '%';
+                        }
+                        $queryCommand->bindValue(':' . $paramName, $paramValue);
+                    }
+                }
+            }
 			$result = $queryCommand->query();
-
 		}
 		catch (\CDbException $e)
 		{

@@ -55,6 +55,25 @@
 							options: option.values|merge([{ label: "", value :"" }]),
 							value: attribute(userValues, optionName),
 						}) }}
+            {% case 'checkboxes' %}
+                <label>{{ option.name }}</label>
+                {{ forms.checkboxGroup({
+                label: option.name,
+                id: optionName,
+                name: 'reportOptions[' ~ optionName ~ ']',
+                options: option.values|merge([{ label: "Any", value :"" }]),
+                values: attribute(userValues, optionName),
+                }) }}
+
+            {% case 'radiobuttons' %}
+                <label>{{ option.name }}</label>
+                {{ forms.radioGroup({
+                label: option.name,
+                id: optionName,
+                name: 'reportOptions[' ~ optionName ~ ']',
+                options: option.values|merge([{ label: "Any", value :"" }]),
+                values: attribute(userValues, optionName),
+                }) }}
 
 				{% endswitch %}
 			{% endfor %}

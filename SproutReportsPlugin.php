@@ -105,7 +105,7 @@ class SproutReportsPlugin extends BasePlugin
     protected function convertHookReportToNative($hookReport)
     {
         $group = new SproutReports_ReportGroupModel;
-        $group->name = 'Sprout Forms';
+        $group->name = $hookReport->getGroup();
         craft()->sproutReports_reports->saveGroup($group);
         $group = SproutReports_ReportGroupRecord::model()->findByAttributes(array('name' => $group->name));
 

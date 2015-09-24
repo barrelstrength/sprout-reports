@@ -169,7 +169,21 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 
 			if (count($queryParams))
 			{
-				$query .= ' WHERE ' . implode(' AND ', $whereCondition);
+                $existingWhereCondition = preg_split('/WHERE/i', $query);
+                if (isset($existingWhereCondition[1]))
+                {
+                    $whereCondition[] = $existingWhereCondition[1];
+                    $query = $existingWhereCondition[0];
+                }
+                $whereCondition = ' WHERE ' . implode(' AND ', $whereCondition);
+                $splitQuery = preg_split('/order by/i', $query);
+                if (isset($splitQuery[1]))
+                {
+                    $query = $splitQuery[0] . $whereCondition . ' ORDER BY' . $splitQuery[1];
+                } else
+                {
+                    $query .= $whereCondition;
+                }
 			}
 
 			$queryCommand = craft()->db->createCommand($query);

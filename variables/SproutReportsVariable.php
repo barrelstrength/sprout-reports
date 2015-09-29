@@ -38,11 +38,16 @@ class SproutReportsVariable
 	public function getReportById($reportId) 
 	{
 		return craft()->sproutReports_reports->getReportById($reportId);
-	}	
+	}
 
-	public function runReport($query, $report=null) 
+    public function getReportByAttributes($attributes)
 	{
-		return craft()->sproutReports_reports->runReport($query, $report);
+		return craft()->sproutReports_reports->getReportByAttributes($attributes);
+	}
+
+	public function runReport(SproutReports_ReportRecord $report, $options=null)
+	{
+		return craft()->sproutReports_reports->runReport($report, $options);
 	}
 
 	public function allElementTypes() 

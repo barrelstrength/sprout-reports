@@ -5,7 +5,9 @@ class SproutReportsPlugin extends BasePlugin
 {
 	function init()
 	{
+		parent::init();
 		require CRAFT_PLUGINS_PATH.'sproutreports/vendor/autoload.php';
+		craft()->on('plugins.loadPlugins', array($this, 'onLoadPlugins'));
 	}
 
 	/**
@@ -16,7 +18,7 @@ class SproutReportsPlugin extends BasePlugin
 	function getName()
 	{
 		$pluginName			= Craft::t('Sprout Reports');
-		$pluginNameOverride	= $this->getSettings()->getAttribute('pluginNameOverride');
+		$pluginNameOverride	= $this->getSettings()->pluginNameOverride;
 
 		if ($pluginNameOverride)
 		{
@@ -28,7 +30,7 @@ class SproutReportsPlugin extends BasePlugin
 
 	function getVersion()
 	{
-		return '0.4.5';
+		return '0.4.7';
 	}
 
 	function getDeveloper()
@@ -67,6 +69,7 @@ class SproutReportsPlugin extends BasePlugin
 	{
 		return array(
 			'editReports'	=> array('label' => Craft::t('Edit Reports')),
+			'singleNumberReports'	=> array('label' => Craft::t('Single Number Reports')),
 		);
 	}
 
@@ -84,8 +87,59 @@ class SproutReportsPlugin extends BasePlugin
 			'sproutreports/reports/edit/(?P<reportId>\d+)' => 
 			'sproutreports/reports/_edit',
 
-			'sproutreports/results/(?P<reportId>\d+)' => 
-			'sproutreports/results/index',
+			'sproutreports/results/(?P<reportId>\d+)' => array(
+				'action' => 'sproutReports/reports/results'
+			)
 		);
 	}
+
+    public function onLoadPlugins()
+    {
+        $this->registerReports();
+    }
+
+    /**
+     * @param SproutReportsSproutFormsIntegration $hookReport
+     * @return SproutReports_ReportModel
+     */
+    protected function convertHookReportToNative($hookReport)
+    {
+        $group = new SproutReports_ReportGroupModel;
+        $group->name = $hookReport->getGroup();
+        craft()->sproutReports_reports->saveGroup($group);
+        $group = SproutReports_ReportGroupRecord::model()->findByAttributes(array('name' => $group->name));
+
+        $report = new SproutReports_ReportModel;
+        $report->name = $hookReport->getName();
+        $report->groupId = $group->id;
+        $report->handle = 'report_' . preg_replace('/^a-zA-Z0-9/', '', $hookReport->getName()); //need to care about valid handle
+        $report->customQuery = $hookReport->getQuery();
+        $report->description = $hookReport->getDescription();
+        $report->settings = $hookReport->getUserOptions();
+        $report->customQueryEditable =  $hookReport->getIsCustomQueryEditable();
+        $report->queryParamsHandler = get_class($hookReport);
+
+        craft()->sproutReports_reports->saveReport($report);
+        return $report;
+    }
+
+    /*
+     * Register 3rd party reports
+     * @return void
+     */
+    protected function registerReports()
+    {
+        $reports = craft()->plugins->call('registerSproutReports');
+        foreach ($reports as $report)
+        {
+            if (!is_array($report))
+            {
+                $report = array($report);
+            }
+            foreach ($report as $singleReport)
+            {
+                $this->convertHookReportToNative($singleReport);
+            }
+        }
+    }
 }

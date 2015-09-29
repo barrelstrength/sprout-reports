@@ -1,43 +1,47 @@
-{% import "_includes/forms" as forms %}
+{% if currentUser.can('singleNumberResports') %}
+    {% import "_includes/forms" as forms %}
+    {{ getCsrfInput() }}
+    {{
+        forms.textField({
+            label:	"Heading"|t,
+            id:		"heading",
+            name:	"heading",
+            value:	(settings.heading is defined) ? settings.heading : "",
+            errors: (settings.heading is defined) ? settings.getErrors("heading") : ""
+        })
+    }}
 
-{{
-	forms.textField({
-		label:	"Heading"|t,
-		id:		"heading",
-		name:	"heading",
-		value:	(settings.heading is defined) ? settings.heading : "",
-		errors: (settings.heading is defined) ? settings.getErrors("heading") : ""
-	})
-}}
+    {{
+        forms.textField({
+            label:	"Description"|t,
+            id:		"description",
+            name:	"description",
+            value:	(settings.description is defined) ? settings.description : "",
+            errors:	(settings.description is defined) ? settings.getErrors("description") : ""
+        })
+    }}
 
-{{
-	forms.textField({
-		label:	"Description"|t,
-		id:		"description",
-		name:	"description",
-		value:	(settings.description is defined) ? settings.description : "",
-		errors:	(settings.description is defined) ? settings.getErrors("description") : ""
-	})
-}}
+    {{
+        forms.textField({
+            label:	"Result Prefix"|t,
+            name:	"resultPrefix",
+            value:	(settings.resultPrefix is defined) ? settings.resultPrefix : "",
+            errors:	(settings.resultPrefix is defined) ? settings.getErrors("resultPrefix") : ""
+        })
+    }}
 
-{{
-	forms.textField({
-		label:	"Result Prefix"|t,
-		name:	"resultPrefix",
-		value:	(settings.resultPrefix is defined) ? settings.resultPrefix : "",
-		errors:	(settings.resultPrefix is defined) ? settings.getErrors("resultPrefix") : ""
-	})
-}}
-
-{% if singleNumberReports is defined and singleNumberReports | length %}
-	{{
-		forms.selectField({
-			label:		"Select Report"|t,
-			id:			"reportId",
-			name:		"reportId",
-			options:	singleNumberReports,
-			value:		settings.reportId,
-			errors:		""
-		})
-	}}
+    {% if singleNumberReports is defined and singleNumberReports | length %}
+        {{
+            forms.selectField({
+                label:		"Select Report"|t,
+                id:			"reportId",
+                name:		"reportId",
+                options:	singleNumberReports,
+                value:		settings.reportId,
+                errors:		""
+            })
+        }}
+    {% endif %}
+{% else %}
+    You don’t have the proper credentials
 {% endif %}

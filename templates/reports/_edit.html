@@ -49,7 +49,8 @@
 	{% endif %}
 
 	<form method="post" action="" data-saveshortcut="1" data-saveshortcut-redirect="sproutreports/reports/edit/{id}" accept-charset="UTF-8">
-		<input type="hidden" name="action" value="sproutReports/reports/saveReport">
+        {{ getCsrfInput() }}
+        <input type="hidden" name="action" value="sproutReports/reports/saveReport">
 		<input type="hidden" name="redirect" value="sproutreports">
 
 		{% if reportId is defined %}
@@ -101,14 +102,21 @@
 			value: (report.description is defined) ? report.description : ""
 		}) }}
 
-		{{ forms.textareaField({
-			label: "Custom Query"|t,
-			name: 'customQuery',
-			class: 'code',
-			required: true,
-			value: (report.customQuery is defined) ? report.customQuery : "",
-			rows: 10
-		}) }}
+        {% if (report.customQueryEditable is defined and report.customQueryEditable ==1) or report.id is not defined %}
+            {{ forms.textareaField({
+                label: "Custom Query"|t,
+                name: 'customQuery',
+                class: 'code',
+                required: true,
+                value: (report.customQuery is defined) ? report.customQuery : "",
+                rows: 10
+            }) }}
+        {% else %}
+            {{ forms.hidden({
+            name: 'customQuery',
+            value: (report.customQuery is defined) ? report.customQuery : "",
+            }) }}
+        {% endif %}
 		
 		{{ forms.checkboxField({
 			label:		"This report returns a single number"|t,

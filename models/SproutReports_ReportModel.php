@@ -13,7 +13,10 @@ class SproutReports_ReportModel extends BaseModel
 			'description'			=> AttributeType::String,
 			'customQuery'			=> AttributeType::Mixed,
 			'returnsSingleNumber'	=> array(AttributeType::Bool, 'default' => false, 'required' => true),
-			'isEmailList'	=> array(AttributeType::Bool, 'default' => false, 'required' => true)
+			'isEmailList'	=> array(AttributeType::Bool, 'default' => false, 'required' => true),
+            'settings'              => AttributeType::Mixed,
+			'customQueryEditable'	=> array(AttributeType::Bool, 'default' => true),
+			'queryParamsHandler'	=> array(AttributeType::Mixed, 'default' => true),
 		);
 	}
 }

@@ -38,7 +38,7 @@ class SproutReports_SingleNumberWidget extends BaseWidget
 
 		if ($report && !empty($report['returnsSingleNumber']))
 		{
-			$result = craft()->sproutReports_reports->runReport($report['customQuery'], $report);
+			$result = craft()->sproutReports_reports->runReport($report);
 
 			if ($result)
 			{

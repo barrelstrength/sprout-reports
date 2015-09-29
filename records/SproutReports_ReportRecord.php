@@ -17,7 +17,10 @@ class SproutReports_ReportRecord extends BaseRecord
 			'description'			=> AttributeType::String,
 			'customQuery'			=> AttributeType::Mixed,
 			'returnsSingleNumber'	=> array(AttributeType::Bool, 'default' => false, 'required' => true),
-			'isEmailList'	=> array(AttributeType::Bool, 'default' => false, 'required' => true)
+			'isEmailList'	=> array(AttributeType::Bool, 'default' => false, 'required' => true),
+			'settings'        => AttributeType::Mixed,
+			'customQueryEditable'	=> array(AttributeType::Bool, 'default' => true),
+			'queryParamsHandler'	=> AttributeType::Mixed,
 		);
 	}
 
@@ -35,5 +38,23 @@ class SproutReports_ReportRecord extends BaseRecord
 
 		return $record;
 	}
+
+    public function beforeSave()
+    {
+        if (empty($this->settings))
+        {
+            $this->settings = array();
+        }
+        $this->settings = JsonHelper::encode($this->settings);
+        parent::beforeSave();
+        return true;
+    }
+
+    public function afterFind()
+    {
+        $this->settings = JsonHelper::decode($this->settings);
+        parent::afterFind();
+        return true;
+    }
 
 }

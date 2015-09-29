@@ -34,8 +34,9 @@
 				<table class="data fullwidth">
 					<thead>
 						<tr>
-							<th scope="col" data-attribute="title" class="first">Report Name</th>
-							<th></th>
+							<th scope="col" data-attribute="title" class="first">Name</th>
+							<th scope="col" data-attribute="description">Description</th>
+							<th class="thin"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -47,6 +48,7 @@
 								{{ report.name }}
 							</a>
 						</td>
+						<td>{{ report.description }}</td>
 						<td style="text-align:right;">
 
 							{% if currentUser.can('editReports') %}
@@ -56,13 +58,14 @@
 							{% endif %}
 
 							<form action="" method="post" accept-charset="UTF-8" style="float:right;margin-right:10px;">
+                                {{ getCsrfInput() }}
 								<input type="hidden" name="action" value="sproutReports/reports/runReport">
 								<input type="hidden" name="reportId" value="{{ report.id }}">
 								<input type="hidden" name="exportData" value="1">
 								<input type="button" value="Export CSV" class="btn small formsubmit">
 							</form>
 
-							<a href="{{ url( 'sproutreports/results/' ~ report.id ) }}" class="btn small" style="float:right;display:inline-block;margin-right:10px;">
+							<a href="{{ url('sproutreports/results/' ~ report.id) }}" class="btn small" style="float:right;display:inline-block;margin-right:10px;">
 								Run Report
 							</a>
 						</td>

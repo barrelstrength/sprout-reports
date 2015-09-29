@@ -1,8 +1,6 @@
+{% import "_includes/forms" as forms %}
 {% extends "sproutreports/_layouts/base" %}
-
-{% set report = craft.sproutReports.reportById(reportId) %}
-{% set results = craft.sproutReports.runReport(report.customQuery, report) %}
-
+{% includeJsResource "sproutreports/js/resultsForm.js" %}
 {% set title = report.name %}
 
 {% set crumbs = [
@@ -10,55 +8,133 @@
 	{ label: "View Results"|t, url: "" }
 ] %}
 
-{# {% set extraPageHeaderHtml %}
-<form action="" method="post" accept-charset="UTF-8">
-	<input type="hidden" name="action" value="sproutReports/reports/runReport">
-	<input type="hidden" name="reportId" value="{{ reportId }}">
-	<input type="hidden" name="exportData" value="1">
-	<input type="button" value="Export CSV" class="btn small">
-</form>
-{% endset %}   #}
-
 {% block content %}
 
-<style type="text/css">
-	.csv { display: inline-block; width: auto; }
-</style>
+	<style type="text/css">
+		.csv {
+			display: inline-block;
+			width: auto;
+		}
+	</style>
 
-<div class="tableview">
+	{% if report.settings|length %}
 
-	<div class="tablecontent">
-		
-	{% for row in results %}
-		{% if loop.first %}
-		<table class="results">
-			<thead>
-				<tr>
-				<th class="left-border"><div></div></th>
-				<th class="padding"><div></div></th>
-				{% for columnName, value in row %}
-					<th><div {% if loop.index == "1" %}class="first"{% endif %}><h3>{{ columnName }}</h3></div></th>
-				{% endfor %}
+		<h2>Select options</h2>
+		<form action="" method="post" accept-charset="UTF-8">
+            {{ getCsrfInput() }}
+			<input type="hidden" name="runReport" value="1">
+
+			{% for optionName, option in report.settings %}
+
+				{% switch option.type %}
+					{% case 'date' %}
+
+						{% set dateFieldOptions = {
+							id: optionName,
+							label: option.name,
+							name: 'reportOptions[' ~ optionName ~ ']',
+							value: attribute(userValues, optionName),
+							errors: "",
+							required: false,
+						} %}
+
+						{% if option.showDate and option.showTime %}
+							{{ forms.dateTimeField(dateFieldOptions) }}
+						{% elseif option.showTime %}
+							{{ forms.timeField(dateFieldOptions) }}
+						{% else %}
+							{{ forms.dateField(dateFieldOptions) }}
+						{% endif %}
+
+					{% case 'dropdown' %}
+
+						{{ forms.selectField({
+							label: option.name,
+							id: optionName,
+							name: 'reportOptions[' ~ optionName ~ ']',
+							options: option.values|merge([{ label: "", value :"" }]),
+							value: attribute(userValues, optionName),
+						}) }}
+            {% case 'checkboxes' %}
+                <label>{{ option.name }}</label>
+                {{ forms.checkboxGroup({
+                label: option.name,
+                id: optionName,
+                name: 'reportOptions[' ~ optionName ~ ']',
+                options: option.values|merge([{ label: "Any", value :"" }]),
+                values: attribute(userValues, optionName),
+                }) }}
+
+            {% case 'radiobuttons' %}
+                <label>{{ option.name }}</label>
+                {{ forms.radioGroup({
+                label: option.name,
+                id: optionName,
+                name: 'reportOptions[' ~ optionName ~ ']',
+                options: option.values|merge([{ label: "Any", value :"" }]),
+                values: attribute(userValues, optionName),
+                }) }}
+
+				{% endswitch %}
+			{% endfor %}
+
+			<input type="submit" value="Run Report" class="btn submit">
+			<input type="submit" value="Export CSV" id="exportCsvButton" class="btn submit">
+			<input type="hidden" value="0" name="exportCSV" id="exportCsvField">
+		</form>
+
+	{% endif %}
+
+	<hr>
+
+	<div class="tableview">
+		<div class="tablecontent">
+
+			{% if results is empty and craft.request.getPost('runReport') is not empty %}
+				<div class="report-message">No results were found</div>
+			{% endif %}
+
+			{% for row in results %}
+
+				{% if loop.first %}
+					<table class="results">
+					<thead>
+					<tr>
+						<th class="left-border">
+							<div></div>
+						</th>
+						<th class="padding">
+							<div></div>
+						</th>
+						{% for columnName, value in row %}
+							<th>
+								<div {% if loop.index == "1" %}class="first"{% endif %}><h3>{{ columnName }}</h3></div>
+							</th>
+						{% endfor %}
+					</tr>
+					</thead>
+					<tbody>
+				{% endif %}
+
+				<tr class="table_row">
+					<td class="left-border">
+						<div></div>
+					</td>
+					<td class="padding"></td>
+					{% for value in row %}
+						<td>
+							<div class="item_content">{{ value }}</div>
+						</td>
+					{% endfor %}
 				</tr>
-			</thead>
-			<tbody>
-		{% endif %}
 
-			<tr class="table_row">
-				<td class="left-border"><div></div></td>
-		<td class="padding"></td>	
-				{% for value in row %}
-					<td><div class="item_content">{{ value }}</div></td>
-				{% endfor %}
-			</tr>
+				{% if loop.last %}
+					</table>
+				{% endif %}
 
-		{% if loop.last %}
-		</table>
-		{% endif %}
+			{% endfor %}
 
-	{% endfor %}
-
+		</div>
 	</div>
-</div>
-{{ parent() }}
+
 {% endblock %}

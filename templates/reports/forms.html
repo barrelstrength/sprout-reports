@@ -1,0 +1,62 @@
+{% extends "sproutreports/_layouts/base" %}
+{% import "_includes/forms" as forms %}
+
+{% set title = "Reports: Sprout forms" %}
+
+{% set crumbs = [
+{ label: "Reports"|t, url: url('sproutreports') },
+{ label: "Sprout forms"|t, url: "" }
+] %}
+
+{% set response = craft.session.getFlash('response') %}
+
+{% block content %}
+
+{% if response is not empty %}
+<h2 class="error">{{ response.message }}</h2>
+<p class="code notice">{{ response.dbMessage }}</p>
+{% endif %}
+
+{% if errorMessage is defined %}
+<h2 style="color: #d00;">{{ errorMessage }}</h2>
+{% endif %}
+
+<form method="post" action="" data-saveshortcut="1" data-saveshortcut-redirect="sproutreports/reports/save/{id}" accept-charset="UTF-8">
+    {{ getCsrfInput() }}
+    <input type="hidden" name="action" value="sproutReports/reports/saveReport">
+    <input type="hidden" name="redirect" value="sproutreports">
+
+    {% if reportId is defined %}
+    <input type="hidden" name="id" value="{{ reportId }}">
+    {% endif %}
+
+    {% set sproutForms=craft.sproutforms.getAllForms() %}
+    {% set formOptions=[] %}
+
+    {% if sproutForms|length %}
+
+        {% for f in sproutForms %}
+            {% set formOptions = formOptions|merge([{ label: f.name, value: f.handle }]) %}l
+        {% endfor %}
+
+        {{ forms.selectField({
+        first: true,
+        label: "Select form"|t,
+        instructions: "Plese select form to create report?"|t,
+        id: 'sproutForm',
+        name: 'sproutForm',
+        options: formOptions,
+        value: 'val'
+        }) }}
+
+    {% else %}
+        Not forms were found
+    {% endif %}
+    <input type="button" class="btn small formsubmit" value="Next step">
+</form>
+
+
+
+{{ parent() }}
+
+{% endblock %}

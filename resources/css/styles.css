@@ -1,7 +1,7 @@
 /* BASE STYLES
 -----------------------------------*/
 
-tr {
+.tablecontent tr {
 	height: 50px;
 	max-height: 50px;
 	overflow: hidden;
@@ -11,15 +11,15 @@ thead tr {
 	height: 40px;
 }
 
-td, th {
+.tablecontent td, .tablecontent th {
 	min-width: 180px;
 }
 
-td {
+.tablecontent td {
 	border-right: 1px solid #eee;
 }
 
-td:last-child  {
+.tablecontent tr td:last-child  {
 	border-right: 0px solid transparent;
 }
 
@@ -151,6 +151,14 @@ table.results td.padding {
 tr:hover td.left-border,
 .expanded:hover td.left-border {
 	background-color: #0d78f2;
+}
+
+#ui-datepicker-div {
+    z-index:20 !important;
+}
+
+.report-message {
+    padding:0 25px;
 }
 
 /* SCROLLBAR DESIGN

@@ -7,7 +7,7 @@ class SproutReportsPlugin extends BasePlugin
 	{
 		parent::init();
 		require CRAFT_PLUGINS_PATH.'sproutreports/vendor/autoload.php';
-		craft()->on('plugins.loadPlugins', array($this, 'onLoadPlugins'));
+        $this->registerReports();
 	}
 
 	/**
@@ -92,11 +92,6 @@ class SproutReportsPlugin extends BasePlugin
 			)
 		);
 	}
-
-    public function onLoadPlugins()
-    {
-        $this->registerReports();
-    }
 
     /**
      * @param SproutReportsSproutFormsIntegration $hookReport

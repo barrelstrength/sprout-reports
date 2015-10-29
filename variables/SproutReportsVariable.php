@@ -86,4 +86,20 @@ class SproutReportsVariable
 
 		return $fields;
 	}
+
+	/**
+	 * @return SproutReportsBaseDataSet[]
+	 */
+	public function getDataSets()
+	{
+		return sproutReports()->getDataSets();
+	}
+
+	/**
+	 * @return null|SproutReportsModel[]
+	 */
+	public function getReports()
+	{
+		return sproutReports()->getReports();
+	}
 }

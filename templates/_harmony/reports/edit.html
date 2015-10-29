@@ -1,0 +1,109 @@
+{% extends "sproutreports/_layouts/base" %}
+
+{% import "_includes/forms" as forms %}
+
+{% set title = id is defined and id is not empty ? "Edit Report" : "New Report"%}
+
+{% set crumbs = [
+	{ label: "Reports"|t, url: url('sproutreports') },
+] %}
+
+{#{% set groups = craft.sproutReports.getAllReportGroups('id') %}#}
+
+{#{% if groups | length %}#}
+	{#{% set groupId = craft.request.getQuery('groupId') %}#}
+
+	{#{% if not groupId %}#}
+		{#{% set groupId = groups|keys[0] %}#}
+	{#{% endif %}#}
+
+	{#{% if groups[groupId] is not defined %}#}
+		{#{% exit 404 %}#}
+	{#{% endif %}#}
+{#{% endif %}#}
+
+{#{% set response = craft.session.getFlash('response') %}#}
+
+{% block content %}
+
+	{% if report is defined and report.hasErrors() %}
+		<h2 class="error">Something went wrong.</h2>
+		<p class="code notice">More in depth message here.</p>
+	{% endif %}
+
+	<form method="post" data-saveshortcut="1" data-saveshortcut-redirect="sproutreports/harmony/reports/edit/{id}" accept-charset="UTF-8">
+        {{ getCsrfInput() }}
+		<input type="hidden" name="action" value="sproutReports/saveReport">
+		<input type="hidden" name="redirect" value="sproutreports/harmony">
+
+		{% if report is defined %}
+			<input type="hidden" name="id" value="{{ report.id }}">
+		{% endif %}
+
+		{#{% if groups | length %}#}
+
+			{#{% set groupOptions = [] %}#}
+			{#{% for group in groups %}#}
+				{#{% set groupOptions = groupOptions|merge([{ label: group.name, value: group.id }]) %}#}
+			{#{% endfor %}#}
+
+			{#{{ forms.selectField({#}
+				{#first: true,#}
+				{#label: "Group"|t,#}
+				{#instructions: "Which group should this report be displayed in?"|t,#}
+				{#id: 'groupId',#}
+				{#name: 'groupId',#}
+				{#options: groupOptions,#}
+				{#value: groupId#}
+			{#}) }}#}
+
+		{#{% endif %}#}
+
+		{{ forms.textField({
+			label: "Name"|t,
+			name: 'name',
+			value: (report.name is defined) ? report.name : "",
+			errors: "",
+			required: true,
+			first: true
+		}) }}
+
+		{{ forms.textareaField({
+			label: "Description"|t,
+			name: 'description',
+			class: 'nicetext',
+			rows: 3,
+			value: (report.description is defined) ? report.description : ""
+		}) }}
+
+
+		{% if dataSet is defined %}
+			<hr>
+			{{ dataSet.getOptionsHtml(report is defined ? report.options : {}) | raw }}
+		{% endif %}
+
+		<div class="button">
+			<div class="btngroup">
+				<input type="submit" class="btn submit" value="{{ 'Save Report'|t }}">
+
+				<div class="btn submit menubtn"></div>
+				<div class="menu">
+					<ul>
+						<li><a class="formsubmit" data-redirect="sproutreports/harmony/reports/edit/{id}">{{ "Save and continue editing"|t }}</a></li>
+						<li><a class="formsubmit" data-redirect="sproutreports/harmony/reports/new">{{ "Save and add another report"|t }}</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		{% if report is defined %}
+			<p>
+				<input type="button" class="btn small formsubmit" value="Delete" data-action="sproutReports/deleteReport" data-confirm="Are you sure you want to delete this report?" data-redirect="sproutreports" tabindex="0">
+			</p>
+		{% endif %}
+
+	</form>
+
+	{{ parent() }}
+
+{% endblock %}

@@ -1,8 +1,16 @@
 <?php
 namespace Craft;
 
+/**
+ * Class SproutReportsVariable
+ *
+ * @package Craft
+ */
 class SproutReportsVariable
 {
+	/**
+	 * @var null|SproutReportsPlugin
+	 */
 	protected $plugin;
 
 	public function __construct()
@@ -10,96 +18,68 @@ class SproutReportsVariable
 		$this->plugin = craft()->plugins->getPlugin('sproutreports');
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getName()
 	{
 		return $this->plugin->getName();
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getVersion()
 	{
 		return $this->plugin->getVersion();
 	}
-	
-	public function getAllReports() 
-	{
-		return craft()->sproutReports_reports->getAllReports();
-	}	
 
-	public function getAllReportGroups($id = null)
+	/**
+	 * @return null|SproutReports_ReportModel[]
+	 */
+	public function getReports()
 	{
-		return craft()->sproutReports_reports->getAllReportGroups($id);
+		return sproutReports()->reports->getAll();
 	}
 
-	public function getReportsByGroupId($groupId)
+	/**
+	 * @return null|SproutReports_ReportGroupModel[]
+	 */
+	public function getReportGroups()
 	{
-		return craft()->sproutReports_reports->getReportsByGroupId($groupId);
+		return sproutReports()->groups->getAll();
 	}
 
-	public function getReportById($reportId) 
+	/**
+	 * @param $id
+	 *
+	 * @return null|SproutReports_ReportGroupModel[]
+	 */
+	public function getReportsByGroupId($id)
 	{
-		return craft()->sproutReports_reports->getReportById($reportId);
+		return sproutReports()->reports->getAllByGroupId($id);
 	}
 
-    public function getReportByAttributes($attributes)
+	/**
+	 * @param int $id
+	 *
+	 * @return SproutReports_ReportModel
+	 */
+	public function getReportById($id)
 	{
-		return craft()->sproutReports_reports->getReportByAttributes($attributes);
+		return sproutReports()->reports->get($id);
 	}
 
 	public function runReport(SproutReports_ReportRecord $report, $options=null)
 	{
-		return craft()->sproutReports_reports->runReport($report, $options);
-	}
-
-	public function allElementTypes() 
-	{
-		return craft()->elements->getAllElementTypes();
-	}
-
-	public function allSections() 
-	{
-		$sections		= array();
-		$Allsections	= craft()->sections->getAllSections();
-
-		foreach($Allsections as $section)
-		{
-			$sections[$section->handle] = array(
-				'id'		=> $section->id,
-				'type'		=> $section->type,
-				'name'		=> $section->name,
-				'handle'	=> $section->handle,
-			);
-		}
-
-		return $sections;
-	}
-
-	public function allFields() 
-	{
-		$fields		= array();
-		$groups		= array();
-		$allFields	= craft()->fields->getAllFields();
-
-		foreach ($allFields  as $field)
-		{
-			$fields[$field->id]	= $field->name;
-		}
-
-		return $fields;
+		return sproutReports()->reports->run($report, $options);
 	}
 
 	/**
-	 * @return SproutReportsBaseDataSet[]
+	 * @return SproutReportsBaseDataSource[]
 	 */
-	public function getDataSets()
+	public function getDataSources()
 	{
-		return sproutReports()->getDataSets();
-	}
-
-	/**
-	 * @return null|SproutReportsModel[]
-	 */
-	public function getReports()
-	{
-		return sproutReports()->getReports();
+		return sproutReports()->sources->getAll();
 	}
 }

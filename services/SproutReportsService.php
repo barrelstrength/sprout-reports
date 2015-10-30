@@ -4,154 +4,56 @@ namespace Craft;
 class SproutReportsService extends BaseApplicationComponent
 {
 	/**
-	 * @var SproutReportsBaseDataSet[]
+	 * @var SproutReports_ReportGroupService
 	 */
-	protected $dataSets;
+	public $groups;
 
 	/**
-	 * @param $id
+	 * @var SproutReports_DataSourceService
+	 */
+	public $sources;
+
+	/**
+	 * @var SproutReports_ReportService
+	 */
+	public $reports;
+
+	public function init()
+	{
+		parent::init();
+
+		$this->groups  = Craft::app()->getComponent('sproutReports_reportGroup');
+		$this->sources = Craft::app()->getComponent('sproutReports_dataSource');
+		$this->reports = Craft::app()->getComponent('sproutReports_report');
+	}
+
+	/**
+	 * @param string $words
 	 *
-	 * @return SproutReportsModel
+	 * @throws Exception
+	 * @return string
 	 */
-	public function getReport($id)
+	public function createHandle($words)
 	{
-		$result = SproutReportsRecord::model()->findById($id);
+		$words = trim($words);
 
-		if ($result)
+		if (empty($words))
 		{
-			return SproutReportsModel::populateModel($result);
+			throw new Exception(Craft::t('Cannot create handle from empty string.'));
 		}
-	}
 
-	/**
-	 * @return null|SproutReportsModel[]
-	 */
-	public function getReports()
-	{
-		$result = SproutReportsRecord::model()->findAll();
+		$words = ElementHelper::createSlug($words);
+		$words = explode('-', $words);
+		$slug  = array_shift($words);
 
-		if ($result)
+		if (count($words))
 		{
-			return SproutReportsModel::populateModels($result);
-		}
-	}
-
-	/**
-	 * @return null|SproutReportsModel[]
-	 */
-	public function getEnabledReports()
-	{
-		$result = SproutReportsRecord::model()->findAllByAttributes(array('enabled' => 1));
-
-		if ($result)
-		{
-			return SproutReportsModel::populateModels($result);
-		}
-	}
-
-	/**
-	 * @param int $id
-	 *
-	 * @return null|SproutReportsModel[]
-	 */
-	public function getReportsByGroupId($id)
-	{
-		$result = SproutReportsRecord::model()->findAllByAttributes(array('groupId' => $id));
-
-		if ($result)
-		{
-			return SproutReportsModel::populateModels($result);
-		}
-	}
-
-	/**
-	 * @return SproutReportsBaseDataSet[]
-	 */
-	public function getDataSets()
-	{
-		if (is_null($this->dataSets))
-		{
-			$responses = craft()->plugins->call('registerSproutReportsDataProvider');
-
-			if ($responses)
+			foreach ($words as $word)
 			{
-				foreach ($responses as $plugin => $response)
-				{
-					if ($response instanceof SproutReportsDataProvider)
-					{
-						$dataSets = $response->getDataSets();
-
-						if ($dataSets)
-						{
-							/**
-							 * @var SproutReportsBaseDataSet $dataSet
-							 */
-							foreach ($dataSets as $dataSet)
-							{
-								if ($dataSet && $dataSet instanceof SproutReportsBaseDataSet)
-								{
-									$this->dataSets[$dataSet->getId($plugin)] = $dataSet;
-								}
-							}
-						}
-					}
-				}
+				$slug .= ucfirst($word);
 			}
 		}
 
-		return $this->dataSets;
-	}
-
-	/**
-	 * @param $id
-	 *
-	 * @throws Exception
-	 * @return SproutReportsBaseDataSet
-	 */
-	public function getDataSet($id)
-	{
-		$sets = $this->getDataSets();
-
-		if (isset($sets[$id]))
-		{
-			return $sets[$id];
-		}
-
-		throw new Exception(Craft::t('The data set with id {id} was not found.', array('id' => $id)));
-	}
-
-	/**
-	 * @param array $reports
-	 */
-	public function createReports(array $reports)
-	{
-		foreach ($reports as $report)
-		{
-			$this->createReport($report);
-		}
-	}
-
-	/**
-	 * @param SproutReportsBaseReportModel $report
-	 *
-	 * @throws Exception
-	 * @return bool
-	 */
-	public function createReport(SproutReportsBaseReportModel $report)
-	{
-		$record = new SproutReportsRecord();
-
-		$record->name        = $report->getName();
-		$record->handle      = $report->getHandle();
-		$record->description = $report->getDescription();
-		$record->options     = $report->getOptions();
-		$record->dataSetId   = $report->getDataSetId();
-		$record->enabled     = true;
-		$record->groupId     = 1;
-
-		if (!$record->save())
-		{
-			throw new Exception(print_r($record->getErrors(), true));
-		}
+		return $slug;
 	}
 }

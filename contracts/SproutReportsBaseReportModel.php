@@ -13,25 +13,23 @@ abstract class SproutReportsBaseReportModel
 	 */
 	final public function getHandle()
 	{
-		$slug   = ElementHelper::createSlug($this->getName());
-		$slug   = explode('-', $slug);
-		$handle = array_shift($slug);
+		return sproutReports()->createHandle($this->getName());
+	}
 
-		if ($slug)
-		{
-			foreach ($slug as $word)
-			{
-				$handle .= ucfirst($word);
-			}
-		}
-
-		return $handle;
+	final public function getSlug()
+	{
+		return ElementHelper::createSlug($this->getHandle());
 	}
 
 	/**
 	 * @return string
 	 */
 	abstract public function getName();
+
+	/**
+	 * @return string
+	 */
+	abstract public function getGroupName();
 
 	/**
 	 * @return string
@@ -49,9 +47,9 @@ abstract class SproutReportsBaseReportModel
 	abstract public function getOptions();
 
 	/**
-	 * @return string
+	 * @return SproutReportsBaseDataSource
 	 */
-	abstract public function getDataSetId();
+	abstract public function getDataSource();
 
 	/**
 	 * Whether or not the result set is a scalar value

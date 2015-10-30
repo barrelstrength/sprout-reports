@@ -1,8 +1,7 @@
 {% extends "sproutreports/_layouts/base" %}
 
-{% set title = craft.sproutReports.name|t %}
-
-{% set groups = craft.sproutReports.getAllReportGroups('id') %}
+{% set title  = craft.sproutReports.name|t %}
+{% set groups = craft.sproutReports.getReportGroups() %}
 
 {% if groupId is defined %}
 	{% if groups[groupId] is not defined %}
@@ -11,145 +10,117 @@
 
 	{% set reports = craft.sproutReports.getReportsByGroupId(groupId) %}
 {% else %}
-	{% set reports = craft.sproutReports.getAllReports() %}
+	{% set reports = craft.sproutReports.getReports() %}
 {% endif %}
 
-{% set dataSets = craft.sproutReports.getDataSets() %}
 {% block content %}
-	
+
 	<style type="text/css">
-	.report-row:hover {
-		background-color: #fafafa;
-		/*cursor: pointer;*/
-	}
-	.data th.first, 
-	.data td.first {
-		padding-left: 10px;
-	}
+		.report-row:hover {
+			background-color: #fafafa;
+			/*cursor: pointer;*/
+		}
+		.data th.first,
+		.data td.first {
+			padding-left: 10px;
+		}
 	</style>
 
-	{% if reports|length %}
-		{% for report in reports %}
-			{% if loop.first %}
-			<div class="tableview">
-				<table class="data fullwidth">
-					<thead>
-						<tr>
-							<th scope="col" data-attribute="title" class="first">Name</th>
-							<th scope="col" data-attribute="description">Description</th>
-							<th class="thin"></th>
-						</tr>
-					</thead>
-					<tbody>
-			{% endif %}
+	<div class="tableview">
+		<table class="data fullwidth">
+			<thead>
+				<tr>
+					<th scope="col" data-attribute="name">Name</th>
+					<th scope="col" data-attribute="description">Description</th>
+					<th class="thin"></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% set reports = craft.sproutReports.getReports() %}
 
-					<tr class="report-row">
-						<td class="first">
-							<a href="{{ url('sproutreports/results/' ~ report.id) }}">
+				{% for report in reports %}
+					<tr>
+						<td>
+							<a href="{{ report.getEditUrl() }}">
 								{{ report.name }}
 							</a>
 						</td>
 						<td>{{ report.description }}</td>
-						<td style="text-align:right;">
-
-							{% if currentUser.can('editReports') %}
-							<a href="{{ url( 'sproutreports/reports/edit/' ~ report.id ) }}" class="btn small" style="float:right;display:inline-block;margin-right:10px;">
-								Edit
-							</a>
-							{% endif %}
-
-							<form action="" method="post" accept-charset="UTF-8" style="float:right;margin-right:10px;">
-                                {{ getCsrfInput() }}
-								<input type="hidden" name="action" value="sproutReports/reports/runReport">
-								<input type="hidden" name="reportId" value="{{ report.id }}">
-								<input type="hidden" name="exportData" value="1">
-								<input type="button" value="Export CSV" class="btn small formsubmit">
-							</form>
-
-							<a href="{{ url('sproutreports/results/' ~ report.id) }}" class="btn small" style="float:right;display:inline-block;margin-right:10px;">
-								Run Report
-							</a>
+						<td>
+							<a href="{{ actionUrl('sproutReports/runReport', {reportId: report.id}) }}" class="btn small">Run</a>
+							<a href="{{ actionUrl('sproutReports/exportReport', {reportId: report.id}) }}" class="btn small">Export</a>
+							<a href="{{ actionUrl('sproutReports/deleteReport', {reportId: report.id}) }}" class="btn small">Delete</a>
 						</td>
 					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<hr>
+	</div>
 
-			{% if loop.last %}
-					</tbody>
-				</table>
-			</div>
-			{% endif %}
-		{% endfor %}
+	<hr>
 
-	{% else %}
-	    <p>Create your first report!</p>
-	{% endif %}
+	<div class="tableview">
+		<table class="data fullwidth">
+			<thead>
+				<tr>
+					<th scope="col" data-attribute="title">Plugin</th>
+					<th scope="col" data-attribute="subtitle">Data Source</th>
+					<th scope="col" data-attribute="description">Description</th>
+					<th class="thin"></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% set dataSources = craft.sproutReports.getDataSources() %}
 
-	{% if currentUser.can('editReports') %}
-		<div class="buttons">
-			<a href="{{ url('sproutreports/reports/new') }}" class="btn submit add icon">New Report</a>
-		</div>
-
-		<div class="tableview">
-			<table class="data fullwidth">
-				<thead>
+				{% for id, dataSource in dataSources %}
 					<tr>
-						<th scope="col" data-attribute="title">Data Source</th>
-						<th scope="col" data-attribute="subtitle">Data Set</th>
-						<th scope="col" data-attribute="description">Description</th>
-						<th class="thin"></th>
+						<td>{{ dataSource.getPluginName() }}</td>
+						<td>{{ dataSource.getName() }}</td>
+						<td>{{ dataSource.getDescription() }}</td>
+						<td>
+							<a href="{{ dataSource.getUrl('/edit/new') }}"
+								class="btn small">New Report</a>
+						</td>
 					</tr>
-				</thead>
-				<tbody>
-					{% for id, dataSet in dataSets %}
-						<tr>
-							<td>{{ id }}</td>
-							<td>{{ dataSet.getName() }}</td>
-							<td>{{ dataSet.getDescription() }}</td>
-							<td>
-								<a href="{{ cpUrl('sproutreports/harmony/reports/edit/new') }}" class="btn small">New Report</a>
-							</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-			<hr>
-		</div>
-
-	{% endif %}
+				{% endfor %}
+			</tbody>
+		</table>
+		<hr>
+	</div>
 
 	{{ parent() }}
 
-{% endblock %}	
+{% endblock %}
 
 
 {% block sidebar %}
 	{% if currentUser.can('editReports') %}
+		<nav>
+			<ul id="groups">
 
-	<nav>
-		<ul id="groups">
-			
-		 	<li><a href="{{ url('sproutreports') }}"{% if groupId is not defined %} class="sel"{% endif %}>{{ "All Reports"|t }}</a></li>
+			    <li><a href="{{ url('sproutreports') }}"{% if groupId is not defined %} class="sel"{% endif %}>{{ "All Reports"|t }}</a></li>
 
-			{% for group in groups %}
-				<li><a href="{{ url('sproutreports/'~group.id) }}"{% if groupId is defined and group.id == groupId %} class="sel"{% endif %} data-id="{{ group.id }}">{{ group.name }}</a></li>
-			{% endfor %} 
+				{% for group in groups %}
+					<li><a href="{{ url('sproutreports/'~group.id) }}"{% if groupId is defined and group.id == groupId %} class="sel"{% endif %} data-id="{{ group.id }}">{{ group.name }}</a></li>
+				{% endfor %}
 
-		</ul>
-	</nav>
+			</ul>
+		</nav>
 
-	<div class="buttons">
-		<div id="newgroupbtn" class="btn add icon">{{ "New Group"|t }}</div>
+		<div class="buttons">
+			<div id="newgroupbtn" class="btn add icon">{{ "New Group"|t }}</div>
 
-		{% if groupId is defined %}
-			<div id="groupsettingsbtn" class="btn settings icon menubtn" title="{{ 'Settings' }}"></div>
-			<div class="menu">
-				<ul>
-					<li><a data-action="rename" role="button">{{ "Rename selected group"|t }}</a></li>
-					<li><a data-action="delete" role="button">{{ "Delete selected group"|t }}</a></li>
-				</ul>
-			</div>
-		{% endif %}
-	</div>
-
+			{% if groupId is defined %}
+				<div id="groupsettingsbtn" class="btn settings icon menubtn" title="{{ 'Settings' }}"></div>
+					<div class="menu">
+					<ul>
+						<li><a data-action="rename" role="button">{{ "Rename selected group"|t }}</a></li>
+						<li><a data-action="delete" role="button">{{ "Delete selected group"|t }}</a></li>
+					</ul>
+				</div>
+			{% endif %}
+		</div>
 	{% endif %}
 {% endblock %}
 

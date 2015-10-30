@@ -1,0 +1,126 @@
+<?php
+namespace Craft;
+
+/**
+ * Class SproutReportsBaseDataSource
+ *
+ * @package Craft
+ */
+abstract class SproutReportsBaseDataSource
+{
+	/**
+	 * @var string
+	 */
+	protected $id;
+	protected $pluginName;
+	protected $pluginHandle;
+
+	/**
+	 * @param string $pluginHandle
+	 */
+	final public function setId($pluginHandle)
+	{
+		$dataSourceClass = str_replace('Craft\\', '', get_class($this));
+
+		$this->id = sproutReports()->sources->generateId($pluginHandle, $dataSourceClass);
+	}
+
+	/**
+	 * Should return a fully qualified string that uniquely identifies the given data source
+	 *
+	 * @format {plugin}.{source}
+	 * 1. {plugin} should be the lower case version of the plugin handle
+	 * 3. {source} should be the lower case version of your data source without prefixes or suffixes
+	 *
+	 * @example
+	 * - SproutFormsSubmissionsDataSource   > sproutforms.submissions
+	 * - SproutReportsCustomQueryDataSource > sproutreports.customquery
+	 *
+	 * @return string
+	 */
+	final public function getId()
+	{
+		return $this->id;
+	}
+
+	/**
+	 * Returns the CP URL for the given data source with the option to append to it once composed
+	 *
+	 * @legend
+	 * Deconstructs the data source id and transforms its components into a URL friendly string
+	 *
+	 * @example
+	 * sproutReports.customQuery > sproutreports/customquery
+	 * sproutreports.customquery > sproutreports/customquery
+	 *
+	 * @see getId()
+	 *
+	 * @param string $append
+	 *
+	 * @return string
+	 */
+	final public function getUrl($append = null)
+	{
+		$url = join('/', explode('.', $this->getId()));
+
+		return UrlHelper::getCpUrl(sprintf('sproutreports/reports/%s/%s', $url, ltrim($append, '/')));
+	}
+
+	/**
+	 * @param string $name
+	 */
+	final public function setPluginName($name)
+	{
+		$this->pluginName = $name;
+	}
+
+	/**
+	 * @return string
+	 */
+	final public function getPluginName()
+	{
+		return $this->pluginName;
+	}
+
+	/**
+	 * @param string $handle
+	 */
+	final public function setPluginHandle($handle)
+	{
+		$this->pluginHandle = $handle;
+	}
+
+	/**
+	 * @return string
+	 */
+	final public function getPluginHandle()
+	{
+		return $this->pluginHandle;
+	}
+
+	/**
+	 * Should return a human readable name for your data source
+	 *
+	 * @return string
+	 */
+	abstract public function getName();
+
+	/**
+	 * Should return an string containing the necessary HTML to capture user input
+	 *
+	 * @return null|string
+	 */
+	public function getOptionsHtml()
+	{
+		return null;
+	}
+
+	/**
+	 * Should return an array of records to use in the report
+	 *
+	 * @param SproutReports_ReportModel $report
+	 *
+	 * @return null|array
+	 */
+	abstract public function getResults(SproutReports_ReportModel &$report);
+}

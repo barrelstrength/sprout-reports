@@ -1,56 +1,72 @@
 <?php
 namespace Craft;
 
+/**
+ * Class SproutReportsPlugin
+ *
+ * @package Craft
+ */
 class SproutReportsPlugin extends BasePlugin
 {
-	function init()
+	/**
+	 * Defines secondary services a properties for improved public API
+	 *
+	 * @throws \Exception
+	 */
+	public function init()
 	{
 		parent::init();
 
 		Craft::import('plugins.sproutreports.contracts.*');
-
-		require CRAFT_PLUGINS_PATH.'sproutreports/vendor/autoload.php';
-		$this->registerReports();
+		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.*');
+		Craft::import('plugins.sproutreports.integrations.sproutreports.datasets.*');
 	}
 
 	/**
-	 * Returns the official name or an override if one is set
-	 *
-	 * @return    string
+	 * @return string
 	 */
-	function getName()
+	public function getName()
 	{
-		$pluginName         = Craft::t('Sprout Reports');
-		$pluginNameOverride = $this->getSettings()->pluginNameOverride;
+		$override = trim($this->getSettings()->getAttribute('pluginNameOverride'));
 
-		if ($pluginNameOverride)
-		{
-			return $pluginNameOverride;
-		}
-
-		return $pluginName;
+		return empty($override) ? Craft::t('Sprout Reports') : $override;
 	}
 
-	function getVersion()
+	/**
+	 * @return string
+	 */
+	public function getVersion()
 	{
-		return '0.4.7';
+		return '0.5.0';
 	}
 
-	function getDeveloper()
+	/**
+	 * @return string
+	 */
+	public function getDeveloper()
 	{
 		return 'Barrel Strength Design';
 	}
 
-	function getDeveloperUrl()
+	/**
+	 * @return string
+	 */
+	public function getDeveloperUrl()
 	{
 		return 'http://barrelstrengthdesign.com';
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function hasCpSection()
 	{
 		return true;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function defineSettings()
 	{
 		return array(
@@ -58,6 +74,9 @@ class SproutReportsPlugin extends BasePlugin
 		);
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getSettingsHtml()
 	{
 		return craft()->templates->render(
@@ -68,88 +87,46 @@ class SproutReportsPlugin extends BasePlugin
 		);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function registerUserPermissions()
 	{
 		return array(
-			'editReports'         => array('label' => Craft::t('Edit Reports')),
-			'singleNumberReports' => array('label' => Craft::t('Single Number Reports')),
+			'editReports' => array('label' => Craft::t('Edit Reports')),
 		);
-	}
-
-	/**
-	 * @param SproutReportsSproutFormsIntegration $hookReport
-	 *
-	 * @return SproutReports_ReportModel
-	 */
-	protected function convertHookReportToNative($hookReport)
-	{
-		$group       = new SproutReports_ReportGroupModel;
-		$group->name = $hookReport->getGroup();
-		craft()->sproutReports_reports->saveGroup($group);
-		$group = SproutReports_ReportGroupRecord::model()->findByAttributes(array('name' => $group->name));
-
-		$report                      = new SproutReports_ReportModel;
-		$report->name                = $hookReport->getName();
-		$report->groupId             = $group->id;
-		$report->handle              = 'report_'.preg_replace('/^a-zA-Z0-9/', '', $hookReport->getName()); //need to care about valid handle
-		$report->customQuery         = $hookReport->getQuery();
-		$report->description         = $hookReport->getDescription();
-		$report->settings            = $hookReport->getUserOptions();
-		$report->customQueryEditable = $hookReport->getIsCustomQueryEditable();
-		$report->queryParamsHandler  = get_class($hookReport);
-
-		craft()->sproutReports_reports->saveReport($report);
-
-		return $report;
 	}
 
 	public function onAfterInstall()
 	{
 		$this->init();
 
-		Craft::import('plugins.sproutreports.integrations.sproutreports.SproutReportsUsersReportModel');
+		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.SproutReportsUsersReportModel');
 
-		sproutReports()->createReport(new SproutReportsUsersReportModel());
+		sproutReports()->reports->register(new SproutReportsUsersReportModel());
 	}
 
-	/*
-	 * Register 3rd party reports
-	 * @return void
+	/**
+	 * @return array
 	 */
-	protected function registerReports()
+	public function registerSproutReportsDataSources()
 	{
-		$reports = craft()->plugins->call('registerSproutReports');
-		foreach ($reports as $report)
-		{
-			if (!is_array($report))
-			{
-				$report = array($report);
-			}
-			foreach ($report as $singleReport)
-			{
-				$this->convertHookReportToNative($singleReport);
-			}
-		}
-	}
-
-	public function registerSproutReportsDataProvider()
-	{
-		Craft::import('plugins.sproutreports.integrations.sproutreports.*');
-
-		return new SproutReportsDataProvider();
+		return array(
+			new SproutReportsUsersDataSource(),
+			new SproutReportsEntriesDataSource(),
+			new SproutReportsCustomQueryDataSource(),
+		);
 	}
 
 	public function registerCpRoutes()
 	{
-		$plugin   = 'sproutreports';
-		$codename = 'harmony';
-		$baseUrl  = sprintf('%s/%s', $plugin, $codename);
-
 		return array(
-			$baseUrl                             => 'sproutreports/_harmony/index',
-			$baseUrl.'/reports/edit/new'         => array('action' => 'sproutReports/editReport'),
-			$baseUrl.'/reports/edit/(?P<id>\d+)' => array('action' => 'sproutReports/editReport'),
-
+			'sproutreports'                                                                              =>
+				'sproutreports/index',
+			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/edit/new'               =>
+				array('action' => 'sproutReports/editReport'),
+			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/edit/(?P<reportId>\d+)' =>
+				array('action' => 'sproutReports/editReport'),
 		);
 	}
 }

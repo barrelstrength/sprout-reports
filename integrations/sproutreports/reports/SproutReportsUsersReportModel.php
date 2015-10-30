@@ -3,9 +3,20 @@ namespace Craft;
 
 class SproutReportsUsersReportModel extends SproutReportsBaseReportModel
 {
+	/**
+	 * @return string
+	 */
 	public function getName()
 	{
 		return 'Pending Users';
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getGroupName()
+	{
+		return 'Sprout Reports';
 	}
 
 	public function getDescription()
@@ -15,25 +26,18 @@ class SproutReportsUsersReportModel extends SproutReportsBaseReportModel
 
 	public function getSettings()
 	{
-		return array(
-			'isSingleNumber' => false,
-		);
+		return array();
 	}
 
 	public function getOptions()
 	{
 		return array(
-			'pending' => true,
+			'pendingOnly' => false,
 		);
 	}
 
-	public function getGroup()
+	public function getDataSource()
 	{
-		return 'Sprout Reports';
-	}
-
-	public function getDataSetId()
-	{
-		return 'SproutReportsUsersDataSet';
+		return sproutReports()->sources->get('sproutreports.users');
 	}
 }

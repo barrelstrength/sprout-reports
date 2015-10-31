@@ -12,7 +12,15 @@ abstract class SproutReportsBaseDataSource
 	 * @var string
 	 */
 	protected $id;
+
+	/**
+	 * @var string
+	 */
 	protected $pluginName;
+
+	/**
+	 * @var string
+	 */
 	protected $pluginHandle;
 
 	/**
@@ -26,7 +34,7 @@ abstract class SproutReportsBaseDataSource
 	}
 
 	/**
-	 * Should return a fully qualified string that uniquely identifies the given data source
+	 * Returns a fully qualified string that uniquely identifies the given data source
 	 *
 	 * @format {plugin}.{source}
 	 * 1. {plugin} should be the lower case version of the plugin handle
@@ -34,7 +42,7 @@ abstract class SproutReportsBaseDataSource
 	 *
 	 * @example
 	 * - SproutFormsSubmissionsDataSource   > sproutforms.submissions
-	 * - SproutReportsCustomQueryDataSource > sproutreports.customquery
+	 * - SproutReportsQueryDataSource > sproutreports.customquery
 	 *
 	 * @return string
 	 */
@@ -47,7 +55,7 @@ abstract class SproutReportsBaseDataSource
 	 * Returns the CP URL for the given data source with the option to append to it once composed
 	 *
 	 * @legend
-	 * Deconstructs the data source id and transforms its components into a URL friendly string
+	 * Breaks apart the data source id and transforms its components into a URL friendly string
 	 *
 	 * @example
 	 * sproutReports.customQuery > sproutreports/customquery
@@ -67,6 +75,8 @@ abstract class SproutReportsBaseDataSource
 	}
 
 	/**
+	 * Returns the name of the plugin name that the given data source is bundled with
+	 *
 	 * @param string $name
 	 */
 	final public function setPluginName($name)
@@ -98,6 +108,15 @@ abstract class SproutReportsBaseDataSource
 		return $this->pluginHandle;
 	}
 
+	/**
+	 * Returns the total count of reports created based on the given data source
+	 *
+	 * @return [type] [description]
+	 */
+	final public function getReportCount()
+	{
+		return sproutReports()->reports->getCountByDataSourceId($this->getId());
+	}
 	/**
 	 * Should return a human readable name for your data source
 	 *

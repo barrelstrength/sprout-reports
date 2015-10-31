@@ -45,7 +45,7 @@ class SproutReports_ReportService extends BaseApplicationComponent
 	/**
 	 * Registers one or more reports with our internal tracking system
 	 *
-	 * @param array|SproutReportsBaseReportModel $reports
+	 * @param array|SproutReportsBaseReport $reports
 	 *
 	 * @throws Exception
 	 * @return bool
@@ -59,7 +59,7 @@ class SproutReports_ReportService extends BaseApplicationComponent
 
 		foreach ($reports as $report)
 		{
-			if ($report instanceof SproutReportsBaseReportModel)
+			if ($report instanceof SproutReportsBaseReport)
 			{
 				$record = new SproutReports_ReportRecord();
 
@@ -133,6 +133,18 @@ class SproutReports_ReportService extends BaseApplicationComponent
 		{
 			return SproutReports_ReportGroupModel::populateModels($reports);
 		}
+	}
+
+	/**
+	 * Returns the number of reports that have been created based on a given data source
+	 *
+	 * @param int $id
+	 *
+	 * @return int
+	 */
+	public function getCountByDataSourceId($dataSourceId)
+	{
+		return (int) SproutReports_ReportRecord::model()->countByAttributes(compact($dataSourceId));
 	}
 
 	/**

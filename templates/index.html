@@ -3,6 +3,19 @@
 {% set title  = craft.sproutReports.name|t %}
 {% set groups = craft.sproutReports.getReportGroups() %}
 
+{% set tabs = {
+	reports: {
+		label: "Reports"|t,
+		url: url('sproutreports')
+	},
+	dataSources: {
+		label: "Data Sources"|t,
+		url: url('sproutreports/data-sources')
+	}
+} %}
+
+{% set selectedTab = 'reports' %}
+
 {% if groupId is defined %}
 	{% if groups[groupId] is not defined %}
 		{% exit 404 %}
@@ -14,18 +27,6 @@
 {% endif %}
 
 {% block content %}
-
-	<style type="text/css">
-		.report-row:hover {
-			background-color: #fafafa;
-			/*cursor: pointer;*/
-		}
-		.data th.first,
-		.data td.first {
-			padding-left: 10px;
-		}
-	</style>
-
 	<div class="tableview">
 		<table class="data fullwidth">
 			<thead>
@@ -50,37 +51,6 @@
 							<a href="{{ actionUrl('sproutReports/runReport', {reportId: report.id}) }}" class="btn small">Run</a>
 							<a href="{{ actionUrl('sproutReports/exportReport', {reportId: report.id}) }}" class="btn small">Export</a>
 							<a href="{{ actionUrl('sproutReports/deleteReport', {reportId: report.id}) }}" class="btn small">Delete</a>
-						</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-		<hr>
-	</div>
-
-	<hr>
-
-	<div class="tableview">
-		<table class="data fullwidth">
-			<thead>
-				<tr>
-					<th scope="col" data-attribute="title">Plugin</th>
-					<th scope="col" data-attribute="subtitle">Data Source</th>
-					<th scope="col" data-attribute="description">Description</th>
-					<th class="thin"></th>
-				</tr>
-			</thead>
-			<tbody>
-				{% set dataSources = craft.sproutReports.getDataSources() %}
-
-				{% for id, dataSource in dataSources %}
-					<tr>
-						<td>{{ dataSource.getPluginName() }}</td>
-						<td>{{ dataSource.getName() }}</td>
-						<td>{{ dataSource.getDescription() }}</td>
-						<td>
-							<a href="{{ dataSource.getUrl('/edit/new') }}"
-								class="btn small">New Report</a>
 						</td>
 					</tr>
 				{% endfor %}

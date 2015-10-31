@@ -9,7 +9,7 @@ namespace Craft;
 class SproutReportsVariable
 {
 	/**
-	 * @var null|SproutReportsPlugin
+	 * @var SproutReportsPlugin
 	 */
 	protected $plugin;
 
@@ -32,6 +32,14 @@ class SproutReportsVariable
 	public function getVersion()
 	{
 		return $this->plugin->getVersion();
+	}
+
+	/**
+	 * @return SproutReportsBaseDataSource[]
+	 */
+	public function getDataSources()
+	{
+		return sproutReports()->sources->getAll();
 	}
 
 	/**
@@ -70,16 +78,8 @@ class SproutReportsVariable
 		return sproutReports()->reports->get($id);
 	}
 
-	public function runReport(SproutReports_ReportRecord $report, $options=null)
+	public function runReport($id, array $options = array())
 	{
-		return sproutReports()->reports->run($report, $options);
-	}
-
-	/**
-	 * @return SproutReportsBaseDataSource[]
-	 */
-	public function getDataSources()
-	{
-		return sproutReports()->sources->getAll();
+		return sproutReports()->reports->run($id, $options);
 	}
 }

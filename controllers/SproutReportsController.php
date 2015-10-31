@@ -45,7 +45,7 @@ class SproutReportsController extends BaseController
 			$variables['dataSource'] = sproutReports()->sources->get($variables['plugin'].'.'.$variables['dataSourceKey']);
 		}
 
-		$this->renderTemplate('sproutreports/reports/_edit', $variables);
+		$this->renderTemplate('sproutreports/_reports/edit', $variables);
 	}
 
 	public function actionDeleteReport()

@@ -19,7 +19,7 @@ class SproutReportsPlugin extends BasePlugin
 
 		Craft::import('plugins.sproutreports.contracts.*');
 		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.*');
-		Craft::import('plugins.sproutreports.integrations.sproutreports.datasets.*');
+		Craft::import('plugins.sproutreports.integrations.sproutreports.datasources.*');
 	}
 
 	/**
@@ -37,7 +37,7 @@ class SproutReportsPlugin extends BasePlugin
 	 */
 	public function getVersion()
 	{
-		return '0.5.0';
+		return '0.6.0';
 	}
 
 	/**
@@ -97,13 +97,16 @@ class SproutReportsPlugin extends BasePlugin
 		);
 	}
 
+	/**
+	 * @throws \Exception
+	 */
 	public function onAfterInstall()
 	{
 		$this->init();
 
-		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.SproutReportsUsersReportModel');
+		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.SproutReportsUsersReport');
 
-		sproutReports()->reports->register(new SproutReportsUsersReportModel());
+		sproutReports()->reports->register(new SproutReportsUsersReport());
 	}
 
 	/**
@@ -113,8 +116,7 @@ class SproutReportsPlugin extends BasePlugin
 	{
 		return array(
 			new SproutReportsUsersDataSource(),
-			new SproutReportsEntriesDataSource(),
-			new SproutReportsCustomQueryDataSource(),
+			new SproutReportsQueryDataSource(),
 		);
 	}
 

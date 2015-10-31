@@ -33,7 +33,7 @@ class SproutReports_DataSourceService extends BaseApplicationComponent
 	}
 
 	/**
-	 * @return SproutReportsBaseDataSource[]
+	 * @return null|SproutReportsBaseDataSource[]
 	 */
 	public function getAll()
 	{

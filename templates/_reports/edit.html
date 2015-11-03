@@ -24,76 +24,54 @@
 
 {% set response = craft.session.getFlash('response') %}
 
-{% block content %}
+{% block main %}
+
+<form method="post" data-saveshortcut="1" data-saveshortcut-redirect="sproutreports/harmony/reports/edit/{id}" accept-charset="UTF-8">
+	{{ getCsrfInput() }}
+	<input type="hidden" name="action" value="sproutReports/saveReport">
+	<input type="hidden" name="redirect" value="sproutreports/harmony">
+	<input type="hidden" name="dataSourceId" value="{{ dataSource.id }}">
+
 	<div class="grid first">
-		<div class="item left" data-min-cols="2">
-			{% if report is defined and report.hasErrors() %}
-				<h2 class="error">Something went wrong.</h2>
-				<p class="code notice">More in depth message here.</p>
-			{% endif %}
-
-			<form method="post" data-saveshortcut="1" data-saveshortcut-redirect="sproutreports/harmony/reports/edit/{id}" accept-charset="UTF-8">
-		        {{ getCsrfInput() }}
-				<input type="hidden" name="action" value="sproutReports/saveReport">
-				<input type="hidden" name="redirect" value="sproutreports/harmony">
-				<input type="hidden" name="dataSourceId" value="{{ dataSource.id }}">
-
-				{% if report is defined %}
-					<input type="hidden" name="id" value="{{ report.id }}">
-				{% endif %}
-
-				{{ forms.textField({
-					label: "Name"|t,
-					name: 'name',
-					value: (report.name is defined) ? report.name : "",
-					errors: "",
-					required: true,
-					first: true,
-					autofocus: true
-				}) }}
-
-				{{ forms.textareaField({
-					label: "Description"|t,
-					name: 'description',
-					class: 'nicetext',
-					rows: 3,
-					value: (report.description is defined) ? report.description : ""
-				}) }}
-
-
-				{% if dataSource is defined %}
-					<hr>
-					{{ dataSource.getOptionsHtml(report is defined ? report.options : {}) | raw }}
-				{% endif %}
-
-				<div class="button">
-					<div class="btngroup">
-						<input type="submit" class="btn submit" value="{{ 'Save Report'|t }}">
-
-						<div class="btn submit menubtn"></div>
-						<div class="menu">
-							<ul>
-								<li><a class="formsubmit" data-redirect="sproutreports/harmony/reports/edit/{id}">{{ "Save and continue editing"|t }}</a></li>
-								<li><a class="formsubmit" data-redirect="sproutreports/harmony/reports/new">{{ "Save and add another report"|t }}</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-
-				{% if report is defined %}
-					<p>
-						<input type="button" class="btn small formsubmit" value="Delete" data-action="sproutReports/deleteReport" data-confirm="Are you sure you want to delete this report?" data-redirect="sproutreports" tabindex="0">
-					</p>
-				{% endif %}
-
-			</form>
-		</div>
-		<div class="item last"
-			data-position="right"
-			data-colspan="1"
-			style="position: absolute; display: block; width: 25%; left: 75%; top: 0px;">
+		<div class="item" data-position="left" data-min-colspan="2" data-max-colspan="3">
 			<div class="pane">
-				
+
+				{% if report is defined and report.hasErrors() %}
+					<h2 class="error">Something went wrong.</h2>
+					<p class="code notice">More in depth message here.</p>
+				{% endif %}
+
+					{% if report is defined %}
+						<input type="hidden" name="id" value="{{ report.id }}">
+					{% endif %}
+
+					{{ forms.textField({
+						label: "Name"|t,
+						name: 'name',
+						value: (report.name is defined) ? report.name : "",
+						errors: "",
+						required: true,
+						first: true,
+						autofocus: true
+					}) }}
+
+					{{ forms.textareaField({
+						label: "Description"|t,
+						name: 'description',
+						class: 'nicetext',
+						rows: 3,
+						value: (report.description is defined) ? report.description : ""
+					}) }}
+
+					{% if dataSource is defined %}
+						{{ dataSource.getOptionsHtml(report is defined ? report.options : {}) | raw }}
+					{% endif %}
+
+			</div>
+		</div>
+		<div class="item" data-position="right" data-colspan="1">
+			<div class="pane">
+
 				{% if groups | length %}
 
 					{% set groupOptions = [] %}
@@ -110,7 +88,7 @@
 						options: groupOptions,
 						value: groupId
 					}) }}
-					
+
 					{{ forms.lightSwitchField({
 						label: 'Enabled'|t,
 						name: 'enabled',
@@ -118,10 +96,31 @@
 					})}}
 				{% endif %}
 
-				<div class="btngroup submit first">
-					<input type="submit" class="btn submit" value="Save">
+			</div>
+
+			<div class="button">
+				<div class="btngroup">
+					<input type="submit" class="btn submit" value="{{ 'Save Report'|t }}">
+
 					<div class="btn submit menubtn"></div>
+					<div class="menu">
+						<ul>
+							<li><a class="formsubmit" data-redirect="sproutreports/harmony/reports/edit/{id}">{{ "Save and continue editing"|t }}</a></li>
+							<li><a class="formsubmit" data-redirect="sproutreports/harmony/reports/new">{{ "Save and add another report"|t }}</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
+
+			{% if report is defined %}
+				<p>
+					<input type="button" class="btn small formsubmit" value="Delete" data-action="sproutReports/deleteReport" data-confirm="Are you sure you want to delete this report?" data-redirect="sproutreports" tabindex="0">
+				</p>
+			{% endif %}
+
 		</div>
+	</div>
+
+</form>
+
 {% endblock %}

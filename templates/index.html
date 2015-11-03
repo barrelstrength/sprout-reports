@@ -27,6 +27,7 @@
 {% endif %}
 
 {% block content %}
+
 	<div class="tableview">
 		<table class="data fullwidth">
 			<thead>
@@ -56,10 +57,13 @@
 				{% endfor %}
 			</tbody>
 		</table>
-		<hr>
 	</div>
 
-	{{ parent() }}
+	<div class="grid">
+		<div class="item">
+			{{ parent() }}
+		</div>
+	</div>
 
 {% endblock %}
 

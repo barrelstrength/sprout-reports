@@ -1,0 +1,70 @@
+{% extends "sproutreports/_layouts/base" %}
+
+{% set title  = craft.sproutReports.name|t %}
+{% set groups = craft.sproutReports.getReportGroups() %}
+
+{% set tabs = {
+	reports: {
+		label: "Reports"|t,
+		url: url('sproutreports')
+	},
+	dataSources: {
+		label: "Data Sources"|t,
+		url: url('sproutreports/data-sources')
+	},
+	resultView: {
+		label: "Results",
+		url: "#results"
+	}
+} %}
+
+{% set selectedTab = 'resultView' %}
+
+{% block content %}
+	<div class="tableview">
+		<div class="tablecontent">
+
+			{% if values is defined and values is iterable and values|length %}
+
+				<table class="data fullwidth results">
+					<thead>
+						<tr>
+							<th class="left-border">
+								<div></div>
+							</th>
+							<th class="padding">
+								<div></div>
+							</th>
+							{% for label in labels %}
+								<th>
+									<div {% if loop.index == "1" %}class="first"{% endif %}><h3>{{ label }}</h3></div>
+								</th>
+							{% endfor %}
+						</tr>
+					</thead>
+					<tbody>
+						{% for value in values %}
+
+							<tr class="table_row">
+								<td class="left-border">
+									<div></div>
+								</td>
+								<td class="padding"></td>
+								{% for property in value %}
+									<td>
+										<div class="item_content">{{ property }}</div>
+									</td>
+								{% endfor %}
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% else %}
+				<h2>The report yielded no results.</h2>
+			{% endif %}
+			<hr>
+		</div>
+	</div>
+
+	{{ parent() }}
+{% endblock %}

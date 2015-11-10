@@ -14,6 +14,11 @@ class SproutReportsService extends BaseApplicationComponent
 	public $sources;
 
 	/**
+	 * @var SproutReports_ExportService
+	 */
+	public $exports;
+
+	/**
 	 * @var SproutReports_ReportService
 	 */
 	public $reports;
@@ -24,6 +29,7 @@ class SproutReportsService extends BaseApplicationComponent
 
 		$this->groups  = Craft::app()->getComponent('sproutReports_reportGroup');
 		$this->sources = Craft::app()->getComponent('sproutReports_dataSource');
+		$this->exports = Craft::app()->getComponent('sproutReports_export');
 		$this->reports = Craft::app()->getComponent('sproutReports_report');
 	}
 

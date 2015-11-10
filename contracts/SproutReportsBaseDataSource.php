@@ -117,6 +117,7 @@ abstract class SproutReportsBaseDataSource
 	{
 		return sproutReports()->reports->getCountByDataSourceId($this->getId());
 	}
+
 	/**
 	 * Should return a human readable name for your data source
 	 *

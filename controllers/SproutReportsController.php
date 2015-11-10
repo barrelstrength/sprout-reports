@@ -6,7 +6,7 @@ class SproutReportsController extends BaseController
 	public function actionSaveReport()
 	{
 		$this->requirePostRequest();
-		$this->requireAdmin(); // @todo: Let's think about permission
+		$this->requireAdmin();
 
 		$report = sproutReports()->reports->prepareFromPost();
 
@@ -50,10 +50,48 @@ class SproutReportsController extends BaseController
 
 	public function actionDeleteReport()
 	{
-		Craft::dd(array($_POST, $_GET));
+		$this->requirePostRequest();
+		$this->requireAdmin();
+
+		if (($record = SproutReports_ReportRecord::model()->findById(craft()->request->getPost('id'))))
+		{
+			$record->delete();
+
+			craft()->userSession->setNotice('Report deleted successfully.');
+
+			$this->redirectToPostedUrl($record->getAttributes());
+		}
+
+		throw new Exception(Craft::t('Report not found.'));
 	}
 
-	public function actionRunReport()
+	public function actionRunReport(array $variables = array())
+	{
+		$id     = isset($variables['reportId']) ? $variables['reportId'] : null;
+		$report = sproutReports()->reports->get($id);
+
+		if ($report)
+		{
+
+			$dataSource = sproutReports()->sources->get($report->dataSourceId);
+
+			if ($dataSource)
+			{
+				$values = $dataSource->getResults($report);
+
+				if (!empty($values) && empty($labels))
+				{
+					$labels = array_keys($values[0]);
+				}
+
+				return $this->renderTemplate('sproutreports/_reports/output/table', compact('values', 'labels'));
+			}
+		}
+
+		throw new HttpException(404, Craft::t('Report not found.'));
+	}
+
+	public function actionExportReport()
 	{
 		$id     = craft()->request->getParam('reportId');
 		$report = sproutReports()->reports->get($id);
@@ -64,7 +102,10 @@ class SproutReportsController extends BaseController
 
 			if ($dataSource)
 			{
-				Craft::dd($dataSource->getResults($report));
+				$filename = $report->name;
+				$results  = $dataSource->getResults($report);
+
+				sproutReports()->exports->toCsv($results, array(), $filename);
 			}
 		}
 	}

@@ -42,15 +42,12 @@
 
 				{% for report in reports %}
 					<tr>
-						<td>
-							<a href="{{ report.getEditUrl() }}">
-								{{ report.name }}
-							</a>
-						</td>
+						<td><strong>{{ report.name }}</strong></td>
 						<td>{{ report.description }}</td>
 						<td>
-							<a href="{{ actionUrl('sproutReports/runReport', {reportId: report.id}) }}" class="btn small">Run</a>
+							<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}" class="btn small">Run</a>
 							<a href="{{ actionUrl('sproutReports/exportReport', {reportId: report.id}) }}" class="btn small">Export</a>
+							<a href="{{ report.getEditUrl() }}" class="btn small">Edit</a>
 							<a href="{{ actionUrl('sproutReports/deleteReport', {reportId: report.id}) }}" class="btn small">Delete</a>
 						</td>
 					</tr>

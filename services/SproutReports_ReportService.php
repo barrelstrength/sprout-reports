@@ -11,12 +11,28 @@ class SproutReports_ReportService extends BaseApplicationComponent
 	/**
 	 * @param SproutReports_ReportModel $model
 	 *
+	 * @throws Exception
 	 * @return bool
 	 */
 	public function save(SproutReports_ReportModel &$model)
 	{
 		$old    = $model->id;
-		$record = new SproutReports_ReportRecord();
+
+		if ($model->id)
+		{
+			$record = SproutReports_ReportRecord::model()->findById($model->id);
+
+			if (!$record)
+			{
+				$model->addError('general', Craft::t('Report with id {} was not found.', array('id' => $model->id)));
+
+				return false;
+			}
+		}
+		else
+		{
+			$record = new SproutReports_ReportRecord();
+		}
 
 		$record->setAttributes($model->getAttributes(), false);
 
@@ -138,13 +154,14 @@ class SproutReports_ReportService extends BaseApplicationComponent
 	/**
 	 * Returns the number of reports that have been created based on a given data source
 	 *
-	 * @param int $id
+	 * @param $dataSourceId
 	 *
 	 * @return int
+	 *
 	 */
 	public function getCountByDataSourceId($dataSourceId)
 	{
-		return (int) SproutReports_ReportRecord::model()->countByAttributes(compact($dataSourceId));
+		return (int) SproutReports_ReportRecord::model()->countByAttributes(array('dataSourceId' => $dataSourceId));
 	}
 
 	/**

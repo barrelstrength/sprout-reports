@@ -37,7 +37,7 @@ class SproutReportsPlugin extends BasePlugin
 	 */
 	public function getVersion()
 	{
-		return '0.6.0';
+		return '0.7.0';
 	}
 
 	/**
@@ -123,12 +123,14 @@ class SproutReportsPlugin extends BasePlugin
 	public function registerCpRoutes()
 	{
 		return array(
-			'sproutreports'                                                                              =>
+			'sproutreports'                                                                                 =>
 				'sproutreports/index',
 			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/edit/new'               =>
 				array('action' => 'sproutReports/editReport'),
 			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/edit/(?P<reportId>\d+)' =>
 				array('action' => 'sproutReports/editReport'),
+			'sproutreports/reports/view/(?P<reportId>\d+)'                                                 =>
+				array('action' => 'sproutReports/runReport'),
 		);
 	}
 }

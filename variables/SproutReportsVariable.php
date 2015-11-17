@@ -78,8 +78,28 @@ class SproutReportsVariable
 		return sproutReports()->reports->get($id);
 	}
 
+	// @todo - refactor and combine logic of how this works and how
+	// SproutReportsController::actionRunReport() work
 	public function runReport($id, array $options = array())
 	{
-		return sproutReports()->reports->get($id);
+		$report = sproutReports()->reports->get($id);
+
+		if ($report)
+		{
+
+			$dataSource = sproutReports()->sources->get($report->dataSourceId);
+
+			if ($dataSource)
+			{
+				$values = $dataSource->getResults($report);
+
+				if (!empty($values) && empty($labels))
+				{
+					$labels = array_keys($values[0]);
+				}
+
+				return compact('values', 'labels');
+			}
+		}
 	}
 }

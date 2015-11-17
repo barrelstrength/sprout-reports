@@ -80,6 +80,6 @@ class SproutReportsVariable
 
 	public function runReport($id, array $options = array())
 	{
-		return sproutReports()->reports->run($id, $options);
+		return sproutReports()->reports->get($id);
 	}
 }

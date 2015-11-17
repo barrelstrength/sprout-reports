@@ -78,8 +78,6 @@ class SproutReportsVariable
 		return sproutReports()->reports->get($id);
 	}
 
-	// @todo - refactor and combine logic of how this works and how
-	// SproutReportsController::actionRunReport() work
 	public function runReport($id, array $options = array())
 	{
 		$report = sproutReports()->reports->get($id);

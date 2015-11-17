@@ -64,7 +64,7 @@
 					}) }}
 
 					{% if dataSource is defined %}
-						{{ dataSource.getOptionsHtml(report is defined ? report.options : {}) | raw }}
+						{{ dataSource.getOptionsHtml(report is defined and report.options is defined ? report.options : {}) | raw }}
 					{% endif %}
 
 			</div>

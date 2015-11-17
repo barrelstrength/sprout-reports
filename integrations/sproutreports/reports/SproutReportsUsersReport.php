@@ -8,7 +8,7 @@ class SproutReportsUsersReport extends SproutReportsBaseReport
 	 */
 	public function getName()
 	{
-		return 'Pending Users';
+		return 'All user data';
 	}
 
 	/**
@@ -21,7 +21,7 @@ class SproutReportsUsersReport extends SproutReportsBaseReport
 
 	public function getDescription()
 	{
-		return 'Returns a subset of users that have not activated their account.';
+		return 'Returns a list of all users restricted by options selected.';
 	}
 
 	public function getSettings()

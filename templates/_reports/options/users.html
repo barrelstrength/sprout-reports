@@ -1,0 +1,17 @@
+{% import "_includes/forms" as forms %}
+
+{% set options = [
+	{label: "Members", value: 1},
+	{label: "Banned Users", value: 2},
+] %}
+
+{% set values = [1, 2] %}
+
+{{ forms.checkboxGroup({
+	name: "options[groups]",
+	label: "Groups"|t,
+	description: "Select group to include in your report. All by default."|t,
+	class: "nicetext code",
+	options: options,
+	values: values,
+}) }}

@@ -18,17 +18,21 @@ class SproutReports_ExportService extends BaseApplicationComponent
 	/**
 	 * @param array $values
 	 * @param array $labels
+	 * @param array $variables
 	 *
 	 * @return string
 	 */
-	public function toHtml(array &$values, array $labels = array())
+	public function toHtml(array &$values, array $labels = array(), array $variables = array())
 	{
 		if (empty($labels))
 		{
 			$labels = array_keys($values[0]);
 		}
 
-		return craft()->templates->render('sproutreports/_reports/output/table', compact('values', 'labels'));
+		$variables['values'] = $values;
+		$variables['labels'] = $labels;
+
+		return craft()->templates->render('sproutreports/_reports/output/table', $variables);
 	}
 
 	/**

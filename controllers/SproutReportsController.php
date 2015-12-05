@@ -72,19 +72,24 @@ class SproutReportsController extends BaseController
 
 		if ($report)
 		{
-
 			$dataSource = sproutReports()->sources->get($report->dataSourceId);
 
 			if ($dataSource)
 			{
 				$values = $dataSource->getResults($report);
+				$labels = $dataSource->getDefaultLabels();
 
-				if (!empty($values) && empty($labels))
+				if (empty($labels))
 				{
 					$labels = array_keys($values[0]);
 				}
 
-				return $this->renderTemplate('sproutreports/_reports/output/table', compact('values', 'labels'));
+				$variables['values'] = $values;
+				$variables['labels'] = $labels;
+				$variables['report'] = $report;
+
+				// @todo Hand off to the export service when a blank page and 404 issues are sorted out
+				return $this->renderTemplate('sproutreports/_reports/output/table', $variables);
 			}
 		}
 
@@ -103,9 +108,10 @@ class SproutReportsController extends BaseController
 			if ($dataSource)
 			{
 				$filename = $report->name;
-				$results  = $dataSource->getResults($report);
+				$values   = $dataSource->getResults($report);
+				$labels   = $dataSource->getDefaultLabels();
 
-				sproutReports()->exports->toCsv($results, array(), $filename);
+				sproutReports()->exports->toCsv($values, $labels, $filename);
 			}
 		}
 	}

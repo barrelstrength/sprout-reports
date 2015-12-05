@@ -37,7 +37,7 @@ class SproutReportsPlugin extends BasePlugin
 	 */
 	public function getVersion()
 	{
-		return '0.7.0';
+		return '0.8.0';
 	}
 
 	/**
@@ -106,7 +106,7 @@ class SproutReportsPlugin extends BasePlugin
 
 		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.SproutReportsUsersReport');
 
-		sproutReports()->reports->register(new SproutReportsUsersReport());
+		// sproutReports()->reports->register(new SproutReportsUsersReport());
 	}
 
 	/**
@@ -115,7 +115,7 @@ class SproutReportsPlugin extends BasePlugin
 	public function registerSproutReportsDataSources()
 	{
 		return array(
-			new SproutReportsUsersDataSource(),
+			// new SproutReportsUsersDataSource(),
 			new SproutReportsQueryDataSource(),
 		);
 	}

@@ -136,6 +136,16 @@ abstract class SproutReportsBaseDataSource
 	}
 
 	/**
+	 * Should return an array of strings to be used as field values in display/output
+	 *
+	 * @return array
+	 */
+	public function getDefaultLabels()
+	{
+		return array();
+	}
+
+	/**
 	 * Should return an array of records to use in the report
 	 *
 	 * @param SproutReports_ReportModel $report

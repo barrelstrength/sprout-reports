@@ -20,6 +20,23 @@ class SproutReportsPlugin extends BasePlugin
 		Craft::import('plugins.sproutreports.contracts.*');
 		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.*');
 		Craft::import('plugins.sproutreports.integrations.sproutreports.datasources.*');
+
+		if (craft()->request->isCpRequest() && craft()->request->getSegment(1) == 'sproutreports')
+		{
+			// @todo Craft 3 - update to use info from config.json
+			craft()->templates->includeJsResource('sproutreports/js/brand.js');
+			craft()->templates->includeJs("
+				sproutFormsBrand = new Craft.SproutBrand();
+				sproutFormsBrand.displayFooter({
+					pluginName: 'Sprout Reports',
+					pluginUrl: 'http://sprout.barrelstrengthdesign.com/craft-plugins/reports',
+					pluginVersion: '" . $this->getVersion() . "',
+					pluginDescription: '" . $this->getDescription() . "',
+					developerName: '(Barrel Strength)',
+					developerUrl: '" . $this->getDeveloperUrl() . "'
+				});
+			");
+		}
 	}
 
 	/**
@@ -30,6 +47,14 @@ class SproutReportsPlugin extends BasePlugin
 		$override = trim($this->getSettings()->getAttribute('pluginNameOverride'));
 
 		return empty($override) ? Craft::t('Sprout Reports') : $override;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDescription()
+	{
+		return 'Powerful custom reports.';
 	}
 
 	/**
@@ -106,7 +131,7 @@ class SproutReportsPlugin extends BasePlugin
 
 		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.SproutReportsUsersReport');
 
-		// sproutReports()->reports->register(new SproutReportsUsersReport());
+		sproutReports()->groups->getOrCreateByName('Sprout Reports');
 	}
 
 	/**
@@ -123,8 +148,12 @@ class SproutReportsPlugin extends BasePlugin
 	public function registerCpRoutes()
 	{
 		return array(
-			'sproutreports'                                                                                 =>
-				'sproutreports/index',
+			'sproutreports' =>
+			'sproutreports/index',
+
+			'sproutreports/(?P<groupId>\d+)' =>
+			'sproutreports/index',
+
 			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/edit/new'               =>
 				array('action' => 'sproutReports/editReport'),
 			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/edit/(?P<reportId>\d+)' =>

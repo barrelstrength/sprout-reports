@@ -1,11 +1,10 @@
 {% extends "sproutreports/_layouts/base" %}
-
 {% import "_includes/forms" as forms %}
 
-{% set title = id is defined and id is not empty ? "Edit Report" : "New Report"%}
+{% set title = id is defined and id is not empty ? "Edit Report: " ~ dataSource.name : "New Report: " ~ dataSource.name %}
 
 {% set crumbs = [
-	{ label: "Reports"|t, url: url('sproutreports') },
+	{ label: "Reports"|t, url: url('sproutreports') }
 ] %}
 
 {% set groups = craft.sproutReports.getReportGroups() %}

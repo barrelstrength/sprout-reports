@@ -89,7 +89,7 @@ class SproutReports_ReportService extends BaseApplicationComponent
 
 				if (!$record->save())
 				{
-					throw new Exception(print_r($record->getErrors(), true));
+					SproutReportsPlugin::log(print_r($record->getErrors(), true), LogLevel::Warning);
 				}
 			}
 		}
@@ -138,16 +138,22 @@ class SproutReports_ReportService extends BaseApplicationComponent
 
 	/**
 	 * @param int $groupId
-	 *
-	 * @return null|SproutReports_ReportGroupModel[]
+	 * 
+	 * @return null|SproutReports_ReportModel[]
 	 */
-	public function getAllByGroupId($groupId)
+	public function getReportsByGroupId($groupId)
 	{
-		$reports = SproutReports_ReportGroupRecord::model()->findAllByAttributes(compact('groupId'));
-
-		if ($reports)
+		$result = craft()->db->createCommand()
+										->select('*')
+										->from('sproutreports_reports')
+										->where('groupId = :groupId', array(
+											':groupId' => $groupId
+											))
+										->queryAll();
+										
+		if ($result)
 		{
-			return SproutReports_ReportGroupModel::populateModels($reports);
+			return SproutReports_ReportModel::populateModels($result);
 		}
 	}
 

@@ -65,7 +65,7 @@ class SproutReportsVariable
 	 */
 	public function getReportsByGroupId($id)
 	{
-		return sproutReports()->reports->getAllByGroupId($id);
+		return sproutReports()->reports->getReportsByGroupId($id);
 	}
 
 	/**
@@ -78,13 +78,28 @@ class SproutReportsVariable
 		return sproutReports()->reports->get($id);
 	}
 
+	public function getReportsAsSelectFieldOptions()
+	{
+		$options = array();
+		$reports = $this->getReports();
+
+		foreach ($reports as $report)
+		{
+			$options[] = array(
+				'label' => $report->name,
+				'value' => $report->id,
+			);
+		}
+
+		return $options;
+	}
+
 	public function runReport($id, array $options = array())
 	{
 		$report = sproutReports()->reports->get($id);
 
 		if ($report)
 		{
-
 			$dataSource = sproutReports()->sources->get($report->dataSourceId);
 
 			if ($dataSource)

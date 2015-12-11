@@ -53,16 +53,4 @@ abstract class SproutReportsBaseReport
 	 * @return SproutReportsBaseDataSource
 	 */
 	abstract public function getDataSource();
-
-	/**
-	 * Whether or not the result set is a scalar value
-	 *
-	 * Scalar: The value returned will be the first column in the first row of the query result
-	 *
-	 * @return bool
-	 */
-	public function isScalar()
-	{
-		return false;
-	}
 }

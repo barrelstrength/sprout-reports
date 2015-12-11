@@ -13,33 +13,63 @@ class SproutReports_ReportGroupService extends BaseApplicationComponent
 	 *
 	 * @return bool
 	 */
-	public function save(SproutReports_ReportGroupModel &$model)
+	public function save(SproutReports_ReportGroupModel &$group)
 	{
-		$isNew  = !$model->id;
-		$record = new SproutReports_ReportGroupRecord();
+		$groupRecord = $this->_getGroupRecord($group);
+		$groupRecord->name = $group->name;
+		$groupRecord->handle = $group->handle;
 
-		$record->setAttributes($model->getAttributes(), false);
-
-		if (!$record->validate())
+		if ($groupRecord->validate())
 		{
-			$model->addErrors($record->getErrors());
+			$groupRecord->save(false);
 
+			// Now that we have an ID, save it on the model & models
+			if (!$group->id)
+			{
+				$group->id = $groupRecord->id;
+			}
+
+			return true;
+		}
+		else
+		{
+			$group->addErrors($groupRecord->getErrors());
 			return false;
 		}
 
-		if (!$record->save())
-		{
-			$model->addError('general', Craft::t('Unable to save report group.'));
+		// $isNew  = !$model->id;
+		// $record = new SproutReports_ReportGroupRecord();
 
-			return false;
-		}
+		// $record->isNewRecord = $isNew;
 
-		if ($isNew)
-		{
-			$model->id = $record->id;
-		}
+		// if ($model->id)
+		// {
+		// 	$oldGroup = $this->get($model->id);
+		// }
 
-		return true;
+		// $record->setAttributes($model->getAttributes(), false);
+
+		// if (!$record->validate())
+		// {
+		// 	$model->addErrors($record->getErrors());
+
+		// 	return false;
+		// }
+
+		// if (!$record->save())
+		// {
+		// 	Craft::dd($record->save());
+		// 	$model->addError('general', Craft::t('Unable to save report group.'));
+
+		// 	return false;
+		// }
+
+		// if ($isNew)
+		// {
+		// 	$model->id = $record->id;
+		// }
+
+		// return true;
 	}
 
 	/**
@@ -83,11 +113,11 @@ class SproutReports_ReportGroupService extends BaseApplicationComponent
 	 */
 	public function getAll()
 	{
-		$groups = SproutReports_ReportGroupRecord::model()->findAll();
+		$groups = SproutReports_ReportGroupRecord::model()->findAll(array('index'=>'id'));
 
 		if ($groups)
 		{
-			return SproutReports_ReportGroupModel::populateModels($groups);
+			return SproutReports_ReportGroupModel::populateModels($groups, 'id');
 		}
 	}
 
@@ -126,5 +156,24 @@ class SproutReports_ReportGroupService extends BaseApplicationComponent
 
 			throw new Exception(print_r($group->getErrors(), true));
 		}
+	}
+
+	private function _getGroupRecord(SproutReports_ReportGroupModel $group)
+	{
+		if ($group->id)
+		{
+			$groupRecord = SproutReports_ReportGroupRecord::model()->findById($group->id);
+
+			if (!$groupRecord)
+			{
+				throw new Exception(Craft::t('No field group exists with the ID “{id}”', array('id' => $group->id)));
+			}
+		}
+		else
+		{
+			$groupRecord = new SproutReports_ReportGroupRecord();
+		}
+
+		return $groupRecord;
 	}
 }

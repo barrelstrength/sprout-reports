@@ -3,10 +3,7 @@ namespace Craft;
 
 class SproutReports_SingleNumberWidget extends BaseWidget
 {
-
 	/**
-	 * Returns the type of widget this is.
-	 *
 	 * @return string
 	 */
 	public function getName()
@@ -15,8 +12,6 @@ class SproutReports_SingleNumberWidget extends BaseWidget
 	}
 
 	/**
-	 * Gets the widget's title.
-	 *
 	 * @return string
 	 */
 	public function getTitle()
@@ -24,65 +19,72 @@ class SproutReports_SingleNumberWidget extends BaseWidget
 		return Craft::t($this->getSettings()->heading);
 	}
 
-
 	/**
-	 * Gets the widget's body HTML.
-	 *
 	 * @return string
 	 */
 	public function getBodyHtml()
 	{
-		$result		= null;
-		$reportId	= $this->getSettings()->getAttribute('reportId');
-		$report		= craft()->sproutReports_reports->getReportById($reportId);
+		$report = sproutReports()->reports->get($this->getSettings()->reportId);
 
-		if ($report && !empty($report['returnsSingleNumber']))
+		if ($report)
 		{
-			$result = craft()->sproutReports_reports->runReport($report);
+			$dataSource = sproutReports()->sources->get($report->dataSourceId);
 
-			if ($result)
+			if ($dataSource)
 			{
-				$result = array_shift($result->read());
+				$result = $dataSource->getResults($report);
+
+				return craft()->templates->render(
+					'sproutreports/_widgets/singlenumber/index',
+					array(
+						'settings' => $this->getSettings(),
+						'result'   => $this->getScalarValue($result)
+					)
+				);
 			}
 		}
-
-		return craft()->templates->render('sproutreports/_widgets/singlenumber/index', array(
-			'settings'	=> $this->getSettings(),
-			'result'	=> $result
-		));
 	}
 
 	protected function defineSettings()
 	{
 		return array(
-			'heading'		=> array(AttributeType::String, 'required' => true),
-			'reportId'		=> array(AttributeType::Number),
-			'description'	=> array(AttributeType::String),
-			'resultPrefix'	=> array(AttributeType::String),
+			'heading'      => array(AttributeType::String, 'required' => true),
+			'description'  => array(AttributeType::String),
+			'resultPrefix' => array(AttributeType::String),
+			'reportId'     => array(AttributeType::Number),
 		);
 	}
 
 	public function getSettingsHtml()
 	{
-		return craft()->templates->render('sproutreports/_widgets/singlenumber/settings', array(
-			'settings'				=> $this->getSettings(),
-			'singleNumberReports'	=> $this->getSingleNumberReportAsOptions()
-		));
+		return craft()->templates->render(
+			'sproutreports/_widgets/singlenumber/settings',
+			array(
+				'settings' => $this->getSettings()
+			)
+		);
 	}
 
-	public function getSingleNumberReportAsOptions()
+	protected function getScalarValue($result)
 	{
-		$options = array();
-		$reports = craft()->sproutReports_reports->getAllReportsByAttributes(array('returnsSingleNumber' => 1));
+		$value = null;
 
-		if ($reports)
+		if (is_array($result))
 		{
-			foreach ($reports as $report)
+			if (count($result) == 1 && count($result[0]) == 1)
 			{
-				$options[$report->id] = $report->name;
+				$value = array_shift($result[0]);
+			}
+			else
+			{
+				$value = count($result);
 			}
 		}
+		else
+		{
+			$value = $result;
+		}
 
-		return $options;
+		return $value;
 	}
 }

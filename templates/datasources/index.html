@@ -1,0 +1,65 @@
+{% extends "sproutreports/_layouts/base" %}
+
+{% set title  = craft.sproutReports.name|t %}
+{% set groups = craft.sproutReports.getReportGroups() %}
+
+{% set tabs = {
+reports: {
+label: "Reports"|t,
+url: url('sproutreports')
+},
+dataSources: {
+label: "Data Sources"|t,
+url: url('sproutreports/datasources/index')
+}
+} %}
+
+{% set selectedTab = 'dataSources' %}
+
+{% if groupId is defined %}
+	{% if groups[groupId] is not defined %}
+		{% exit 404 %}
+	{% endif %}
+
+	{% set reports = craft.sproutReports.getReportsByGroupId(groupId) %}
+{% else %}
+	{% set reports = craft.sproutReports.getReports() %}
+{% endif %}
+
+{% block content %}
+	<div class="tableview">
+		<table class="data fullwidth">
+			<thead>
+			<tr>
+				<th scope="col" data-attribute="title">Plugin</th>
+				<th scope="col" data-attribute="subtitle">Data Source</th>
+				<th scope="col" data-attribute="description">Description</th>
+				<th scope="col" data-attribute="description">Total Reports</th>
+				<th class="thin"></th>
+			</tr>
+			</thead>
+			<tbody>
+			{% set dataSources = craft.sproutReports.getDataSources() %}
+
+			{% for id, dataSource in dataSources %}
+				<tr>
+					<td>{{ dataSource.getPluginName() }}</td>
+					<td>{{ dataSource.getName() }}</td>
+					<td>{{ dataSource.getDescription() }}</td>
+					<td>{{ dataSource.getReportCount() }}</td>
+					<td>
+						<a href="{{ dataSource.getUrl('/edit/new') }}" class="btn small">New Report</a>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+	<div class="grid">
+		<div class="item">
+			{{ parent() }}
+		</div>
+	</div>
+
+{% endblock %}

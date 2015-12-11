@@ -45,7 +45,7 @@ class SproutReportsController extends BaseController
 			$variables['dataSource'] = sproutReports()->sources->get($variables['plugin'].'.'.$variables['dataSourceKey']);
 		}
 
-		$this->renderTemplate('sproutreports/_reports/edit', $variables);
+		$this->renderTemplate('sproutreports/reports/_edit', $variables);
 	}
 
 	public function actionDeleteReport()
@@ -89,7 +89,7 @@ class SproutReportsController extends BaseController
 				$variables['report'] = $report;
 
 				// @todo Hand off to the export service when a blank page and 404 issues are sorted out
-				return $this->renderTemplate('sproutreports/_reports/output/table', $variables);
+				return $this->renderTemplate('sproutreports/results/index', $variables);
 			}
 		}
 

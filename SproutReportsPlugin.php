@@ -105,7 +105,7 @@ class SproutReportsPlugin extends BasePlugin
 	public function getSettingsHtml()
 	{
 		return craft()->templates->render(
-			'sproutreports/_settings/plugin',
+			'sproutreports/_cp/settings',
 			array(
 				'settings' => $this->getSettings()
 			)
@@ -129,9 +129,16 @@ class SproutReportsPlugin extends BasePlugin
 	{
 		$this->init();
 
+		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.SproutReportsCategoriesReport');
 		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.SproutReportsUsersReport');
 
 		sproutReports()->groups->getOrCreateByName('Sprout Reports');
+
+		if (craft()->plugins->getPlugin('sproutreports'))
+		{
+			sproutReports()->reports->register(new SproutReportsCategoriesReport());
+			sproutReports()->reports->register(new SproutReportsUsersReport());
+		}
 	}
 
 	/**
@@ -140,7 +147,8 @@ class SproutReportsPlugin extends BasePlugin
 	public function registerSproutReportsDataSources()
 	{
 		return array(
-			// new SproutReportsUsersDataSource(),
+			new SproutReportsCategoriesDataSource(),
+			new SproutReportsUsersDataSource(),
 			new SproutReportsQueryDataSource(),
 		);
 	}
@@ -154,11 +162,13 @@ class SproutReportsPlugin extends BasePlugin
 			'sproutreports/(?P<groupId>\d+)' =>
 			'sproutreports/index',
 
-			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/edit/new'               =>
+			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/edit/new' =>
 				array('action' => 'sproutReports/editReport'),
+
 			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/edit/(?P<reportId>\d+)' =>
 				array('action' => 'sproutReports/editReport'),
-			'sproutreports/reports/view/(?P<reportId>\d+)'                                                 =>
+
+			'sproutreports/reports/view/(?P<reportId>\d+)' =>
 				array('action' => 'sproutReports/runReport'),
 		);
 	}

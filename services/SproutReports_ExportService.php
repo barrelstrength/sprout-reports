@@ -32,7 +32,7 @@ class SproutReports_ExportService extends BaseApplicationComponent
 		$variables['values'] = $values;
 		$variables['labels'] = $labels;
 
-		return craft()->templates->render('sproutreports/_reports/output/table', $variables);
+		return craft()->templates->render('sproutreports/results/index', $variables);
 	}
 
 	/**

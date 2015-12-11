@@ -43,6 +43,6 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 	 */
 	public function getOptionsHtml(array $options = array())
 	{
-		return craft()->templates->render('sproutreports/_reports/options/users', compact('options'));
+		return craft()->templates->render('sproutreports/datasources/_options/users', compact('options'));
 	}
 }

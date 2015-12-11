@@ -1,0 +1,54 @@
+{% import "_includes/forms" as forms %}
+
+{% set sections = craft.sections.getAllSections() %}
+
+{% set sectionOptions = [] %}
+
+{% for section in sections %}
+  {% if section.type != 'single' %}
+
+  	{% set sectionOptions = sectionOptions|merge([{
+  		label: section.name,
+  		value: section.id
+  	}]) %}
+
+  {% endif %}
+{% endfor %}
+
+{% set categoryGroups = craft.categoryGroups.getAllGroups() %}
+
+{% set categoryGroupOptions = [] %}
+
+{% for categoryGroup in categoryGroups %}
+  {# {{ dump(categoryGroup)}} #}
+  	{% set categoryGroupOptions = categoryGroupOptions|merge([{
+  		label: categoryGroup.name,
+  		value: categoryGroup.id
+  	}]) %}
+
+{% endfor %}
+
+{{ forms.selectField({
+	label: "Category Group"|t,
+	instructions: "Which category group do you report category usage for?"|t,
+	name: 'options[categoryGroupId]',
+	options: categoryGroupOptions,
+	value: (options.categoryGroupId is defined ? options.categoryGroupId : null)
+}) }}
+
+{{ forms.selectField({
+	label: "Section"|t,
+	instructions: "Which section do you report category usage for?"|t,
+	name: 'options[sectionId]',
+	options: sectionOptions,
+	value: (options.section is defined ? options.section : null)
+}) }}
+
+{# {{ forms.select({
+	name: "options[groups]",
+	label: "Sections"|t,
+	description: "Select section to use for your report."|t,
+	class: "nicetext",
+	options: sections,
+	values: values,
+}) }} #}

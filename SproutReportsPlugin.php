@@ -189,7 +189,7 @@ class SproutReportsPlugin extends BasePlugin
 			'sproutreports/reports/(?P<groupId>\d+)' =>
 			'sproutreports/reports/index',
 
-			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/edit/new' =>
+			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/new' =>
 				array('action' => 'sproutReports/reports/editReport'),
 
 			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/edit/(?P<reportId>\d+)' =>

@@ -68,6 +68,14 @@ class SproutReportsPlugin extends BasePlugin
 	/**
 	 * @return string
 	 */
+	public function getSchemaVersion()
+	{
+		return '0.8.0';
+	}
+
+	/**
+	 * @return string
+	 */
 	public function getDeveloper()
 	{
 		return 'Barrel Strength Design';
@@ -80,6 +88,23 @@ class SproutReportsPlugin extends BasePlugin
 	{
 		return 'http://barrelstrengthdesign.com';
 	}
+
+	/**
+	 * @return string
+	 */
+	public function getDocumentationUrl()
+	{
+		return "http://sprout.barrelstrengthdesign.com/craft-plugins/results/docs";
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getReleaseFeedUrl()
+	{
+		return 'https://sprout.barrelstrengthdesign.com/craft-plugins/reports/releases.json';
+	}
+
 
 	/**
 	 * @return bool

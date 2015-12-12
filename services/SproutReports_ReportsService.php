@@ -2,11 +2,11 @@
 namespace Craft;
 
 /**
- * Class SproutReports_ReportService
+ * Class SproutReports_ReportsService
  *
  * @package Craft
  */
-class SproutReports_ReportService extends BaseApplicationComponent
+class SproutReports_ReportsService extends BaseApplicationComponent
 {
 	/**
 	 * @param SproutReports_ReportModel $model
@@ -14,7 +14,7 @@ class SproutReports_ReportService extends BaseApplicationComponent
 	 * @throws Exception
 	 * @return bool
 	 */
-	public function save(SproutReports_ReportModel &$model)
+	public function saveReport(SproutReports_ReportModel &$model)
 	{
 		$old    = $model->id;
 

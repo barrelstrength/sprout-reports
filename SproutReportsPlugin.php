@@ -163,13 +163,13 @@ class SproutReportsPlugin extends BasePlugin
 			'sproutreports/reports/index',
 
 			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/edit/new' =>
-				array('action' => 'sproutReports/editReport'),
+				array('action' => 'sproutReports/reports/editReport'),
 
 			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/edit/(?P<reportId>\d+)' =>
-				array('action' => 'sproutReports/editReport'),
+				array('action' => 'sproutReports/reports/editReport'),
 
 			'sproutreports/reports/view/(?P<reportId>\d+)' =>
-				array('action' => 'sproutReports/runReport'),
+				array('action' => 'sproutReports/reports/resultsIndex'),
 		);
 	}
 }

@@ -14,10 +14,9 @@ class SproutReports_ReportsController extends BaseController
 	{
 		$this->requirePostRequest();
 
-		$report = craft()->request->getPost();
-		$report = SproutReports_ReportModel::populateModel($report);
+		$report = sproutReports()->reports->prepareFromPost();
 
-		if (craft()->sproutReports_reports->saveReport($report))
+		if (sproutReports()->reports->saveReport($report))
 		{
 			craft()->userSession->setNotice(Craft::t('Report saved.'));
 			$this->redirectToPostedUrl($report);
@@ -26,85 +25,136 @@ class SproutReports_ReportsController extends BaseController
 		{
 			craft()->userSession->setError(Craft::t('Could not save report.'));
 
-			craft()->urlManager->setRouteVariables(
-				array(
-					'errorMessage'  => $report->getError('customQuery'),
-					'unsavedReport' => $report
-				)
-			);
+			craft()->urlManager->setRouteVariables(array(
+				'report' => $report->getErrors()
+			));
 		}
+	}
+
+	public function actionEditReport(array $variables = array())
+	{
+		if (isset($variables['reportId']) && ($report = sproutReports()->reports->get($variables['reportId'])))
+		{
+			$variables['report']     = $report;
+			$variables['dataSource'] = sproutReports()->dataSources->get($report->dataSourceId);
+		}
+		else
+		{
+			$variables['dataSource'] = sproutReports()->dataSources->get($variables['plugin'].'.'.$variables['dataSourceKey']);
+		}
+
+		$this->renderTemplate('sproutreports/reports/_edit', $variables);
+	}
+
+	public function actionResultsIndex(array $variables = array())
+	{
+		$id     = isset($variables['reportId']) ? $variables['reportId'] : null;
+		$report = sproutReports()->reports->get($id);
+
+		if ($report)
+		{
+			$dataSource = sproutReports()->dataSources->get($report->dataSourceId);
+
+			if ($dataSource)
+			{
+				$values = $dataSource->getResults($report);
+				$labels = $dataSource->getDefaultLabels();
+
+				if (empty($labels))
+				{
+					$labels = array_keys($values[0]);
+				}
+
+				$variables['values'] = $values;
+				$variables['labels'] = $labels;
+				$variables['report'] = $report;
+
+				// @todo Hand off to the export service when a blank page and 404 issues are sorted out
+				return $this->renderTemplate('sproutreports/results/index', $variables);
+			}
+		}
+
+		throw new HttpException(404, Craft::t('Report not found.'));
 	}
 
 	/*
 	 * Process report query and display results
 	 */
 	public function actionResults()
-    {
-        $reportId = craft()->request->getSegment(3);
-        $report = craft()->sproutReports_reports->getReportById($reportId);
-        $runReport = craft()->request->getParam('runReport');
+	{
+		$reportId  = craft()->request->getSegment(3);
+		$report    = craft()->sproutReports_reports->getReportById($reportId);
+		$runReport = craft()->request->getParam('runReport');
 
-        $results = array();
+		$results = array();
 
-        $userValues = array();
-        //prepare default values
-        foreach ($report->settings as $optionName => $option)
-        {
-            $userValues[$optionName] = '';
-            if (!$runReport)
-            {
-                if (isset($option['defaultValue']['isSQL']) && ($option['defaultValue']['isSQL'] === true))
-                {
-                    $userValues[$optionName] = craft()->db->createCommand($option['defaultValue']['value'])->queryScalar();
-                } else
-                {
-                    $userValues[$optionName] = $option['defaultValue']['value'];
-                }
-                if ($option['type'] == 'date')
-                {
-                    if (!empty($userValues[$optionName]))
-                    {
-                        $dateValue = $userValues[$optionName];
-                    } elseif ($optionName == 'dateCreatedFrom')
-                    {
-                        $dateValue = date('Y-m-1 00:00:00');
-                    } elseif ($optionName == 'dateCreatedTill')
-                    {
-                        $dateValue = date('Y-m-t 23:59:59');
-                    } else
-                    {
-                        $dateValue = date('Y-m-d H:i:s');
-                    }
-                    $userValues[$optionName] = DateTime::createFromFormat('Y-m-d H:i:s', $dateValue);
-                }
-            } else
-            {
-                if ($optionDate = craft()->request->getPost('reportOptions.' . $optionName . '.date'))
-                {
-                    $optionTime = craft()->request->getPost('reportOptions.' . $optionName . '.time') ?: '0:00 AM';
-                    $userValues[$optionName] = DateTime::createFromFormat('n/j/Yg:i A', $optionDate . $optionTime);
-                } else
-                {
-                    $userValues[$optionName] = craft()->request->getPost('reportOptions.' . $optionName);
-                }
-            }
-        }
+		$userValues = array();
+		//prepare default values
+		foreach ($report->settings as $optionName => $option)
+		{
+			$userValues[$optionName] = '';
+			if (!$runReport)
+			{
+				if (isset($option['defaultValue']['isSQL']) && ($option['defaultValue']['isSQL'] === true))
+				{
+					$userValues[$optionName] = craft()->db->createCommand($option['defaultValue']['value'])->queryScalar();
+				}
+				else
+				{
+					$userValues[$optionName] = $option['defaultValue']['value'];
+				}
 
-        if ($runReport)
-        {
-            $reportOptions = craft()->request->getPost('reportOptions');
-            $results = craft()->sproutReports_reports->runReport($report, $reportOptions);
-            if ($results->rowCount && craft()->request->getPost('exportCSV'))
-            {
-                $this->exportDataToCsv($report, $results);
-            }
-        }
+				if ($option['type'] == 'date')
+				{
+					if (!empty($userValues[$optionName]))
+					{
+						$dateValue = $userValues[$optionName];
+					}
+					elseif ($optionName == 'dateCreatedFrom')
+					{
+						$dateValue = date('Y-m-1 00:00:00');
+					}
+					elseif ($optionName == 'dateCreatedTill')
+					{
+						$dateValue = date('Y-m-t 23:59:59');
+					}
+					else
+					{
+						$dateValue = date('Y-m-d H:i:s');
+					}
+					$userValues[$optionName] = DateTime::createFromFormat('Y-m-d H:i:s', $dateValue);
+				}
+			}
+			else
+			{
+				if ($optionDate = craft()->request->getPost('reportOptions.' . $optionName . '.date'))
+				{
+					$optionTime              = craft()->request->getPost('reportOptions.' . $optionName . '.time') ?: '0:00 AM';
+					$userValues[$optionName] = DateTime::createFromFormat('n/j/Yg:i A', $optionDate . $optionTime);
+				}
+				else
+				{
+					$userValues[$optionName] = craft()->request->getPost('reportOptions.' . $optionName);
+				}
+			}
+		}
 
-        $this->renderTemplate('sproutreports/results/index', array(
-            'report' => $report,
-            'results' => $results,
-            'userValues' => $userValues
-        ));
+		if ($runReport)
+		{
+			$reportOptions = craft()->request->getPost('reportOptions');
+			$results       = sproutReports()->reports->runReport($report, $reportOptions);
+
+			if ($results->rowCount && craft()->request->getPost('exportCSV'))
+			{
+				$this->exportDataToCsv($report, $results);
+			}
+		}
+
+		$this->renderTemplate('sproutreports/results/index', array(
+			'report'     => $report,
+			'results'    => $results,
+			'userValues' => $userValues
+		));
 	}
 
 	/**
@@ -115,8 +165,8 @@ class SproutReports_ReportsController extends BaseController
 	public function actionRunReport()
 	{
 		$reportId = craft()->request->getPost('reportId');
-		$report   = craft()->sproutReports_reports->getReportById($reportId);
-		$results  = craft()->sproutReports_reports->runReport($report);
+		$report   = sproutReports()->reports->getReportById($reportId);
+		$results  = sproutReports()->reports->runReport($report);
 
 		if (false !== $results)
 		{
@@ -146,6 +196,7 @@ class SproutReports_ReportsController extends BaseController
 
 			$this->redirect('sproutreports/reports/edit/' . $reportId);
 		}
+
 		$this->renderTemplate('results/index', array(
 			'report'  => $report,
 			'results' => $results
@@ -156,10 +207,38 @@ class SproutReports_ReportsController extends BaseController
 	{
 		$this->requirePostRequest();
 
-		$reportId = craft()->request->getRequiredPost('id');
+		$reportId = craft()->request->getRequiredPost('reportId');
 
-		craft()->sproutReports_reports->deleteReportById($reportId);
-		$this->redirectToPostedUrl();
+		if ($record = SproutReports_ReportRecord::model()->findById($reportId))
+		{
+			$record->delete();
+
+			craft()->userSession->setNotice('Report deleted.');
+
+			$this->redirectToPostedUrl($record->getAttributes());
+		}
+
+		throw new Exception(Craft::t('Report not found.'));
+	}
+
+	public function actionExportReport()
+	{
+		$id     = craft()->request->getParam('reportId');
+		$report = sproutReports()->reports->get($id);
+
+		if ($report)
+		{
+			$dataSource = sproutReports()->dataSources->get($report->dataSourceId);
+
+			if ($dataSource)
+			{
+				$filename = $report->name;
+				$values   = $dataSource->getResults($report);
+				$labels   = $dataSource->getDefaultLabels();
+
+				sproutReports()->exports->toCsv($values, $labels, $filename);
+			}
+		}
 	}
 
 	/**

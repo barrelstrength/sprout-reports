@@ -28,7 +28,7 @@ class SproutReports_SingleNumberWidget extends BaseWidget
 
 		if ($report)
 		{
-			$dataSource = sproutReports()->sources->get($report->dataSourceId);
+			$dataSource = sproutReports()->dataSources->get($report->dataSourceId);
 
 			if ($dataSource)
 			{

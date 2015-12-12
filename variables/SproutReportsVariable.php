@@ -39,7 +39,7 @@ class SproutReportsVariable
 	 */
 	public function getDataSources()
 	{
-		return sproutReports()->sources->getAll();
+		return sproutReports()->dataSources->getAll();
 	}
 
 	/**
@@ -100,7 +100,7 @@ class SproutReportsVariable
 
 		if ($report)
 		{
-			$dataSource = sproutReports()->sources->get($report->dataSourceId);
+			$dataSource = sproutReports()->dataSources->get($report->dataSourceId);
 
 			if ($dataSource)
 			{

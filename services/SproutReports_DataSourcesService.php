@@ -2,11 +2,11 @@
 namespace Craft;
 
 /**
- * Class SproutReports_DataSourceService
+ * Class SproutReports_DataSourcesService
  *
  * @package Craft
  */
-class SproutReports_DataSourceService extends BaseApplicationComponent
+class SproutReports_DataSourcesService extends BaseApplicationComponent
 {
 	/**
 	 * @var SproutReportsBaseDataSource[]

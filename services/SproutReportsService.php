@@ -9,17 +9,17 @@ class SproutReportsService extends BaseApplicationComponent
 	public $reportGroups;
 
 	/**
-	 * @var SproutReports_DataSourceService
+	 * @var SproutReports_DataSourcesService
 	 */
-	public $sources;
+	public $dataSources;
 
 	/**
-	 * @var SproutReports_ExportService
+	 * @var SproutReports_ExportsService
 	 */
 	public $exports;
 
 	/**
-	 * @var SproutReports_ReportService
+	 * @var SproutReports_ReportsService
 	 */
 	public $reports;
 
@@ -27,10 +27,10 @@ class SproutReportsService extends BaseApplicationComponent
 	{
 		parent::init();
 
-		$this->reportGroups  = Craft::app()->getComponent('sproutReports_reportGroups');
-		$this->sources = Craft::app()->getComponent('sproutReports_dataSource');
-		$this->exports = Craft::app()->getComponent('sproutReports_export');
-		$this->reports = Craft::app()->getComponent('sproutReports_report');
+		$this->reportGroups = Craft::app()->getComponent('sproutReports_reportGroups');
+		$this->dataSources = Craft::app()->getComponent('sproutReports_dataSources');
+		$this->exports = Craft::app()->getComponent('sproutReports_exports');
+		$this->reports = Craft::app()->getComponent('sproutReports_reports');
 	}
 
 	/**

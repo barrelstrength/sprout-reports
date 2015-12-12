@@ -58,7 +58,7 @@ class SproutReports_ReportModel extends BaseModel
 
 	public function getDataSource()
 	{
-		return sproutReports()->sources->get($this->getDataSourceId());
+		return sproutReports()->dataSources->get($this->getDataSourceId());
 	}
 
 	/**

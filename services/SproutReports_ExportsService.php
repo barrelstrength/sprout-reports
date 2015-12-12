@@ -3,7 +3,7 @@ namespace Craft;
 
 use League\Csv\Writer;
 
-class SproutReports_ExportService extends BaseApplicationComponent
+class SproutReports_ExportsService extends BaseApplicationComponent
 {
 	/**
 	 * Initializes the service by importing vendor libraries

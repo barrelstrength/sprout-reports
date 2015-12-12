@@ -38,6 +38,6 @@ class SproutReportsUsersReport extends SproutReportsBaseReport
 
 	public function getDataSource()
 	{
-		return sproutReports()->sources->get('sproutreports.users');
+		return sproutReports()->dataSources->get('sproutreports.users');
 	}
 }

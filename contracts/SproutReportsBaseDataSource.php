@@ -30,7 +30,7 @@ abstract class SproutReportsBaseDataSource
 	{
 		$dataSourceClass = str_replace('Craft\\', '', get_class($this));
 
-		$this->id = sproutReports()->sources->generateId($pluginHandle, $dataSourceClass);
+		$this->id = sproutReports()->dataSources->generateId($pluginHandle, $dataSourceClass);
 	}
 
 	/**

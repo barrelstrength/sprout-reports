@@ -28,31 +28,36 @@
 
 {% block content %}
 
-	<div class="tableview">
-		<table class="data fullwidth">
-			<thead>
-			<tr>
-				<th scope="col" data-attribute="name">Name</th>
-				<th scope="col" data-attribute="description">Description</th>
-				<th class="thin"></th>
-			</tr>
-			</thead>
-			<tbody>
-			{% for report in reports %}
+	<form method="post" accept-charset="UTF-8">
+		{{ getCsrfInput() }}
+
+		<div class="tableview">
+			<table class="data fullwidth">
+				<thead>
 				<tr>
-					<td><strong>{{ report.name }}</strong></td>
-					<td>{{ report.description }}</td>
-					<td>
-						<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}" class="btn small">Run</a>
-						<a href="{{ actionUrl('sproutReports/exportReport', {reportId: report.id}) }}" class="btn small">Export</a>
-						<a href="{{ report.getEditUrl() }}" class="btn small">Edit</a>
-						<a href="{{ actionUrl('sproutReports/deleteReport', {reportId: report.id}) }}" class="btn small">Delete</a>
-					</td>
+					<th scope="col" data-attribute="name">Name</th>
+					<th scope="col" data-attribute="description">Description</th>
+					<th class="thin"></th>
 				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
-	</div>
+				</thead>
+				<tbody>
+				{% for report in reports %}
+					<tr>
+						<td><strong>{{ report.name }}</strong></td>
+						<td>{{ report.description }}</td>
+						<td>
+							<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}" class="btn small">Run</a>
+							<a href="{{ actionUrl('sproutReports/reports/exportReport', {reportId: report.id}) }}" class="btn small">Export</a>
+							<a href="{{ report.getEditUrl() }}" class="btn small">Edit</a>
+							<a class="btn small formsubmit" data-param="reportId" data-value="{{ report.id }}" data-action="sproutReports/reports/deleteReport" data-redirect="sproutReports/reports" data-confirm="Are you sure you want to delete this report?">Delete</a>
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+	</form>
 
 	<div class="grid">
 		<div class="item">

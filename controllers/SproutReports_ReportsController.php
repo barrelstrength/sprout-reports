@@ -26,7 +26,7 @@ class SproutReports_ReportsController extends BaseController
 			craft()->userSession->setError(Craft::t('Could not save report.'));
 
 			craft()->urlManager->setRouteVariables(array(
-				'report' => $report->getErrors()
+				'report' => $report
 			));
 		}
 	}
@@ -35,7 +35,8 @@ class SproutReports_ReportsController extends BaseController
 	{
 		if (isset($variables['reportId']) && ($report = sproutReports()->reports->get($variables['reportId'])))
 		{
-			$variables['report']     = $report;
+			// If we have a Report Model in our $variables, we are handling errors
+			$variables['report']     = isset($variables['report']) ? $variables['report'] : $report;
 			$variables['dataSource'] = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
 		}
 		else

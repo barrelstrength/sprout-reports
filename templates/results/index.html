@@ -23,7 +23,6 @@
 {% block content %}
 	<div class="meta">
 		<h2>{{ report.name|t }}</h2>
-		<p>{{ report.description|t }}</p>
 	</div>
 	<div class="tableview">
 		{% if values is defined and values is iterable and values|length %}

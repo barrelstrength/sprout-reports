@@ -38,8 +38,6 @@
 			</tr>
 			</thead>
 			<tbody>
-			{% set reports = craft.sproutReports.getReports() %}
-
 			{% for report in reports %}
 				<tr>
 					<td><strong>{{ report.name }}</strong></td>
@@ -72,7 +70,7 @@
 				<li><a href="{{ url('sproutreports') }}"{% if groupId is not defined %} class="sel"{% endif %}>{{ "All Reports"|t }}</a></li>
 
 				{% for group in groups %}
-					<li><a href="{{ url('sproutreports/'~group.id) }}"{% if groupId is defined and group.id == groupId %} class="sel"{% endif %} data-id="{{ group.id }}">{{ group.name }}</a></li>
+					<li><a href="{{ url('sproutreports/reports/'~group.id) }}"{% if groupId is defined and group.id == groupId %} class="sel"{% endif %} data-id="{{ group.id }}">{{ group.name }}</a></li>
 				{% endfor %}
 
 			</ul>

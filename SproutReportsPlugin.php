@@ -132,7 +132,7 @@ class SproutReportsPlugin extends BasePlugin
 		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.SproutReportsCategoriesReport');
 		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.SproutReportsUsersReport');
 
-		sproutReports()->groups->getOrCreateByName('Sprout Reports');
+		sproutReports()->reportGroups->getOrCreateByName('Sprout Reports');
 
 		if (craft()->plugins->getPlugin('sproutreports'))
 		{
@@ -157,10 +157,10 @@ class SproutReportsPlugin extends BasePlugin
 	{
 		return array(
 			'sproutreports' =>
-			'sproutreports/index',
+			'sproutreports/reports/index',
 
-			'sproutreports/(?P<groupId>\d+)' =>
-			'sproutreports/index',
+			'sproutreports/reports/(?P<groupId>\d+)' =>
+			'sproutreports/reports/index',
 
 			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/edit/new' =>
 				array('action' => 'sproutReports/editReport'),

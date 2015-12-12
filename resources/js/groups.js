@@ -152,7 +152,7 @@ Garnish.$doc.ready(function()
 		groupSettingsSelector: '#groupsettingsbtn',
 
 		newGroupAction: 'sproutReports/group/saveGroup',
-		newGroupOnSuccessUrlBase: 'sproutreports/',
+		newGroupOnSuccessUrlBase: 'sproutreports/reports/',
 		newGroupOnErrorMessage: 'Could not create the group:',
 
 		renameGroupAction: 'sproutReports/group/saveGroup',

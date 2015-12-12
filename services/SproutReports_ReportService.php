@@ -85,7 +85,7 @@ class SproutReports_ReportService extends BaseApplicationComponent
 				$record->options      = $report->getOptions();
 				$record->dataSourceId = $report->getDataSource()->getId();
 				$record->enabled      = true;
-				$record->groupId      = sproutReports()->groups->getOrCreateByName($report->getGroupName())->id;
+				$record->groupId      = sproutReports()->reportGroups->getOrCreateByName($report->getGroupName())->id;
 
 				if (!$record->save())
 				{

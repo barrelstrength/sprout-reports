@@ -20,7 +20,7 @@ class SproutReports_GroupController extends BaseController
 
 		$isNewGroup = empty($group->id);
 
-		if (sproutReports()->groups->save($group))
+		if (sproutReports()->reportGroups->saveGroup($group))
 		{
 			if ($isNewGroup)
 			{
@@ -49,7 +49,7 @@ class SproutReports_GroupController extends BaseController
 		$this->requireAjaxRequest();
 
 		$groupId = craft()->request->getRequiredPost('id');
-		$success = sproutReports()->groups->delete($groupId);
+		$success = sproutReports()->reportGroups->deleteGroup($groupId);
 
 		craft()->userSession->setNotice(Craft::t('Group deleted.'));
 

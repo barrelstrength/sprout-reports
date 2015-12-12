@@ -2,18 +2,18 @@
 namespace Craft;
 
 /**
- * Class SproutReports_ReportGroupService
+ * Class SproutReports_ReportGroupsService
  *
  * @package Craft
  */
-class SproutReports_ReportGroupService extends BaseApplicationComponent
+class SproutReports_ReportGroupsService extends BaseApplicationComponent
 {
 	/**
 	 * @param SproutReports_ReportGroupModel &$model
 	 *
 	 * @return bool
 	 */
-	public function save(SproutReports_ReportGroupModel &$group)
+	public function saveGroup(SproutReports_ReportGroupModel &$group)
 	{
 		$groupRecord = $this->_getGroupRecord($group);
 		$groupRecord->name = $group->name;
@@ -36,40 +36,6 @@ class SproutReports_ReportGroupService extends BaseApplicationComponent
 			$group->addErrors($groupRecord->getErrors());
 			return false;
 		}
-
-		// $isNew  = !$model->id;
-		// $record = new SproutReports_ReportGroupRecord();
-
-		// $record->isNewRecord = $isNew;
-
-		// if ($model->id)
-		// {
-		// 	$oldGroup = $this->get($model->id);
-		// }
-
-		// $record->setAttributes($model->getAttributes(), false);
-
-		// if (!$record->validate())
-		// {
-		// 	$model->addErrors($record->getErrors());
-
-		// 	return false;
-		// }
-
-		// if (!$record->save())
-		// {
-		// 	Craft::dd($record->save());
-		// 	$model->addError('general', Craft::t('Unable to save report group.'));
-
-		// 	return false;
-		// }
-
-		// if ($isNew)
-		// {
-		// 	$model->id = $record->id;
-		// }
-
-		// return true;
 	}
 
 	/**
@@ -78,7 +44,7 @@ class SproutReports_ReportGroupService extends BaseApplicationComponent
 	 * @throws Exception
 	 * @return SproutReports_ReportGroupModel
 	 */
-	public function get($id)
+	public function getGroupById($id)
 	{
 		$group = SproutReports_ReportGroupRecord::model()->findByAttributes(compact('id'));
 
@@ -96,7 +62,7 @@ class SproutReports_ReportGroupService extends BaseApplicationComponent
 	 * @throws Exception
 	 * @return SproutReports_ReportGroupModel
 	 */
-	public function getByHandle($handle)
+	public function getGroupByHandle($handle)
 	{
 		$group = SproutReports_ReportGroupRecord::model()->findByAttributes(compact('handle'));
 
@@ -111,7 +77,7 @@ class SproutReports_ReportGroupService extends BaseApplicationComponent
 	/**
 	 * @return null|SproutReports_ReportGroupModel[]
 	 */
-	public function getAll()
+	public function getAllReportGroups()
 	{
 		$groups = SproutReports_ReportGroupRecord::model()->findAll(array('index'=>'id'));
 
@@ -126,7 +92,7 @@ class SproutReports_ReportGroupService extends BaseApplicationComponent
 	 *
 	 * @return bool
 	 */
-	public function delete($id)
+	public function deleteGroup($id)
 	{
 		return (bool) SproutReports_ReportGroupRecord::model()->deleteByPk($id);
 	}
@@ -143,13 +109,13 @@ class SproutReports_ReportGroupService extends BaseApplicationComponent
 
 		try
 		{
-			return $this->getByHandle($handle);
+			return $this->getGroupByHandle($handle);
 		}
 		catch (\Exception $e)
 		{
 			$group = new SproutReports_ReportGroupModel(compact('name', 'handle'));
 
-			if ($this->save($group))
+			if ($this->saveGroup($group))
 			{
 				return $group;
 			}

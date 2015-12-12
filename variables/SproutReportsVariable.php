@@ -55,7 +55,7 @@ class SproutReportsVariable
 	 */
 	public function getReportGroups()
 	{
-		return sproutReports()->groups->getAll();
+		return sproutReports()->reportGroups->getAllReportGroups();
 	}
 
 	/**

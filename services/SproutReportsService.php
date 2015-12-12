@@ -4,9 +4,9 @@ namespace Craft;
 class SproutReportsService extends BaseApplicationComponent
 {
 	/**
-	 * @var SproutReports_ReportGroupService
+	 * @var SproutReports_ReportGroupsService
 	 */
-	public $groups;
+	public $reportGroups;
 
 	/**
 	 * @var SproutReports_DataSourceService
@@ -27,7 +27,7 @@ class SproutReportsService extends BaseApplicationComponent
 	{
 		parent::init();
 
-		$this->groups  = Craft::app()->getComponent('sproutReports_reportGroup');
+		$this->reportGroups  = Craft::app()->getComponent('sproutReports_reportGroups');
 		$this->sources = Craft::app()->getComponent('sproutReports_dataSource');
 		$this->exports = Craft::app()->getComponent('sproutReports_export');
 		$this->reports = Craft::app()->getComponent('sproutReports_report');

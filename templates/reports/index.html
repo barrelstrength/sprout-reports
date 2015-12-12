@@ -26,6 +26,30 @@
 	{% set reports = craft.sproutReports.getReports() %}
 {% endif %}
 
+{% if craft.app.getVersion() >= 2.5 %}
+	{% set extraPageHeaderHtml %}
+
+		{% set dataSources = craft.sproutReports.getDataSources() %}
+
+		<div class="btngroup submit">
+			<a class="btn submit add icon" href="{{ cpUrl("sproutreports/reports/sproutreports/query/edit/new") }}">New report</a>
+
+			{% if dataSources|length %}
+				<div class="btn submit menubtn"></div>
+				<div class="menu">
+					<ul>
+						{% for id, dataSource in dataSources %}
+							{% set dataSourceName = dataSource.getName() ~ " Report" %}
+							<li><a href="{{ dataSource.getUrl('/edit/new') }}">{{ dataSourceName|t }}</a></li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+		</div>
+
+	{% endset %}
+{% endif %}
+
 {% block content %}
 
 	<form method="post" accept-charset="UTF-8">
@@ -69,28 +93,32 @@
 
 {% block sidebar %}
 
-	{% set dataSources = craft.sproutReports.getDataSources() %}
+	{% if craft.app.getVersion() < 2.5 %}
 
-	<div class="btngroup submit">
-		<a class="btn submit add icon" href="{{ cpUrl("sproutreports/reports/sproutreports/query/edit/new") }}">New report</a>
+		{% set dataSources = craft.sproutReports.getDataSources() %}
 
-		{% if dataSources|length %}
-		<div class="btn submit menubtn"></div>
-		<div class="menu">
-			<ul>
-				{% for id, dataSource in dataSources %}
-					{% set dataSourceName = dataSource.getName() ~ " Report" %}
-					<li><a href="{{ dataSource.getUrl('/edit/new') }}">{{ dataSourceName|t }}</a></li>
-				{% endfor %}
-			</ul>
+		<div class="btngroup submit">
+			<a class="btn submit add icon" href="{{ cpUrl("sproutreports/reports/sproutreports/query/edit/new") }}">New report</a>
+
+			{% if dataSources|length %}
+				<div class="btn submit menubtn"></div>
+				<div class="menu">
+					<ul>
+						{% for id, dataSource in dataSources %}
+							{% set dataSourceName = dataSource.getName() ~ " Report" %}
+							<li><a href="{{ dataSource.getUrl('/edit/new') }}">{{ dataSourceName|t }}</a></li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
 		</div>
-		{% endif %}
-	</div>
+
+		<hr>
+
+	{% endif %}
 
 	{% if currentUser.can('editReports') %}
 
-		<hr>
-		
 		<nav>
 			<ul id="groups">
 

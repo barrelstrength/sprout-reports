@@ -83,14 +83,16 @@ class SproutReportsVariable
 		$options = array();
 		$reports = $this->getReports();
 
-		foreach ($reports as $report)
+		if ($reports)
 		{
-			$options[] = array(
-				'label' => $report->name,
-				'value' => $report->id,
-			);
+			foreach ($reports as $report)
+			{
+				$options[] = array(
+					'label' => $report->name,
+					'value' => $report->id,
+				);
+			}
 		}
-
 		return $options;
 	}
 

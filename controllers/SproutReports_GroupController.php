@@ -16,7 +16,6 @@ class SproutReports_GroupController extends BaseController
 		$group = new SproutReports_ReportGroupModel();
 		$group->id = craft()->request->getPost('id');
 		$group->name = $groupName;
-		$group->handle = sproutReports()->createHandle($groupName);
 
 		$isNewGroup = empty($group->id);
 

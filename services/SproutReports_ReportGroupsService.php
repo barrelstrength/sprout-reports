@@ -17,7 +17,6 @@ class SproutReports_ReportGroupsService extends BaseApplicationComponent
 	{
 		$groupRecord = $this->_getGroupRecord($group);
 		$groupRecord->name = $group->name;
-		$groupRecord->handle = $group->handle;
 
 		if ($groupRecord->validate())
 		{
@@ -36,6 +35,19 @@ class SproutReports_ReportGroupsService extends BaseApplicationComponent
 			$group->addErrors($groupRecord->getErrors());
 			return false;
 		}
+	}
+
+	public function createGroupByName($name)
+	{
+		$group = new SproutReports_ReportGroupModel();
+		$group->name = $name;
+
+		if ($this->saveGroup($group))
+		{
+			return $group;
+		}
+
+		return false;
 	}
 
 	/**
@@ -95,33 +107,6 @@ class SproutReports_ReportGroupsService extends BaseApplicationComponent
 	public function deleteGroup($id)
 	{
 		return (bool) SproutReports_ReportGroupRecord::model()->deleteByPk($id);
-	}
-
-	/**
-	 * @param string $name
-	 *
-	 * @throws Exception
-	 * @return SproutReports_ReportGroupModel
-	 */
-	public function getOrCreateByName($name)
-	{
-		$handle = sproutReports()->createHandle($name);
-
-		try
-		{
-			return $this->getGroupByHandle($handle);
-		}
-		catch (\Exception $e)
-		{
-			$group = new SproutReports_ReportGroupModel(compact('name', 'handle'));
-
-			if ($this->saveGroup($group))
-			{
-				return $group;
-			}
-
-			throw new Exception(print_r($group->getErrors(), true));
-		}
 	}
 
 	private function _getGroupRecord(SproutReports_ReportGroupModel $group)

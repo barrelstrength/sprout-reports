@@ -11,6 +11,11 @@ class SproutReportsUsersReport extends SproutReportsBaseReport
 		return 'All user data';
 	}
 
+	public function getHandle()
+	{
+		return 'allUserData';
+	}
+
 	/**
 	 * @return string
 	 */

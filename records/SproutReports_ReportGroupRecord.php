@@ -26,8 +26,7 @@ class SproutReports_ReportGroupRecord extends BaseRecord
 	protected function defineAttributes()
 	{
 		return array(
-			'name' => array(AttributeType::Name, 'required' => true),
-			'handle' => array(AttributeType::Handle, 'required' => true)
+			'name' => array(AttributeType::Name, 'required' => true)
 		);
 	}
 
@@ -47,7 +46,7 @@ class SproutReports_ReportGroupRecord extends BaseRecord
 	public function defineIndexes()
 	{
 		return array(
-			array('columns' => array('name', 'handle'), 'unique' => true)
+			array('columns' => array('name'), 'unique' => true)
 		);
 	}
 

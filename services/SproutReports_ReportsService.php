@@ -16,7 +16,7 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	 */
 	public function saveReport(SproutReports_ReportModel &$model)
 	{
-		$old    = $model->id;
+		$old = $model->id;
 
 		if ($model->id)
 		{
@@ -66,7 +66,7 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	 * @throws Exception
 	 * @return bool
 	 */
-	public function register($reports)
+	public function registerReports($reports, SproutReports_ReportGroupModel $group)
 	{
 		if (!is_array($reports))
 		{
@@ -85,7 +85,7 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 				$record->options      = $report->getOptions();
 				$record->dataSourceId = $report->getDataSource()->getId();
 				$record->enabled      = true;
-				$record->groupId      = sproutReports()->reportGroups->getOrCreateByName($report->getGroupName())->id;
+				$record->groupId      = $group->id;
 
 				if (!$record->save())
 				{
@@ -138,19 +138,19 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 
 	/**
 	 * @param int $groupId
-	 * 
+	 *
 	 * @return null|SproutReports_ReportModel[]
 	 */
 	public function getReportsByGroupId($groupId)
 	{
 		$result = craft()->db->createCommand()
-										->select('*')
-										->from('sproutreports_reports')
-										->where('groupId = :groupId', array(
-											':groupId' => $groupId
-											))
-										->queryAll();
-										
+			->select('*')
+			->from('sproutreports_reports')
+			->where('groupId = :groupId', array(
+				':groupId' => $groupId
+			))
+			->queryAll();
+
 		if ($result)
 		{
 			return SproutReports_ReportModel::populateModels($result);
@@ -167,7 +167,7 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	 */
 	public function getCountByDataSourceId($dataSourceId)
 	{
-		return (int) SproutReports_ReportRecord::model()->countByAttributes(array('dataSourceId' => $dataSourceId));
+		return (int)SproutReports_ReportRecord::model()->countByAttributes(array('dataSourceId' => $dataSourceId));
 	}
 
 	/**
@@ -195,7 +195,7 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 		}
 
 		$instance->name         = craft()->request->getPost('name');
-		$instance->handle       = sproutReports()->createHandle($instance->name);
+		$instance->handle       = craft()->request->getPost('handle');
 		$instance->description  = craft()->request->getPost('description');
 		$instance->settings     = craft()->request->getPost('settings');
 		$instance->options      = craft()->request->getPost('options');

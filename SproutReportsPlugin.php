@@ -160,11 +160,11 @@ class SproutReportsPlugin extends BasePlugin
 		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.SproutReportsCategoriesReport');
 		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.SproutReportsUsersReport');
 
-		sproutReports()->reportGroups->getOrCreateByName('Sprout Reports');
+		$defaultGroup = sproutReports()->reportGroups->createGroupByName('Sprout Reports');
 
 		if (craft()->plugins->getPlugin('sproutreports'))
 		{
-			sproutReports()->reports->register(new SproutReportsUsersReport());
+			sproutReports()->reports->registerReports(new SproutReportsUsersReport(), $defaultGroup);
 		}
 	}
 

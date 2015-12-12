@@ -11,23 +11,12 @@ abstract class SproutReportsBaseReport
 	/**
 	 * @return string
 	 */
-	final public function getSlug()
-	{
-		return ElementHelper::createSlug($this->getHandle());
-	}
-
-	/**
-	 * @return string
-	 */
-	final public function getHandle()
-	{
-		return sproutReports()->createHandle($this->getName());
-	}
-
-	/**
-	 * @return string
-	 */
 	abstract public function getName();
+
+	/**
+	 * @return string
+	 */
+	abstract public function getHandle();
 
 	/**
 	 * @return string

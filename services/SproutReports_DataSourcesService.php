@@ -82,8 +82,8 @@ class SproutReports_DataSourcesService extends BaseApplicationComponent
 	 */
 	public function generateId($pluginHandle, $dataSourceClass)
 	{
-		$pluginHandle    = strtolower(sproutReports()->createHandle($pluginHandle));
-		$dataSourceClass = strtolower(sproutReports()->createHandle($dataSourceClass));
+		$pluginHandle    = strtolower($pluginHandle);
+		$dataSourceClass = strtolower($dataSourceClass);
 		$dataSourceClass = str_replace($pluginHandle, '', $dataSourceClass);
 		$dataSourceClass = str_replace('datasource', '', $dataSourceClass);
 

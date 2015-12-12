@@ -67,7 +67,8 @@ class SproutReports_ReportRecord extends BaseRecord
 	public function defineIndexes()
 	{
 		return array(
-			array('columns' => array('name', 'handle'), 'unique' => true),
+			array('columns' => array('name'), 'unique' => true),
+			array('columns' => array('handle'), 'unique' => true),
 			array('columns' => array('dataSourceId')),
 		);
 	}

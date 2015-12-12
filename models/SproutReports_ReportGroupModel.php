@@ -27,8 +27,7 @@ class SproutReports_ReportGroupModel extends BaseModel
 	{
 		return array(
 			'id'     => array(AttributeType::Number),
-			'name'   => array(AttributeType::String, 'required' => true),
-			'handle' => array(AttributeType::Handle, 'required' => true),
+			'name'   => array(AttributeType::String, 'required' => true)
 		);
 	}
 

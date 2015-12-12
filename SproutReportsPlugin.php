@@ -143,9 +143,9 @@ class SproutReportsPlugin extends BasePlugin
 	public function registerUserPermissions()
 	{
 		return array(
-			'editReports' => array('label' => Craft::t('Edit Reports')),
+			'editSproutReportsReports' => array('label' => Craft::t('Edit Reports')),
 			'editSproutReportsSettings' => array(
-					'label' => Craft::t('Edit Report Settings')
+					'label' => Craft::t('Edit Plugin Settings')
 			)
 		);
 	}

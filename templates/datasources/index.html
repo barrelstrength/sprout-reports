@@ -1,17 +1,17 @@
 {% extends "sproutreports/_layouts/base" %}
 
-{% set title  = craft.sproutReports.name|t %}
+{% set title  = "Data Sources"|t %}
 {% set groups = craft.sproutReports.getReportGroups() %}
 
 {% set tabs = {
-reports: {
-label: "Reports"|t,
-url: url('sproutreports')
-},
-dataSources: {
-label: "Data Sources"|t,
-url: url('sproutreports/datasources')
-}
+	reports: {
+		label: "Reports"|t,
+		url: url('sproutreports')
+	},
+	dataSources: {
+		label: "Data Sources"|t,
+		url: url('sproutreports/datasources')
+	}
 } %}
 
 {% set selectedTab = 'dataSources' %}
@@ -31,10 +31,10 @@ url: url('sproutreports/datasources')
 		<table class="data fullwidth">
 			<thead>
 			<tr>
-				<th scope="col" data-attribute="title">Plugin</th>
-				<th scope="col" data-attribute="subtitle">Data Source</th>
+				<th scope="col" data-attribute="plugin">Plugin</th>
+				<th scope="col" data-attribute="datasource">Data Source</th>
 				<th scope="col" data-attribute="description">Description</th>
-				<th scope="col" data-attribute="description">Total Reports</th>
+				<th scope="col" data-attribute="totalReports">Total Reports</th>
 				<th class="thin"></th>
 			</tr>
 			</thead>

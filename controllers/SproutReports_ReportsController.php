@@ -36,11 +36,11 @@ class SproutReports_ReportsController extends BaseController
 		if (isset($variables['reportId']) && ($report = sproutReports()->reports->get($variables['reportId'])))
 		{
 			$variables['report']     = $report;
-			$variables['dataSource'] = sproutReports()->dataSources->get($report->dataSourceId);
+			$variables['dataSource'] = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
 		}
 		else
 		{
-			$variables['dataSource'] = sproutReports()->dataSources->get($variables['plugin'].'.'.$variables['dataSourceKey']);
+			$variables['dataSource'] = sproutReports()->dataSources->getDataSourceById($variables['plugin'].'.'.$variables['dataSourceKey']);
 		}
 
 		$this->renderTemplate('sproutreports/reports/_edit', $variables);
@@ -53,7 +53,7 @@ class SproutReports_ReportsController extends BaseController
 
 		if ($report)
 		{
-			$dataSource = sproutReports()->dataSources->get($report->dataSourceId);
+			$dataSource = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
 
 			if ($dataSource)
 			{
@@ -228,7 +228,7 @@ class SproutReports_ReportsController extends BaseController
 
 		if ($report)
 		{
-			$dataSource = sproutReports()->dataSources->get($report->dataSourceId);
+			$dataSource = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
 
 			if ($dataSource)
 			{

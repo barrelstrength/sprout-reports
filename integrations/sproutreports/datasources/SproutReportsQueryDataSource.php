@@ -10,7 +10,7 @@ class SproutReportsQueryDataSource extends SproutReportsBaseDataSource
 {
 	public function getName()
 	{
-		return Craft::t('Query');
+		return Craft::t('Custom Query');
 	}
 
 	/**
@@ -18,7 +18,7 @@ class SproutReportsQueryDataSource extends SproutReportsBaseDataSource
 	 */
 	public function getDescription()
 	{
-		return Craft::t('Allows you to create reports based on a custom SQL statement.');
+		return Craft::t('Create reports using a custom database query');
 	}
 
 	/**

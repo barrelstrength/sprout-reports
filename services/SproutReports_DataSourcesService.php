@@ -20,9 +20,9 @@ class SproutReports_DataSourcesService extends BaseApplicationComponent
 	 * @throws Exception
 	 * @return SproutReportsBaseDataSource
 	 */
-	public function get($id)
+	public function getDataSourceById($id)
 	{
-		$sources = $this->getAll();
+		$sources = $this->getAllDataSources();
 
 		if (isset($sources[$id]))
 		{
@@ -35,11 +35,13 @@ class SproutReports_DataSourcesService extends BaseApplicationComponent
 	/**
 	 * @return null|SproutReportsBaseDataSource[]
 	 */
-	public function getAll()
+	public function getAllDataSources()
 	{
 		if (is_null($this->dataSources))
 		{
 			$responses = craft()->plugins->call('registerSproutReportsDataSources');
+
+			$names = array();
 
 			if ($responses)
 			{
@@ -57,9 +59,14 @@ class SproutReports_DataSourcesService extends BaseApplicationComponent
 							$dataSource->setPluginHandle($plugin);
 
 							$this->dataSources[$dataSource->getId()] = $dataSource;
+
+							$names[] = $dataSource->getName();
 						}
 					}
 				}
+
+				// Sort data sources by name
+				$this->_sortDataSources($names, $this->dataSources);
 			}
 		}
 
@@ -81,5 +88,26 @@ class SproutReports_DataSourcesService extends BaseApplicationComponent
 		$dataSourceClass = str_replace('datasource', '', $dataSourceClass);
 
 		return sprintf('%s.%s', $pluginHandle, $dataSourceClass);
+	}
+
+	/**
+	 * @param $names
+	 * @param $secondaryArray
+	 *
+	 * @return null
+	 */
+	private function _sortDataSources(&$names, &$secondaryArray)
+	{
+		// TODO: Remove this check for Craft 3.
+		if (PHP_VERSION_ID < 50400)
+		{
+			// Sort plugins by name
+			array_multisort($names, $secondaryArray);
+		}
+		else
+		{
+			// Sort plugins by name
+			array_multisort($names, SORT_NATURAL | SORT_FLAG_CASE, $secondaryArray);
+		}
 	}
 }

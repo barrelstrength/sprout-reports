@@ -5,7 +5,7 @@
 		label: "Reports"|t,
 		url: url('sproutreports')
 	},
-	dataSources: {
+	datasources: {
 		label: "Data Sources"|t,
 		url: url('sproutreports/datasources')
 	}
@@ -19,6 +19,8 @@
 		}
 	}) %}
 {% endif %}
+
+{% set selectedSubnavItem = craft.request.segment(2) %}
 
 {% block content %}
 

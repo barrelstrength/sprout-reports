@@ -1,5 +1,25 @@
 {% extends "_layouts/cp" %}
 
+{% set subnav = {
+	reports: {
+		label: "Reports"|t,
+		url: url('sproutreports')
+	},
+	dataSources: {
+		label: "Data Sources"|t,
+		url: url('sproutreports/datasources')
+	}
+} %}
+
+{% if currentUser.can('editSproutReportsSettings') %}
+	{% set subnav = subnav|merge({
+		settings: {
+			label: "Settings"|t,
+			url: url('settings/plugins/sproutreports')
+		}
+	}) %}
+{% endif %}
+
 {% block content %}
 
 {% endblock %}

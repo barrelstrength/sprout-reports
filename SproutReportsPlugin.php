@@ -161,7 +161,6 @@ class SproutReportsPlugin extends BasePlugin
 
 		if (craft()->plugins->getPlugin('sproutreports'))
 		{
-			sproutReports()->reports->register(new SproutReportsCategoriesReport());
 			sproutReports()->reports->register(new SproutReportsUsersReport());
 		}
 	}

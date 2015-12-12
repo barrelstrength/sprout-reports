@@ -1,14 +1,14 @@
 <?php
 namespace Craft;
 
-class SproutReports_SingleNumberWidget extends BaseWidget
+class SproutReports_NumberReportWidget extends BaseWidget
 {
 	/**
 	 * @return string
 	 */
 	public function getName()
 	{
-		return Craft::t('Single Number Report');
+		return Craft::t('Number Report');
 	}
 
 	/**
@@ -35,7 +35,7 @@ class SproutReports_SingleNumberWidget extends BaseWidget
 				$result = $dataSource->getResults($report);
 
 				return craft()->templates->render(
-					'sproutreports/_widgets/singlenumber/index',
+					'sproutreports/_widgets/number/index',
 					array(
 						'settings' => $this->getSettings(),
 						'result'   => $this->getScalarValue($result)
@@ -58,7 +58,7 @@ class SproutReports_SingleNumberWidget extends BaseWidget
 	public function getSettingsHtml()
 	{
 		return craft()->templates->render(
-			'sproutreports/_widgets/singlenumber/settings',
+			'sproutreports/_widgets/number/settings',
 			array(
 				'settings' => $this->getSettings()
 			)

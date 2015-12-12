@@ -60,3 +60,21 @@
 	position:relative;
 }
 
+.tableview th.sproutreports-reportname {
+	vertical-align:top;
+	width:20%;
+}
+
+.tableview th.sproutreports-reportactions {
+	width:25%;
+}
+
+.tableview td.sproutreports-reportname,
+.tableview td.sproutreports-reportdescription,
+.tableview td.sproutreports-reportactions {
+	vertical-align:text-top;
+}
+
+.tableview td.sproutreports-reportactions {
+	text-align: right;
+}

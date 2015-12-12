@@ -61,21 +61,31 @@
 			<table class="data fullwidth">
 				<thead>
 				<tr>
-					<th scope="col" data-attribute="name">Name</th>
-					<th scope="col" data-attribute="description">Description</th>
-					<th class="thin"></th>
+					<th class="sproutreports-reportname">Name</th>
+					<th class="sproutreports-reportdescription">Description</th>
+					<th class="sproutreports-reportactions"></th>
 				</tr>
 				</thead>
 				<tbody>
 				{% for report in reports %}
 					<tr>
-						<td><strong>{{ report.name }}</strong></td>
-						<td>{{ report.description }}</td>
-						<td>
-							<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}" class="btn small">Run</a>
+						<td class="sproutreports-reportname"><strong>{{ report.name }}</strong></td>
+						<td class="sproutreports-reportdescription">{{ report.description }}</td>
+						<td class="sproutreports-reportactions">
+
+
+							<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}" class="btn small">View</a>
 							<a href="{{ actionUrl('sproutReports/reports/exportReport', {reportId: report.id}) }}" class="btn small">Export</a>
-							<a href="{{ report.getEditUrl() }}" class="btn small">Edit</a>
-							<a class="btn small formsubmit" data-param="reportId" data-value="{{ report.id }}" data-action="sproutReports/reports/deleteReport" data-redirect="sproutReports/reports" data-confirm="Are you sure you want to delete this report?">Delete</a>
+
+							{% if currentUser.can('editReports') %}
+
+								<a href="{{ report.getEditUrl() }}" class="btn small">Edit</a>
+
+								{#<a class="btn small formsubmit" data-param="reportId" data-value="{{ report.id }}" data-action="sproutReports/reports/deleteReport" data-redirect="sproutReports/reports" data-confirm="Are you sure you want to delete this report?">Delete</a>#}
+
+							{% endif %}
+
+
 						</td>
 					</tr>
 				{% endfor %}
@@ -151,4 +161,5 @@
 
 {% endblock %}
 
+{% includeCssResource "sproutreports/css/styles.css" %}
 {% includeJsResource "sproutreports/js/groups.js" %}

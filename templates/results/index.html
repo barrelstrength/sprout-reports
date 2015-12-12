@@ -1,29 +1,23 @@
 {% extends "sproutreports/_layouts/base" %}
 
-{% set title  = craft.sproutReports.name|t %}
+{% set title  = report.name|t %}
 {% set groups = craft.sproutReports.getReportGroups() %}
 
-{% set tabs = {
-	reports: {
-		label: "Reports"|t,
-		url: url('sproutreports')
-	},
-	dataSources: {
-		label: "Data Sources"|t,
-		url: url('sproutreports/datasources')
-	},
-	resultView: {
-		label: "Results",
-		url: "#results"
-	}
-} %}
+{% set crumbs = [
+	{ label: "Reports"|t, url: url('sproutreports/reports') },
+	{ label: report.name|t, url: report.getEditUrl() }
+] %}
 
 {% set selectedTab = 'resultView' %}
 
+{% set extraPageHeaderHtml %}
+
+	<a href="{{ actionUrl('sproutReports/reports/exportReport', {reportId: report.id}) }}" class="btn">Export</a>
+
+{% endset %}
+
 {% block content %}
-	<div class="meta">
-		<h2>{{ report.name|t }}</h2>
-	</div>
+
 	<div class="tableview">
 		{% if values is defined and values is iterable and values|length %}
 			<div class="tablecontent">
@@ -53,7 +47,6 @@
 		{% else %}
 			<h2>The report yielded no results.</h2>
 		{% endif %}
-		<hr>
 	</div>
 
 {% endblock %}

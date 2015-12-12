@@ -144,6 +144,9 @@ class SproutReportsPlugin extends BasePlugin
 	{
 		return array(
 			'editReports' => array('label' => Craft::t('Edit Reports')),
+			'editSproutReportsSettings' => array(
+					'label' => Craft::t('Edit Report Settings')
+			)
 		);
 	}
 

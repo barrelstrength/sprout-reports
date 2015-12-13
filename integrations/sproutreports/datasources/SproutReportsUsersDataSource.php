@@ -32,39 +32,38 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 	public function getResults(SproutReports_ReportModel &$report)
 	{
 		$options = $report->getOptions();
-		$userGroupIds = $options['userGroups'];
+
+		$userGroupIds            = $options['userGroups'];
 		$displayUserGroupColumns = $options['displayUserGroupColumns'];
 
 		$includeAdmins = false;
 
-		if (is_array($userGroupIds) && $userGroupIds[0] == 'admin')
+		if (is_array($userGroupIds) && in_array('admin', $userGroupIds))
 		{
-			$includeAdmins = in_array('admin', $userGroupIds);
+			$includeAdmins = true;
 
-			// Admin is always the first in our array
+			// Admin is always the first in our array if it exists
 			unset($userGroupIds[0]);
 		}
 
 		$userGroups = craft()->userGroups->getAllGroups();
 
-		$userGroupColumns = array();
+		$userGroupsByName = array();
 		foreach ($userGroups as $userGroup)
 		{
-			$userGroupColumns[$userGroup->name] = null;
-		}
-
-		$selectQuery = "{{users.id}}, {{usergroups.name}} AS 'User Group'";
-		foreach ($userGroupColumns as $userGroupSelectStatement)
-		{
-			$selectQuery = $selectQuery . ',' . $userGroupSelectStatement;
+			$userGroupsByName[$userGroup->name] = null;
 		}
 
 		$userQuery = craft()->db->createCommand()
-				->select('{{users.id}}, {{users.username}}, {{users.email}}, {{users.firstName}}, {{users.lastName}}')
-				->from('users')
-				->join('usergroups_users', '{{users.id}} = {{usergroups_users.userId}}');
+			->select('{{users.id}},
+								{{users.username}},
+								{{users.email}},
+								{{users.firstName}},
+								{{users.lastName}}
+								')
+			->from('users')
+			->join('usergroups_users', '{{users.id}} = {{usergroups_users.userId}}');
 
-		// Limit our query. If all (*) is selected, we return all records.
 		if (is_array($userGroupIds))
 		{
 			$userQuery->where(array('in', '{{usergroups_users.groupId}}', $userGroupIds));
@@ -77,8 +76,10 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 
 		$userQuery->group('{{users.id}}');
 
+		// @todo - can we query users and user their ids as the array key?
 		$users = $userQuery->queryAll();
 
+		// Update users to be indexed by their ids
 		$usersById = array();
 		foreach ($users as $user)
 		{
@@ -86,14 +87,15 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 			unset ($usersById[$user['id']]['id']);
 		}
 
-		$userGroupsPerUserQuery = craft()->db->createCommand()
-				->select('*')
-				->from('usergroups_users')
-				->join('usergroups', '{{usergroups.id}} = {{usergroups_users.groupId}}')
-				->queryAll();
+		$userGroupsMapQuery = craft()->db->createCommand()
+			->select('*')
+			->from('usergroups_users')
+			->join('usergroups', '{{usergroups.id}} = {{usergroups_users.groupId}}')
+			->queryAll();
 
+		// Create a map of all users and which user groups they are in
 		$userGroupsMap = array();
-		foreach ($userGroupsPerUserQuery as $userGroupsUser)
+		foreach ($userGroupsMapQuery as $userGroupsUser)
 		{
 			$userGroupsMap[$userGroupsUser['userId']][$userGroupsUser['name']] = true;
 		}
@@ -104,11 +106,11 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 			if ($displayUserGroupColumns)
 			{
 				// Add User Groups as columns to user array
-				$user = array_merge($user, $userGroupColumns);
+				$user = array_merge($user, $userGroupsByName);
 
 				if (isset($userGroupsMap[$key]))
 				{
-					// Mark which groups a user is in
+					// Match users to the user groups they are in
 					$user = array_merge($user, $userGroupsMap[$key]);
 				}
 			}
@@ -145,8 +147,8 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 
 		return craft()->templates->render('sproutreports/datasources/_options/users', array(
 			'userGroupOptions' => $userGroupOptions,
-			'options' => $this->report->getOptions(),
-			'errors' => $optionErrors
+			'options'          => $this->report->getOptions(),
+			'errors'           => $optionErrors
 		));
 	}
 

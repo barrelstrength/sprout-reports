@@ -16,22 +16,15 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	 */
 	public function saveReport(SproutReports_ReportModel &$model)
 	{
-		$old = $model->id;
+		$isNewReport = !$model->id;
 
-		if ($model->id)
+		if (empty($model->id))
 		{
-			$record = SproutReports_ReportRecord::model()->findById($model->id);
-
-			if (!$record)
-			{
-				$model->addError('general', Craft::t('Report with id {} was not found.', array('id' => $model->id)));
-
-				return false;
-			}
+			$record = new SproutReports_ReportRecord();
 		}
 		else
 		{
-			$record = new SproutReports_ReportRecord();
+			$record = SproutReports_ReportRecord::model()->findById($model->id);
 		}
 
 		$record->setAttributes($model->getAttributes(), false);
@@ -50,7 +43,7 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 			return false;
 		}
 
-		if (!$old)
+		if (!$isNewReport)
 		{
 			$model->id = $record->id;
 		}
@@ -194,11 +187,14 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 			$instance = new SproutReports_ReportModel();
 		}
 
+		$settings = craft()->request->getPost('settings');
+		$options = craft()->request->getPost('options');
+
 		$instance->name         = craft()->request->getPost('name');
 		$instance->handle       = craft()->request->getPost('handle');
 		$instance->description  = craft()->request->getPost('description');
-		$instance->settings     = craft()->request->getPost('settings');
-		$instance->options      = craft()->request->getPost('options');
+		$instance->settings     = is_array($settings) ? $settings : array();
+		$instance->options      = is_array($options) ? $options : array();
 		$instance->dataSourceId = craft()->request->getPost('dataSourceId');
 		$instance->enabled      = craft()->request->getPost('enabled');
 		$instance->groupId      = craft()->request->getPost('groupId', 1);

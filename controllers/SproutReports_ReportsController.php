@@ -31,17 +31,25 @@ class SproutReports_ReportsController extends BaseController
 		}
 	}
 
+	// @todo - reconsider logic
 	public function actionEditReport(array $variables = array())
 	{
-		if (isset($variables['reportId']) && ($report = sproutReports()->reports->get($variables['reportId'])))
+		// If we have a Report Model in our $variables, we are handling errors
+		if (isset($variables['report']))
 		{
-			// If we have a Report Model in our $variables, we are handling errors
-			$variables['report']     = isset($variables['report']) ? $variables['report'] : $report;
-			$variables['dataSource'] = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
+			$variables['report']     = $variables['report'];
+			$variables['dataSource'] = $variables['report']->getDataSource();
+		}
+		elseif (isset($variables['reportId']) && ($report = sproutReports()->reports->get($variables['reportId'])))
+		{
+			$variables['report']     = $report;
+			$variables['dataSource'] = $report->getDataSource();
 		}
 		else
 		{
-			$variables['dataSource'] = sproutReports()->dataSources->getDataSourceById($variables['plugin'].'.'.$variables['dataSourceKey']);
+			$variables['report']               = new SproutReports_ReportModel();
+			$variables['report']->dataSourceId = $variables['plugin'] . '.' . $variables['dataSourceKey'];
+			$variables['dataSource']           = $variables['report']->getDataSource();
 		}
 
 		$this->renderTemplate('sproutreports/reports/_edit', $variables);
@@ -55,24 +63,28 @@ class SproutReports_ReportsController extends BaseController
 		if ($report)
 		{
 			$dataSource = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
+			$labels     = $dataSource->getDefaultLabels();
+
+			$variables['report'] = $report;
+			$variables['labels'] = $labels;
+			$variables['values'] = array();
 
 			if ($dataSource)
 			{
 				$values = $dataSource->getResults($report);
-				$labels = $dataSource->getDefaultLabels();
 
-				if (empty($labels))
+				// @todo - reconsider this logic
+				if (empty($labels) && !empty($values))
 				{
-					$labels = array_keys($values[0]);
+					$labels              = array_keys($values[0]);
+					$variables['labels'] = $labels;
 				}
 
 				$variables['values'] = $values;
-				$variables['labels'] = $labels;
-				$variables['report'] = $report;
-
-				// @todo Hand off to the export service when a blank page and 404 issues are sorted out
-				return $this->renderTemplate('sproutreports/results/index', $variables);
 			}
+
+			// @todo Hand off to the export service when a blank page and 404 issues are sorted out
+			return $this->renderTemplate('sproutreports/results/index', $variables);
 		}
 
 		throw new HttpException(404, Craft::t('Report not found.'));

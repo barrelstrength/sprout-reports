@@ -10,8 +10,19 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 
 	public function getDescription()
 	{
-		return Craft::t('Returns a list of all users filtered by options in report.');
+		return Craft::t('Create reports about your users and user groups.');
 	}
+
+	// @todo - conditionally adjust the labels depending on which columns are returned
+	//public function getDefaultLabels()
+	//{
+	//	return array(
+	//			'Username',
+	//			'Email',
+	//			'First Name',
+	//			'Last Name'
+	//	);
+	//}
 
 	/**
 	 * @param  SproutReports_ReportModel &$report
@@ -21,21 +32,91 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 	public function getResults(SproutReports_ReportModel &$report)
 	{
 		$options = $report->getOptions();
+		$userGroupIds = $options['userGroups'];
+		$displayUserGroupColumns = $options['displayUserGroupColumns'];
 
-		$fields = array('id', 'email', 'firstName', 'lastName');
-		$criteria = craft()->elements->getCriteria(ElementType::User);
-		$criteria->limit = null;
-		$criteria->groupId = $options['memberGroups'];
+		$includeAdmins = false;
 
-		$filter = function($user) use ($fields)
+		if (is_array($userGroupIds) && $userGroupIds[0] == 'admin')
 		{
-			return $user->getAttributes($fields);
-		};
+			$includeAdmins = in_array('admin', $userGroupIds);
 
-		return array_map(
-			$filter,
-			$criteria->find()
-		);
+			// Admin is always the first in our array
+			unset($userGroupIds[0]);
+		}
+
+		$userGroups = craft()->userGroups->getAllGroups();
+
+		$userGroupColumns = array();
+		foreach ($userGroups as $userGroup)
+		{
+			$userGroupColumns[$userGroup->name] = null;
+		}
+
+		$selectQuery = "{{users.id}}, {{usergroups.name}} AS 'User Group'";
+		foreach ($userGroupColumns as $userGroupSelectStatement)
+		{
+			$selectQuery = $selectQuery . ',' . $userGroupSelectStatement;
+		}
+
+		$userQuery = craft()->db->createCommand()
+				->select('{{users.id}}, {{users.username}}, {{users.email}}, {{users.firstName}}, {{users.lastName}}')
+				->from('users')
+				->join('usergroups_users', '{{users.id}} = {{usergroups_users.userId}}');
+
+		// Limit our query. If all (*) is selected, we return all records.
+		if (is_array($userGroupIds))
+		{
+			$userQuery->where(array('in', '{{usergroups_users.groupId}}', $userGroupIds));
+		}
+
+		if ($includeAdmins)
+		{
+			$userQuery->orWhere('{{users.admin}} = 1');
+		}
+
+		$userQuery->group('{{users.id}}');
+
+		$users = $userQuery->queryAll();
+
+		$usersById = array();
+		foreach ($users as $user)
+		{
+			$usersById[$user['id']] = $user;
+			unset ($usersById[$user['id']]['id']);
+		}
+
+		$userGroupsPerUserQuery = craft()->db->createCommand()
+				->select('*')
+				->from('usergroups_users')
+				->join('usergroups', '{{usergroups.id}} = {{usergroups_users.groupId}}')
+				->queryAll();
+
+		$userGroupsMap = array();
+		foreach ($userGroupsPerUserQuery as $userGroupsUser)
+		{
+			$userGroupsMap[$userGroupsUser['userId']][$userGroupsUser['name']] = true;
+		}
+
+		// Add and identify User Groups as columns
+		foreach ($usersById as $key => $user)
+		{
+			if ($displayUserGroupColumns)
+			{
+				// Add User Groups as columns to user array
+				$user = array_merge($user, $userGroupColumns);
+
+				if (isset($userGroupsMap[$key]))
+				{
+					// Mark which groups a user is in
+					$user = array_merge($user, $userGroupsMap[$key]);
+				}
+			}
+
+			$usersById[$key] = $user;
+		}
+
+		return $usersById;
 	}
 
 	/**
@@ -47,10 +128,10 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 	{
 		$userGroups = craft()->userGroups->getAllGroups();
 
-		//$userGroupOptions[] = array(
-		//	'label' => 'Admin',
-		//	'value' => 'admin'
-		//);
+		$userGroupOptions[] = array(
+			'label' => 'Admin',
+			'value' => 'admin'
+		);
 
 		foreach ($userGroups as $userGroup)
 		{
@@ -79,9 +160,9 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 	{
 		$errors = null;
 
-		if (empty($options['memberGroups']))
+		if (empty($options['userGroups']))
 		{
-			$errors['memberGroups'][] = Craft::t('Select at least one Member Group.');
+			$errors['userGroups'][] = Craft::t('Select at least one User Group.');
 
 			return $errors;
 		}

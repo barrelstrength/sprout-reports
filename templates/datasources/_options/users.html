@@ -1,10 +1,16 @@
 {% import "_includes/forms" as forms %}
 
 {{ forms.checkboxSelectField({
-	name: "options[memberGroups]",
-	label: "Member Groups"|t,
-	instructions: "Select the member groups to include in your report. All by default."|t,
-	class: "nicetext code",
+	label: "User Groups"|t,
+	instructions: "Select the user groups to include in your report. All by default."|t,
+	name: "options[userGroups]",
 	options: userGroupOptions,
-	values: options.memberGroups is defined ? options.memberGroups : null
+	values: options.userGroups is defined ? options.userGroups : null
+}) }}
+
+{{ forms.lightswitchField({
+	label: "Display User Groups",
+	instructions: "Display user groups as columns in your results",
+	name: 'options[displayUserGroupColumns]',
+	on: options.displayUserGroupColumns is defined ? options.displayUserGroupColumns : null
 }) }}

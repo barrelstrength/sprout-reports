@@ -8,12 +8,12 @@ class SproutReportsUsersReport extends SproutReportsBaseReport
 	 */
 	public function getName()
 	{
-		return 'All user data';
+		return 'Users and User Groups';
 	}
 
 	public function getHandle()
 	{
-		return 'allUserData';
+		return 'usersAndUserGroups';
 	}
 
 	/**
@@ -26,7 +26,7 @@ class SproutReportsUsersReport extends SproutReportsBaseReport
 
 	public function getDescription()
 	{
-		return 'Returns a list of all users restricted by options selected.';
+		return 'Create a list of all users and their user groups.';
 	}
 
 	public function getSettings()
@@ -37,7 +37,8 @@ class SproutReportsUsersReport extends SproutReportsBaseReport
 	public function getOptions()
 	{
 		return array(
-			'pendingOnly' => false,
+			'userGroups' => '*',
+			'displayUserGroupColumns' => true
 		);
 	}
 

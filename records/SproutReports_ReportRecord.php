@@ -82,4 +82,28 @@ class SproutReports_ReportRecord extends BaseRecord
 			'ordered' => array('order' => 'dataSourceId, name'),
 		);
 	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		$rules = parent::rules();
+
+		$rules[] = array('options', 'validateOptions');
+
+		return $rules;
+	}
+
+	public function validateOptions($attribute)
+	{
+		$dataSource = sproutReports()->dataSources->getDataSourceById($this->dataSourceId);
+
+		$errors = $dataSource->validate($this->options);
+
+		if (is_array($errors) && count($errors) > 0)
+		{
+			$this->addError($attribute, $errors);
+		}
+	}
 }

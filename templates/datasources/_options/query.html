@@ -2,10 +2,11 @@
 
 {{ forms.textareaField({
 	name: "options[query]",
-	label: "Query"|t,
-	description: "Handcrafted query to get the results you want.",
+	label: "Custom Query"|t,
+	instructions: "Build a custom database query.",
 	class: "nicetext code",
 	rows: 5,
 	required: true,
-	value: (options.query is defined) ? options.query : ""
+	value: options.query is defined ? options.query : "",
+	errors: errors['query'] is defined ? errors['query'] : null
 }) }}

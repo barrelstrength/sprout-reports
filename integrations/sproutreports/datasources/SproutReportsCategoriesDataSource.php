@@ -75,9 +75,10 @@ class SproutReportsCategoriesDataSource extends SproutReportsBaseDataSource
 	 */
 	public function getOptionsHtml(array $options = array())
 	{
+		$options = $this->report->options;
+
 		$sectionOptions       = array();
 		$categoryGroupOptions = array();
-		$errorMessage         = '';
 
 		$sections = craft()->sections->getAllSections();
 
@@ -102,16 +103,49 @@ class SproutReportsCategoriesDataSource extends SproutReportsBaseDataSource
 			);
 		}
 
-		if (empty($sectionOptions) or empty($categoryGroupOptions))
+		$optionErrors = array_shift($this->report->getErrors('options'));
+
+		$setupRequiredMessage = null;
+
+		if (empty($sectionOptions) OR empty($categoryGroupOptions))
 		{
-			$errorMessage = Craft::t('This report requires a Channel or Structure section using Categories. Please update your settings to include at least one Channel or Structure and at least one Category Group with Categories available to assign to that section.');
+			$setupRequiredMessage = Craft::t('This report requires a Channel or Structure section using Categories. Please update your settings to include at least one Channel or Structure and at least one Category Group with Categories available to assign to that section.');
 		}
 
 		return craft()->templates->render('sproutreports/datasources/_options/categories', array(
 			'options'              => $options,
 			'sectionOptions'       => $sectionOptions,
 			'categoryGroupOptions' => $categoryGroupOptions,
-			'errorMessage'         => $errorMessage
+			'errors'               => $optionErrors,
+			'setupRequiredMessage' => $setupRequiredMessage
 		));
+	}
+
+	/**
+	 * Validate our data source options
+	 *
+	 * @param array $options
+	 * @return array|bool
+	 */
+	public function validate(array $options = array())
+	{
+		$errors = array();
+
+		if (empty($options['sectionId']))
+		{
+			$errors['sectionId'][] = Craft::t('Section is required.');
+		}
+
+		if (empty($options['categoryGroupId']))
+		{
+			$errors['categoryGroupId'][] = Craft::t('Category Group is required.');
+		}
+
+		if (count($errors) > 0)
+		{
+			return $errors;
+		}
+
+		return true;
 	}
 }

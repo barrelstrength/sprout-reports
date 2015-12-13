@@ -20,10 +20,12 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 	 */
 	public function getResults(SproutReports_ReportModel &$report)
 	{
+		$options = $report->getOptions();
+
 		$fields = array('id', 'email', 'firstName', 'lastName');
 		$criteria = craft()->elements->getCriteria(ElementType::User);
 		$criteria->limit = null;
-		$criteria->groups = array(1);
+		$criteria->groupId = $options['memberGroups'];
 
 		$filter = function($user) use ($fields)
 		{
@@ -43,6 +45,47 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 	 */
 	public function getOptionsHtml(array $options = array())
 	{
-		return craft()->templates->render('sproutreports/datasources/_options/users', compact('options'));
+		$userGroups = craft()->userGroups->getAllGroups();
+
+		//$userGroupOptions[] = array(
+		//	'label' => 'Admin',
+		//	'value' => 'admin'
+		//);
+
+		foreach ($userGroups as $userGroup)
+		{
+			$userGroupOptions[] = array(
+				'label' => $userGroup->name,
+				'value' => $userGroup->id
+			);
+		}
+
+		$optionErrors = array_shift($this->report->getErrors('options'));
+
+		return craft()->templates->render('sproutreports/datasources/_options/users', array(
+			'userGroupOptions' => $userGroupOptions,
+			'options' => $this->report->getOptions(),
+			'errors' => $optionErrors
+		));
+	}
+
+	/**
+	 * Validate our data source options
+	 *
+	 * @param array $options
+	 * @return array|bool
+	 */
+	public function validate(array $options = array())
+	{
+		$errors = null;
+
+		if (empty($options['memberGroups']))
+		{
+			$errors['memberGroups'][] = Craft::t('Select at least one Member Group.');
+
+			return $errors;
+		}
+
+		return true;
 	}
 }

@@ -49,6 +49,31 @@ class SproutReportsQueryDataSource extends SproutReportsBaseDataSource
 	 */
 	public function getOptionsHtml(array $options = array())
 	{
-		return craft()->templates->render('sproutreports/datasources/_options/query', compact('options'));
+		$optionErrors = array_shift($this->report->getErrors('options'));
+
+		return craft()->templates->render('sproutreports/datasources/_options/query', array(
+			'options' => $this->report->getOptions(),
+			'errors' => $optionErrors
+		));
+	}
+
+	/**
+	 * Validate our data source options
+	 *
+	 * @param array $options
+	 * @return array|bool
+	 */
+	public function validate(array $options = array())
+	{
+		$errors = null;
+
+		if (empty($options['query']))
+		{
+			$errors['query'][] = Craft::t('Query cannot be blank.');
+
+			return $errors;
+		}
+
+		return true;
 	}
 }

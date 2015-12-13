@@ -58,7 +58,10 @@ class SproutReports_ReportModel extends BaseModel
 
 	public function getDataSource()
 	{
-		return sproutReports()->dataSources->getDataSourceById($this->getDataSourceId());
+		$dataSource = sproutReports()->dataSources->getDataSourceById($this->getDataSourceId());
+		$dataSource->setReport($this);
+
+		return $dataSource;
 	}
 
 	/**
@@ -82,7 +85,7 @@ class SproutReports_ReportModel extends BaseModel
 	 */
 	public function setResultsError($message)
 	{
-		$this->addError('results', Craft::dd($message));
+		$this->addError('results', $message);
 	}
 
 	/**

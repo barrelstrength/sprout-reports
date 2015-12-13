@@ -24,6 +24,11 @@ abstract class SproutReportsBaseDataSource
 	protected $pluginHandle;
 
 	/**
+	 * @var SproutReports_ReportModel()
+	 */
+	protected $report;
+
+	/**
 	 * @param string $pluginHandle
 	 */
 	final public function setId($pluginHandle)
@@ -49,6 +54,16 @@ abstract class SproutReportsBaseDataSource
 	final public function getId()
 	{
 		return $this->id;
+	}
+
+	public function setReport(SproutReports_ReportModel $report = null)
+	{
+		if (is_null($report))
+		{
+			$report = new SproutReports_ReportModel();
+		}
+
+		$this->report = $report;
 	}
 
 	/**
@@ -153,4 +168,14 @@ abstract class SproutReportsBaseDataSource
 	 * @return null|array
 	 */
 	abstract public function getResults(SproutReports_ReportModel &$report);
+
+	/**
+	 * Validate the data sources options
+	 *
+	 * @return boolean
+	 */
+	public function validate()
+	{
+		return true;
+	}
 }

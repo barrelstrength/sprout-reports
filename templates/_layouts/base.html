@@ -3,7 +3,7 @@
 {% set subnav = {
 	reports: {
 		label: "Reports"|t,
-		url: url('sproutreports')
+		url: url('sproutreports/reports')
 	},
 	datasources: {
 		label: "Data Sources"|t,
@@ -20,7 +20,7 @@
 	}) %}
 {% endif %}
 
-{% set selectedSubnavItem = craft.request.segment(2) %}
+{% set selectedSubnavItem = craft.request.segment(2) ? craft.request.segment(2) : 'reports' %}
 
 {% block content %}
 

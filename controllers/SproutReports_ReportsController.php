@@ -76,7 +76,7 @@ class SproutReports_ReportsController extends BaseController
 				// @todo - reconsider this logic
 				if (empty($labels) && !empty($values))
 				{
-					$labels              = array_keys($values[0]);
+					$labels              = array_keys(array_shift(array_values($values)));
 					$variables['labels'] = $labels;
 				}
 

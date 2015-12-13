@@ -60,11 +60,9 @@
 
 			{% if dataSource is defined %}
 
-				{% set reportOptions = report is defined ? report.options : {} %}
-
 				<div class="pane">
 
-					{{ dataSource.getOptionsHtml(reportOptions) | raw }}
+					{{ dataSource.getOptionsHtml() | raw }}
 
 				</div>
 

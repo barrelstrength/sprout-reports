@@ -56,6 +56,11 @@ abstract class SproutReportsBaseDataSource
 		return $this->id;
 	}
 
+	/**
+	 * Set a SproutReports_ReportModel on our data source.
+	 *
+	 * @param SproutReports_ReportModel|null $report
+	 */
 	public function setReport(SproutReports_ReportModel $report = null)
 	{
 		if (is_null($report))
@@ -174,7 +179,7 @@ abstract class SproutReportsBaseDataSource
 	 *
 	 * @return boolean
 	 */
-	public function validate()
+	public function validateOptions(array $options = array(), array $errors = array())
 	{
 		return true;
 	}

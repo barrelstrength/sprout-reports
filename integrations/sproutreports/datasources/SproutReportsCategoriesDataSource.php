@@ -127,10 +127,8 @@ class SproutReportsCategoriesDataSource extends SproutReportsBaseDataSource
 	 * @param array $options
 	 * @return array|bool
 	 */
-	public function validate(array $options = array())
+	public function validateOptions(array $options = array(), array $errors = array())
 	{
-		$errors = array();
-
 		if (empty($options['sectionId']))
 		{
 			$errors['sectionId'][] = Craft::t('Section is required.');
@@ -143,7 +141,7 @@ class SproutReportsCategoriesDataSource extends SproutReportsBaseDataSource
 
 		if (count($errors) > 0)
 		{
-			return $errors;
+			return false;
 		}
 
 		return true;

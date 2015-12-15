@@ -58,20 +58,16 @@ class SproutReportsQueryDataSource extends SproutReportsBaseDataSource
 	}
 
 	/**
-	 * Validate our data source options
-	 *
 	 * @param array $options
-	 * @return array|bool
+	 * @return bool
 	 */
-	public function validate(array $options = array())
+	public function validateOptions(array $options = array(), array &$errors = array())
 	{
-		$errors = null;
-
 		if (empty($options['query']))
 		{
 			$errors['query'][] = Craft::t('Query cannot be blank.');
 
-			return $errors;
+			return false;
 		}
 
 		return true;

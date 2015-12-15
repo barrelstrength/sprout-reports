@@ -158,15 +158,13 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 	 * @param array $options
 	 * @return array|bool
 	 */
-	public function validate(array $options = array())
+	public function validateOptions(array $options = array(), array &$errors = array())
 	{
-		$errors = null;
-
 		if (empty($options['userGroups']))
 		{
 			$errors['userGroups'][] = Craft::t('Select at least one User Group.');
 
-			return $errors;
+			return false;
 		}
 
 		return true;

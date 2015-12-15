@@ -27,6 +27,11 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 			$record = SproutReports_ReportRecord::model()->findById($model->id);
 		}
 
+		if (!$this->validateOptions($model))
+		{
+			return false;
+		}
+
 		$record->setAttributes($model->getAttributes(), false);
 
 		if (!$record->validate())
@@ -200,5 +205,25 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 		$instance->groupId      = craft()->request->getPost('groupId', 1);
 
 		return $instance;
+	}
+
+	/**
+	 * @param SproutReports_ReportModel $report
+	 * @return bool
+	 */
+	protected function validateOptions(SproutReports_ReportModel &$report)
+	{
+		$errors = array();
+
+		$dataSource = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
+
+		if (!$dataSource->validateOptions($report->options, $errors))
+		{
+			$report->addError('options', $errors);
+
+			return false;
+		}
+
+		return true;
 	}
 }

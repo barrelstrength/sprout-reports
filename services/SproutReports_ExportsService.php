@@ -12,7 +12,7 @@ class SproutReports_ExportsService extends BaseApplicationComponent
 	{
 		parent::init();
 
-		require_once dirname(__FILE__).'/../vendor/autoload.php';
+		require_once dirname(__FILE__) . '/../vendor/autoload.php';
 	}
 
 	/**
@@ -24,13 +24,14 @@ class SproutReports_ExportsService extends BaseApplicationComponent
 	 */
 	public function toHtml(array &$values, array $labels = array(), array $variables = array())
 	{
-		if (empty($labels))
+		// @todo - reconsider this logic
+		if (empty($labels) && !empty($values))
 		{
-			$labels = array_keys($values[0]);
+			$labels = array_keys(array_shift(array_values($values)));
 		}
 
-		$variables['values'] = $values;
 		$variables['labels'] = $labels;
+		$variables['values'] = $values;
 
 		return craft()->templates->render('sproutreports/results/index', $variables);
 	}
@@ -56,17 +57,17 @@ class SproutReports_ExportsService extends BaseApplicationComponent
 	/**
 	 * Takes an array of values and options labels and creates a downloadable CSV file
 	 *
-	 * @param array  $values
-	 * @param array  $labels
+	 * @param array $values
+	 * @param array $labels
 	 * @param string $filename
 	 */
 	public function toCsv(array &$values, array $labels = array(), $filename = 'export.csv')
 	{
-		$filename = str_replace('.csv', '', $filename).'.csv';
+		$filename = str_replace('.csv', '', $filename) . '.csv';
 
-		if (empty($labels))
+		if (empty($labels) && !empty($values))
 		{
-			$labels = array_keys($values[0]);
+			$labels = array_keys(array_shift(array_values($values)));
 		}
 
 		$csv = Writer::createFromFileObject(new \SplTempFileObject());

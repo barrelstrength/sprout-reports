@@ -66,7 +66,6 @@ class SproutReports_ReportsController extends BaseController
 			$labels     = $dataSource->getDefaultLabels();
 
 			$variables['report'] = $report;
-			$variables['labels'] = $labels;
 			$variables['values'] = array();
 
 			if ($dataSource)
@@ -76,10 +75,10 @@ class SproutReports_ReportsController extends BaseController
 				// @todo - reconsider this logic
 				if (empty($labels) && !empty($values))
 				{
-					$labels              = array_keys(array_shift(array_values($values)));
-					$variables['labels'] = $labels;
+					$labels = array_keys(array_shift(array_values($values)));
 				}
 
+				$variables['labels'] = $labels;
 				$variables['values'] = $values;
 			}
 

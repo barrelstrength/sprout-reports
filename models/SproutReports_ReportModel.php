@@ -59,6 +59,11 @@ class SproutReports_ReportModel extends BaseModel
 	public function getDataSource()
 	{
 		$dataSource = sproutReports()->dataSources->getDataSourceById($this->getDataSourceId());
+
+		// @todo - consider alternative ways to handle this
+		// Do we need to add a complete Model here? It's currently used when handling errors
+		// in a Reports getOptionsHtml() method, as the errors are assigned to the Report
+		// but the validation of those errors is managed by the Data Source
 		$dataSource->setReport($this);
 
 		return $dataSource;

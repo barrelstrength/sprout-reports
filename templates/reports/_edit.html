@@ -73,38 +73,6 @@
 
 			<div class="pane meta">
 
-				{{ forms.textField({
-					label: "Handle"|t,
-					id: 'handle',
-					name: 'handle',
-					required: true,
-					value: report is defined ? report.handle : "",
-					errors: report is defined ? report.getErrors('handle') : ""
-				}) }}
-
-				{% set statusInput %}
-					<div class="left">
-						{{ forms.lightSwitchField({
-							name: 'enabled',
-							on: report is defined ? report.enabled : true
-						})}}
-					</div>
-
-					<div class="right">
-						{% if report is defined %}
-								<input type="button" class="btn small formsubmit" value="Delete" data-action="sproutReports/reports/deleteReport" data-confirm="Are you sure you want to delete this report?" data-redirect="sproutreports" tabindex="0">
-						{% endif %}
-					</div>
-				{% endset %}
-
-				{{ forms.field({
-					label: "Enabled"|t,
-				}, statusInput) }}
-
-			</div>
-
-			<div class="pane meta">
-
 				{% set dataSourceNameLabel = "<h6>" ~ dataSource.name ~ "</h6>" %}
 
 				{{ forms.field({
@@ -130,6 +98,38 @@
 				{% endif %}
 
 			</div>
+			
+			<div class="pane meta">
+
+				{{ forms.textField({
+					label: "Handle"|t,
+					id: 'handle',
+					name: 'handle',
+					required: true,
+					value: report is defined ? report.handle : "",
+					errors: report is defined ? report.getErrors('handle') : ""
+				}) }}
+
+				{% set statusInput %}
+					<div class="left">
+						{{ forms.lightSwitchField({
+							name: 'enabled',
+							on: report is defined ? report.enabled : true
+						})}}
+					</div>
+
+					<div class="right">
+						{% if report is defined %}
+								<input type="button" class="btn small formsubmit" value="Delete" data-param="reportId" data-value="{{ report.id }}" data-action="sproutReports/reports/deleteReport" data-confirm="Are you sure you want to delete this report?" data-redirect="sproutreports" tabindex="0">
+						{% endif %}
+					</div>
+				{% endset %}
+
+				{{ forms.field({
+					label: "Enabled"|t,
+				}, statusInput) }}
+
+			</div>
 
 			<div class="button">
 				<div class="btngroup">
@@ -153,5 +153,5 @@
 {% endblock %}
 
 {% if report is not defined or not report.handle %}
-	{% includejs "new Craft.HandleGenerator('#name', '#handle');" %}
+	{% includeJs "new Craft.HandleGenerator('#name', '#handle');" %}
 {% endif %}

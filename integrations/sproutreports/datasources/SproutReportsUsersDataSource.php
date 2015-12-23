@@ -51,16 +51,22 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 		$userGroupsByName = array();
 		foreach ($userGroups as $userGroup)
 		{
-			$userGroupsByName[$userGroup->name] = null;
+			$userGroupsByName[$userGroup->name] = 0;
+		}
+
+		$selectQueryString = '{{users.id}},
+			{{users.username}} AS Username,
+			{{users.email}} AS Email,
+			{{users.firstName}} AS First Name,
+			{{users.lastName}} AS Last Name';
+
+		if ($displayUserGroupColumns)
+		{
+			$selectQueryString = $selectQueryString . ',{{users.admin}} AS Admin';
 		}
 
 		$userQuery = craft()->db->createCommand()
-			->select('{{users.id}},
-								{{users.username}},
-								{{users.email}},
-								{{users.firstName}},
-								{{users.lastName}}
-								')
+			->select($selectQueryString)
 			->from('users')
 			->join('usergroups_users', '{{users.id}} = {{usergroups_users.userId}}');
 

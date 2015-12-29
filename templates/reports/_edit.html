@@ -60,11 +60,15 @@
 
 			{% if dataSource is defined %}
 
-				<div class="pane">
+				{% set optionsHtml = dataSource.getOptionsHtml() %}
 
-					{{ dataSource.getOptionsHtml() | raw }}
+				{% if optionsHtml %}
 
-				</div>
+					<div class="pane">
+						{{ optionsHtml | raw }}
+					</div>
+
+				{% endif %}
 
 			{% endif %}
 

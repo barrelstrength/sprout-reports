@@ -100,57 +100,6 @@ class SproutReports_ReportsController extends BaseController
 
 		$results = array();
 
-		$userValues = array();
-		//prepare default values
-		foreach ($report->settings as $optionName => $option)
-		{
-			$userValues[$optionName] = '';
-			if (!$runReport)
-			{
-				if (isset($option['defaultValue']['isSQL']) && ($option['defaultValue']['isSQL'] === true))
-				{
-					$userValues[$optionName] = craft()->db->createCommand($option['defaultValue']['value'])->queryScalar();
-				}
-				else
-				{
-					$userValues[$optionName] = $option['defaultValue']['value'];
-				}
-
-				if ($option['type'] == 'date')
-				{
-					if (!empty($userValues[$optionName]))
-					{
-						$dateValue = $userValues[$optionName];
-					}
-					elseif ($optionName == 'dateCreatedFrom')
-					{
-						$dateValue = date('Y-m-1 00:00:00');
-					}
-					elseif ($optionName == 'dateCreatedTill')
-					{
-						$dateValue = date('Y-m-t 23:59:59');
-					}
-					else
-					{
-						$dateValue = date('Y-m-d H:i:s');
-					}
-					$userValues[$optionName] = DateTime::createFromFormat('Y-m-d H:i:s', $dateValue);
-				}
-			}
-			else
-			{
-				if ($optionDate = craft()->request->getPost('reportOptions.' . $optionName . '.date'))
-				{
-					$optionTime              = craft()->request->getPost('reportOptions.' . $optionName . '.time') ?: '0:00 AM';
-					$userValues[$optionName] = DateTime::createFromFormat('n/j/Yg:i A', $optionDate . $optionTime);
-				}
-				else
-				{
-					$userValues[$optionName] = craft()->request->getPost('reportOptions.' . $optionName);
-				}
-			}
-		}
-
 		if ($runReport)
 		{
 			$reportOptions = craft()->request->getPost('reportOptions');

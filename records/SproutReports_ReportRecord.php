@@ -10,7 +10,6 @@ namespace Craft;
  * @property string $name
  * @property string $handle
  * @property string $description
- * @property array  $settings
  * @property array  $options
  * @property string $dataSourceId
  * @property int    $groupId
@@ -35,7 +34,6 @@ class SproutReports_ReportRecord extends BaseRecord
 			'name'         => array(AttributeType::String, 'required' => true),
 			'handle'       => array(AttributeType::Handle, 'required' => true),
 			'description'  => array(AttributeType::String, 'default' => null),
-			'settings'     => array(AttributeType::Mixed, 'required' => false),
 			'options'      => array(AttributeType::Mixed, 'required' => false),
 			'dataSourceId' => array(AttributeType::String, 'required' => true),
 			'enabled'      => array(AttributeType::Bool, 'default' => true),

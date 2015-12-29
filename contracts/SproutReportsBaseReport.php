@@ -31,11 +31,6 @@ abstract class SproutReportsBaseReport
 	/**
 	 * @return array
 	 */
-	abstract public function getSettings();
-
-	/**
-	 * @return array
-	 */
 	abstract public function getOptions();
 
 	/**

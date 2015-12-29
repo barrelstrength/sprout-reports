@@ -29,11 +29,6 @@ class SproutReportsUsersReport extends SproutReportsBaseReport
 		return 'Create a list of all users and their user groups.';
 	}
 
-	public function getSettings()
-	{
-		return array();
-	}
-
 	public function getOptions()
 	{
 		return array(

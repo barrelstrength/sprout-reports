@@ -13,7 +13,7 @@ class m151229_000000_sproutReports_updateSingleNumberWidgetToNumberWidget extend
 			if ($table->getColumn('type') != null)
 			{
 				$singleNumberWidgets = craft()->db->createCommand()
-					->select('id, type')
+					->select('id')
 					->from('widgets')
 					->where('type=:type', array(':type'=>'SproutReports_SingleNumber'))
 					->queryAll();
@@ -24,9 +24,10 @@ class m151229_000000_sproutReports_updateSingleNumberWidgetToNumberWidget extend
 
 					SproutReportsPlugin::log('Migrating Single Number Widgets', LogLevel::Info, true);
 
-					craft()->db->createCommand()->update('widgets', array(
-							'type' => 'SproutReports_NumberReport'
-						), 'type= :type', array(':type' => 'SproutReports_SingleNumber')
+					$query = craft()->db->createCommand()->update(
+						'widgets',
+						array('type' => 'SproutReports_NumberReport'),
+						array('type' => 'SproutReports_SingleNumber')
 					);
 
 					SproutReportsPlugin::log('Migration of Single Number Widgets => Number Widgets complete', LogLevel::Info,
@@ -37,12 +38,12 @@ class m151229_000000_sproutReports_updateSingleNumberWidgetToNumberWidget extend
 			}
 			else
 			{
-				SproutReportsPlugin::log('Could not find the `type` column.', LogLevel::Info, true);
+				SproutFormsPlugin::log('Could not find the `type` column.', LogLevel::Info, true);
 			}
 		}
 		else
 		{
-			SproutReportsPlugin::log('Could not find the `widgets` table.', LogLevel::Info, true);
+			SproutFormsPlugin::log('Could not find the `widgets` table.', LogLevel::Info, true);
 		}
 
 		return true;

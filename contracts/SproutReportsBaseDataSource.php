@@ -156,7 +156,7 @@ abstract class SproutReportsBaseDataSource
 	}
 
 	/**
-	 * Should return an array of strings to be used as field values in display/output
+	 * Should return an array of strings to be used as column headings in display/output
 	 *
 	 * @return array
 	 */

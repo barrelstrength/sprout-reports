@@ -1,7 +1,7 @@
 <?php
 namespace Craft;
 
-class m151229_000000_sproutReports_addReportGroupsTable extends BaseMigration
+class m151229_000001_sproutReports_addReportGroupsTable extends BaseMigration
 {
 	/**
 	 * @return bool

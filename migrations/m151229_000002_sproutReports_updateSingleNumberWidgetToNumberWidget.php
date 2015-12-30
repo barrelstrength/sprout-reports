@@ -1,7 +1,7 @@
 <?php
 namespace Craft;
 
-class m151229_000000_sproutReports_updateSingleNumberWidgetToNumberWidget extends BaseMigration
+class m151229_000002_sproutReports_updateSingleNumberWidgetToNumberWidget extends BaseMigration
 {
 	/**
 	 * @return bool

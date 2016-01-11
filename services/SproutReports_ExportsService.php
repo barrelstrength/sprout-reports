@@ -12,7 +12,7 @@ class SproutReports_ExportsService extends BaseApplicationComponent
 	{
 		parent::init();
 
-		require_once dirname(__FILE__) . '/../vendor/autoload_psr4.php';
+		require_once dirname(__FILE__) . '/../vendor/autoload.php';
 	}
 
 	/**

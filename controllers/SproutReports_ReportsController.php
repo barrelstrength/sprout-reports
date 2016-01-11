@@ -63,7 +63,7 @@ class SproutReports_ReportsController extends BaseController
 		if ($report)
 		{
 			$dataSource = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
-			$labels     = $dataSource->getDefaultLabels();
+			$labels     = $dataSource->getDefaultLabels($report);
 
 			$variables['report'] = $report;
 			$variables['values'] = array();
@@ -72,10 +72,10 @@ class SproutReports_ReportsController extends BaseController
 			{
 				$values = $dataSource->getResults($report);
 
-				// @todo - reconsider this logic
 				if (empty($labels) && !empty($values))
 				{
-					$labels = array_keys(array_shift(array_values($values)));
+					$firstItemInArray = reset($values);
+					$labels = array_keys($firstItemInArray);
 				}
 
 				$variables['labels'] = $labels;
@@ -119,8 +119,8 @@ class SproutReports_ReportsController extends BaseController
 			if ($dataSource)
 			{
 				$filename = $report->name;
+				$labels   = $dataSource->getDefaultLabels($report);
 				$values   = $dataSource->getResults($report);
-				$labels   = $dataSource->getDefaultLabels();
 
 				sproutReports()->exports->toCsv($values, $labels, $filename);
 			}

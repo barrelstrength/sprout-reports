@@ -13,14 +13,14 @@ class SproutReportsCategoriesDataSource extends SproutReportsBaseDataSource
 		return Craft::t('Returns a breakdown of Categories used by Entries.');
 	}
 
-	public function getDefaultLabels()
-	{
-		return array(
-			'Category Name',
-			'Total Entries Assigned Category',
-			'% of Total Categories'
-		);
-	}
+	//public function getDefaultLabels(SproutReports_ReportModel &$report)
+	//{
+	//	return array(
+	//		'Category Name',
+	//		'Total Entries Assigned Category',
+	//		'% of Total Categories'
+	//	);
+	//}
 
 	/**
 	 * @param  SproutReports_ReportModel &$report
@@ -54,8 +54,8 @@ class SproutReportsCategoriesDataSource extends SproutReportsBaseDataSource
 
 		$entries = craft()->db->createCommand()
 			->select("{{content.title}} AS 'Category Name',
-								COUNT({{relations.sourceId}}) AS 'ASDASD Entries assigned this category',
-								(COUNT({{relations.sourceId}}) / $totalCategories) AS '% of total categories used'
+								COUNT({{relations.sourceId}}) AS 'Total Entries Assigned Category',
+								(COUNT({{relations.sourceId}}) / $totalCategories) * 100 AS '% of Total Categories used'
 				")
 			->from('content')
 			->join('categories', '{{content.elementId}} = {{categories.id}}')

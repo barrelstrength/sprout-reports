@@ -14,7 +14,7 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 	}
 
 	// @todo - conditionally adjust the labels depending on which columns are returned
-	//public function getDefaultLabels()
+	//public function getDefaultLabels(SproutReports_ReportModel &$report)
 	//{
 	//	return array(
 	//			'Username',

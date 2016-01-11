@@ -5,7 +5,7 @@
 
 {% set crumbs = [
 	{ label: "Reports"|t, url: url('sproutreports/reports') },
-	{ label: report.name|t, url: report.getEditUrl() }
+	{ label: "Edit "|t ~ report.name|t, url: report.getEditUrl() }
 ] %}
 
 {% set selectedTab = 'resultView' %}

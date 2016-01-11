@@ -96,26 +96,27 @@ class SproutReportsVariable
 		return $options;
 	}
 
-	public function getResults($reportHandle, array $options = array())
-	{
-		$report = sproutReports()->reports->getReportByHandle($reportHandle);
-
-		if ($report)
-		{
-			$dataSource = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
-
-			if ($dataSource)
-			{
-				$values = $dataSource->getResults($report);
-
-				if (!empty($values) && empty($labels))
-				{
-					$firstItemInArray = reset($values);
-					$labels = array_keys($firstItemInArray);
-				}
-
-				return compact('labels', 'values');
-			}
-		}
-	}
+	// @todo - figure out how this best works with Labels and Values before making available
+	//public function getResults($reportHandle, array $options = array())
+	//{
+	//	$report = sproutReports()->reports->getReportByHandle($reportHandle);
+	//
+	//	if ($report)
+	//	{
+	//		$dataSource = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
+	//
+	//		if ($dataSource)
+	//		{
+	//			$values = $dataSource->getResults($report);
+	//
+	//			if (!empty($values) && empty($labels))
+	//			{
+	//				$firstItemInArray = reset($values);
+	//				$labels = array_keys($firstItemInArray);
+	//			}
+	//
+	//			return compact('labels', 'values');
+	//		}
+	//	}
+	//}
 }

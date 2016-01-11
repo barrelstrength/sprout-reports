@@ -31,7 +31,7 @@ class SproutReports_ReportRecord extends BaseRecord
 	protected function defineAttributes()
 	{
 		return array(
-			'groupId'      => array(AttributeType::Number, 'required' => true),
+			'groupId'      => array(AttributeType::Number, 'default' => null),
 			'name'         => array(AttributeType::String, 'required' => true),
 			'handle'       => array(AttributeType::Handle, 'required' => true),
 			'description'  => array(AttributeType::String, 'default' => null),

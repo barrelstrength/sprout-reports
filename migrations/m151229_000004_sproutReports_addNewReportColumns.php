@@ -17,7 +17,8 @@ class m151229_000004_sproutReports_addNewReportColumns extends BaseMigration
 					'column' => ColumnType::TinyInt,
 					'length' => 1,
 					'default' => true,
-					'required' => false
+					'required' => true,
+					'unsigned' => true
 				);
 
 				$this->addColumnAfter('sproutreports_reports', 'enabled', $enabledColumn, 'description');

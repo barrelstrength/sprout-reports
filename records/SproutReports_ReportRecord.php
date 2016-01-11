@@ -31,29 +31,13 @@ class SproutReports_ReportRecord extends BaseRecord
 	protected function defineAttributes()
 	{
 		return array(
-			'groupId'      => array(AttributeType::Number, 'default' => null),
+			'groupId'      => array(AttributeType::Number),
 			'name'         => array(AttributeType::String, 'required' => true),
 			'handle'       => array(AttributeType::Handle, 'required' => true),
 			'description'  => array(AttributeType::String, 'default' => null),
 			'dataSourceId' => array(AttributeType::String, 'required' => true),
 			'options'      => array(AttributeType::Mixed, 'required' => false),
 			'enabled'      => array(AttributeType::Bool, 'default' => true)
-		);
-	}
-
-	/**
-	 * @return array
-	 */
-	public function defineRelations()
-	{
-		return array(
-			'report' => array(
-				static::BELONGS_TO,
-				'SproutReports_ReportGroupRecord',
-				'groupId',
-				'required' => true,
-				'onDelete' => static::CASCADE
-			),
 		);
 	}
 

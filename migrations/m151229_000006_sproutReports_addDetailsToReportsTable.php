@@ -17,12 +17,6 @@ class m151229_000006_sproutReports_addDetailsToReportsTable extends BaseMigratio
 			SproutReportsPlugin::log('Dropping groupId Foreign Key.', LogLevel::Info, true);
 
 			MigrationHelper::dropForeignKeyIfExists('sproutreports_reports', 'groupId');
-
-			SproutReportsPlugin::log('Creating groupId Foreign Key.', LogLevel::Info, true);
-
-			// Make reports 'groupId' a FK to report groups 'id'
-			craft()->db->createCommand()->addForeignKey('sproutreports_reports', 'groupId', 'sproutreports_reportgroups',
-				'id', 'CASCADE');
 		}
 		else
 		{

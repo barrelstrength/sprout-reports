@@ -15,6 +15,7 @@ class m151229_000004_sproutReports_addNewReportColumns extends BaseMigration
 				$enabledColumn = array(
 					AttributeType::Bool,
 					'column' => ColumnType::TinyInt,
+					'length' => 1,
 					'default' => true,
 					'required' => false
 				);

@@ -146,7 +146,7 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	/**
 	 * @return null|SproutReports_ReportModel[]
 	 */
-	public function getEnabled()
+	public function getEnabledReports()
 	{
 		$result = SproutReports_ReportRecord::model()->findAllByAttributes(array('enabled' => 1));
 

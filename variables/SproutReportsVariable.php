@@ -47,7 +47,7 @@ class SproutReportsVariable
 	 */
 	public function getReports()
 	{
-		return sproutReports()->reports->getAll();
+		return sproutReports()->reports->getAllReports();
 	}
 
 	/**
@@ -63,9 +63,9 @@ class SproutReportsVariable
 	 *
 	 * @return null|SproutReports_ReportGroupModel[]
 	 */
-	public function getReportsByGroupId($id)
+	public function getReportsByGroupId($groupId)
 	{
-		return sproutReports()->reports->getReportsByGroupId($id);
+		return sproutReports()->reports->getReportsByGroupId($groupId);
 	}
 
 	/**
@@ -73,9 +73,9 @@ class SproutReportsVariable
 	 *
 	 * @return SproutReports_ReportModel
 	 */
-	public function getReportById($id)
+	public function getReportById($reportId)
 	{
-		return sproutReports()->reports->get($id);
+		return sproutReports()->reports->getReport($reportId);
 	}
 
 	public function getReportsAsSelectFieldOptions()
@@ -96,9 +96,9 @@ class SproutReportsVariable
 		return $options;
 	}
 
-	public function runReport($id, array $options = array())
+	public function getResults($reportHandle, array $options = array())
 	{
-		$report = sproutReports()->reports->get($id);
+		$report = sproutReports()->reports->getReportByHandle($reportHandle);
 
 		if ($report)
 		{
@@ -110,10 +110,11 @@ class SproutReportsVariable
 
 				if (!empty($values) && empty($labels))
 				{
-					$labels = array_keys($values[0]);
+					$firstItemInArray = reset($values);
+					$labels = array_keys($firstItemInArray);
 				}
 
-				return compact('values', 'labels');
+				return compact('labels', 'values');
 			}
 		}
 	}

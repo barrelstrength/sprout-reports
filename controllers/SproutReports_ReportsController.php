@@ -40,7 +40,7 @@ class SproutReports_ReportsController extends BaseController
 			$variables['report']     = $variables['report'];
 			$variables['dataSource'] = $variables['report']->getDataSource();
 		}
-		elseif (isset($variables['reportId']) && ($report = sproutReports()->reports->get($variables['reportId'])))
+		elseif (isset($variables['reportId']) && ($report = sproutReports()->reports->getReport($variables['reportId'])))
 		{
 			$variables['report']     = $report;
 			$variables['dataSource'] = $report->getDataSource();
@@ -57,8 +57,8 @@ class SproutReports_ReportsController extends BaseController
 
 	public function actionResultsIndex(array $variables = array())
 	{
-		$id     = isset($variables['reportId']) ? $variables['reportId'] : null;
-		$report = sproutReports()->reports->get($id);
+		$reportId = isset($variables['reportId']) ? $variables['reportId'] : null;
+		$report   = sproutReports()->reports->getReport($reportId);
 
 		if ($report)
 		{
@@ -109,8 +109,8 @@ class SproutReports_ReportsController extends BaseController
 
 	public function actionExportReport()
 	{
-		$id     = craft()->request->getParam('reportId');
-		$report = sproutReports()->reports->get($id);
+		$reportId = craft()->request->getParam('reportId');
+		$report   = sproutReports()->reports->getReport($reportId);
 
 		if ($report)
 		{

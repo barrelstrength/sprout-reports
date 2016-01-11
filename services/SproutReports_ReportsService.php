@@ -98,9 +98,31 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	 *
 	 * @return SproutReports_ReportModel
 	 */
-	public function get($id)
+	public function getReport($reportId)
 	{
-		$result = SproutReports_ReportRecord::model()->findById($id);
+		$result = SproutReports_ReportRecord::model()->findById($reportId);
+
+		if ($result)
+		{
+			return SproutReports_ReportModel::populateModel($result);
+		}
+	}
+
+	/**
+	 * Returns a SproutReports_ReportModel model if one is found in the database by handle
+	 *
+	 * @param string $handle
+	 * @return false|SproutReports_ReportModel
+	 */
+	public function getReportByHandle($handle)
+	{
+		$result = craft()->db->createCommand()
+			->select('*')
+			->from('sproutreports_reports')
+			->where('handle = :handle', array(
+				':handle' => $handle
+			))
+			->queryRow();
 
 		if ($result)
 		{
@@ -111,7 +133,7 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	/**
 	 * @return null|SproutReports_ReportModel[]
 	 */
-	public function getAll()
+	public function getAllReports()
 	{
 		$result = SproutReports_ReportRecord::model()->findAll();
 
@@ -176,15 +198,15 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	 */
 	public function prepareFromPost()
 	{
-		$id = craft()->request->getPost('id');
+		$reportId = craft()->request->getPost('id');
 
-		if ($id && is_numeric($id))
+		if ($reportId && is_numeric($reportId))
 		{
-			$instance = sproutReports()->reports->get($id);
+			$instance = sproutReports()->reports->getReport($reportId);
 
 			if (!$instance)
 			{
-				$instance->addError('id', Craft::t('Could not find a report with id {id}', compact('id')));
+				$instance->addError('id', Craft::t('Could not find a report with id {reportId}', compact('reportId')));
 			}
 		}
 		else

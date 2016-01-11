@@ -24,7 +24,7 @@ class SproutReports_NumberReportWidget extends BaseWidget
 	 */
 	public function getBodyHtml()
 	{
-		$report = sproutReports()->reports->get($this->getSettings()->reportId);
+		$report = sproutReports()->reports->getReport($this->getSettings()->reportId);
 
 		if ($report)
 		{

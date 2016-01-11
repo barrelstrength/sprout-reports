@@ -8,10 +8,6 @@ class m151229_000006_sproutReports_addDetailsToReportsTable extends BaseMigratio
 	 */
 	public function safeUp()
 	{
-		// KEY `craft_sproutreports_reports_dataSourceId_idx` (`dataSourceId`),
-		// KEY `craft_sproutreports_reports_groupId_fk` (`groupId`),
-    // CONSTRAINT `craft_sproutreports_reports_groupId_fk` FOREIGN KEY (`groupId`) REFERENCES `craft_sproutreports_reportgroups` (`id`) ON DELETE CASCADE
-
 		if (($table = $this->dbConnection->schema->getTable('{{sproutreports_reports}}')))
 		{
 			SproutReportsPlugin::log('Creating `dataSourceId` index.', LogLevel::Info);

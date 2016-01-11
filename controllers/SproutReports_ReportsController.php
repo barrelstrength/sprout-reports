@@ -14,10 +14,9 @@ class SproutReports_ReportsController extends BaseController
 	{
 		$this->requirePostRequest();
 
-		$report = craft()->request->getPost();
-		$report = SproutReports_ReportModel::populateModel($report);
+		$report = sproutReports()->reports->prepareFromPost();
 
-		if (craft()->sproutReports_reports->saveReport($report))
+		if (sproutReports()->reports->saveReport($report))
 		{
 			craft()->userSession->setNotice(Craft::t('Report saved.'));
 			$this->redirectToPostedUrl($report);
@@ -26,26 +25,109 @@ class SproutReports_ReportsController extends BaseController
 		{
 			craft()->userSession->setError(Craft::t('Could not save report.'));
 
-			craft()->urlManager->setRouteVariables(
-				array(
-					'errorMessage'	=> $report->getError('customQuery'),
-					'unsavedReport' => $report
-				)
-			);
+			craft()->urlManager->setRouteVariables(array(
+				'report' => $report
+			));
 		}
+	}
+
+	// @todo - reconsider logic
+	public function actionEditReport(array $variables = array())
+	{
+		// If we have a Report Model in our $variables, we are handling errors
+		if (isset($variables['report']))
+		{
+			$variables['report']     = $variables['report'];
+			$variables['dataSource'] = $variables['report']->getDataSource();
+		}
+		elseif (isset($variables['reportId']) && ($report = sproutReports()->reports->get($variables['reportId'])))
+		{
+			$variables['report']     = $report;
+			$variables['dataSource'] = $report->getDataSource();
+		}
+		else
+		{
+			$variables['report']               = new SproutReports_ReportModel();
+			$variables['report']->dataSourceId = $variables['plugin'] . '.' . $variables['dataSourceKey'];
+			$variables['dataSource']           = $variables['report']->getDataSource();
+		}
+
+		$this->renderTemplate('sproutreports/reports/_edit', $variables);
+	}
+
+	public function actionResultsIndex(array $variables = array())
+	{
+		$id     = isset($variables['reportId']) ? $variables['reportId'] : null;
+		$report = sproutReports()->reports->get($id);
+
+		if ($report)
+		{
+			$dataSource = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
+			$labels     = $dataSource->getDefaultLabels();
+
+			$variables['report'] = $report;
+			$variables['values'] = array();
+
+			if ($dataSource)
+			{
+				$values = $dataSource->getResults($report);
+
+				// @todo - reconsider this logic
+				if (empty($labels) && !empty($values))
+				{
+					$labels = array_keys(array_shift(array_values($values)));
+				}
+
+				$variables['labels'] = $labels;
+				$variables['values'] = $values;
+			}
+
+			// @todo Hand off to the export service when a blank page and 404 issues are sorted out
+			return $this->renderTemplate('sproutreports/results/index', $variables);
+		}
+
+		throw new HttpException(404, Craft::t('Report not found.'));
+	}
+
+	/*
+	 * Process report query and display results
+	 */
+	public function actionResults()
+	{
+		$reportId  = craft()->request->getSegment(3);
+		$report    = craft()->sproutReports_reports->getReportById($reportId);
+		$runReport = craft()->request->getParam('runReport');
+
+		$results = array();
+
+		if ($runReport)
+		{
+			$reportOptions = craft()->request->getPost('reportOptions');
+			$results       = sproutReports()->reports->runReport($report, $reportOptions);
+
+			if ($results->rowCount && craft()->request->getPost('exportCSV'))
+			{
+				$this->exportDataToCsv($report, $results);
+			}
+		}
+
+		$this->renderTemplate('sproutreports/results/index', array(
+			'report'     => $report,
+			'results'    => $results,
+			'userValues' => $userValues
+		));
 	}
 
 	/**
 	 * Runs a previously saved report query
-	 * 
-	 * @return mixed	Report output or report output as CSV
+	 *
+	 * @return mixed  Report output or report output as CSV
 	 */
 	public function actionRunReport()
-	{ 
-
-		$reportId	= craft()->request->getPost('reportId');
-		$report		= craft()->sproutReports_reports->getReportById($reportId);
-		$results	= craft()->sproutReports_reports->runReport($report['customQuery']);
+	{
+		$reportId = craft()->request->getPost('reportId');
+		$report   = sproutReports()->reports->getReportById($reportId);
+		$results  = sproutReports()->reports->runReport($report);
 
 		if (false !== $results)
 		{
@@ -58,8 +140,8 @@ class SproutReports_ReportsController extends BaseController
 			{
 				craft()->urlManager->setRouteVariables(
 					array(
-						'report'	=> $report, 
-						'results'	=> $results
+						'report'  => $report,
+						'results' => $results
 					)
 				);
 			}
@@ -68,38 +150,71 @@ class SproutReports_ReportsController extends BaseController
 		{
 			craft()->userSession->setFlash(
 				'errorMessage',
-				'Report could not be ran, please [update query]sproutreports/reports/edit/'.$reportId
+				'Report could not be ran, please [update query]sproutreports/reports/edit/' . $reportId
 			);
 
 			craft()->userSession->setFlash('unsavedReport', $report);
 
-			$this->redirect('sproutreports/reports/edit/'.$reportId);
+			$this->redirect('sproutreports/reports/edit/' . $reportId);
 		}
+
+		$this->renderTemplate('results/index', array(
+			'report'  => $report,
+			'results' => $results
+		));
 	}
 
 	public function actionDeleteReport()
 	{
 		$this->requirePostRequest();
 
-		$reportId = craft()->request->getRequiredPost('id');
+		$reportId = craft()->request->getRequiredPost('reportId');
 
-		craft()->sproutReports_reports->deleteReportById($reportId);
-		$this->redirectToPostedUrl();
+		if ($record = SproutReports_ReportRecord::model()->findById($reportId))
+		{
+			$record->delete();
+
+			craft()->userSession->setNotice('Report deleted.');
+
+			$this->redirectToPostedUrl($record->getAttributes());
+		}
+
+		throw new Exception(Craft::t('Report not found.'));
+	}
+
+	public function actionExportReport()
+	{
+		$id     = craft()->request->getParam('reportId');
+		$report = sproutReports()->reports->get($id);
+
+		if ($report)
+		{
+			$dataSource = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
+
+			if ($dataSource)
+			{
+				$filename = $report->name;
+				$values   = $dataSource->getResults($report);
+				$labels   = $dataSource->getDefaultLabels();
+
+				sproutReports()->exports->toCsv($values, $labels, $filename);
+			}
+		}
 	}
 
 	/**
 	 * Export Data as CSV
-	 * 
-	 * @param  object	$results	Results from SQL query
-	 * @return buffer				The CSV output
+	 *
+	 * @param  object $results Results from SQL query
+	 * @return buffer        The CSV output
 	 */
 	protected function exportDataToCsv($report, $results)
 	{
 		$worksheet = new Worksheet();
 
-		foreach($results as $key => $row) 
+		foreach ($results as $key => $row)
 		{
-			if($key == 0)
+			if ($key == 0)
 			{
 				$columnNames = array_keys($row);
 				$worksheet->insertRecord($columnNames);
@@ -111,8 +226,8 @@ class SproutReports_ReportsController extends BaseController
 		$excel = new SimpleExcel();
 		$excel->insertWorksheet($worksheet);
 
-		$reportName	= str_replace(' ', '', $report['name']);
-		$filename	= $reportName . '-'. date('Ymd-hms') . '.csv';
+		$reportName = str_replace(' ', '', $report['name']);
+		$filename   = $reportName . '-' . date('Ymd-hms') . '.csv';
 
 		$excel->exportFile('php://output', 'CSV', array('filename' => $filename));
 	}

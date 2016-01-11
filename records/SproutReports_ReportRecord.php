@@ -1,39 +1,81 @@
 <?php
 namespace Craft;
 
+/**
+ * Class SproutReports_ReportRecord
+ *
+ * @package Craft
+ * --
+ * @property int $id
+ * @property string $name
+ * @property string $handle
+ * @property string $description
+ * @property array $options
+ * @property string $dataSourceId
+ * @property int $groupId
+ * @property int $enabled
+ */
 class SproutReports_ReportRecord extends BaseRecord
 {
+	/**
+	 * @return string
+	 */
 	public function getTableName()
 	{
 		return 'sproutreports_reports';
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function defineAttributes()
 	{
 		return array(
-			'groupId'				=> array(AttributeType::Number),
-			'name'					=> array(AttributeType::String, 'required' => true),
-			'handle'				=> array(AttributeType::String, 'required' => true),
-			'description'			=> AttributeType::String,
-			'customQuery'			=> AttributeType::Mixed,
-			'returnsSingleNumber'	=> array(AttributeType::Bool, 'default' => false, 'required' => true),
-			'isEmailList'	=> array(AttributeType::Bool, 'default' => false, 'required' => true)
+			'groupId'      => array(AttributeType::Number, 'required' => true),
+			'name'         => array(AttributeType::String, 'required' => true),
+			'handle'       => array(AttributeType::Handle, 'required' => true),
+			'description'  => array(AttributeType::String, 'default' => null),
+			'dataSourceId' => array(AttributeType::String, 'required' => true),
+			'options'      => array(AttributeType::Mixed, 'required' => false),
+			'enabled'      => array(AttributeType::Bool, 'default' => true)
 		);
 	}
 
+	/**
+	 * @return array
+	 */
+	public function defineRelations()
+	{
+		return array(
+			'report' => array(
+				static::BELONGS_TO,
+				'SproutReports_ReportGroupRecord',
+				'groupId',
+				'required' => true,
+				'onDelete' => static::CASCADE
+			),
+		);
+	}
+
+	/**
+	 * @return array
+	 */
 	public function defineIndexes()
 	{
 		return array(
-			array('columns' => array('name', 'handle'), 'unique' => true),
+			array('columns' => array('name'), 'unique' => true),
+			array('columns' => array('handle'), 'unique' => true),
+			array('columns' => array('dataSourceId')),
 		);
 	}
 
-	public function create()
+	/**
+	 * @return array
+	 */
+	public function scopes()
 	{
-		$class	= get_class($this);
-		$record	= new $class();
-
-		return $record;
+		return array(
+			'ordered' => array('order' => 'dataSourceId, name'),
+		);
 	}
-
 }

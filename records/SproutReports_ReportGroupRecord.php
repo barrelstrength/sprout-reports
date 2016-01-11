@@ -2,17 +2,13 @@
 namespace Craft;
 
 /**
- * Craft by Pixel & Tonic
+ * Class SproutReports_ReportGroupRecord
  *
- * @package   Craft
- * @author    Pixel & Tonic, Inc.
- * @copyright Copyright (c) 2013, Pixel & Tonic, Inc.
- * @license   http://buildwithcraft.com/license Craft License Agreement
- * @link      http://buildwithcraft.com
- */
-
-/**
- *
+ * @package Craft
+ * --
+ * @property int    $id
+ * @property string $name
+ * @property string $handle
  */
 class SproutReports_ReportGroupRecord extends BaseRecord
 {
@@ -25,13 +21,12 @@ class SproutReports_ReportGroupRecord extends BaseRecord
 	}
 
 	/**
-	 * @access protected
 	 * @return array
 	 */
 	protected function defineAttributes()
 	{
 		return array(
-			'name'          => array(AttributeType::Name, 'required' => true)
+			'name' => array(AttributeType::Name, 'required' => true)
 		);
 	}
 
@@ -41,7 +36,7 @@ class SproutReports_ReportGroupRecord extends BaseRecord
 	public function defineRelations()
 	{
 		return array(
-			'sproutreports_reports'  => array(static::HAS_MANY, 'SproutReports_ReportRecord', 'id'),
+			'reports' => array(static::HAS_MANY, 'SproutReports_ReportRecord', 'groupId'),
 		);
 	}
 

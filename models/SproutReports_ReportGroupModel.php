@@ -2,45 +2,40 @@
 namespace Craft;
 
 /**
- * Section model class
+ * Class SproutReports_ReportGroupModel
  *
- * Used for transporting section data throughout the system.
+ * @package Craft
+ * --
+ * @property int    $id
+ * @property string $name
+ * @property string $handle
  */
 class SproutReports_ReportGroupModel extends BaseModel
 {
-	private $_locales;
-	private $_fieldLayout;
-
 	/**
-	 * Use the translated section name as the string representation.
-	 *
 	 * @return string
 	 */
-	function __toString()
+	public function __toString()
 	{
 		return Craft::t($this->name);
 	}
 
 	/**
-	 * @access protected
 	 * @return array
 	 */
 	protected function defineAttributes()
 	{
 		return array(
-			'id'            => AttributeType::Number,
-			'name'          => AttributeType::String,
+			'id'     => array(AttributeType::Number),
+			'name'   => array(AttributeType::String, 'required' => true)
 		);
 	}
 
 	/**
-	 * Returns the group's fields.
-	 *
-	 * @return array
+	 * @return null|SproutReports_ReportModel[]
 	 */
 	public function getReports()
 	{
-		return craft()->sproutReports->getFormsByGroupId($this->id);
+		return sproutReports()->getReportsByGroupId($this->id);
 	}
-
 }

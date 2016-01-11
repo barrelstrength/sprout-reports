@@ -1,20 +1,32 @@
 {% extends "_layouts/cp" %}
 
-{% block content %}
+{% set subnav = {
+	reports: {
+		label: "Reports"|t,
+		url: url('sproutreports/reports')
+	},
+	datasources: {
+		label: "Data Sources"|t,
+		url: url('sproutreports/datasources')
+	}
+} %}
 
-  {% if craft.request.getSegment(2) != 'results' %}
-  <br/>
-  <footer class="bsd-branding">
-    <p>
-      Powered by <a href="http://barrelstrengthdesign.com" target="_blank">Sprout Reports</a> {{ craft.sproutReports.version }} | 
-      Designed by <a href="http://barrelstrengthdesign.com" target="_blank">(Barrel Strength)</a>
-    </p>
-  </footer>
-  {% endif %}
+{% if currentUser.can('editSproutReportsSettings') %}
+	{% set subnav = subnav|merge({
+		settings: {
+			label: "Settings"|t,
+			url: url('settings/plugins/sproutreports')
+		}
+	}) %}
+{% endif %}
+
+{% set selectedSubnavItem = craft.request.segment(2) ? craft.request.segment(2) : 'reports' %}
+
+{% block content %}
 
 {% endblock %}
 
-{% if craft.request.getSegment(2) == 'results' %}
+{% if craft.request.getSegment(4) == 'results' %}
 	{% includeCssResource "sproutreports/css/jquery.jscrollpane.css" %}
 	{% includeCssResource "sproutreports/css/styles.css" %}
 
@@ -22,19 +34,3 @@
 	{% includeJsResource "sproutreports/js/jquery.mousewheel.js" %}
 	{% includeJsResource "sproutreports/js/scripts.js" %}
 {% endif %}
-
-{% set brandCss %}
-  footer.bsd-branding {
-    bottom:10px;
-    color:#999;
-    font-size:11px;
-    position:absolute;
-    right:30px;
-  }
-  footer.bsd-branding a {
-    color:#999;
-    font-weight:bold;
-  }
-{% endset %}
-
-{% includeCss brandCss %}

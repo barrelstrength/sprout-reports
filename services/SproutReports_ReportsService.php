@@ -1,371 +1,227 @@
 <?php
 namespace Craft;
 
+/**
+ * Class SproutReports_ReportsService
+ *
+ * @package Craft
+ */
 class SproutReports_ReportsService extends BaseApplicationComponent
 {
-	protected $reportRecord			= null;
-	protected $commandsNotAllowed	= array('INSERT', 'UPDATE', 'DELETE', 'ALTER', 'DROP');
-
-	// For retrieving groups
-	private $_groupsById;
-	private $_fetchedAllGroups = false;
-
-	public function __construct($reportRecord = null)
-	{
-		$this->reportRecord = $reportRecord;
-		
-		if (is_null($this->reportRecord)) 
-		{
-			$this->reportRecord = SproutReports_ReportRecord::model();
-		}
-	}
-
 	/**
-	 * Get a new blank item
+	 * @param SproutReports_ReportModel $model
 	 *
-	 * @param  array               $attributes
-	 * @return SproutReports_ReportModel
+	 * @throws Exception
+	 * @return bool
 	 */
-	public function newModel($attributes = array())
-	{
-		$model = new SproutReports_ReportModel();
-		$model->setAttributes($attributes);
-
-		return $model;
-	}
-
 	public function saveReport(SproutReports_ReportModel &$model)
-	{	
-		if ($id = $model->getAttribute('id')) 
+	{
+		$isNewReport = !$model->id;
+
+		if (empty($model->id))
 		{
-			if (null === ($record = $this->reportRecord->findByPk($id))) 
-			{
-				throw new Exception(Craft::t('Can\'t find report with ID "{id}"', array('id' => $id)));
-			}
-		} 
-		else 
+			$record = new SproutReports_ReportRecord();
+		}
+		else
 		{
-			$record = $this->reportRecord->create();
+			$record = SproutReports_ReportRecord::model()->findById($model->id);
 		}
 
-		// Simple validation on query string
-		
-		$customQuery = $this->sanitizeQueryString($model->getAttribute('customQuery'), false);
-
-		if ($customQuery === false)
+		if (!$this->validateOptions($model))
 		{
-			$model->addError('customQuery', Craft::t('Potentially unsafe or invalid query.'));
-
 			return false;
 		}
-
-		$model->setAttribute('customQuery', $customQuery);
 
 		$record->setAttributes($model->getAttributes(), false);
 
-		if ($record->validate() && $record->save()) {
-			// update id on model (for new records)
-			$model->setAttribute('id', $record->getAttribute('id'));
-			
-			return true;
-		} 
-		else 
+		if (!$record->validate())
 		{
 			$model->addErrors($record->getErrors());
-			
+
 			return false;
 		}
+
+		if (!$record->save())
+		{
+			$model->addError('general', Craft::t('Unable to save report.'));
+
+			return false;
+		}
+
+		if (!$isNewReport)
+		{
+			$model->id = $record->id;
+		}
+
+		return true;
 	}
 
-	public function runReport($query, $report=null)
+	/**
+	 * Registers one or more reports with our internal tracking system
+	 *
+	 * @param array|SproutReportsBaseReport $reports
+	 *
+	 * @throws Exception
+	 * @return bool
+	 */
+	public function registerReports($reports, SproutReports_ReportGroupModel $group)
 	{
-		$query = $this->sanitizeQueryString($query);
-
-		if ($query === false)
+		if (!is_array($reports))
 		{
-			return false;
+			$reports = array($reports);
 		}
 
-		$query	= $this->parseModifierFlag($query);
-
-		try
+		foreach ($reports as $report)
 		{
-			$result	= craft()->db->createCommand($query)->query();
-		}
-		catch (\CDbException $e)
-		{
-			if (is_null($report))
+			if ($report instanceof SproutReportsBaseReport)
 			{
-				throw new \CDbException($e->getMessage());
+				$record = new SproutReports_ReportRecord();
+
+				$record->name         = $report->getName();
+				$record->handle       = $report->getHandle();
+				$record->description  = $report->getDescription();
+				$record->options      = $report->getOptions();
+				$record->dataSourceId = $report->getDataSource()->getId();
+				$record->enabled      = true;
+				$record->groupId      = $group->id;
+
+				if (!$record->save())
+				{
+					SproutReportsPlugin::log(print_r($record->getErrors(), true), LogLevel::Warning);
+				}
 			}
-
-			$reportEditUrl = sprintf('/%s/sproutreports/reports/edit/%s', craft()->config->get('cpTrigger'), $report['id']);
-
-			$response = array(
-				'message'	=> 'Report could not be ran, please update query.',
-				'dbMessage'	=> $e->getMessage()
-			);
-
-			
-			craft()->userSession->setFlash('response', $response);
-
-			craft()->request->redirect($reportEditUrl);
 		}
-
-		return $result;
 	}
 
-	public function deleteReportById($reportId)
+	/**
+	 * @param $id
+	 *
+	 * @return SproutReports_ReportModel
+	 */
+	public function get($id)
 	{
-		if (!$reportId)
+		$result = SproutReports_ReportRecord::model()->findById($id);
+
+		if ($result)
 		{
-			return false;
+			return SproutReports_ReportModel::populateModel($result);
 		}
-
-		$report = new SproutReports_ReportRecord;
-
-		return $report->deleteByPk($reportId);
 	}
 
-	public function getAllReports() 
+	/**
+	 * @return null|SproutReports_ReportModel[]
+	 */
+	public function getAll()
 	{
-		$q = craft()->db->createCommand()->from('sproutreports_reports');
+		$result = SproutReports_ReportRecord::model()->findAll();
 
-		return $q->queryAll();
+		if ($result)
+		{
+			return SproutReports_ReportModel::populateModels($result);
+		}
 	}
 
-	public function getAllReportsByAttributes(array $attributes=array())
+	/**
+	 * @return null|SproutReports_ReportModel[]
+	 */
+	public function getEnabled()
 	{
-		return $this->reportRecord->findAllByAttributes($attributes);
+		$result = SproutReports_ReportRecord::model()->findAllByAttributes(array('enabled' => 1));
+
+		if ($result)
+		{
+			return SproutReports_ReportModel::populateModels($result);
+		}
 	}
 
+	/**
+	 * @param int $groupId
+	 *
+	 * @return null|SproutReports_ReportModel[]
+	 */
 	public function getReportsByGroupId($groupId)
 	{
-		$query = craft()->db->createCommand()
-							->from('sproutreports_reports')
-							->where('groupId=:groupId', array('groupId' => $groupId))
-							->order('name')
-							->queryAll();    
+		$result = craft()->db->createCommand()
+			->select('*')
+			->from('sproutreports_reports')
+			->where('groupId = :groupId', array(
+				':groupId' => $groupId
+			))
+			->queryAll();
 
-		return SproutReports_ReportModel::populateModels($query);
-	}
-
-	public function getReportById($reportId)
-	{
-		$reports	= craft()->db->createCommand()
-					->from('sproutreports_reports')
-					->limit(1)
-					->where('id=:id', array('id' => $reportId))
-					->queryAll();
-
-		if ($reports)
+		if ($result)
 		{
-			return array_shift($reports);
+			return SproutReports_ReportModel::populateModels($result);
 		}
-		
-		return false;
 	}
-
-	public function getReportByHandle($handle) 
-	{
-		if (!$handle)
-		{
-			return false;
-		}
-
-		return SproutReports_ReportRecord::model()->findByAttributes(array('handle' => $handle));
-	}
-
 
 	/**
-	 * Returns all report groups.
+	 * Returns the number of reports that have been created based on a given data source
 	 *
-	 * @param string|null $indexBy
-	 * @return array
+	 * @param $dataSourceId
+	 *
+	 * @return int
+	 *
 	 */
-	public function getAllReportGroups($indexBy = null)
+	public function getCountByDataSourceId($dataSourceId)
 	{
-			if (!$this->_fetchedAllGroups)
-			{
-					$groupRecords = SproutReports_ReportGroupRecord::model()->ordered()->findAll();
-					$this->_groupsById = SproutReports_ReportGroupModel::populateModels($groupRecords, 'id');
-					$this->_fetchedAllGroups = true;
-			}
-
-			if ($indexBy == 'id')
-			{
-					$groups = $this->_groupsById;
-			}
-			else if (!$indexBy)
-			{
-					$groups = array_values($this->_groupsById);
-			}
-			else
-			{
-					$groups = array();
-					foreach ($this->_groupsById as $group)
-					{
-							$groups[$group->$indexBy] = $group;
-					}
-			}
-
-			return $groups;
+		return (int)SproutReports_ReportRecord::model()->countByAttributes(array('dataSourceId' => $dataSourceId));
 	}
 
 	/**
-	 * Saves a group group.
+	 * Returns a report model populated from saved/POSTed data
 	 *
-	 * @param ReportGroupModel $group
-	 * @return bool
-	 */
-	public function saveGroup(SproutReports_ReportGroupModel $group)
-	{		
-			$groupRecord = $this->_getGroupRecord($group);
-			$groupRecord->name = $group->name;
-
-			if ($groupRecord->validate())
-			{
-					$groupRecord->save(false);
-
-					// Now that we have an ID, save it on the model & models
-					if (!$group->id)
-					{
-							$group->id = $groupRecord->id;
-					}
-
-					return true;
-			}
-			else
-			{
-					$group->addErrors($groupRecord->getErrors());
-					return false;
-			}
-	}
-
-	/**
-	 * Deletes a group
-	 *
-	 * @param int $groupId
-	 * @return bool
-	 */
-	public function deleteGroupById($groupId)
-	{
-			$groupRecord = SproutReports_ReportGroupRecord::model()->findById($groupId);
-
-			if (!$groupRecord)
-			{
-					return false;
-			}
-
-			$affectedRows = craft()->db->createCommand()->delete('sproutreports_reportgroups', array('id' => $groupId));
-
-			return (bool) $affectedRows;
-	}
-
-	/**
-	 * Gets a group record or creates a new one.
-	 *
-	 * @access private
-	 * @param ReportGroupModel $group
 	 * @throws Exception
-	 * @return ReportGroupRecord
+	 * @return SproutReports_ReportModel
 	 */
-	private function _getGroupRecord(SproutReports_ReportGroupModel $group)
+	public function prepareFromPost()
 	{
-		if ($group->id)
-		{
-			$groupRecord = SproutReports_ReportGroupRecord::model()->findById($group->id);
+		$id = craft()->request->getPost('id');
 
-			if (!$groupRecord)
+		if ($id && is_numeric($id))
+		{
+			$instance = sproutReports()->reports->get($id);
+
+			if (!$instance)
 			{
-				throw new Exception(Craft::t('No field group exists with the ID “{id}”', array('id' => $group->id)));
+				$instance->addError('id', Craft::t('Could not find a report with id {id}', compact('id')));
 			}
 		}
 		else
 		{
-			$groupRecord = new SproutReports_ReportGroupRecord();
+			$instance = new SproutReports_ReportModel();
 		}
 
-		return $groupRecord;
+		$options = craft()->request->getPost('options');
+
+		$instance->name         = craft()->request->getPost('name');
+		$instance->handle       = craft()->request->getPost('handle');
+		$instance->description  = craft()->request->getPost('description');
+		$instance->options      = is_array($options) ? $options : array();
+		$instance->dataSourceId = craft()->request->getPost('dataSourceId');
+		$instance->enabled      = craft()->request->getPost('enabled');
+		$instance->groupId      = craft()->request->getPost('groupId', 1);
+
+		return $instance;
 	}
 
 	/**
-	 * Validates a query string and attempts to make it as safe as possible
-	 *
-	 * @param	string	$query	The SQL string
-	 *
-	 * @return	mixed			The sanitized query string or false if not safe enough
+	 * @param SproutReports_ReportModel $report
+	 * @return bool
 	 */
-	public function sanitizeQueryString($query)
+	protected function validateOptions(SproutReports_ReportModel &$report)
 	{
-		// Must be a string
-		// Must be at least 15 characters long
-		if (!is_string($query) || strlen($query) < 15)
+		$errors = array();
+
+		$dataSource = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
+
+		if (!$dataSource->validateOptions($report->options, $errors))
 		{
+			$report->addError('options', $errors);
+
 			return false;
 		}
 
-		
-		// Must start with the SELECT command
-		if (stripos(trim($query), 'SELECT') !== 0)
-		{
-			return false;
-		}
-
-		// Must not contain any of these potentially unsafe strings/commands
-		// May escape command with @ (one at sign) if required
-		foreach ($this->commandsNotAllowed as $command)
-		{
-			if (preg_match('/\s?[^@]+\b'.$command.'\b\s+/i', $query))
-			{
-				return false;
-			}
-		}
-
-		// Remove possible CRLF injection
-		$query	= str_replace('\n', '', $query);
-
-		return $query;
-	}
-
-	/**
-	 * The @ sign is our modifier flag
-	 * Its purpose is to allow table prefix replacement and command escaping
-	 *
-	 * 1. Dynamic table prefix replacement with @_table
-	 * 2. Dynamic command escaping with @command
-	 *
-	 * @example
-	 *
-	 * Flagging
-	 * > SELECT * FROM @_actions WHERE action = 'execute @delete command.' LIMIT 1
-	 *
-	 * Yields
-	 * > SELECT * FROM craft_actions WHERE action = 'execute delete command.' LIMIT 1
-	 */
-
-	public function parseModifierFlag($query)
-	{
-		if (stripos($query, '@') !== false)
-		{
-			if (stripos($query, '@_') !== false)
-			{
-				$query = str_replace('@_', craft()->config->getDbItem('tablePrefix').'_', $query);
-			}
-
-			foreach ($this->commandsNotAllowed as $command)
-			{
-				$foundAtposition = stripos($query, '@'.$command);
-
-				if ($foundAtposition !== false)
-				{
-					$commandAsWritten = substr($query, $foundAtposition + 1, strlen($command));
-
-					$query = str_replace('@'.$commandAsWritten, $commandAsWritten, $query);
-				}
-			}
-		}
-
-		return $query;
+		return true;
 	}
 }

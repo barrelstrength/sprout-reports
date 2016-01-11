@@ -152,7 +152,7 @@ Garnish.$doc.ready(function()
 		groupSettingsSelector: '#groupsettingsbtn',
 
 		newGroupAction: 'sproutReports/group/saveGroup',
-		newGroupOnSuccessUrlBase: 'sproutreports/',
+		newGroupOnSuccessUrlBase: 'sproutreports/reports/',
 		newGroupOnErrorMessage: 'Could not create the group:',
 
 		renameGroupAction: 'sproutReports/group/saveGroup',
@@ -161,7 +161,7 @@ Garnish.$doc.ready(function()
 
 		promptForGroupNameMessage: 'What do you want to name your group?',
 
-		deleteGroupConfirmMessage: 'Are you sure you want to delete this group and all its fields?',
+		deleteGroupConfirmMessage: 'Are you sure you want to delete this group and all its reports?',
 		deleteGroupAction: 'sproutReports/group/deleteGroup',
 		deleteGroupOnSuccessUrl: 'sproutReports',
 		deleteGroupOnErrorMessage: 'Could not delete the group.',

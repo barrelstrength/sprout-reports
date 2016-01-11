@@ -1,0 +1,165 @@
+{% extends "sproutreports/_layouts/base" %}
+
+{% set title  = "Reports"|t %}
+{% set groups = craft.sproutReports.getReportGroups() %}
+
+{% if craft.app.getVersion() < 2.5 %}
+	{% set tabs = {
+		reports: {
+			label: "Reports"|t,
+			url: url('sproutreports')
+		},
+		dataSources: {
+			label: "Data Sources"|t,
+			url: url('sproutreports/datasources')
+		}
+	} %}
+{% endif %}
+
+{% set selectedTab = 'reports' %}
+
+{% if groupId is defined %}
+	{% if groups[groupId] is not defined %}
+		{% exit 404 %}
+	{% endif %}
+
+	{% set reports = craft.sproutReports.getReportsByGroupId(groupId) %}
+{% else %}
+	{% set reports = craft.sproutReports.getReports() %}
+{% endif %}
+
+{% if craft.app.getVersion() >= 2.5 %}
+	{% set extraPageHeaderHtml %}
+
+		{% set dataSources = craft.sproutReports.getDataSources() %}
+
+		<div class="btngroup submit">
+			<a class="btn submit add icon" href="{{ cpUrl("sproutreports/reports/sproutreports/query/new") }}">New report</a>
+
+			{% if dataSources|length %}
+				<div class="btn submit menubtn"></div>
+				<div class="menu">
+					<ul>
+						{% for id, dataSource in dataSources %}
+							{% set dataSourceName = dataSource.getName() ~ " Report" %}
+							<li><a href="{{ dataSource.getUrl('/new') }}">{{ dataSourceName|t }}</a></li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+		</div>
+
+	{% endset %}
+{% endif %}
+
+{% block content %}
+
+	<form method="post" accept-charset="UTF-8">
+		{{ getCsrfInput() }}
+
+		<div class="tableview">
+			<table class="data fullwidth">
+				<thead>
+				<tr>
+					<th class="sproutreports-reportname">Name</th>
+					<th class="sproutreports-reportdescription">Description</th>
+					<th class="sproutreports-reportactions"></th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for report in reports %}
+					<tr>
+						<td class="sproutreports-reportname"><strong>{{ report.name }}</strong></td>
+						<td class="sproutreports-reportdescription">{{ report.description }}</td>
+						<td class="sproutreports-reportactions">
+
+
+							<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}" class="btn small">View</a>
+							<a href="{{ actionUrl('sproutReports/reports/exportReport', {reportId: report.id}) }}" class="btn small">Export</a>
+
+							{% if currentUser.can('editReports') %}
+
+								<a href="{{ report.getEditUrl() }}" class="btn small">Edit</a>
+
+								{#<a class="btn small formsubmit" data-param="reportId" data-value="{{ report.id }}" data-action="sproutReports/reports/deleteReport" data-redirect="sproutReports/reports" data-confirm="Are you sure you want to delete this report?">Delete</a>#}
+
+							{% endif %}
+
+
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+	</form>
+
+	<div class="grid">
+		<div class="item">
+			{{ parent() }}
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+	{% if craft.app.getVersion() < 2.5 %}
+
+		{% set dataSources = craft.sproutReports.getDataSources() %}
+
+		<div class="btngroup submit">
+			<a class="btn submit add icon" href="{{ cpUrl("sproutreports/reports/sproutreports/query/new") }}">New report</a>
+
+			{% if dataSources|length %}
+				<div class="btn submit menubtn"></div>
+				<div class="menu">
+					<ul>
+						{% for id, dataSource in dataSources %}
+							{% set dataSourceName = dataSource.getName() ~ " Report" %}
+							<li><a href="{{ dataSource.getUrl('/new') }}">{{ dataSourceName|t }}</a></li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+		</div>
+
+		<hr>
+
+	{% endif %}
+
+	{% if currentUser.can('editReports') %}
+
+		<nav>
+			<ul id="groups">
+
+				<li><a href="{{ url('sproutreports') }}"{% if groupId is not defined %} class="sel"{% endif %}>{{ "All Reports"|t }}</a></li>
+
+				{% for group in groups %}
+					<li><a href="{{ url('sproutreports/reports/'~group.id) }}"{% if groupId is defined and group.id == groupId %} class="sel"{% endif %} data-id="{{ group.id }}">{{ group.name }}</a></li>
+				{% endfor %}
+
+			</ul>
+		</nav>
+
+		<div class="buttons">
+			<div id="newgroupbtn" class="btn add icon">{{ "New Group"|t }}</div>
+
+			{% if groupId is defined %}
+				<div id="groupsettingsbtn" class="btn settings icon menubtn" title="{{ 'Settings' }}"></div>
+				<div class="menu">
+					<ul>
+						<li><a data-action="rename" role="button">{{ "Rename selected group"|t }}</a></li>
+						<li><a data-action="delete" role="button">{{ "Delete selected group"|t }}</a></li>
+					</ul>
+				</div>
+			{% endif %}
+		</div>
+
+	{% endif %}
+
+{% endblock %}
+
+{% includeCssResource "sproutreports/css/styles.css" %}
+{% includeJsResource "sproutreports/js/groups.js" %}

@@ -1,91 +1,211 @@
 <?php
 namespace Craft;
 
+/**
+ * Class SproutReportsPlugin
+ *
+ * @package Craft
+ */
 class SproutReportsPlugin extends BasePlugin
 {
-	function init()
+	/**
+	 * Defines secondary services a properties for improved public API
+	 *
+	 * @throws \Exception
+	 */
+	public function init()
 	{
-		require CRAFT_PLUGINS_PATH.'sproutreports/vendor/autoload.php';
+		parent::init();
+
+		Craft::import('plugins.sproutreports.contracts.*');
+		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.*');
+		Craft::import('plugins.sproutreports.integrations.sproutreports.datasources.*');
+
+		if (craft()->request->isCpRequest() && craft()->request->getSegment(1) == 'sproutreports')
+		{
+			// @todo Craft 3 - update to use info from config.json
+			craft()->templates->includeJsResource('sproutreports/js/brand.js');
+			craft()->templates->includeJs("
+				sproutFormsBrand = new Craft.SproutBrand();
+				sproutFormsBrand.displayFooter({
+					pluginName: 'Sprout Reports',
+					pluginUrl: 'http://sprout.barrelstrengthdesign.com/craft-plugins/reports',
+					pluginVersion: '" . $this->getVersion() . "',
+					pluginDescription: '" . $this->getDescription() . "',
+					developerName: '(Barrel Strength)',
+					developerUrl: '" . $this->getDeveloperUrl() . "'
+				});
+			");
+		}
 	}
 
 	/**
-	 * Returns the official name or an override if one is set
-	 *
-	 * @return	string
+	 * @return string
 	 */
-	function getName()
+	public function getName()
 	{
-		$pluginName			= Craft::t('Sprout Reports');
-		$pluginNameOverride	= $this->getSettings()->pluginNameOverride;
+		$override = trim($this->getSettings()->getAttribute('pluginNameOverride'));
 
-		if ($pluginNameOverride)
-		{
-			return $pluginNameOverride;
-		}
-
-		return $pluginName;
+		return empty($override) ? Craft::t('Sprout Reports') : $override;
 	}
 
-	function getVersion()
+	/**
+	 * @return string
+	 */
+	public function getDescription()
 	{
-		return '0.4.5';
+		return 'Powerful custom reports.';
 	}
 
-	function getDeveloper()
+	/**
+	 * @return string
+	 */
+	public function getVersion()
+	{
+		return '0.8.0';
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getSchemaVersion()
+	{
+		return '0.8.0';
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDeveloper()
 	{
 		return 'Barrel Strength Design';
 	}
 
-	function getDeveloperUrl()
+	/**
+	 * @return string
+	 */
+	public function getDeveloperUrl()
 	{
 		return 'http://barrelstrengthdesign.com';
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getDocumentationUrl()
+	{
+		return "http://sprout.barrelstrengthdesign.com/craft-plugins/results/docs";
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getReleaseFeedUrl()
+	{
+		return 'https://sprout.barrelstrengthdesign.com/craft-plugins/reports/releases.json';
+	}
+
+
+	/**
+	 * @return bool
+	 */
 	public function hasCpSection()
 	{
 		return true;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function defineSettings()
 	{
 		return array(
-			'pluginNameOverride'	=> AttributeType::String,
+			'pluginNameOverride' => AttributeType::String,
 		);
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getSettingsHtml()
 	{
 		return craft()->templates->render(
-			'sproutreports/_settings/plugin',
-				array(
-				'settings'	=> $this->getSettings()
+			'sproutreports/_cp/settings',
+			array(
+				'settings' => $this->getSettings()
 			)
 		);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function registerUserPermissions()
 	{
 		return array(
-			'editReports'	=> array('label' => Craft::t('Edit Reports')),
+			'sproutReports-editReports' => array('label' => Craft::t('Edit Reports')),
+			'sproutReports-editSettings' => array(
+					'label' => Craft::t('Edit Plugin Settings')
+			)
+		);
+	}
+
+	/**
+	 * @throws \Exception
+	 */
+	public function onAfterInstall()
+	{
+		$this->init();
+
+		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.SproutReportsCategoriesReport');
+		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.SproutReportsUsersReport');
+
+		$defaultGroup = sproutReports()->reportGroups->createGroupByName('Sprout Reports');
+
+		if (craft()->plugins->getPlugin('sproutreports'))
+		{
+			sproutReports()->reports->registerReports(new SproutReportsUsersReport(), $defaultGroup);
+		}
+	}
+
+	/**
+	 * @return array
+	 */
+	public function registerSproutReportsDataSources()
+	{
+		return array(
+			new SproutReportsCategoriesDataSource(),
+			new SproutReportsUsersDataSource(),
+			new SproutReportsQueryDataSource(),
 		);
 	}
 
 	public function registerCpRoutes()
 	{
 		return array(
+			'sproutreports' =>
+			'sproutreports/reports/index',
 
-			// Adjust output to account for selected group
-			'sproutreports/(?P<groupId>\d+)' =>
-			'sproutreports',
+			'sproutreports/reports/(?P<groupId>\d+)' =>
+			'sproutreports/reports/index',
 
-			'sproutreports/reports/(?P<newReport>new)' => 
-			'sproutreports/reports/_edit',
+			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/new' =>
+				array('action' => 'sproutReports/reports/editReport'),
 
-			'sproutreports/reports/edit/(?P<reportId>\d+)' => 
-			'sproutreports/reports/_edit',
+			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/edit/(?P<reportId>\d+)' =>
+				array('action' => 'sproutReports/reports/editReport'),
 
-			'sproutreports/results/(?P<reportId>\d+)' => 
-			'sproutreports/results/index',
+			'sproutreports/reports/view/(?P<reportId>\d+)' =>
+				array('action' => 'sproutReports/reports/resultsIndex'),
 		);
 	}
+}
+
+
+/**
+ * @return SproutReportsService
+ */
+function sproutReports()
+{
+	return Craft::app()->getComponent('sproutReports');
 }

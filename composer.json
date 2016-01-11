@@ -1,6 +1,5 @@
 {
     "require": {
-       "paste/pre": "dev-master",
-       "faisalman/simple-excel-php" : "dev-develop"
+        "league/csv": "^7.2"
     }
 }

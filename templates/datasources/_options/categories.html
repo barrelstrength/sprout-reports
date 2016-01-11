@@ -1,0 +1,29 @@
+{% import "_includes/forms" as forms %}
+
+{% if setupRequiredMessage %}
+
+	<ul class="errors">
+		<li>{{ setupRequiredMessage }}</li>
+	</ul>
+
+{% else %}
+
+	{{ forms.selectField({
+		label: "Section"|t,
+		instructions: "Section for which you want to report category usage"|t,
+		name: 'options[sectionId]',
+		options: sectionOptions,
+		value: options.section is defined ? options.section : null,
+		errors: errors['sectionId'] is defined ? errors['sectionId'] : null
+	}) }}
+
+	{{ forms.selectField({
+		label: "Category Group"|t,
+		instructions: "Category group for which you want report category usage"|t,
+		name: 'options[categoryGroupId]',
+		options: categoryGroupOptions,
+		value: options.categoryGroupId is defined ? options.categoryGroupId : null,
+		errors: errors['categoryGroupId'] is defined ? errors['categoryGroupId'] : null
+	}) }}
+
+{% endif %}

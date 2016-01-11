@@ -1,7 +1,7 @@
 {% extends "sproutreports/_layouts/base" %}
 {% import "_includes/forms" as forms %}
 
-{% set title = id is defined and id is not empty ? "Edit Report" : "New Report" %}
+{% set title = report['id'] is defined and report['id'] is not empty ? "Edit Report" : "New Report" %}
 
 {% set crumbs = [
 	{ label: "Reports"|t, url: url('sproutreports') }

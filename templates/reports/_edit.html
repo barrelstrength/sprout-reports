@@ -30,8 +30,8 @@
 	<input type="hidden" name="dataSourceId" value="{{ dataSource.id }}">
 
 	<div class="grid first">
-		<div class="item" data-position="left" data-min-colspan="2" data-max-colspan="3">
-			<div class="pane">
+		<div class="item" data-position="left" data-max-colspan="3">
+			<div class="pane" >
 
 				{% if report is defined %}
 					<input type="hidden" name="id" value="{{ report.id }}">
@@ -73,7 +73,7 @@
 			{% endif %}
 
 		</div>
-		<div class="item" data-position="right" data-colspan="1">
+		<div class="item" data-position="right" data-colspan="2">
 
 			<div class="pane meta">
 
@@ -102,7 +102,7 @@
 				{% endif %}
 
 			</div>
-			
+
 			<div class="pane meta">
 
 				{{ forms.textField({

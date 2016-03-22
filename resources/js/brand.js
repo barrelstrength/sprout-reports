@@ -9,7 +9,7 @@
 			brandHtml += '<li> Designed by <a href="' + plugin.developerUrl + '" target="_blank">' + plugin.developerName + '</a></li>';
 			brandHtml += '</ul>';
 
-			$('#footer').prepend(brandHtml)
+			$('#footer').append(brandHtml)
 		}
 	});
 

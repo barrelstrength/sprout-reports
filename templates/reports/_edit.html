@@ -29,8 +29,8 @@
 	<input type="hidden" name="redirect" value="sproutreports/reports">
 	<input type="hidden" name="dataSourceId" value="{{ dataSource.id }}">
 
-	<div class="grid first">
-		<div class="item" data-position="left" data-max-colspan="3">
+	<div class="grid first" data-max-cols="3">
+		<div class="item" data-position="left" data-colspan="2">
 			<div class="pane" >
 
 				{% if report is defined %}
@@ -73,7 +73,7 @@
 			{% endif %}
 
 		</div>
-		<div class="item" data-position="right" data-colspan="2">
+		<div class="item" data-position="right" data-colspan="1">
 
 			<div class="pane meta">
 

@@ -103,7 +103,8 @@ class SproutReportsCategoriesDataSource extends SproutReportsBaseDataSource
 			);
 		}
 
-		$optionErrors = array_shift($this->report->getErrors('options'));
+		$optionErrors = $this->report->getErrors('options');
+		$optionErrors = array_shift($optionErrors);
 
 		$setupRequiredMessage = null;
 

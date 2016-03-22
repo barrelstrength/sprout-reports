@@ -49,7 +49,8 @@ class SproutReportsQueryDataSource extends SproutReportsBaseDataSource
 	 */
 	public function getOptionsHtml(array $options = array())
 	{
-		$optionErrors = array_shift($this->report->getErrors('options'));
+		$optionErrors = $this->report->getErrors('options');
+		$optionErrors = array_shift($optionErrors);
 
 		return craft()->templates->render('sproutreports/datasources/_options/query', array(
 			'options' => $this->report->getOptions(),

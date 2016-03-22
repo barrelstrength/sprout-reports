@@ -10,7 +10,7 @@
 {% set groups = craft.sproutReports.getReportGroups() %}
 
 {% if groups | length %}
-	{% set groupId = craft.request.getQuery('groupId') %}
+	{% set groupId = report is defined ? report.groupId : null %}
 
 	{% if not groupId %}
 		{% set groupId = groups|keys[0] %}

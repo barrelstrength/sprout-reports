@@ -13,17 +13,6 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 		return Craft::t('Create reports about your users and user groups.');
 	}
 
-	// @todo - conditionally adjust the labels depending on which columns are returned
-	//public function getDefaultLabels(SproutReports_ReportModel &$report)
-	//{
-	//	return array(
-	//			'Username',
-	//			'Email',
-	//			'First Name',
-	//			'Last Name'
-	//	);
-	//}
-
 	/**
 	 * @param  SproutReports_ReportModel &$report
 	 *

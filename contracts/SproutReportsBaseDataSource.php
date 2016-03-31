@@ -160,7 +160,7 @@ abstract class SproutReportsBaseDataSource
 	 *
 	 * @return array
 	 */
-	public function getDefaultLabels()
+	public function getDefaultLabels(SproutReports_ReportModel &$report, $options = array())
 	{
 		return array();
 	}
@@ -174,7 +174,7 @@ abstract class SproutReportsBaseDataSource
 	 */
 	public function getResults(SproutReports_ReportModel &$report, $options = array())
 	{
-		return null;
+		return array();
 	}
 
 	/**

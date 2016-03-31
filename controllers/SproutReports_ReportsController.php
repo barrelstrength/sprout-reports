@@ -66,7 +66,7 @@ class SproutReports_ReportsController extends BaseController
 		if ($report)
 		{
 			$dataSource = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
-			$labels     = $dataSource->getDefaultLabels($report);
+			$labels     = $dataSource->getDefaultLabels($report, $options);
 
 			$variables['dataSource'] = null;
 			$variables['report']     = $report;
@@ -118,6 +118,9 @@ class SproutReports_ReportsController extends BaseController
 		$reportId = craft()->request->getParam('reportId');
 		$report   = sproutReports()->reports->getReport($reportId);
 
+		$options = craft()->request->getPost('options');
+		$options = count($options) ? $options : array();
+		
 		if ($report)
 		{
 			$dataSource = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
@@ -125,8 +128,8 @@ class SproutReports_ReportsController extends BaseController
 			if ($dataSource)
 			{
 				$filename = $report->name;
-				$labels   = $dataSource->getDefaultLabels($report);
-				$values   = $dataSource->getResults($report);
+				$labels   = $dataSource->getDefaultLabels($report, $options);
+				$values   = $dataSource->getResults($report, $options);
 
 				sproutReports()->exports->toCsv($values, $labels, $filename);
 			}

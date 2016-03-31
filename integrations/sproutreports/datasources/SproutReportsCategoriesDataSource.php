@@ -13,15 +13,6 @@ class SproutReportsCategoriesDataSource extends SproutReportsBaseDataSource
 		return Craft::t('Returns a breakdown of Categories used by Entries.');
 	}
 
-	//public function getDefaultLabels(SproutReports_ReportModel &$report)
-	//{
-	//	return array(
-	//		'Category Name',
-	//		'Total Entries Assigned Category',
-	//		'% of Total Categories'
-	//	);
-	//}
-
 	/**
 	 * @param  SproutReports_ReportModel &$report
 	 *

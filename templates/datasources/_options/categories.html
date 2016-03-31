@@ -14,7 +14,8 @@
 		name: 'options[sectionId]',
 		options: sectionOptions,
 		value: options.section is defined ? options.section : null,
-		errors: errors['sectionId'] is defined ? errors['sectionId'] : null
+		errors: errors['sectionId'] is defined ? errors['sectionId'] : null,
+		first: true
 	}) }}
 
 	{{ forms.selectField({

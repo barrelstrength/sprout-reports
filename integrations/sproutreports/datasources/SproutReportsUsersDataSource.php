@@ -29,9 +29,13 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 	 *
 	 * @return array|null
 	 */
-	public function getResults(SproutReports_ReportModel &$report)
+	public function getResults(SproutReports_ReportModel &$report, $options = array())
 	{
-		$options = $report->getOptions();
+		// First, use dynamic options, fallback to report options
+		if (!count($options))
+		{
+			$options = $report->getOptions();
+		}
 
 		$userGroupIds            = $options['userGroups'];
 		$displayUserGroupColumns = $options['displayUserGroupColumns'];
@@ -154,7 +158,7 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 
 		return craft()->templates->render('sproutreports/datasources/_options/users', array(
 			'userGroupOptions' => $userGroupOptions,
-			'options'          => $this->report->getOptions(),
+			'options'          => count($options) ? $options : $this->report->getOptions(),
 			'errors'           => $optionErrors
 		));
 	}

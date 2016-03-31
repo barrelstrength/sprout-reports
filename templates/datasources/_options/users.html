@@ -5,7 +5,8 @@
 	instructions: "Select the user groups to include in your report. All by default."|t,
 	name: "options[userGroups]",
 	options: userGroupOptions,
-	values: options.userGroups is defined ? options.userGroups : null
+	values: options.userGroups is defined ? options.userGroups : null,
+	first: true
 }) }}
 
 {{ forms.lightswitchField({

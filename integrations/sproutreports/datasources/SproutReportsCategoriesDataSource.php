@@ -27,7 +27,7 @@ class SproutReportsCategoriesDataSource extends SproutReportsBaseDataSource
 	 *
 	 * @return array|null
 	 */
-	public function getResults(SproutReports_ReportModel &$report)
+	public function getResults(SproutReports_ReportModel &$report, $options)
 	{
 		$options = $report->getOptions();
 

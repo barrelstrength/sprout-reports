@@ -27,7 +27,10 @@ class SproutReports_ExportsService extends BaseApplicationComponent
 		// @todo - reconsider this logic
 		if (empty($labels) && !empty($values))
 		{
-			$labels = array_keys(array_shift(array_values($values)));
+			$arrayValues = array_values($values);
+			$firstRowOfArray = array_shift($arrayValues);
+
+			$labels = array_keys($firstRowOfArray);
 		}
 
 		$variables['labels'] = $labels;
@@ -67,7 +70,10 @@ class SproutReports_ExportsService extends BaseApplicationComponent
 
 		if (empty($labels) && !empty($values))
 		{
-			$labels = array_keys(array_shift(array_values($values)));
+			$arrayValues = array_values($values);
+			$firstRowOfArray = array_shift($arrayValues);
+
+			$labels = array_keys($firstRowOfArray);
 		}
 
 		$csv = Writer::createFromFileObject(new \SplTempFileObject());

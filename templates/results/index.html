@@ -12,11 +12,43 @@
 
 {% set extraPageHeaderHtml %}
 
-	<a href="{{ actionUrl('sproutReports/reports/exportReport', {reportId: report.id}) }}" class="btn">Export</a>
+	<a href="{{ actionUrl('sproutReports/reports/exportReport', {reportId: report.id}) }}" class="btn">{{ "Download"|t }}</a>
+
+	<a id="modify-options-icon" class="btn" data-icon="settings"></a>
 
 {% endset %}
 
 {% block content %}
+
+	{% if dataSource is defined %}
+
+		{% set optionsHtml = dataSource.getOptionsHtml(options) %}
+
+		{% if optionsHtml %}
+
+			<div id="modify-options-panel" style="display:none;">
+
+				<form method="post" accept-charset="UTF-8" action="{{ cpUrl('sproutreports/reports/view/' ~ reportId) }}">
+					{{ getCsrfInput() }}
+					<input type="hidden" name="reportId" value="{{ reportId }}">
+
+					{{ optionsHtml | raw }}
+
+					<div class="button">
+						<div class="btngroup">
+							<input type="submit" class="btn submit" value="{{ 'Update Report'|t }}">
+						</div>
+					</div>
+
+				</form>
+
+				<hr>
+
+			</div>
+
+		{% endif %}
+
+	{% endif %}
 
 	<div class="tableview">
 		{% if values is defined and values is iterable and values|length %}
@@ -52,3 +84,12 @@
 {% endblock %}
 
 {% includeCssResource 'sproutreports/css/styles.css' %}
+
+{% includejs %}
+	(function(){
+		$('#modify-options-icon').on('click', function() {
+console.log('sa');
+			$('#modify-options-panel').slideToggle('slow');
+		});
+	})();
+{% endincludejs %}

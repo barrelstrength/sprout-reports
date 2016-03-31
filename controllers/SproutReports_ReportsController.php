@@ -60,26 +60,32 @@ class SproutReports_ReportsController extends BaseController
 		$reportId = isset($variables['reportId']) ? $variables['reportId'] : null;
 		$report   = sproutReports()->reports->getReport($reportId);
 
+		$options = craft()->request->getPost('options');
+		$options = count($options) ? $options : array();
+
 		if ($report)
 		{
 			$dataSource = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
 			$labels     = $dataSource->getDefaultLabels($report);
 
-			$variables['report'] = $report;
-			$variables['values'] = array();
+			$variables['dataSource'] = null;
+			$variables['report']     = $report;
+			$variables['values']     = array();
+			$variables['options']    = $options;
 
 			if ($dataSource)
 			{
-				$values = $dataSource->getResults($report);
+				$values = $dataSource->getResults($report, $options);
 
 				if (empty($labels) && !empty($values))
 				{
 					$firstItemInArray = reset($values);
-					$labels = array_keys($firstItemInArray);
+					$labels           = array_keys($firstItemInArray);
 				}
 
-				$variables['labels'] = $labels;
-				$variables['values'] = $values;
+				$variables['labels']     = $labels;
+				$variables['values']     = $values;
+				$variables['dataSource'] = $dataSource;
 			}
 
 			// @todo Hand off to the export service when a blank page and 404 issues are sorted out
@@ -131,6 +137,7 @@ class SproutReports_ReportsController extends BaseController
 	 * Export Data as CSV
 	 *
 	 * @param  object $results Results from SQL query
+	 *
 	 * @return buffer        The CSV output
 	 */
 	protected function exportDataToCsv($report, $results)

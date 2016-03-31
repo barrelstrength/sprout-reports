@@ -73,7 +73,6 @@
 						<td class="sproutreports-reportdescription">{{ report.description }}</td>
 						<td class="sproutreports-reportactions">
 
-
 							<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}" class="btn small">View</a>
 							<a href="{{ actionUrl('sproutReports/reports/exportReport', {reportId: report.id}) }}" class="btn small">Export</a>
 
@@ -84,7 +83,6 @@
 								{#<a class="btn small formsubmit" data-param="reportId" data-value="{{ report.id }}" data-action="sproutReports/reports/deleteReport" data-redirect="sproutReports/reports" data-confirm="Are you sure you want to delete this report?">Delete</a>#}
 
 							{% endif %}
-
 
 						</td>
 					</tr>

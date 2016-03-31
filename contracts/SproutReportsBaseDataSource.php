@@ -172,7 +172,10 @@ abstract class SproutReportsBaseDataSource
 	 *
 	 * @return null|array
 	 */
-	abstract public function getResults(SproutReports_ReportModel &$report);
+	public function getResults(SproutReports_ReportModel &$report, $options = array())
+	{
+		return null;
+	}
 
 	/**
 	 * Validate the data sources options

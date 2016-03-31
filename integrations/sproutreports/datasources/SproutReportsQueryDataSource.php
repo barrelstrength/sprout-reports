@@ -53,7 +53,7 @@ class SproutReportsQueryDataSource extends SproutReportsBaseDataSource
 		$optionErrors = array_shift($optionErrors);
 
 		return craft()->templates->render('sproutreports/datasources/_options/query', array(
-			'options' => $this->report->getOptions(),
+			'options' => count($options) ? $options : $this->report->getOptions(),
 			'errors' => $optionErrors
 		));
 	}

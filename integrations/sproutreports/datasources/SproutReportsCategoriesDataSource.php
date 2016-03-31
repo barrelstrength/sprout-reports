@@ -66,8 +66,6 @@ class SproutReportsCategoriesDataSource extends SproutReportsBaseDataSource
 	 */
 	public function getOptionsHtml(array $options = array())
 	{
-		$options = $this->report->options;
-
 		$sectionOptions       = array();
 		$categoryGroupOptions = array();
 
@@ -105,7 +103,7 @@ class SproutReportsCategoriesDataSource extends SproutReportsBaseDataSource
 		}
 
 		return craft()->templates->render('sproutreports/datasources/_options/categories', array(
-			'options'              => $options,
+			'options'              => count($options) ? $options : $this->report->getOptions(),
 			'sectionOptions'       => $sectionOptions,
 			'categoryGroupOptions' => $categoryGroupOptions,
 			'errors'               => $optionErrors,

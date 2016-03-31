@@ -3,19 +3,6 @@
 {% set title  = "Data Sources"|t %}
 {% set groups = craft.sproutReports.getReportGroups() %}
 
-{% if craft.app.getVersion() < 2.5 %}
-	{% set tabs = {
-		reports: {
-			label: "Reports"|t,
-			url: url('sproutreports')
-		},
-		dataSources: {
-			label: "Data Sources"|t,
-			url: url('sproutreports/datasources')
-		}
-	} %}
-{% endif %}
-
 {% set selectedTab = 'dataSources' %}
 
 {% if groupId is defined %}

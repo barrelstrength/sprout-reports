@@ -3,19 +3,6 @@
 {% set title  = "Reports"|t %}
 {% set groups = craft.sproutReports.getReportGroups() %}
 
-{% if craft.app.getVersion() < 2.5 %}
-	{% set tabs = {
-		reports: {
-			label: "Reports"|t,
-			url: url('sproutreports')
-		},
-		dataSources: {
-			label: "Data Sources"|t,
-			url: url('sproutreports/datasources')
-		}
-	} %}
-{% endif %}
-
 {% set selectedTab = 'reports' %}
 
 {% if groupId is defined %}
@@ -26,30 +13,6 @@
 	{% set reports = craft.sproutReports.getReportsByGroupId(groupId) %}
 {% else %}
 	{% set reports = craft.sproutReports.getReports() %}
-{% endif %}
-
-{% if craft.app.getVersion() >= 2.5 %}
-	{% set extraPageHeaderHtml %}
-
-		{% set dataSources = craft.sproutReports.getDataSources() %}
-
-		<div class="btngroup submit">
-			<a class="btn submit add icon" href="{{ cpUrl("sproutreports/reports/sproutreports/query/new") }}">New report</a>
-
-			{% if dataSources|length %}
-				<div class="btn submit menubtn"></div>
-				<div class="menu">
-					<ul>
-						{% for id, dataSource in dataSources %}
-							{% set dataSourceName = dataSource.getName() ~ " Report" %}
-							<li><a href="{{ dataSource.getUrl('/new') }}">{{ dataSourceName|t }}</a></li>
-						{% endfor %}
-					</ul>
-				</div>
-			{% endif %}
-		</div>
-
-	{% endset %}
 {% endif %}
 
 {% block content %}
@@ -102,30 +65,6 @@
 {% endblock %}
 
 {% block sidebar %}
-
-	{% if craft.app.getVersion() < 2.5 %}
-
-		{% set dataSources = craft.sproutReports.getDataSources() %}
-
-		<div class="btngroup submit">
-			<a class="btn submit add icon" href="{{ cpUrl("sproutreports/reports/sproutreports/query/new") }}">New report</a>
-
-			{% if dataSources|length %}
-				<div class="btn submit menubtn"></div>
-				<div class="menu">
-					<ul>
-						{% for id, dataSource in dataSources %}
-							{% set dataSourceName = dataSource.getName() ~ " Report" %}
-							<li><a href="{{ dataSource.getUrl('/new') }}">{{ dataSourceName|t }}</a></li>
-						{% endfor %}
-					</ul>
-				</div>
-			{% endif %}
-		</div>
-
-		<hr>
-
-	{% endif %}
 
 	{% if currentUser.can('editReports') %}
 

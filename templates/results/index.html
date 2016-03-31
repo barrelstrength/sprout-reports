@@ -10,9 +10,24 @@
 
 {% set selectedTab = 'resultView' %}
 
+{% if dataSource is defined %}
+	{% set optionsHtml = dataSource.getOptionsHtml(options) %}
+{% endif %}
+
 {% set extraPageHeaderHtml %}
 
-	<a href="{{ actionUrl('sproutReports/reports/exportReport', {reportId: report.id}) }}" class="btn">{{ "Download"|t }}</a>
+	<form method="post" accept-charset="UTF-8" action="{{ cpUrl('sproutreports/reports/view/' ~ reportId) }}"
+		class="btn-download">
+		{{ getCsrfInput() }}
+		<input type="hidden" name="action" value="sproutReports/reports/exportReport">
+		<input type="hidden" name="reportId" value="{{ reportId }}">
+
+		{% if optionsHtml %}
+			<div class="hidden">{{ optionsHtml | raw }}</div>
+		{% endif %}
+
+		<input type="submit" value="{{ 'Download'|t }}" class="btn">
+	</form>
 
 	<a id="modify-options-icon" class="btn" data-icon="settings"></a>
 
@@ -20,33 +35,27 @@
 
 {% block content %}
 
-	{% if dataSource is defined %}
+	{% if optionsHtml %}
 
-		{% set optionsHtml = dataSource.getOptionsHtml(options) %}
+		<div id="modify-options-panel" style="display:none;">
 
-		{% if optionsHtml %}
+			<form method="post" accept-charset="UTF-8" action="{{ cpUrl('sproutreports/reports/view/' ~ reportId) }}">
+				{{ getCsrfInput() }}
+				<input type="hidden" name="reportId" value="{{ reportId }}">
 
-			<div id="modify-options-panel" style="display:none;">
+				{{ optionsHtml | raw }}
 
-				<form method="post" accept-charset="UTF-8" action="{{ cpUrl('sproutreports/reports/view/' ~ reportId) }}">
-					{{ getCsrfInput() }}
-					<input type="hidden" name="reportId" value="{{ reportId }}">
-
-					{{ optionsHtml | raw }}
-
-					<div class="button">
-						<div class="btngroup">
-							<input type="submit" class="btn submit" value="{{ 'Update Report'|t }}">
-						</div>
+				<div class="button">
+					<div class="btngroup">
+						<input type="submit" class="btn submit" value="{{ 'Update Report'|t }}">
 					</div>
+				</div>
 
-				</form>
+			</form>
 
-				<hr>
+			<hr>
 
-			</div>
-
-		{% endif %}
+		</div>
 
 	{% endif %}
 

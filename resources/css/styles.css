@@ -70,3 +70,11 @@
 .tableview td.sproutreports-reportactions {
 	text-align: right;
 }
+
+form.btn-download {
+	display: inline;
+}
+
+form.btn-download input {
+	outline: none;
+}

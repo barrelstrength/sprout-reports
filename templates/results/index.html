@@ -16,18 +16,9 @@
 
 {% set extraPageHeaderHtml %}
 
-	<form method="post" accept-charset="UTF-8" action="{{ cpUrl('sproutreports/reports/view/' ~ reportId) }}"
-		class="btn-download">
-		{{ getCsrfInput() }}
-		<input type="hidden" name="action" value="sproutReports/reports/exportReport">
-		<input type="hidden" name="reportId" value="{{ reportId }}">
-
-		{% if optionsHtml %}
-			<div class="hidden">{{ optionsHtml | raw }}</div>
-		{% endif %}
-
-		<input type="submit" value="{{ 'Download'|t }}" class="btn">
-	</form>
+	<a id="btn-download-csv" class="btn">
+		{{ "Download"|t }}
+	</a>
 
 	<a id="modify-options-icon" class="btn" data-icon="settings"></a>
 
@@ -39,7 +30,8 @@
 
 		<div id="modify-options-panel" style="display:none;">
 
-			<form method="post" accept-charset="UTF-8" action="{{ cpUrl('sproutreports/reports/view/' ~ reportId) }}">
+			<form id="report-options" method="post" accept-charset="UTF-8"
+				action="{{ cpUrl('sproutreports/reports/view/' ~ reportId) }}">
 				{{ getCsrfInput() }}
 				<input type="hidden" name="reportId" value="{{ reportId }}">
 
@@ -95,10 +87,33 @@
 {% includeCssResource 'sproutreports/css/styles.css' %}
 
 {% includejs %}
+
 	(function(){
+
+		$('#btn-download-csv').on('click', function(event) {
+
+			event.preventDefault();
+
+			$form = $('#report-options');
+
+			oldAction = $form.attr('action');
+			$form.removeAttr('action');
+
+			$exportActionInput = '<input id="export-action-input" type="hidden" name="action" value="sproutReports/reports/exportReport" />';
+			$form.prepend($exportActionInput);
+
+			$form.submit();
+
+			// return our options form to it's initial state
+			$('#export-action-input').remove();
+      $form.attr('action', oldAction);
+
+		});
+
 		$('#modify-options-icon').on('click', function() {
-console.log('sa');
 			$('#modify-options-panel').slideToggle('slow');
 		});
+
 	})();
+
 {% endincludejs %}

@@ -44,9 +44,10 @@ class SproutReportsPlugin extends BasePlugin
 	 */
 	public function getName()
 	{
-		$override = trim($this->getSettings()->getAttribute('pluginNameOverride'));
+		$pluginName         = Craft::t('Sprout Reports');
+		$pluginNameOverride = $this->getSettings()->pluginNameOverride;
 
-		return empty($override) ? Craft::t('Sprout Reports') : $override;
+		return ($pluginNameOverride) ? $pluginNameOverride : $pluginName;
 	}
 
 	/**
@@ -105,7 +106,6 @@ class SproutReportsPlugin extends BasePlugin
 		return 'https://sprout.barrelstrengthdesign.com/craft-plugins/reports/releases.json';
 	}
 
-
 	/**
 	 * @return bool
 	 */
@@ -127,14 +127,9 @@ class SproutReportsPlugin extends BasePlugin
 	/**
 	 * @return string
 	 */
-	public function getSettingsHtml()
+	public function getSettingsUrl()
 	{
-		return craft()->templates->render(
-			'sproutreports/_cp/settings',
-			array(
-				'settings' => $this->getSettings()
-			)
-		);
+		return 'sproutreports/settings';
 	}
 
 	/**
@@ -143,9 +138,9 @@ class SproutReportsPlugin extends BasePlugin
 	public function registerUserPermissions()
 	{
 		return array(
-			'sproutReports-editReports' => array('label' => Craft::t('Edit Reports')),
+			'sproutReports-editReports'  => array('label' => Craft::t('Edit Reports')),
 			'sproutReports-editSettings' => array(
-					'label' => Craft::t('Edit Plugin Settings')
+				'label' => Craft::t('Edit Plugin Settings')
 			)
 		);
 	}
@@ -184,10 +179,10 @@ class SproutReportsPlugin extends BasePlugin
 	{
 		return array(
 			'sproutreports' =>
-			'sproutreports/reports/index',
+				'sproutreports/reports/index',
 
 			'sproutreports/reports/(?P<groupId>\d+)' =>
-			'sproutreports/reports/index',
+				'sproutreports/reports/index',
 
 			'sproutreports/reports/(?P<plugin>{handle})/(?P<dataSourceKey>{handle})/new' =>
 				array('action' => 'sproutReports/reports/editReport'),
@@ -197,10 +192,12 @@ class SproutReportsPlugin extends BasePlugin
 
 			'sproutreports/reports/view/(?P<reportId>\d+)' =>
 				array('action' => 'sproutReports/reports/resultsIndex'),
+
+			'sproutreports/settings' =>
+				array('action' => 'sproutReports/settings/settingsIndexTemplate'),
 		);
 	}
 }
-
 
 /**
  * @return SproutReportsService

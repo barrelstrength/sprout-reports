@@ -1,0 +1,42 @@
+{% extends "_layouts/cp" %}
+
+{% set subnav = {
+	reports: {
+		label: "Reports"|t,
+		url: url('sproutreports/reports')
+	},
+	datasources: {
+		label: "Data Sources"|t,
+		url: url('sproutreports/datasources')
+	}
+} %}
+
+{% if currentUser.can('editSproutReportsSettings') %}
+	{% set subnav = subnav|merge({
+		settings: {
+			label: "Settings"|t,
+			url: url('sproutreports/settings')
+		}
+	}) %}
+{% endif %}
+
+{% set title  = "Settings"|t %}
+{% set bodyClass = craft.request.getSegments()|slice(0, 3)|join(' ') %}
+
+{% set selectedSubnavItem = craft.request.segment(2) %}
+{% set selectedSidebarItem = craft.request.getSegment(3) ? craft.request.getSegment(3) : craft.request.getSegment(2) %}
+
+{% block content %}
+
+{% endblock %}
+
+{% set sidebar %}
+
+<nav class="last">
+	<ul>
+		<li><a href="{{ cpUrl('sproutreports/settings') }}" {% if selectedSidebarItem == 'settings' %}class="sel"{% endif
+			%}>General Settings</a></li>
+	</ul>
+</nav>
+
+{% endset %}

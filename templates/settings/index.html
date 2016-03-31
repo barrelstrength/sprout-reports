@@ -1,0 +1,41 @@
+{% extends "sproutreports/_layouts/settings" %}
+{% import "_includes/forms" as forms %}
+
+{% requirePermission "sproutReports-editSettings" %}
+
+{% set title = 'Settings' %}
+
+{% set fullPageForm = true %}
+{% set saveShortcutRedirect = 'sproutreports/settings' %}
+
+{% set saveButton %}
+<div class="buttons">
+	<input class="btn submit" type="submit" value="{{ 'Save'|t }}">
+</div>
+{% endset %}
+
+{% block content %}
+
+	<input type="hidden" name="action" value="sproutReports/settings/saveSettings">
+
+	<div id="settings-cp">
+
+		{% namespace 'settings' %}
+
+			{{ forms.textField({
+				label:			"Plugin Name"|t,
+				id:				"pluginNameOverride",
+				name:			"pluginNameOverride",
+				instructions:	"Intuitive, human-readable plugin name for the end user."|t,
+				value:			settings.pluginNameOverride,
+				autofocus:	true,
+				first:			true,
+				errors:			""
+			}) }}
+
+		{% endnamespace %}
+
+	</div>
+
+{% endblock %}
+

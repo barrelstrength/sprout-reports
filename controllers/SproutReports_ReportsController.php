@@ -127,7 +127,9 @@ class SproutReports_ReportsController extends BaseController
 
 			if ($dataSource)
 			{
-				$filename = $report->name;
+				$date = date("Ymd-his");
+				
+				$filename = $report->name . '-' . $date;
 				$labels   = $dataSource->getDefaultLabels($report, $options);
 				$values   = $dataSource->getResults($report, $options);
 

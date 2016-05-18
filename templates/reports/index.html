@@ -15,6 +15,12 @@
 	{% set reports = craft.sproutReports.getReports() %}
 {% endif %}
 
+{% set extraPageHeaderHtml %}
+	<div class="buttons">
+		<a class="btn submit add icon" href="{{ url('sproutreports/datasources') }}">{{ "New Report"|t }}</a>
+	</div>
+{% endset %}
+
 {% block content %}
 
 	<form method="post" accept-charset="UTF-8">

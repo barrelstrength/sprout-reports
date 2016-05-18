@@ -152,8 +152,14 @@ class SproutReportsPlugin extends BasePlugin
 	{
 		$this->init();
 
+		$isCraftPro = craft()->getEdition() == Craft::Pro ? true : false;
+
 		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.SproutReportsCategoriesReport');
-		Craft::import('plugins.sproutreports.integrations.sproutreports.reports.SproutReportsUsersReport');
+
+		if ($isCraftPro)
+		{
+			Craft::import('plugins.sproutreports.integrations.sproutreports.reports.SproutReportsUsersReport');
+		}
 
 		$defaultGroup = sproutReports()->reportGroups->createGroupByName('Sprout Reports');
 
@@ -168,11 +174,19 @@ class SproutReportsPlugin extends BasePlugin
 	 */
 	public function registerSproutReportsDataSources()
 	{
-		return array(
+		$isCraftPro = craft()->getEdition() == Craft::Pro ? true : false;
+
+		$sources =  array(
 			new SproutReportsCategoriesDataSource(),
-			new SproutReportsUsersDataSource(),
 			new SproutReportsQueryDataSource(),
 		);
+
+		if ($isCraftPro)
+		{
+			$sources[] = new SproutReportsUsersDataSource();
+		}
+
+		return $sources;
 	}
 
 	public function registerCpRoutes()

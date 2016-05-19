@@ -30,9 +30,10 @@
 
 		<div id="modify-options-panel" style="display:none;">
 
-			<form id="report-options" method="post" accept-charset="UTF-8"
-				action="{{ cpUrl('sproutreports/reports/view/' ~ reportId) }}">
+			<form id="report-options" method="post" accept-charset="UTF-8">
 				{{ getCsrfInput() }}
+				<input type="hidden" name="action" value="sproutReports/reports/updateReport">
+				<input type="hidden" name="redirect" value="sproutreports/reports/view/{{ reportId }}">
 				<input type="hidden" name="reportId" value="{{ reportId }}">
 
 				{{ optionsHtml | raw }}

@@ -31,6 +31,39 @@ class SproutReports_ReportsController extends BaseController
 		}
 	}
 
+	/**
+	 * Saves a report query to the database
+	 */
+	public function actionUpdateReport()
+	{
+		$this->requirePostRequest();
+
+		$reportId = craft()->request->getPost('reportId');
+		$options  = craft()->request->getPost('options');
+
+		if ($reportId && $options)
+		{
+			$reportModel = sproutReports()->reports->getReport($reportId);
+
+			if (!$reportModel)
+			{
+				throw new Exception(Craft::t('No report exists with the id “{id}”', array('id' => $reportId)));
+			}
+
+			$reportModel->options = is_array($options) ? $options : array();
+
+			if (sproutReports()->reports->saveReport($reportModel))
+			{
+				craft()->userSession->setNotice(Craft::t('Query updated.'));
+				$this->redirectToPostedUrl($reportModel);
+			}
+		}
+
+		craft()->userSession->setError(Craft::t('Could not update report.'));
+
+		$this->redirectToPostedUrl();
+	}
+
 	// @todo - reconsider logic
 	public function actionEditReport(array $variables = array())
 	{
@@ -120,7 +153,7 @@ class SproutReports_ReportsController extends BaseController
 
 		$options = craft()->request->getPost('options');
 		$options = count($options) ? $options : array();
-		
+
 		if ($report)
 		{
 			$dataSource = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
@@ -128,7 +161,7 @@ class SproutReports_ReportsController extends BaseController
 			if ($dataSource)
 			{
 				$date = date("Ymd-his");
-				
+
 				$filename = $report->name . '-' . $date;
 				$labels   = $dataSource->getDefaultLabels($report, $options);
 				$values   = $dataSource->getResults($report, $options);

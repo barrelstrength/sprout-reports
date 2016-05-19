@@ -106,6 +106,8 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 		{
 			return SproutReports_ReportModel::populateModel($result);
 		}
+
+		return null;
 	}
 
 	/**

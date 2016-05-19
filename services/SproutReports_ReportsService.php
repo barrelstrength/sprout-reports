@@ -224,7 +224,7 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 		$instance->options      = is_array($options) ? $options : array();
 		$instance->dataSourceId = craft()->request->getPost('dataSourceId');
 		$instance->enabled      = craft()->request->getPost('enabled');
-		$instance->groupId      = craft()->request->getPost('groupId', 1);
+		$instance->groupId      = craft()->request->getPost('groupId', null);
 
 		return $instance;
 	}

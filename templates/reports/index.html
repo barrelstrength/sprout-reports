@@ -15,9 +15,21 @@
 	{% set reports = craft.sproutReports.getReports() %}
 {% endif %}
 
+{% set dataSources = craft.sproutReports.getDataSources() %}
+
 {% set extraPageHeaderHtml %}
-	<div class="buttons">
-		<a class="btn submit add icon" href="{{ url('sproutreports/datasources') }}">{{ "New Report"|t }}</a>
+	<div class="btngroup submit first">
+		<a class="btn submit add icon" href="{{ url('sproutreports/reports/sproutreports/query/new') }}">{{ "New Report"|t }}</a>
+		{% if dataSources %}
+			<div class="btn submit menubtn"></div>
+			<div class="menu">
+				<ul>
+					{% for id, dataSource in dataSources %}
+						<li><a class="formsubmit" href="{{ dataSource.getUrl('/new') }}">{{ dataSource.getName() }}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endif %}
 	</div>
 {% endset %}
 

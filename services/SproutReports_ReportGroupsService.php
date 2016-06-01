@@ -106,7 +106,9 @@ class SproutReports_ReportGroupsService extends BaseApplicationComponent
 	 */
 	public function deleteGroup($id)
 	{
-		return (bool) SproutReports_ReportGroupRecord::model()->deleteByPk($id);
+		$record =  SproutReports_ReportGroupRecord::model()->findById($id);
+
+		return (bool) $record->delete();
 	}
 
 	private function _getGroupRecord(SproutReports_ReportGroupModel $group)

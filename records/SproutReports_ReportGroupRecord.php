@@ -59,4 +59,21 @@ class SproutReports_ReportGroupRecord extends BaseRecord
 			'ordered' => array('order' => 'name'),
 		);
 	}
+
+	protected function beforeDelete()
+	{
+		$reports = SproutReports_ReportRecord::model()->findAll('groupId =:groupId',array(
+				':groupId' => $this->id
+			)
+		);
+
+		foreach ($reports as $report)
+		{
+			$record = SproutReports_ReportRecord::model()->findById($report->id);
+			$record->groupId = null;
+			$record->save(false);
+		}
+
+		return true;
+	}
 }

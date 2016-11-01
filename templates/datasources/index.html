@@ -1,4 +1,5 @@
 {% extends "sproutreports/_layouts/base" %}
+{% import "_includes/forms" as forms %}
 
 {% set title  = "Data Sources"|t %}
 {% set groups = craft.sproutReports.getReportGroups() %}
@@ -23,6 +24,7 @@
 				<th scope="col" data-attribute="datasource">Data Source</th>
 				<th scope="col" data-attribute="description">Description</th>
 				<th scope="col" data-attribute="plugin">Plugin</th>
+				<th scope="col" data-attribute="status">{{ "Status"|t }}</th>
 				<th scope="col" data-attribute="totalReports">Total Reports</th>
 				<th class="thin"></th>
 			</tr>
@@ -35,10 +37,19 @@
 					<td><strong>{{ dataSource.getName() }}</strong></td>
 					<td>{{ dataSource.getDescription() }}</td>
 					<td><span class="light">{{ dataSource.getPluginName() }}</span></td>
-					<td>{{ dataSource.getReportCount() }}</td>
+                    <td>
+                        {{ forms.lightswitchField({
+                            label: "",
+                            instructions: "",
+                            on: true,
+                            name: 'status'
+                        }) }}
+                    </td>
+                    <td>{{ dataSource.getReportCount() }}</td>
 					<td>
 						<a href="{{ dataSource.getUrl('/new') }}" class="btn small">New Report</a>
 					</td>
+
 				</tr>
 			{% endfor %}
 			</tbody>

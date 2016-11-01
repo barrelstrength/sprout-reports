@@ -78,3 +78,7 @@ form.btn-download {
 form.btn-download input {
 	outline: none;
 }
+
+.tableview.sproutreports {
+    overflow: auto
+}

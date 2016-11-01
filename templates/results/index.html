@@ -15,10 +15,14 @@
 {% endif %}
 
 {% set extraPageHeaderHtml %}
-
-	<a id="btn-download-csv" class="btn">
-		{{ "Download"|t }}
-	</a>
+    <form id="export-report-form" method="post" accept-charset="UTF-8">
+        {{ getCsrfInput() }}
+        <input type="hidden" name="action" value="sproutReports/reports/exportReport">
+        <input type="hidden" name="reportId" value="{{ reportId }}">
+        <a id="btn-download-csv" class="btn">
+            {{ "Download"|t }}
+        </a>
+    </form>
 
 	<a id="modify-options-icon" class="btn" data-icon="settings"></a>
 
@@ -95,19 +99,8 @@
 
 			event.preventDefault();
 
-			$form = $('#report-options');
-
-			oldAction = $form.attr('action');
-			$form.removeAttr('action');
-
-			$exportActionInput = '<input id="export-action-input" type="hidden" name="action" value="sproutReports/reports/exportReport" />';
-			$form.prepend($exportActionInput);
-
-			$form.submit();
-
-			// return our options form to it's initial state
-			$('#export-action-input').remove();
-      $form.attr('action', oldAction);
+            $form = $(this).parents('form');
+            $form.submit();
 
 		});
 

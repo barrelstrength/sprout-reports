@@ -46,6 +46,7 @@
 				<tr>
 					<th class="sproutreports-reportname">Name</th>
 					<th class="sproutreports-reportdescription">Description</th>
+					<th class="sproutreports-datasource">Data Source</th>
 					<th class="sproutreports-reportactions"></th>
 				</tr>
 				</thead>
@@ -54,6 +55,7 @@
 					<tr>
 						<td class="sproutreports-reportname"><strong>{{ report.name }}</strong></td>
 						<td class="sproutreports-reportdescription">{{ report.description }}</td>
+						<td class="sproutreports-reportdatasource">{{ report.getDataSource().getName() }}</td>
 						<td class="sproutreports-reportactions">
 
 							<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}" class="btn small">View</a>

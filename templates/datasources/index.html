@@ -38,10 +38,10 @@
 					<td>{{ dataSource.getDescription() }}</td>
 					<td><span class="light">{{ dataSource.getPluginName() }}</span></td>
                     <td>
+                        {% set status = dataSource.getStatus() %}
                         {{ forms.lightswitchField({
-                            label: "",
-                            instructions: "",
-                            on: true,
+                            id: dataSource.getId(),
+                            on: status,
                             name: 'status'
                         }) }}
                     </td>
@@ -63,3 +63,22 @@
 	</div>
 
 {% endblock %}
+
+{% includejs %}
+
+    $(document).ready(function() {
+        $('.lightswitch').change(function() {
+
+            var status = $(this).find("[name='status']").val();
+            var dataSourceId = $(this).attr('id');
+
+            Craft.postActionRequest('sproutReports/reports/dataSourceStatus', {dataSourceId: dataSourceId, status: status}, function(response) {
+                if (response)
+                {
+                    Craft.cp.displayNotice(Craft.t('Status Updated.'));
+                }
+            });
+        })
+    });
+
+{% endincludejs %}

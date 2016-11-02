@@ -25,7 +25,9 @@
 			<div class="menu">
 				<ul>
 					{% for id, dataSource in dataSources %}
-						<li><a class="formsubmit" href="{{ dataSource.getUrl('/new') }}">{{ dataSource.getName() }}</a></li>
+                        {% if (dataSource.getStatus()) %}
+						    <li><a class="formsubmit" href="{{ dataSource.getUrl('/new') }}">{{ dataSource.getName() }}</a></li>
+                        {% endif %}
 					{% endfor %}
 				</ul>
 			</div>

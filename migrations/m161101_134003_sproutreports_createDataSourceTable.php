@@ -23,13 +23,13 @@ class m161101_134003_sproutreports_createDataSourceTable extends BaseMigration
             {
                 // Create the sproutreports_datasources table
                 craft()->db->createCommand()->createTable($tableName, array(
-                    'id'            => array('column' => 'integer', 'required' => true),
+                    'id'            => array('column' => ColumnType::PK, 'null' => false),
                     'dataSourceId'  => AttributeType::String,
                     'status'        => array('column' => 'integer'),
                     'options'       => array('column' => 'text')
                 ), null, false);
 
-                craft()->db->createCommand()->addPrimaryKey($tableName, 'id');
+                craft()->db->createCommand()->createIndex($tableName, 'id');
             }
             catch (\Exception $e)
             {

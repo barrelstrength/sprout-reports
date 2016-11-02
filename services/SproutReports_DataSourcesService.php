@@ -110,4 +110,54 @@ class SproutReports_DataSourcesService extends BaseApplicationComponent
 			array_multisort($names, SORT_NATURAL | SORT_FLAG_CASE, $secondaryArray);
 		}
 	}
+
+    public function saveDataSource(SproutReports_DataSourceModel $model)
+    {
+        $result = false;
+
+        $record = SproutReports_DataSourceRecord::model()->findByAttributes(array(
+            'dataSourceId' => $model->dataSourceId
+        ));
+
+        if ($record == null)
+        {
+            $record = new SproutReports_DataSourceRecord();
+        }
+
+        $attributes = $model->getAttributes();
+
+        if (!empty($attributes))
+        {
+            foreach ($attributes as $handle => $value)
+            {
+                // Ignore id for dataSourceId
+                if ($handle == 'id') continue;
+
+                $record->setAttribute($handle, $value);
+            }
+        }
+
+        $transaction = craft()->db->getCurrentTransaction() === null ? craft()->db->beginTransaction() : null;
+
+        if ($record->validate())
+        {
+            if ($record->save(false))
+            {
+                $model->id = $record->id;
+
+                if ($transaction && $transaction->active)
+                {
+                    $transaction->commit();
+                }
+
+                $result = true;
+            }
+        }
+        else
+        {
+            $model->addErrors($record->getErrors());
+        }
+
+        return $result;
+    }
 }

@@ -19,6 +19,7 @@ class SproutReports_DataSourceModel extends BaseModel
         $defaults = parent::defineAttributes();
 
         $attributes = array(
+            'id'           => array(AttributeType::Number),
             'dataSourceId' => array(AttributeType::String, 'required' => true),
             'options'      => array(AttributeType::Mixed, 'required' => false),
             'status'       => array(AttributeType::Bool, 'default' => true)

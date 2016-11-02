@@ -186,4 +186,18 @@ abstract class SproutReportsBaseDataSource
 	{
 		return true;
 	}
+
+    public function getStatus()
+    {
+        $record = SproutReports_DataSourceRecord::model()->findByAttributes(array(
+            'dataSourceId' => $this->id
+        ));
+
+        if ($record != null && $record->status != null)
+        {
+            return $record->status;
+        }
+
+        return true;
+    }
 }

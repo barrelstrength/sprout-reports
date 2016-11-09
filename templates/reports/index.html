@@ -18,21 +18,36 @@
 {% set dataSources = craft.sproutReports.getDataSources() %}
 
 {% set extraPageHeaderHtml %}
-	<div class="btngroup submit first">
-		<a class="btn submit add icon" href="{{ url('sproutreports/reports/sproutreports/query/new') }}">{{ "New Report"|t }}</a>
-		{% if dataSources %}
-			<div class="btn submit menubtn"></div>
-			<div class="menu">
-				<ul>
-					{% for id, dataSource in dataSources %}
-                        {% if (dataSource.getStatus()) %}
-						    <li><a class="formsubmit" href="{{ dataSource.getUrl('/new') }}">{{ dataSource.getName() }}</a></li>
-                        {% endif %}
-					{% endfor %}
-				</ul>
+	{% if currentUser.can('sproutReports-editReports') %}
+
+		{% set newReportOptions = [] %}
+
+		{% for id, dataSource in dataSources %}
+			{% if dataSource.getStatus() %}
+				{% set newReportOptions = newReportOptions|merge([{
+					name: dataSource.getName(),
+					url: dataSource.getUrl('/new')
+				}]) %}
+			{% endif %}
+		{% endfor %}
+
+		{% if newReportOptions|length %}
+			<div class="btngroup submit first">
+				<a class="btn submit add icon" href="{{ newReportOptions[0].url }}">{{ "New Report"|t }}</a>
+				{% if dataSources %}
+					<div class="btn submit menubtn"></div>
+					<div class="menu">
+						<ul>
+							{% for option in newReportOptions %}
+								<li><a class="formsubmit" href="{{ option.url }}">{{ option.name }}</a></li>
+							{% endfor %}
+						</ul>
+					</div>
+				{% endif %}
 			</div>
 		{% endif %}
-	</div>
+
+	{% endif %}
 {% endset %}
 
 {% block content %}
@@ -44,32 +59,40 @@
 			<table class="data fullwidth">
 				<thead>
 				<tr>
-					<th class="sproutreports-reportname">Name</th>
-					<th class="sproutreports-reportdescription">Description</th>
-					<th class="sproutreports-datasource">Data Source</th>
-					<th class="sproutreports-reportactions"></th>
+					<th class="sproutreports-reportname" style="width:60%;">{{ "Name"|t }}</th>
+					<th class="sproutreports-datasource" style="width:35%;">{{ "Data Source"|t }}</th>
+					<th class="thin"></th>
+
+					{% if currentUser.can('sproutReports-editReports') %}
+					<th class="thin"></th>
+					{% endif %}
+
 				</tr>
 				</thead>
 				<tbody>
 				{% for report in reports %}
 					<tr>
-						<td class="sproutreports-reportname"><strong>{{ report.name }}</strong></td>
-						<td class="sproutreports-reportdescription">{{ report.description }}</td>
-						<td class="sproutreports-reportdatasource">{{ report.getDataSource().getName() }}</td>
-						<td class="sproutreports-reportactions">
+						<td class="sproutreports-reportname">
+							<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}"><strong>{{ report.name }}</strong></a>
 
-							<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}" class="btn small">View</a>
-							<a href="{{ actionUrl('sproutReports/reports/exportReport', {reportId: report.id}) }}" class="btn small">Export</a>
-
-							{% if currentUser.can('editReports') %}
-
-								<a href="{{ report.getEditUrl() }}" class="btn small">Edit</a>
-
-								{#<a class="btn small formsubmit" data-param="reportId" data-value="{{ report.id }}" data-action="sproutReports/reports/deleteReport" data-redirect="sproutReports/reports" data-confirm="Are you sure you want to delete this report?">Delete</a>#}
-
+							{% if report.description %}
+								<span class="info">{{ report.description }}</span>
 							{% endif %}
-
 						</td>
+						<td class="sproutreports-reportdatasource">
+							{{ report.getDataSource().getName() }}
+						</td>
+
+						<td class="sproutreports-reportactions">
+							<a href="{{ actionUrl('sproutReports/reports/exportReport', {reportId: report.id}) }}" class="btn small">{{ "Download"|t }}</a>
+						</td>
+
+						{% if currentUser.can('sproutReports-editReports') %}
+						<td class="sproutreports-reportactions">
+							<a href="{{ report.getEditUrl() }}" title="Edit Report Settings" data-icon="settings"></a>
+						</td>
+						{% endif %}
+
 					</tr>
 				{% endfor %}
 				</tbody>
@@ -88,19 +111,19 @@
 
 {% block sidebar %}
 
-	{% if currentUser.can('editReports') %}
+	<nav>
+		<ul id="groups">
 
-		<nav>
-			<ul id="groups">
+			<li><a href="{{ url('sproutreports') }}"{% if groupId is not defined %} class="sel"{% endif %}>{{ "All Reports"|t }}</a></li>
 
-				<li><a href="{{ url('sproutreports') }}"{% if groupId is not defined %} class="sel"{% endif %}>{{ "All Reports"|t }}</a></li>
+			{% for group in groups %}
+				<li><a href="{{ url('sproutreports/reports/'~group.id) }}"{% if groupId is defined and group.id == groupId %} class="sel"{% endif %} data-id="{{ group.id }}">{{ group.name }}</a></li>
+			{% endfor %}
 
-				{% for group in groups %}
-					<li><a href="{{ url('sproutreports/reports/'~group.id) }}"{% if groupId is defined and group.id == groupId %} class="sel"{% endif %} data-id="{{ group.id }}">{{ group.name }}</a></li>
-				{% endfor %}
+		</ul>
+	</nav>
 
-			</ul>
-		</nav>
+	{% if currentUser.can('sproutReports-editReports') %}
 
 		<div class="buttons">
 			<div id="newgroupbtn" class="btn add icon">{{ "New Group"|t }}</div>

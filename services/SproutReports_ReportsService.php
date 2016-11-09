@@ -47,10 +47,8 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 
 			return false;
 		}
-        else
-        {
-            $model->id = $record->id;
-        }
+
+		$model->id = $record->id;
 
 		return true;
 	}

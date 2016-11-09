@@ -187,17 +187,20 @@ abstract class SproutReportsBaseDataSource
 		return true;
 	}
 
-    public function getStatus()
-    {
-        $record = SproutReports_DataSourceRecord::model()->findByAttributes(array(
-            'dataSourceId' => $this->id
-        ));
+	/**
+	 * @return bool|mixed
+	 */
+	public function allowNew()
+	{
+		$record = SproutReports_DataSourceRecord::model()->findByAttributes(array(
+			'dataSourceId' => $this->id
+		));
 
-        if ($record != null && $record->status != null)
-        {
-            return $record->status;
-        }
+		if ($record != null && $record->allowNew != null)
+		{
+			return $record->allowNew;
+		}
 
-        return true;
-    }
+		return true;
+	}
 }

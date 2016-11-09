@@ -29,7 +29,7 @@
 				<th scope="col" data-attribute="description">{{ "Description"|t }}</th>
 				<th scope="col" data-attribute="plugin">{{ "Plugin"|t }}</th>
 				<th scope="col" data-attribute="totalReports">{{ "Total Reports"|t }}</th>
-				<th scope="col" data-attribute="status">{{ "Allow New?"|t }} <span class="info">{{ "Allow users to create a new Report from this Data Source from the New Report dropdown. If disabled, any existing Reports using this Data Source will still be visible to all users in the list of Reports. Users with the 'Edit Data Sources' permission can always create a new Report from this page. "|t }}</span></th>
+				<th scope="col" data-attribute="allowNew">{{ "Allow New?"|t }} <span class="info">{{ "Allow users to create a new Report from this Data Source from the New Report dropdown. If disabled, any existing Reports using this Data Source will still be visible to all users in the list of Reports. Users with the 'Edit Data Sources' permission can always create a new Report from this page. "|t }}</span></th>
 				<th class="thin"></th>
 			</tr>
 			</thead>
@@ -44,11 +44,11 @@
 
           <td>{{ dataSource.getReportCount() }}</td>
 					<td>
-						{% set status = dataSource.getStatus() %}
+						{% set allowNew = dataSource.allowNew() %}
 						{{ forms.lightswitchField({
 							id: dataSource.getId(),
-							on: status,
-							name: 'status',
+							on: allowNew,
+							name: 'allowNew',
 							small: true
 						}) }}
 					</td>
@@ -72,18 +72,21 @@
 {% includejs %}
 
     $(document).ready(function() {
-        $('.lightswitch').change(function() {
+      $('.lightswitch').change(function() {
 
-            var status = $(this).find("[name='status']").val();
-            var dataSourceId = $(this).attr('id');
+        var allowNew = $(this).find("[name='allowNew']").val();
+        var dataSourceId = $(this).attr('id');
 
-            Craft.postActionRequest('sproutReports/reports/dataSourceStatus', {dataSourceId: dataSourceId, status: status}, function(response) {
-                if (response)
-                {
-                    Craft.cp.displayNotice(Craft.t('Status Updated.'));
-                }
-            });
-        })
+        Craft.postActionRequest('sproutReports/dataSources/updateDataSource', {
+					dataSourceId: dataSourceId,
+					allowNew: allowNew
+				}, function(response) {
+          if (response)
+          {
+            Craft.cp.displayNotice(Craft.t('Data Source updated.'));
+          }
+        });
+      })
     });
 
 {% endincludejs %}

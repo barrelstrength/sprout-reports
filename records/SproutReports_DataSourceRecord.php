@@ -7,8 +7,8 @@ namespace Craft;
  * @package Craft
  * --
  * @property string $dataSourceId
- * @property array $options
- * @property int $status
+ * @property array  $options
+ * @property int    $allowNew
  */
 class SproutReports_DataSourceRecord extends BaseRecord
 {
@@ -28,7 +28,7 @@ class SproutReports_DataSourceRecord extends BaseRecord
 		return array(
 			'dataSourceId' => array(AttributeType::String, 'required' => true),
 			'options'      => array(AttributeType::Mixed, 'required' => false),
-			'status'       => array(AttributeType::Bool, 'default' => true)
+			'allowNew'     => array(AttributeType::Bool, 'default' => true)
 		);
 	}
 }

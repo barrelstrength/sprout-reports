@@ -23,7 +23,7 @@
 		{% set newReportOptions = [] %}
 
 		{% for id, dataSource in dataSources %}
-			{% if dataSource.getStatus() %}
+			{% if dataSource.allowNew() %}
 				{% set newReportOptions = newReportOptions|merge([{
 					name: dataSource.getName(),
 					url: dataSource.getUrl('/new')

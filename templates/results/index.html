@@ -25,7 +25,7 @@
 	    {{ "Download"|t }}
     </a>
 
-		{% if not currentUser.can('sproutReports-editReports') %}
+		{% if currentUser.can('sproutReports-editReports') %}
 	    <a id="modify-options-icon" class="btn" data-icon="settings"></a>
 		{% endif %}
   </form>

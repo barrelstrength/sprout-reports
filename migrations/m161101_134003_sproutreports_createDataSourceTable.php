@@ -13,6 +13,8 @@ class m161101_134003_sproutreports_createDataSourceTable extends BaseMigration
 	 */
 	public function safeUp()
 	{
+		$tableName = 'sproutreports_datasources';
+
 		SproutEmailPlugin::log('Creating the sproutreports_datasources table');
 
 		// Create the sproutreports_datasources table

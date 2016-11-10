@@ -3,7 +3,7 @@
 <project name="Sprout Reports" default="release">
     <property name="pluginFileName" value="SproutReports" />
     <property name="pluginName" value="sproutreports" />
-    <property name="pluginVersion" value="0.8.6" />
+    <property name="pluginVersion" value="0.8.7" />
 
     <target name="release">
         <echo msg="Preparing release distro..." />

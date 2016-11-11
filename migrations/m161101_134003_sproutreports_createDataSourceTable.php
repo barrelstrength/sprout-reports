@@ -15,7 +15,7 @@ class m161101_134003_sproutreports_createDataSourceTable extends BaseMigration
 	{
 		$tableName = 'sproutreports_datasources';
 
-		SproutEmailPlugin::log('Creating the sproutreports_datasources table');
+		SproutReportsPlugin::log('Creating the sproutreports_datasources table');
 
 		// Create the sproutreports_datasources table
 		craft()->db->createCommand()->createTable($tableName, array(
@@ -27,7 +27,7 @@ class m161101_134003_sproutreports_createDataSourceTable extends BaseMigration
 
 		craft()->db->createCommand()->createIndex($tableName, 'id');
 
-		SproutEmailPlugin::log('Finished creating the sproutreports_datasources table');
+		SproutReportsPlugin::log('Finished creating the sproutreports_datasources table');
 
 		return true;
 	}

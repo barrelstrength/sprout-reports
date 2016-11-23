@@ -205,8 +205,6 @@ abstract class SproutReportsBaseDataSource
 	}
 
 	/**
-	 * Should return an string containing the necessary HTML to capture user input
-	 *
 	 * @return null|string
 	 */
 	public function getReportHandle()

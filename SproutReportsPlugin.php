@@ -71,7 +71,7 @@ class SproutReportsPlugin extends BasePlugin
 	 */
 	public function getSchemaVersion()
 	{
-		return '0.8.1';
+		return '0.8.8';
 	}
 
 	/**

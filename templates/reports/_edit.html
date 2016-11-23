@@ -134,6 +134,16 @@
 					errors: report is defined ? report.getErrors('handle') : ""
 				}) }}
 
+				{% set reportHandle = dataSource.getReportHandle() %}
+
+				{% if reportHandle == 'customQuery' %}
+					{{ forms.lightSwitchField({
+						label: 'Allows html?',
+						name: 'allowsHtml',
+						on: report.allowsHtml is defined ? report.allowsHtml : false
+					})}}
+				{% endif %}
+
 				{% set statusInput %}
 					<div class="left">
 						{{ forms.lightSwitchField({

@@ -8,6 +8,11 @@ namespace Craft;
  */
 class SproutReportsQueryDataSource extends SproutReportsBaseDataSource
 {
+	public function getReportHandle()
+	{
+		return 'customQuery';
+	}
+
 	public function getName()
 	{
 		return Craft::t('Custom Query');

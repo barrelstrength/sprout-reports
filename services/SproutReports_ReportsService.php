@@ -218,6 +218,7 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 		$instance->name         = craft()->request->getPost('name');
 		$instance->handle       = craft()->request->getPost('handle');
 		$instance->description  = craft()->request->getPost('description');
+		$instance->allowsHtml   = craft()->request->getPost('allowsHtml');
 		$instance->options      = is_array($options) ? $options : array();
 		$instance->dataSourceId = craft()->request->getPost('dataSourceId');
 		$instance->enabled      = craft()->request->getPost('enabled');

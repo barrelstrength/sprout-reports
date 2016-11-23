@@ -78,7 +78,7 @@
 							<tr class="table_row">
 								{% for property in value %}
 									<td>
-										<div class="item_content">{{ property|raw }}</div>
+										<div class="item_content">{% if report.allowsHtml %} {{ property|raw }} {% else %} {{ property }} {% endif %}</div>
 									</td>
 								{% endfor %}
 							</tr>

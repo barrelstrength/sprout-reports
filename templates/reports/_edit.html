@@ -134,13 +134,11 @@
 					errors: report is defined ? report.getErrors('handle') : ""
 				}) }}
 
-				{% set reportHandle = dataSource.getReportHandle() %}
-
-				{% if reportHandle == 'customQuery' %}
+				{% if dataSource.isAllowHtmlEditable() %}
 					{{ forms.lightSwitchField({
-						label: 'Allows html?',
-						name: 'allowsHtml',
-						on: report.allowsHtml is defined ? report.allowsHtml : false
+						label: 'Allow HTML <span class="info">Render HTML in your report results. Don\'t enable this setting if you allow user submitted content.</span>'|t,
+						name: 'allowHtml',
+						on: report.allowHtml is defined ? report.allowHtml : dataSource.getDefaultAllowHtml()
 					})}}
 				{% endif %}
 

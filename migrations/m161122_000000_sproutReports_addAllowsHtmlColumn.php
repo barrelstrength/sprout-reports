@@ -3,7 +3,7 @@ namespace Craft;
 /**
  * The class name is the UTC timestamp in the format of mYYMMDD_HHMMSS_pluginHandle_migrationName
  */
-class m161122_000000_sproutReports_addAllowsHtmlColumn extends BaseMigration
+class m161122_000000_sproutReports_addallowHtmlColumn extends BaseMigration
 {
 	/**
 	 * @return bool
@@ -11,8 +11,7 @@ class m161122_000000_sproutReports_addAllowsHtmlColumn extends BaseMigration
 	public function safeUp()
 	{
 		$tableName  = 'sproutreports_reports';
-		$columnName = 'allowsHtml';
-
+		$columnName = 'allowHtml';
 
 		$this->addColumnAfter($tableName, $columnName,
 			array(

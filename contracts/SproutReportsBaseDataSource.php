@@ -188,6 +188,8 @@ abstract class SproutReportsBaseDataSource
 	}
 
 	/**
+	 * Allows a user to disable a Data Source from displaying in the New Report dropdown
+	 *
 	 * @return bool|mixed
 	 */
 	public function allowNew()
@@ -205,10 +207,23 @@ abstract class SproutReportsBaseDataSource
 	}
 
 	/**
+	 * Allow a user to toggle the Allow Html setting.
+	 *
 	 * @return null|string
 	 */
-	public function getReportHandle()
+	public function isAllowHtmlEditable()
 	{
-		return '';
+		return false;
+	}
+
+	/**
+	 * Define the default value for the Allow HTML setting. Setting Allow HTML
+	 * to true enables a report to output HTML on the Results page.
+	 *
+	 * @return null|string
+	 */
+	public function getDefaultAllowHtml()
+	{
+		return false;
 	}
 }

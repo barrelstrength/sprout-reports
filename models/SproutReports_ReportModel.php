@@ -10,7 +10,7 @@ namespace Craft;
  * @property string $name
  * @property string $handle
  * @property string $description
- * @property int    $allowsHtml
+ * @property int    $allowHtml
  * @property array  $options
  * @property string $dataSourceId
  * @property int    $groupId
@@ -103,7 +103,7 @@ class SproutReports_ReportModel extends BaseModel
 			'name'         => array(AttributeType::String, 'required' => true),
 			'handle'       => array(AttributeType::Handle, 'required' => true),
 			'description'  => array(AttributeType::String, 'default' => null),
-			'allowsHtml'   => array(AttributeType::Bool, 'default' => false),
+			'allowHtml'    => array(AttributeType::Bool, 'default' => false),
 			'options'      => array(AttributeType::Mixed, 'default' => array()),
 			'dataSourceId' => array(AttributeType::String, 'required' => true),
 			'enabled'      => array(AttributeType::Bool, 'default' => true),

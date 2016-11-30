@@ -3,7 +3,7 @@ namespace Craft;
 /**
  * The class name is the UTC timestamp in the format of mYYMMDD_HHMMSS_pluginHandle_migrationName
  */
-class m161122_000000_sproutReports_addallowHtmlColumn extends BaseMigration
+class m161122_000000_sproutReports_addAllowHtmlColumn extends BaseMigration
 {
 	/**
 	 * @return bool

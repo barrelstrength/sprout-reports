@@ -63,7 +63,7 @@ class SproutReportsPlugin extends BasePlugin
 	 */
 	public function getVersion()
 	{
-		return '0.8.8';
+		return '0.8.9';
 	}
 
 	/**
@@ -71,7 +71,7 @@ class SproutReportsPlugin extends BasePlugin
 	 */
 	public function getSchemaVersion()
 	{
-		return '0.8.8';
+		return '0.8.9';
 	}
 
 	/**

@@ -4,14 +4,19 @@
 	reports: {
 		label: "Reports"|t,
 		url: url('sproutreports/reports')
-	},
-	datasources: {
-		label: "Data Sources"|t,
-		url: url('sproutreports/datasources')
 	}
 } %}
 
-{% if currentUser.can('editSproutReportsSettings') %}
+{% if currentUser.can('sproutReports-editDataSources') %}
+	{% set subnav = subnav|merge({
+		datasources: {
+			label: "Data Sources"|t,
+			url: url('sproutreports/datasources')
+		}
+	}) %}
+{% endif %}
+
+{% if currentUser.can('sproutReports-editSettings') %}
 	{% set subnav = subnav|merge({
 		settings: {
 			label: "Settings"|t,

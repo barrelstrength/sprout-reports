@@ -63,7 +63,7 @@ class SproutReportsPlugin extends BasePlugin
 	 */
 	public function getVersion()
 	{
-		return '0.8.4';
+		return '0.8.9';
 	}
 
 	/**
@@ -71,7 +71,7 @@ class SproutReportsPlugin extends BasePlugin
 	 */
 	public function getSchemaVersion()
 	{
-		return '0.8.1';
+		return '0.8.9';
 	}
 
 	/**
@@ -138,7 +138,12 @@ class SproutReportsPlugin extends BasePlugin
 	public function registerUserPermissions()
 	{
 		return array(
-			'sproutReports-editReports'  => array('label' => Craft::t('Edit Reports')),
+			'sproutReports-editReports'  => array(
+				'label' => Craft::t('Edit Reports')
+			),
+			'sproutReports-editDataSources'  => array(
+				'label' => Craft::t('Edit Data Sources')
+			),
 			'sproutReports-editSettings' => array(
 				'label' => Craft::t('Edit Plugin Settings')
 			)

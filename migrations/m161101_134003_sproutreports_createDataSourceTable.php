@@ -13,32 +13,22 @@ class m161101_134003_sproutreports_createDataSourceTable extends BaseMigration
 	 */
 	public function safeUp()
 	{
-        SproutEmailPlugin::log('Creating the sproutreports_datasources table');
+		$tableName = 'sproutreports_datasources';
 
-        $tableName = 'sproutreports_datasources';
+		SproutReportsPlugin::log('Creating the sproutreports_datasources table');
 
-        if (!craft()->db->tableExists($tableName))
-        {
-            try
-            {
-                // Create the sproutreports_datasources table
-                craft()->db->createCommand()->createTable($tableName, array(
-                    'id'            => array('column' => ColumnType::PK, 'null' => false),
-                    'dataSourceId'  => AttributeType::String,
-                    'status'        => array('column' => 'integer'),
-                    'options'       => array('column' => 'text')
-                ), null, false);
+		// Create the sproutreports_datasources table
+		craft()->db->createCommand()->createTable($tableName, array(
+			'id'           => array('column' => ColumnType::PK, 'null' => false),
+			'dataSourceId' => AttributeType::String,
+			'allowNew'     => array('column' => 'integer'),
+			'options'      => array('column' => 'text')
+		), null, false);
 
-                craft()->db->createCommand()->createIndex($tableName, 'id');
-            }
-            catch (\Exception $e)
-            {
-                SproutEmailPlugin::log('Error creating the sproutreports_datasources table: ' . $e->getMessage());
-            }
-        }
+		craft()->db->createCommand()->createIndex($tableName, 'id');
 
-        SproutEmailPlugin::log('Finished creating the sproutreports_datasources table');
-        
+		SproutReportsPlugin::log('Finished creating the sproutreports_datasources table');
+
 		return true;
 	}
 }

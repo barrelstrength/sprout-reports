@@ -1,6 +1,10 @@
 {% extends "sproutreports/_layouts/base" %}
 {% import "_includes/forms" as forms %}
 
+{% if not currentUser.can('sproutReports-editReports') %}
+	{% redirect 'sproutreports' %}
+{% endif %}
+
 {% set title = report['id'] is defined and report['id'] is not empty ? "Edit Report" : "New Report" %}
 
 {% set crumbs = [
@@ -21,10 +25,26 @@
 	{% endif %}
 {% endif %}
 
+{% set fullPageForm = true %}
+
+{% block saveButton %}
+	<div class="button">
+		<div class="btngroup">
+			<input type="submit" class="btn submit" value="{{ 'Save Report'|t }}">
+
+			<div class="btn submit menubtn"></div>
+			<div class="menu">
+				<ul>
+					<li><a class="formsubmit" data-redirect="sproutreports/reports/sproutreports/query/edit/{id}">{{ "Save and continue editing"|t }}</a></li>
+					<li><a class="formsubmit" data-redirect="{{ dataSource.getUrl('/new') }}">{{ "Save and add another report"|t }}</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
 {% block main %}
 
-<form method="post" accept-charset="UTF-8" data-saveshortcut>
-	{{ getCsrfInput() }}
 	<input type="hidden" name="action" value="sproutReports/reports/saveReport">
 	<input type="hidden" name="redirect" value="sproutreports/reports">
 	<input type="hidden" name="dataSourceId" value="{{ dataSource.id }}">
@@ -114,6 +134,14 @@
 					errors: report is defined ? report.getErrors('handle') : ""
 				}) }}
 
+				{% if dataSource.isAllowHtmlEditable() %}
+					{{ forms.lightSwitchField({
+						label: 'Allow HTML <span class="info">Render HTML in your report results. Don\'t enable this setting if you allow user submitted content.</span>'|t,
+						name: 'allowHtml',
+						on: report.allowHtml is defined ? report.allowHtml : dataSource.getDefaultAllowHtml()
+					})}}
+				{% endif %}
+
 				{% set statusInput %}
 					<div class="left">
 						{{ forms.lightSwitchField({
@@ -135,24 +163,8 @@
 
 			</div>
 
-			<div class="button">
-				<div class="btngroup">
-					<input type="submit" class="btn submit" value="{{ 'Save Report'|t }}">
-
-					<div class="btn submit menubtn"></div>
-					<div class="menu">
-						<ul>
-							<li><a class="formsubmit" data-redirect="sproutreports/reports/sproutreports/query/edit/{id}">{{ "Save and continue editing"|t }}</a></li>
-							<li><a class="formsubmit" data-redirect="{{ dataSource.getUrl('/new') }}">{{ "Save and add another report"|t }}</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
 		</div>
 	</div>
-
-</form>
 
 {% endblock %}
 

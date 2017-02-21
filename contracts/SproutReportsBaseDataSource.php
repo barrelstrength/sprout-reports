@@ -187,17 +187,43 @@ abstract class SproutReportsBaseDataSource
 		return true;
 	}
 
-    public function getStatus()
-    {
-        $record = SproutReports_DataSourceRecord::model()->findByAttributes(array(
-            'dataSourceId' => $this->id
-        ));
+	/**
+	 * Allows a user to disable a Data Source from displaying in the New Report dropdown
+	 *
+	 * @return bool|mixed
+	 */
+	public function allowNew()
+	{
+		$record = SproutReports_DataSourceRecord::model()->findByAttributes(array(
+			'dataSourceId' => $this->id
+		));
 
-        if ($record != null && $record->status != null)
-        {
-            return $record->status;
-        }
+		if ($record != null && $record->allowNew != null)
+		{
+			return $record->allowNew;
+		}
 
-        return true;
-    }
+		return true;
+	}
+
+	/**
+	 * Allow a user to toggle the Allow Html setting.
+	 *
+	 * @return null|string
+	 */
+	public function isAllowHtmlEditable()
+	{
+		return false;
+	}
+
+	/**
+	 * Define the default value for the Allow HTML setting. Setting Allow HTML
+	 * to true enables a report to output HTML on the Results page.
+	 *
+	 * @return null|string
+	 */
+	public function getDefaultAllowHtml()
+	{
+		return false;
+	}
 }

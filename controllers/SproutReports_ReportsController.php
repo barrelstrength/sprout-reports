@@ -171,31 +171,6 @@ class SproutReports_ReportsController extends BaseController
 		}
 	}
 
-    public function actionDataSourceStatus()
-    {
-        $this->requirePostRequest();
-        $this->requireAjaxRequest();
-
-        $status       = craft()->request->getRequiredPost('status');
-        $dataSourceId = craft()->request->getRequiredPost('dataSourceId');
-
-        $status = (empty($status)) ? false : true;
-
-        $attributes = array(
-          'status' => $status,
-          'dataSourceId' => $dataSourceId
-        );
-
-       $model = SproutReports_DataSourceModel::populateModel($attributes);
-
-       if (sproutReports()->dataSources->saveDataSource($model))
-       {
-           $this->returnJson(true);
-       }
-
-       $this->returnJson(false);
-    }
-
 	/**
 	 * Export Data as CSV
 	 *

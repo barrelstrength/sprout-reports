@@ -47,10 +47,8 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 
 			return false;
 		}
-        else
-        {
-            $model->id = $record->id;
-        }
+
+		$model->id = $record->id;
 
 		return true;
 	}
@@ -113,6 +111,7 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	 * Returns a SproutReports_ReportModel model if one is found in the database by handle
 	 *
 	 * @param string $handle
+	 *
 	 * @return false|SproutReports_ReportModel
 	 */
 	public function getReportByHandle($handle)
@@ -188,7 +187,7 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 	 */
 	public function getCountByDataSourceId($dataSourceId)
 	{
-		return (int)SproutReports_ReportRecord::model()->countByAttributes(array('dataSourceId' => $dataSourceId));
+		return (int) SproutReports_ReportRecord::model()->countByAttributes(array('dataSourceId' => $dataSourceId));
 	}
 
 	/**
@@ -225,11 +224,16 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 		$instance->enabled      = craft()->request->getPost('enabled');
 		$instance->groupId      = craft()->request->getPost('groupId', null);
 
+		$dataSource = sproutReports()->dataSources->getDataSourceById($instance->dataSourceId);
+
+		$instance->allowHtml = craft()->request->getPost('allowHtml', $dataSource->getDefaultAllowHtml());
+
 		return $instance;
 	}
 
 	/**
 	 * @param SproutReports_ReportModel $report
+	 *
 	 * @return bool
 	 */
 	protected function validateOptions(SproutReports_ReportModel &$report)

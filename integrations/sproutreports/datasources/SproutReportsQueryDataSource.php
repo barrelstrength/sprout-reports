@@ -22,6 +22,14 @@ class SproutReportsQueryDataSource extends SproutReportsBaseDataSource
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function isAllowHtmlEditable()
+	{
+		return true;
+	}
+
+	/**
 	 * @todo:so Let's bring back a little sanity checks back into raw queries
 	 *
 	 * @param SproutReports_ReportModel $report

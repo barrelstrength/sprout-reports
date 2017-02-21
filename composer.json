@@ -1,6 +1,43 @@
 {
+    "name": "barrelstrength/sprout-reports",
+    "description": "Powerful custom reports.",
+    "type": "craft-plugin",
+    "version": "3",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "sprout reports"
+    ],
+    "support": {
+        "docs": "???",
+        "issues": "???"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Barrelstrength",
+            "homepage": "barrelstrengthdesign.com"
+        }
+    ],
     "require": {
-       "paste/pre": "dev-master",
-       "faisalman/simple-excel-php" : "dev-develop"
+    },
+    "autoload": {
+        "psr-4": {
+          "barrelstrength\\sproutreports\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Sprout Reports",
+        "handle": "sproutReports",
+        "schemaVersion": "3",
+        "hasSettings": true,
+        "hasCpSection": true,
+        "changelogUrl": "???",
+        "components": {
+            "api": "barrelstrength\\sproutreports\\services\\Api"
+        },
+        "class": "barrelstrength\\sproutreports\\SproutReports"
     }
 }

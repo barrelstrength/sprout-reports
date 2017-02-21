@@ -1,0 +1,41 @@
+{% extends "_layouts/cp" %}
+
+{% set subnav = {
+	reports: {
+		label: "Reports"|t,
+		url: url('sproutreports/reports')
+	}
+} %}
+
+{% if currentUser.can('sproutReports-editDataSources') %}
+	{% set subnav = subnav|merge({
+		datasources: {
+			label: "Data Sources"|t,
+			url: url('sproutreports/datasources')
+		}
+	}) %}
+{% endif %}
+
+{% if currentUser.can('sproutReports-editSettings') %}
+	{% set subnav = subnav|merge({
+		settings: {
+			label: "Settings"|t,
+			url: url('sproutreports/settings')
+		}
+	}) %}
+{% endif %}
+
+{% set selectedSubnavItem = craft.request.segment(2) ? craft.request.segment(2) : 'reports' %}
+
+{% block content %}
+
+{% endblock %}
+
+{% if craft.request.getSegment(4) == 'results' %}
+	{% includeCssResource "sproutreports/css/jquery.jscrollpane.css" %}
+	{% includeCssResource "sproutreports/css/styles.css" %}
+
+	{% includeJsResource "sproutreports/js/jquery.jscrollpane.min.js" %}
+	{% includeJsResource "sproutreports/js/jquery.mousewheel.js" %}
+	{% includeJsResource "sproutreports/js/scripts.js" %}
+{% endif %}

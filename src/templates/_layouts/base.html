@@ -32,10 +32,10 @@
 {% endblock %}
 
 {% if craft.request.getSegment(4) == 'results' %}
-	{% includeCssResource "sproutreports/css/jquery.jscrollpane.css" %}
-	{% includeCssResource "sproutreports/css/styles.css" %}
+	{% includeCssFile "sproutreports/css/jquery.jscrollpane.css" %}
+	{% includeCssFile "sproutreports/css/styles.css" %}
 
-	{% includeJsResource "sproutreports/js/jquery.jscrollpane.min.js" %}
-	{% includeJsResource "sproutreports/js/jquery.mousewheel.js" %}
-	{% includeJsResource "sproutreports/js/scripts.js" %}
+	{% includeJsFile "sproutreports/js/jquery.jscrollpane.min.js" %}
+	{% includeJsFile "sproutreports/js/jquery.mousewheel.js" %}
+	{% includeJsFile "sproutreports/js/scripts.js" %}
 {% endif %}

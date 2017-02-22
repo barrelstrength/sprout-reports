@@ -30,23 +30,36 @@ use craft\base\Component;
  */
 class Api extends Component
 {
-    // Public Methods
-    // =========================================================================
+	/**
+	 * @var ReportGroups
+	 */
+	public $reportGroups;
 
-    /**
-     * This function can literally be anything you want, and you can have as many service
-     * functions as you want
-     *
-     * From any other plugin file, call it like this:
-     *
-     *     SproutReports::$plugin->api->exampleService()
-     *
-     * @return mixed
-     */
-    public function exampleService()
-    {
-        $result = 'something';
+	/**
+	 * @var SproutReports_DataSourcesService
+	 */
+	public $dataSources;
 
-        return $result;
-    }
+	/**
+	 * @var SproutReports_ExportsService
+	 */
+	public $exports;
+
+	/**
+	 * @var SproutReports_ReportsService
+	 */
+	public $reports;
+
+	/**
+	 * @var SproutReports_SettingsService
+	 */
+	public $settings;
+
+	public function init()
+	{
+		$this->reportGroups = new ReportGroups();
+		//$this->dataSources  = new Utilities();
+		//$this->exports      = new Email();
+		//$this->settings     = new Link();
+	}
 }

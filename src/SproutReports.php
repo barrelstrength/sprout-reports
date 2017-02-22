@@ -12,7 +12,7 @@ namespace barrelstrength\sproutreports;
 
 use craft\base\Plugin;
 use barrelstrength\sproutreports\models\Settings;
-
+use barrelstrength\sproutreports\variables\SproutReportsVariable;
 /**
  * https://craftcms.com/docs/plugins/introduction
  *
@@ -48,5 +48,10 @@ class SproutReports extends Plugin
 		return \Craft::$app->getView()->renderTemplate('sprout-reports/_cp/settings', [
 			'settings' => $this->getSettings()
 		]);
+	}
+
+	public function defineTemplateComponent()
+	{
+		return SproutReportsVariable::class;
 	}
 }

@@ -11,7 +11,8 @@ class Install extends \craft\db\Migration
 
 	public function safeDown()
 	{
-		// ...
+		$this->dropTable('{{%sproutreports_report}}');
+		$this->dropTable('{{%sproutreports_reportgroups}}');
 	}
 
 	public function createTables()
@@ -26,5 +27,22 @@ class Install extends \craft\db\Migration
 		  'groupId'      => $this->integer(),
 		  'enabled'      => $this->boolean()
 		]);
+
+		$this->createTable('{{%sproutreports_reportgroups}}', [
+			'id'     => $this->primaryKey(),
+			'name'   => $this->string()->notNull()
+		]);
+
+		$this->createIndex($this->db->getIndexName('{{%sproutreports_report}}', 'handle', true, true),
+			'{{%sproutreports_report}}', 'name', true);
+
+		$this->createIndex($this->db->getIndexName('{{%sproutreports_report}}', 'name', true, true),
+			'{{%sproutreports_report}}', 'name', true);
+
+		$this->createIndex($this->db->getIndexName('{{%sproutreports_report}}', 'dataSourceId', true, false),
+			'{{%sproutreports_report}}', 'dataSourceId', false);
+
+		$this->createIndex($this->db->getIndexName('{{%sproutreports_reportgroups}}', 'name', false, true),
+			'{{%sproutreports_reportgroups}}', 'name', false);
 	}
 }

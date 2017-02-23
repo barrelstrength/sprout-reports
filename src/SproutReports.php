@@ -12,7 +12,13 @@ namespace barrelstrength\sproutreports;
 
 use craft\base\Plugin;
 use barrelstrength\sproutreports\models\Settings;
+use barrelstrength\sproutreports\services\DataSources;
 use barrelstrength\sproutreports\variables\SproutReportsVariable;
+use yii\base\Event;
+use craft\events\RegisterComponentTypesEvent;
+use craft\web\UrlManager;
+use craft\events\RegisterUrlRulesEvent;
+use barrelstrength\sproutreports\integrations\sproutreports\datasources\Categories;
 /**
  * https://craftcms.com/docs/plugins/introduction
  *
@@ -33,9 +39,19 @@ class SproutReports extends Plugin
 
   public function init()
   {
-   parent::init();
+		parent::init();
 
-	 self::$api = $this->get('api');
+		self::$api = $this->get('api');
+
+		Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function (RegisterUrlRulesEvent $event) {
+
+			$event->rules['sproutreports'] = 'sprout-reports/reports/index';
+
+		});
+
+		Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent $event) {
+		  $event->types[] = new Categories;
+		});
   }
 
 	protected function createSettingsModel()

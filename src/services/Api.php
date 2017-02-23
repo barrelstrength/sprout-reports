@@ -58,7 +58,7 @@ class Api extends Component
 	public function init()
 	{
 		$this->reportGroups = new ReportGroups();
-		//$this->dataSources  = new Utilities();
+		$this->dataSources  = new DataSources();
 		//$this->exports      = new Email();
 		//$this->settings     = new Link();
 	}

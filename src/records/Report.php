@@ -27,43 +27,4 @@ class Report extends ActiveRecord
 	{
 		return '{{%sproutreports_reports}}';
 	}
-
-	//
-	///**
-	// * @return array
-	// */
-	//protected function defineAttributes()
-	//{
-	//	return array(
-	//		'groupId'      => array(AttributeType::Number),
-	//		'name'         => array(AttributeType::String, 'required' => true),
-	//		'handle'       => array(AttributeType::Handle, 'required' => true),
-	//		'description'  => array(AttributeType::String, 'default' => null),
-	//		'allowHtml'   => array(AttributeType::Bool, 'required' => false),
-	//		'dataSourceId' => array(AttributeType::String, 'required' => true),
-	//		'options'      => array(AttributeType::Mixed, 'required' => false),
-	//		'enabled'      => array(AttributeType::Bool, 'default' => true)
-	//	);
-	//}
-	//
-	///**
-	// * @return array
-	// */
-	//public function defineIndexes()
-	//{
-	//	return array(
-	//		array('columns' => array('name', 'handle'), 'unique' => true),
-	//		array('columns' => array('dataSourceId')),
-	//	);
-	//}
-	//
-	///**
-	// * @return array
-	// */
-	//public function scopes()
-	//{
-	//	return array(
-	//		'ordered' => array('order' => 'dataSourceId, name'),
-	//	);
-	//}
 }

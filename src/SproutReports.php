@@ -50,9 +50,20 @@ class SproutReports extends Plugin
 		});
 
 		Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent $event) {
-		  $event->types[] = new Categories;
+		  $event->types['SproutReports'][] = new Categories;
 		});
   }
+
+	/**
+	 * @param string $message
+	 * @param array  $params
+	 *
+	 * @return string
+	 */
+	public static function t($message, array $params = [])
+	{
+		return \Craft::t('sproutReports', $message, $params);
+	}
 
 	protected function createSettingsModel()
 	{

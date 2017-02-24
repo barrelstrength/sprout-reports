@@ -2,17 +2,18 @@
 namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 
 use barrelstrength\sproutreports\contracts\BaseDataSource;
+use barrelstrength\sproutreports\sproutReports;
 
 class Categories extends BaseDataSource
 {
 	public function getName()
 	{
-		return 'Category Usage by Section';
+		return sproutReports::t('Category Usage by Section');
 	}
 
 	public function getDescription()
 	{
-		return Craft::t('Returns a breakdown of Categories used by Entries.');
+		return sproutReports::t('Returns a breakdown of Categories used by Entries.');
 	}
 
 	///**

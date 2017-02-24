@@ -3,6 +3,7 @@ namespace barrelstrength\sproutreports\services;
 
 use yii\base\Component;
 use craft\events\RegisterComponentTypesEvent;
+use barrelstrength\sproutreports\contracts\BaseDataSource;
 
 /**
  * Class DataSources
@@ -49,39 +50,39 @@ class DataSources  extends Component
 			]);
 
 			$this->trigger(self::EVENT_REGISTER_DATA_SOURCES, $event);
-			\Craft::dd($event->types[0]->getName());
-		//	$responses = craft()->plugins->call('registerSproutReportsDataSources');
-		//
-		//	$names = array();
-		//
-		//	if ($responses)
-		//	{
-		//		foreach ($responses as $plugin => $dataSources)
-		//		{
-		//			/**
-		//			 * @var SproutReportsBaseDataSource $dataSource
-		//			 */
-		//			foreach ($dataSources as $dataSource)
-		//			{
-		//				if ($dataSource && $dataSource instanceof SproutReportsBaseDataSource)
-		//				{
-		//					$dataSource->setId($plugin);
-		//					$dataSource->setPluginName(craft()->plugins->getPlugin($plugin)->getName());
-		//					$dataSource->setPluginHandle($plugin);
-		//
-		//					$this->dataSources[$dataSource->getId()] = $dataSource;
-		//
-		//					$names[] = $dataSource->getName();
-		//				}
-		//			}
-		//		}
-		//
-		//		// Sort data sources by name
-		//		$this->_sortDataSources($names, $this->dataSources);
+
+			$responses = $event->types;
+
+			$names = array();
+
+			if ($responses)
+			{
+				foreach ($responses as $plugin => $dataSources)
+				{
+					/**
+					 * @var BaseDataSource $dataSource
+					 */
+					foreach ($dataSources as $dataSource)
+					{
+						if ($dataSource && $dataSource instanceof BaseDataSource)
+						{
+							$dataSource->setId($plugin);
+							$dataSource->setPluginName(\Craft::$app->getPlugin($plugin)->getName());
+							$dataSource->setPluginHandle($plugin);
+
+							$this->dataSources[$dataSource->getId()] = $dataSource;
+
+							$names[] = $dataSource->getName();
+						}
+					}
+				}
+
+				// Sort data sources by name
+				$this->_sortDataSources($names, $this->dataSources);
 			}
-		//}
-		//
-		//return $this->dataSources;
+		}
+
+		return $this->dataSources;
 	}
 
 	///**

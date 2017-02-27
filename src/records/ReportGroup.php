@@ -1,5 +1,5 @@
 <?php
-namespace barrelstrength\sproutfields\records;
+namespace barrelstrength\sproutreports\records;
 
 use craft\db\ActiveRecord;
 

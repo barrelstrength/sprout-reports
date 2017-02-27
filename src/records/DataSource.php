@@ -18,13 +18,13 @@ use yii\db\ActiveQueryInterface;
  * @property int $groupId          Group ID
  * @property int $enabled          Enabled
  */
-class Report extends ActiveRecord
+class DataSource extends ActiveRecord
 {
 	/**
 	 * @return string
 	 */
 	public static function tableName(): string
 	{
-		return '{{%sproutreports_reports}}';
+		return '{{%sproutreports_datasources}}';
 	}
 }

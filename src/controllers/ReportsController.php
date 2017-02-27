@@ -8,7 +8,8 @@ class ReportsController extends Controller
 {
 	public function actionIndex()
 	{
-		SproutReports::$api->dataSources->getAllDataSources();
+		$sources = SproutReports::$api->dataSources->getAllDataSources();
+		//\Craft::dd($sources);
 	}
 	///**
 	// * Saves a report query to the database
@@ -67,30 +68,31 @@ class ReportsController extends Controller
 	//	$this->redirectToPostedUrl();
 	//}
 	//
-	//// @todo - reconsider logic
-	//public function actionEditReport(array $variables = array())
-	//{
-	//	// If we have a Report Model in our $variables, we are handling errors
-	//	if (isset($variables['report']))
-	//	{
-	//		$variables['report']     = $variables['report'];
-	//		$variables['dataSource'] = $variables['report']->getDataSource();
-	//	}
-	//	elseif (isset($variables['reportId']) && ($report = sproutReports()->reports->getReport($variables['reportId'])))
-	//	{
-	//		$variables['report']     = $report;
-	//		$variables['dataSource'] = $report->getDataSource();
-	//	}
-	//	else
-	//	{
-	//		$variables['report']               = new SproutReports_ReportModel();
-	//		$variables['report']->dataSourceId = $variables['plugin'] . '.' . $variables['dataSourceKey'];
-	//		$variables['dataSource']           = $variables['report']->getDataSource();
-	//	}
-	//
-	//	$this->renderTemplate('sproutreports/reports/_edit', $variables);
-	//}
-	//
+	// @todo - reconsider logic
+	public function actionEditReport(string $pluginId, string $dataSourceKey, )
+	{
+		\Craft::dd($pluginId);
+		//// If we have a Report Model in our $variables, we are handling errors
+		//if (isset($variables['report']))
+		//{
+		//	$variables['report']     = $variables['report'];
+		//	$variables['dataSource'] = $variables['report']->getDataSource();
+		//}
+		//elseif (isset($variables['reportId']) && ($report = sproutReports()->reports->getReport($variables['reportId'])))
+		//{
+		//	$variables['report']     = $report;
+		//	$variables['dataSource'] = $report->getDataSource();
+		//}
+		//else
+		//{
+		//	$variables['report']               = new SproutReports_ReportModel();
+		//	$variables['report']->dataSourceId = $variables['plugin'] . '.' . $variables['dataSourceKey'];
+		//	$variables['dataSource']           = $variables['report']->getDataSource();
+		//}
+		//
+		//$this->renderTemplate('sproutreports/reports/_edit', $variables);
+	}
+
 	//public function actionResultsIndex(array $variables = array())
 	//{
 	//	$reportId = isset($variables['reportId']) ? $variables['reportId'] : null;

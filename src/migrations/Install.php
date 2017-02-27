@@ -23,7 +23,7 @@ class Install extends \craft\db\Migration
 			'handle' => $this->string()->notNull(),
 		  'description'  => $this->text(),
 		  'options'      => $this->text(),
-		  'dataSourceId' => $this->integer(),
+		  'dataSourceId' => $this->string(),
 		  'groupId'      => $this->integer(),
 		  'enabled'      => $this->boolean()
 		]);
@@ -31,6 +31,13 @@ class Install extends \craft\db\Migration
 		$this->createTable('{{%sproutreports_reportgroups}}', [
 			'id'     => $this->primaryKey(),
 			'name'   => $this->string()->notNull()
+		]);
+
+		$this->createTable('{{%sproutreports_datasources}}', [
+			'id'     => $this->primaryKey(),
+			'dataSourceId' => $this->string(),
+			'options'      => $this->text(),
+			'allowNew'      => $this->boolean()
 		]);
 
 		$this->createIndex($this->db->getIndexName('{{%sproutreports_report}}', 'handle', true, true),

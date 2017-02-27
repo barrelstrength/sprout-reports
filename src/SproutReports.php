@@ -46,11 +46,12 @@ class SproutReports extends Plugin
 		Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function (RegisterUrlRulesEvent $event) {
 
 			$event->rules['sproutreports'] = 'sprout-reports/reports/index';
+			$event->rules['sproutreports/reports/<pluginId>/<dataSourceKey:{handle}>/new'] = 'sprout-reports/reports/edit-report';
 
 		});
 
 		Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent $event) {
-		  $event->types['SproutReports'][] = new Categories;
+		  $event->types[] = new Categories;
 		});
   }
 

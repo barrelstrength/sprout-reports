@@ -57,23 +57,20 @@ class DataSources  extends Component
 
 			if ($responses)
 			{
-				foreach ($responses as $plugin => $dataSources)
+				/**
+				 * @var BaseDataSource $dataSource
+				 */
+				foreach ($responses as $dataSource)
 				{
-					/**
-					 * @var BaseDataSource $dataSource
-					 */
-					foreach ($dataSources as $dataSource)
+
+					if ($dataSource && $dataSource instanceof BaseDataSource)
 					{
-						if ($dataSource && $dataSource instanceof BaseDataSource)
-						{
-							$dataSource->setId($plugin);
-							$dataSource->setPluginName(\Craft::$app->getPlugin($plugin)->getName());
-							$dataSource->setPluginHandle($plugin);
+						//$dataSource->setPluginName(\Craft::$app->getPlugin($plugin)->getName());
+					//	$dataSource->setPluginHandle($plugin);
 
-							$this->dataSources[$dataSource->getId()] = $dataSource;
+						$this->dataSources[$dataSource->getId()] = $dataSource;
 
-							$names[] = $dataSource->getName();
-						}
+						$names[] = $dataSource->getName();
 					}
 				}
 
@@ -108,20 +105,21 @@ class DataSources  extends Component
 	// *
 	// * @return null
 	// */
-	//private function _sortDataSources(&$names, &$secondaryArray)
-	//{
-	//	// TODO: Remove this check for Craft 3.
-	//	if (PHP_VERSION_ID < 50400)
-	//	{
-	//		// Sort plugins by name
-	//		array_multisort($names, $secondaryArray);
-	//	}
-	//	else
-	//	{
-	//		// Sort plugins by name
-	//		array_multisort($names, SORT_NATURAL | SORT_FLAG_CASE, $secondaryArray);
-	//	}
-	//}
+	private function _sortDataSources(&$names, &$secondaryArray)
+	{
+		// TODO: Remove this check for Craft 3.
+		if (PHP_VERSION_ID < 50400)
+		{
+			// Sort plugins by name
+			array_multisort($names, $secondaryArray);
+		}
+		else
+		{
+
+			// Sort plugins by name
+			array_multisort($names, SORT_NATURAL | SORT_FLAG_CASE, $secondaryArray);
+		}
+	}
 	//
    // public function saveDataSource(SproutReports_DataSourceModel $model)
    // {

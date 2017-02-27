@@ -14,10 +14,11 @@
 {% else %}
 	{% set reports = craft.sproutReports.getReports() %}
 {% endif %}
-
-{% set dataSources = craft.sproutReports.getDataSources() %}
+#}
+{% set dataSources = craft.sproutreports.getDataSources() %}
 
 {% set extraPageHeaderHtml %}
+
 	{% if currentUser.can('sproutReports-editReports') %}
 
 		{% set newReportOptions = [] %}
@@ -48,7 +49,7 @@
 		{% endif %}
 
 	{% endif %}
-{% endset %}#}
+{% endset %}
 
 {% block content %}
 

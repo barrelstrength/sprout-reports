@@ -3,6 +3,7 @@
 namespace barrelstrength\sproutreports\variables;
 
 use Craft;
+use barrelstrength\sproutreports\SproutReports;
 
 class SproutReportsVariable
 {
@@ -35,10 +36,10 @@ class SproutReportsVariable
 	///**
 	// * @return SproutReportsBaseDataSource[]
 	// */
-	//public function getDataSources()
-	//{
-	//	return sproutReports()->dataSources->getAllDataSources();
-	//}
+	public function getDataSources()
+	{
+		return SproutReports::$api->dataSources->getAllDataSources();
+	}
 	//
 	///**
 	// * @return null|SproutReports_ReportModel[]
@@ -117,4 +118,9 @@ class SproutReportsVariable
 	//		}
 	//	}
 	//}
+
+	public function test()
+	{
+		return 'this is test';
+	}
 }

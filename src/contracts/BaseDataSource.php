@@ -1,6 +1,9 @@
 <?php
 namespace barrelstrength\sproutreports\contracts;
 
+use barrelstrength\sproutreports\records\DataSource;
+use craft\helpers\UrlHelper;
+
 /**
  * Class SproutReportsBaseDataSource
  *
@@ -31,11 +34,11 @@ abstract class BaseDataSource
 	/**
 	 * @param string $pluginHandle
 	 */
-	final public function setId($pluginHandle)
+	public function __construct()
 	{
-		$dataSourceClass = str_replace('Craft\\', '', get_class($this));
+		$dataSourceClass = __NAMESPACE__ . get_class($this);
 
-		$this->id = sproutReports()->dataSources->generateId($pluginHandle, $dataSourceClass);
+		$this->id = $dataSourceClass;
 	}
 
 	/**
@@ -55,43 +58,43 @@ abstract class BaseDataSource
 	{
 		return $this->id;
 	}
-
-	/**
-	 * Set a SproutReports_ReportModel on our data source.
-	 *
-	 * @param SproutReports_ReportModel|null $report
-	 */
-	public function setReport(SproutReports_ReportModel $report = null)
-	{
-		if (is_null($report))
-		{
-			$report = new SproutReports_ReportModel();
-		}
-
-		$this->report = $report;
-	}
-
-	/**
-	 * Returns the CP URL for the given data source with the option to append to it once composed
-	 *
-	 * @legend
-	 * Breaks apart the data source id and transforms its components into a URL friendly string
-	 *
-	 * @example
-	 * sproutReports.customQuery > sproutreports/customquery
-	 * sproutreports.customquery > sproutreports/customquery
-	 *
-	 * @see getId()
-	 *
-	 * @param string $append
-	 *
-	 * @return string
-	 */
+	//
+	///**
+	// * Set a SproutReports_ReportModel on our data source.
+	// *
+	// * @param SproutReports_ReportModel|null $report
+	// */
+	//public function setReport(SproutReports_ReportModel $report = null)
+	//{
+	//	if (is_null($report))
+	//	{
+	//		$report = new SproutReports_ReportModel();
+	//	}
+	//
+	//	$this->report = $report;
+	//}
+	//
+	///**
+	// * Returns the CP URL for the given data source with the option to append to it once composed
+	// *
+	// * @legend
+	// * Breaks apart the data source id and transforms its components into a URL friendly string
+	// *
+	// * @example
+	// * sproutReports.customQuery > sproutreports/customquery
+	// * sproutreports.customquery > sproutreports/customquery
+	// *
+	// * @see getId()
+	// *
+	// * @param string $append
+	// *
+	// * @return string
+	// */
 	final public function getUrl($append = null)
 	{
-		$url = join('/', explode('.', $this->getId()));
+		$url = strtolower(basename($this->getId()));
 
-		return UrlHelper::getCpUrl(sprintf('sproutreports/reports/%s/%s', $url, ltrim($append, '/')));
+		return UrlHelper::cpUrl(sprintf('sproutreports/reports/%s/%s', $url, ltrim($append, '/')));
 	}
 
 	/**
@@ -127,16 +130,16 @@ abstract class BaseDataSource
 	{
 		return $this->pluginHandle;
 	}
-
-	/**
-	 * Returns the total count of reports created based on the given data source
-	 *
-	 * @return [type] [description]
-	 */
-	final public function getReportCount()
-	{
-		return sproutReports()->reports->getCountByDataSourceId($this->getId());
-	}
+	//
+	///**
+	// * Returns the total count of reports created based on the given data source
+	// *
+	// * @return [type] [description]
+	// */
+	//final public function getReportCount()
+	//{
+	//	return sproutReports()->reports->getCountByDataSourceId($this->getId());
+	//}
 
 	/**
 	 * Should return a human readable name for your data source
@@ -154,49 +157,47 @@ abstract class BaseDataSource
 	{
 		return null;
 	}
-
-	/**
-	 * Should return an array of strings to be used as column headings in display/output
-	 *
-	 * @return array
-	 */
-	public function getDefaultLabels(SproutReports_ReportModel &$report, $options = array())
-	{
-		return array();
-	}
-
-	/**
-	 * Should return an array of records to use in the report
-	 *
-	 * @param SproutReports_ReportModel $report
-	 *
-	 * @return null|array
-	 */
-	public function getResults(SproutReports_ReportModel &$report, $options = array())
-	{
-		return array();
-	}
-
-	/**
-	 * Validate the data sources options
-	 *
-	 * @return boolean
-	 */
-	public function validateOptions(array $options = array(), array $errors = array())
-	{
-		return true;
-	}
-
-	/**
-	 * Allows a user to disable a Data Source from displaying in the New Report dropdown
-	 *
-	 * @return bool|mixed
-	 */
+	//
+	///**
+	// * Should return an array of strings to be used as column headings in display/output
+	// *
+	// * @return array
+	// */
+	//public function getDefaultLabels(SproutReports_ReportModel &$report, $options = array())
+	//{
+	//	return array();
+	//}
+	//
+	///**
+	// * Should return an array of records to use in the report
+	// *
+	// * @param SproutReports_ReportModel $report
+	// *
+	// * @return null|array
+	// */
+	//public function getResults(SproutReports_ReportModel &$report, $options = array())
+	//{
+	//	return array();
+	//}
+	//
+	///**
+	// * Validate the data sources options
+	// *
+	// * @return boolean
+	// */
+	//public function validateOptions(array $options = array(), array $errors = array())
+	//{
+	//	return true;
+	//}
+	//
+	///**
+	// * Allows a user to disable a Data Source from displaying in the New Report dropdown
+	// *
+	// * @return bool|mixed
+	// */
 	public function allowNew()
 	{
-		$record = SproutReports_DataSourceRecord::model()->findByAttributes(array(
-			'dataSourceId' => $this->id
-		));
+		$record = DataSource::findOne(['dataSourceId' => $this->id]);
 
 		if ($record != null && $record->allowNew != null)
 		{
@@ -205,25 +206,25 @@ abstract class BaseDataSource
 
 		return true;
 	}
-
-	/**
-	 * Allow a user to toggle the Allow Html setting.
-	 *
-	 * @return null|string
-	 */
-	public function isAllowHtmlEditable()
-	{
-		return false;
-	}
-
-	/**
-	 * Define the default value for the Allow HTML setting. Setting Allow HTML
-	 * to true enables a report to output HTML on the Results page.
-	 *
-	 * @return null|string
-	 */
-	public function getDefaultAllowHtml()
-	{
-		return false;
-	}
+		//
+	///**
+	// * Allow a user to toggle the Allow Html setting.
+	// *
+	// * @return null|string
+	// */
+	//public function isAllowHtmlEditable()
+	//{
+	//	return false;
+	//}
+	//
+	///**
+	// * Define the default value for the Allow HTML setting. Setting Allow HTML
+	// * to true enables a report to output HTML on the Results page.
+	// *
+	// * @return null|string
+	// */
+	//public function getDefaultAllowHtml()
+	//{
+	//	return false;
+	//}
 }

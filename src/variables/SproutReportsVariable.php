@@ -52,10 +52,10 @@ class SproutReportsVariable
 	///**
 	// * @return null|SproutReports_ReportGroupModel[]
 	// */
-	//public function getReportGroups()
-	//{
-	//	return sproutReports()->reportGroups->getAllReportGroups();
-	//}
+	public function getReportGroups()
+	{
+		return SproutReports::$api->reportGroups->getAllReportGroups();
+	}
 	//
 	///**
 	// * @param $id

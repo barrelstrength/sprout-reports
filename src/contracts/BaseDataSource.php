@@ -2,6 +2,7 @@
 namespace barrelstrength\sproutreports\contracts;
 
 use barrelstrength\sproutreports\records\DataSource;
+use barrelstrength\sproutreports\models\Report;
 use craft\helpers\UrlHelper;
 
 /**
@@ -36,9 +37,13 @@ abstract class BaseDataSource
 	 */
 	public function __construct()
 	{
-		$dataSourceClass = __NAMESPACE__ . get_class($this);
+		$namespaces = explode('\\', __NAMESPACE__);
+		$class = basename(get_class($this));
 
-		$this->id = $dataSourceClass;
+		// get plugin name on second array
+		$dataSourceClass = $namespaces[1] . '.' . $class;
+
+		$this->id = strtolower($dataSourceClass);
 	}
 
 	/**
@@ -58,21 +63,21 @@ abstract class BaseDataSource
 	{
 		return $this->id;
 	}
-	//
-	///**
-	// * Set a SproutReports_ReportModel on our data source.
-	// *
-	// * @param SproutReports_ReportModel|null $report
-	// */
-	//public function setReport(SproutReports_ReportModel $report = null)
-	//{
-	//	if (is_null($report))
-	//	{
-	//		$report = new SproutReports_ReportModel();
-	//	}
-	//
-	//	$this->report = $report;
-	//}
+
+	/**
+	 * Set a SproutReports_ReportModel on our data source.
+	 *
+	 * @param SproutReports_ReportModel|null $report
+	 */
+	public function setReport(Report $report = null)
+	{
+		if (is_null($report))
+		{
+			$report = new Report();
+		}
+
+		$this->report = $report;
+	}
 	//
 	///**
 	// * Returns the CP URL for the given data source with the option to append to it once composed
@@ -92,7 +97,7 @@ abstract class BaseDataSource
 	// */
 	final public function getUrl($append = null)
 	{
-		$url = strtolower(basename($this->getId()));
+		$url = join('/', explode('.', $this->getId()));
 
 		return UrlHelper::cpUrl(sprintf('sproutreports/reports/%s/%s', $url, ltrim($append, '/')));
 	}
@@ -212,10 +217,10 @@ abstract class BaseDataSource
 	// *
 	// * @return null|string
 	// */
-	//public function isAllowHtmlEditable()
-	//{
-	//	return false;
-	//}
+	public function isAllowHtmlEditable()
+	{
+		return false;
+	}
 	//
 	///**
 	// * Define the default value for the Allow HTML setting. Setting Allow HTML

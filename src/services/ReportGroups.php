@@ -2,6 +2,7 @@
 namespace barrelstrength\sproutreports\services;
 
 use yii\base\Component;
+use barrelstrength\sproutreports\records\ReportGroup;
 /**
  * Class SproutReports_ReportGroupsService
  *
@@ -92,12 +93,9 @@ class ReportGroups extends Component
 	 */
 	public function getAllReportGroups()
 	{
-		$groups = SproutReports_ReportGroupRecord::model()->findAll(array('index'=>'id'));
+		$groups = ReportGroup::find()->all();
 
-		if ($groups)
-		{
-			return SproutReports_ReportGroupModel::populateModels($groups, 'id');
-		}
+		return $groups;
 	}
 
 	/**

@@ -1,0 +1,92 @@
+{% extends "sproutreports/_layouts/base" %}
+{% import "_includes/forms" as forms %}
+
+{% if not currentUser.can('sproutReports-editDataSources') %}
+	{% redirect 'sproutreports' %}
+{% endif %}
+
+{% set title  = "Data Sources"|t %}
+{% set groups = craft.sproutReports.getReportGroups() %}
+
+{% set selectedTab = 'dataSources' %}
+
+{% if groupId is defined %}
+	{% if groups[groupId] is not defined %}
+		{% exit 404 %}
+	{% endif %}
+
+	{% set reports = craft.sproutReports.getReportsByGroupId(groupId) %}
+{% else %}
+	{% set reports = craft.sproutReports.getReports() %}
+{% endif %}
+
+{% block content %}
+	<div class="tableview">
+		<table class="data fullwidth">
+			<thead>
+			<tr>
+				<th scope="col" data-attribute="datasource">{{ "Data Source"|t }}</th>
+				<th scope="col" data-attribute="description">{{ "Description"|t }}</th>
+				<th scope="col" data-attribute="plugin">{{ "Plugin"|t }}</th>
+				<th scope="col" data-attribute="totalReports">{{ "Total Reports"|t }}</th>
+				<th scope="col" data-attribute="allowNew">{{ "Allow New?"|t }} <span class="info">{{ "Allow users to create a new Report from this Data Source from the New Report dropdown. If disabled, any existing Reports using this Data Source will still be visible to all users in the list of Reports. Users with the 'Edit Data Sources' permission can always create a new Report from this page. "|t }}</span></th>
+				<th class="thin"></th>
+			</tr>
+			</thead>
+			<tbody>
+			{% set dataSources = craft.sproutReports.getDataSources() %}
+
+			{% for id, dataSource in dataSources %}
+				<tr>
+					<td><strong>{{ dataSource.getName() }}</strong></td>
+					<td>{{ dataSource.getDescription() }}</td>
+					<td><span class="light">{{ dataSource.getPluginName() }}</span></td>
+
+          <td>{{ dataSource.getReportCount() }}</td>
+					<td>
+						{% set allowNew = dataSource.allowNew() %}
+						{{ forms.lightswitchField({
+							id: dataSource.getId(),
+							on: allowNew,
+							name: 'allowNew',
+							small: true
+						}) }}
+					</td>
+					<td>
+						<a href="{{ dataSource.getUrl('/new') }}" class="btn small">{{ "New Report"|t }}</a>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+	<div class="grid">
+		<div class="item">
+			{{ parent() }}
+		</div>
+	</div>
+
+{% endblock %}
+
+{% includejs %}
+
+    $(document).ready(function() {
+      $('.lightswitch').change(function() {
+
+        var allowNew = $(this).find("[name='allowNew']").val();
+        var dataSourceId = $(this).attr('id');
+
+        Craft.postActionRequest('sproutReports/dataSources/updateDataSource', {
+					dataSourceId: dataSourceId,
+					allowNew: allowNew
+				}, function(response) {
+          if (response)
+          {
+            Craft.cp.displayNotice(Craft.t('Data Source updated.'));
+          }
+        });
+      })
+    });
+
+{% endincludejs %}

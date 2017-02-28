@@ -27,7 +27,7 @@ class ReportGroup extends ActiveRecord
 		return $this->hasMany(Report::class, ['groupId' => 'id']);
 	}
 
-	protected function beforeDelete()
+	public function beforeDelete()
 	{
 /*
 		$reports = SproutReports_ReportRecord::model()->findAll('groupId =:groupId',array(

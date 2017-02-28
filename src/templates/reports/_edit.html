@@ -1,7 +1,7 @@
 {% extends "sproutreports/_layouts/base" %}
 {% import "_includes/forms" as forms %}
 
-{% if not currentUser.can('sproutReports-editReports') %}
+{% if not currentUser.can('sproutreports-editReports') %}
 	{% redirect 'sproutreports' %}
 {% endif %}
 
@@ -11,7 +11,7 @@
 	{ label: "Reports"|t, url: url('sproutreports') }
 ] %}
 
-{% set groups = craft.sproutReports.getReportGroups() %}
+{% set groups = craft.sproutreports.getReportGroups() %}
 
 {% if groups | length %}
 	{% set groupId = report is defined ? report.groupId : null %}
@@ -43,10 +43,12 @@
 	</div>
 {% endblock %}
 
-{% block main %}
+{% block content %}
 
-	<input type="hidden" name="action" value="sproutReports/reports/saveReport">
-	<input type="hidden" name="redirect" value="sproutreports/reports">
+	<input type="hidden" name="action" value="sprout-reports/reports/save-report">
+
+	{{ redirectInput('sproutreports/reports') }}
+
 	<input type="hidden" name="dataSourceId" value="{{ dataSource.id }}">
 
 	<div class="grid first" data-max-cols="3">
@@ -152,7 +154,7 @@
 
 					<div class="right">
 						{% if report is defined %}
-								<input type="button" class="btn small formsubmit" value="Delete" data-param="reportId" data-value="{{ report.id }}" data-action="sproutReports/reports/deleteReport" data-confirm="Are you sure you want to delete this report?" data-redirect="sproutreports" tabindex="0">
+								<input type="button" class="btn small formsubmit" value="Delete" data-param="reportId" data-value="{{ report.id }}" data-action="sproutreports/reports/deleteReport" data-confirm="Are you sure you want to delete this report?" data-redirect="sproutreports" tabindex="0">
 						{% endif %}
 					</div>
 				{% endset %}

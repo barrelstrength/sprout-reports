@@ -1,0 +1,13 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textareaField({
+	name: "options[query]",
+	label: "Custom Query"|t,
+	instructions: "Build a custom database query.",
+	class: "nicetext code",
+	rows: 5,
+	required: true,
+	first: true,
+	value: options.query is defined ? options.query : "",
+	errors: errors['query'] is defined ? errors['query'] : null
+}) }}

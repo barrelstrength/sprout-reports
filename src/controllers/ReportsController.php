@@ -1,39 +1,46 @@
 <?php
 namespace barrelstrength\sproutreports\controllers;
 
+use Craft;
 use craft\web\Controller;
 use barrelstrength\sproutreports\SproutReports;
+use barrelstrength\sproutreports\models\Report;
 
 class ReportsController extends Controller
 {
 	public function actionIndex()
 	{
 		$sources = SproutReports::$api->dataSources->getAllDataSources();
-		//\Craft::dd($sources);
+
 	}
-	///**
-	// * Saves a report query to the database
-	// */
-	//public function actionSaveReport()
-	//{
-	//	$this->requirePostRequest();
-	//
-	//	$report = sproutReports()->reports->prepareFromPost();
-	//
-	//	if (sproutReports()->reports->saveReport($report))
-	//	{
-	//		craft()->userSession->setNotice(Craft::t('Report saved.'));
-	//		$this->redirectToPostedUrl($report);
-	//	}
-	//	else
-	//	{
-	//		craft()->userSession->setError(Craft::t('Could not save report.'));
-	//
-	//		craft()->urlManager->setRouteVariables(array(
-	//			'report' => $report
-	//		));
-	//	}
-	//}
+	/**
+	 * Saves a report query to the database
+	 */
+	public function actionSaveReport()
+	{
+		$this->requirePostRequest();
+
+		$request = Craft::$app->getRequest();
+		$name = $request->getBodyParam('name');
+		Craft::dd($name);
+/*		$this->requirePostRequest();
+
+		$report = sproutReports()->reports->prepareFromPost();
+
+		if (sproutReports()->reports->saveReport($report))
+		{
+			craft()->userSession->setNotice(Craft::t('Report saved.'));
+			$this->redirectToPostedUrl($report);
+		}
+		else
+		{
+			craft()->userSession->setError(Craft::t('Could not save report.'));
+
+			craft()->urlManager->setRouteVariables(array(
+				'report' => $report
+			));
+		}*/
+	}
 	//
 	///**
 	// * Saves a report query to the database
@@ -69,28 +76,41 @@ class ReportsController extends Controller
 	//}
 	//
 	// @todo - reconsider logic
-	public function actionEditReport(string $pluginId, string $dataSourceKey, )
+	public function actionEditReport(string $pluginId, string $dataSourceKey, Report $report = null)
 	{
-		\Craft::dd($pluginId);
-		//// If we have a Report Model in our $variables, we are handling errors
-		//if (isset($variables['report']))
-		//{
-		//	$variables['report']     = $variables['report'];
-		//	$variables['dataSource'] = $variables['report']->getDataSource();
-		//}
-		//elseif (isset($variables['reportId']) && ($report = sproutReports()->reports->getReport($variables['reportId'])))
-		//{
-		//	$variables['report']     = $report;
-		//	$variables['dataSource'] = $report->getDataSource();
-		//}
-		//else
-		//{
-		//	$variables['report']               = new SproutReports_ReportModel();
-		//	$variables['report']->dataSourceId = $variables['plugin'] . '.' . $variables['dataSourceKey'];
-		//	$variables['dataSource']           = $variables['report']->getDataSource();
-		//}
-		//
-		//$this->renderTemplate('sproutreports/reports/_edit', $variables);
+		$variables = array();
+
+		$variables['report'] = new Report();
+
+		if (isset($report))
+		{
+			$variables['report'] = $report;
+		}
+
+		$variables['report']->dataSourceId = $pluginId . '.' . $dataSourceKey;
+		$variables['dataSource']           = $variables['report']->getDataSource();
+
+		//\Craft::dd($variables);
+/*		// If we have a Report Model in our $variables, we are handling errors
+		if (isset($variables['report']))
+		{
+			$variables['report']     = $report;
+			$variables['dataSource'] = $variables['report']->getDataSource();
+		}
+		elseif (isset($variables['reportId']) && ($report = sproutReports()->reports->getReport($variables['reportId'])))
+		{
+			$variables['report']     = $report;
+			$variables['dataSource'] = $report->getDataSource();
+		}
+		else
+		{
+			$variables['report']               = new SproutReports_ReportModel();
+			$variables['report']->dataSourceId = $variables['plugin'] . '.' . $variables['dataSourceKey'];
+			$variables['dataSource']           = $variables['report']->getDataSource();
+		}
+*/
+	//	\Craft::dd($variables);
+		return $this->renderTemplate('sproutreports/reports/_edit', $variables);
 	}
 
 	//public function actionResultsIndex(array $variables = array())

@@ -211,25 +211,25 @@ abstract class BaseDataSource
 
 		return true;
 	}
-		//
-	///**
-	// * Allow a user to toggle the Allow Html setting.
-	// *
-	// * @return null|string
-	// */
+
+	/**
+	 * Allow a user to toggle the Allow Html setting.
+	 *
+	 * @return null|string
+	 */
 	public function isAllowHtmlEditable()
 	{
 		return false;
 	}
-	//
-	///**
-	// * Define the default value for the Allow HTML setting. Setting Allow HTML
-	// * to true enables a report to output HTML on the Results page.
-	// *
-	// * @return null|string
-	// */
-	//public function getDefaultAllowHtml()
-	//{
-	//	return false;
-	//}
+
+	/**
+	 * Define the default value for the Allow HTML setting. Setting Allow HTML
+	 * to true enables a report to output HTML on the Results page.
+	 *
+	 * @return null|string
+	 */
+	public function getDefaultAllowHtml()
+	{
+		return false;
+	}
 }

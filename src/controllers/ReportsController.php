@@ -10,8 +10,8 @@ class ReportsController extends Controller
 {
 	public function actionIndex()
 	{
-		$sources = SproutReports::$api->dataSources->getAllDataSources();
-
+		$report = SproutReports::$api->reports->getReport(2);
+		Craft::dd($report);
 	}
 	/**
 	 * Saves a report query to the database
@@ -20,12 +20,24 @@ class ReportsController extends Controller
 	{
 		$this->requirePostRequest();
 
-		$request = Craft::$app->getRequest();
-		$name = $request->getBodyParam('name');
-		Craft::dd($name);
-/*		$this->requirePostRequest();
+		$report = SproutReports::$api->reports->prepareFromPost();
 
-		$report = sproutReports()->reports->prepareFromPost();
+		if (!SproutReports::$api->reports->saveReport($report))
+		{
+			Craft::$app->getSession()->setError(SproutReports::t('Couldn’t save section.'));
+
+			// Send the section back to the template
+			Craft::$app->getUrlManager()->setRouteParams([
+				'report' => $report
+			]);
+
+			return null;
+		}
+
+		Craft::$app->getSession()->setNotice(SproutReports::t('Report saved.'));
+
+		return $this->redirectToPostedUrl($report);
+/*
 
 		if (sproutReports()->reports->saveReport($report))
 		{
@@ -89,6 +101,8 @@ class ReportsController extends Controller
 
 		$variables['report']->dataSourceId = $pluginId . '.' . $dataSourceKey;
 		$variables['dataSource']           = $variables['report']->getDataSource();
+
+		$variables['continueEditingUrl']   = $variables['dataSource']->getUrl() . '/edit/{id}';
 
 		//\Craft::dd($variables);
 /*		// If we have a Report Model in our $variables, we are handling errors

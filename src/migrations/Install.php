@@ -13,6 +13,7 @@ class Install extends \craft\db\Migration
 	{
 		$this->dropTable('{{%sproutreports_report}}');
 		$this->dropTable('{{%sproutreports_reportgroups}}');
+		$this->dropTable('{{%sproutreports_datasources}}');
 	}
 
 	public function createTables()
@@ -22,22 +23,32 @@ class Install extends \craft\db\Migration
 			'name'   => $this->string()->notNull(),
 			'handle' => $this->string()->notNull(),
 		  'description'  => $this->text(),
+		  'allowHtml'    => $this->boolean(),
 		  'options'      => $this->text(),
 		  'dataSourceId' => $this->string(),
 		  'groupId'      => $this->integer(),
-		  'enabled'      => $this->boolean()
+		  'enabled'      => $this->boolean(),
+			'dateCreated'  => $this->dateTime()->notNull(),
+			'dateUpdated'  => $this->dateTime()->notNull(),
+			'uid'          => $this->uid()
 		]);
 
 		$this->createTable('{{%sproutreports_reportgroups}}', [
-			'id'     => $this->primaryKey(),
-			'name'   => $this->string()->notNull()
+			'id'          => $this->primaryKey(),
+			'name'        => $this->string()->notNull(),
+			'dateCreated' => $this->dateTime()->notNull(),
+			'dateUpdated' => $this->dateTime()->notNull(),
+			'uid'         => $this->uid()
 		]);
 
 		$this->createTable('{{%sproutreports_datasources}}', [
-			'id'     => $this->primaryKey(),
+			'id'           => $this->primaryKey(),
 			'dataSourceId' => $this->string(),
 			'options'      => $this->text(),
-			'allowNew'      => $this->boolean()
+			'allowNew'     => $this->boolean(),
+			'dateCreated'  => $this->dateTime()->notNull(),
+			'dateUpdated'  => $this->dateTime()->notNull(),
+			'uid'          => $this->uid()
 		]);
 
 		$this->createIndex($this->db->getIndexName('{{%sproutreports_report}}', 'handle', true, true),

@@ -113,30 +113,30 @@ class Categories extends BaseDataSource
 			'setupRequiredMessage' => $setupRequiredMessage
 		));
 	}
-	//
-	///**
-	// * Validate our data source options
-	// *
-	// * @param array $options
-	// * @return array|bool
-	// */
-	//public function validateOptions(array $options = array(), array $errors = array())
-	//{
-	//	if (empty($options['sectionId']))
-	//	{
-	//		$errors['sectionId'][] = Craft::t('Section is required.');
-	//	}
-	//
-	//	if (empty($options['categoryGroupId']))
-	//	{
-	//		$errors['categoryGroupId'][] = Craft::t('Category Group is required.');
-	//	}
-	//
-	//	if (count($errors) > 0)
-	//	{
-	//		return false;
-	//	}
-	//
-	//	return true;
-	//}
+
+	/**
+	 * Validate our data source options
+	 *
+	 * @param array $options
+	 * @return array|bool
+	 */
+	public function validateOptions(array $options = array(), array $errors = array())
+	{
+		if (empty($options['sectionId']))
+		{
+			$errors['sectionId'][] = sproutReports::t('Section is required.');
+		}
+
+		if (empty($options['categoryGroupId']))
+		{
+			$errors['categoryGroupId'][] = sproutReports::t('Category Group is required.');
+		}
+
+		if (count($errors) > 0)
+		{
+			return false;
+		}
+
+		return true;
+	}
 }

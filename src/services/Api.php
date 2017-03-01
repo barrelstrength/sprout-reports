@@ -10,9 +10,6 @@
 
 namespace barrelstrength\sproutreports\services;
 
-use barrelstrength\sproutreports\SproutReports;
-
-use Craft;
 use craft\base\Component;
 
 /**
@@ -46,7 +43,7 @@ class Api extends Component
 	public $exports;
 
 	/**
-	 * @var SproutReports_ReportsService
+	 * @var ReportsService
 	 */
 	public $reports;
 
@@ -59,7 +56,6 @@ class Api extends Component
 	{
 		$this->reportGroups = new ReportGroups();
 		$this->dataSources  = new DataSources();
-		//$this->exports      = new Email();
-		//$this->settings     = new Link();
+		$this->reports      = new Reports();
 	}
 }

@@ -28,6 +28,11 @@
 {% set fullPageForm = true %}
 
 {% block saveButton %}
+
+	<input type="hidden" name="action" value="sprout-reports/reports/save-report">
+
+	{{ redirectInput('sproutreports/reports') }}
+
 	<div class="button">
 		<div class="btngroup">
 			<input type="submit" class="btn submit" value="{{ 'Save Report'|t }}">
@@ -35,7 +40,7 @@
 			<div class="btn submit menubtn"></div>
 			<div class="menu">
 				<ul>
-					<li><a class="formsubmit" data-redirect="sproutreports/reports/sproutreports/query/edit/{id}">{{ "Save and continue editing"|t }}</a></li>
+					<li><a class="formsubmit" data-redirect="{{ continueEditingUrl|hash }}">{{ "Save and continue editing"|t }}</a></li>
 					<li><a class="formsubmit" data-redirect="{{ dataSource.getUrl('/new') }}">{{ "Save and add another report"|t }}</a></li>
 				</ul>
 			</div>
@@ -44,10 +49,6 @@
 {% endblock %}
 
 {% block content %}
-
-	<input type="hidden" name="action" value="sprout-reports/reports/save-report">
-
-	{{ redirectInput('sproutreports/reports') }}
 
 	<input type="hidden" name="dataSourceId" value="{{ dataSource.id }}">
 

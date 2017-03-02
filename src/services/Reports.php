@@ -59,9 +59,15 @@ class Reports extends Component
 	 */
 	public function getReport($reportId)
 	{
-		$result = Report::findOne($reportId);
+		$reportRecord  = ReportRecord::findOne($reportId);
+		$reportModel   = new Report();
 
-		return $result;
+		if ($reportRecord != null)
+		{
+			$reportModel->attributes = $reportRecord->getAttributes();
+		}
+
+		return $reportModel;
 	}
 
 	/**

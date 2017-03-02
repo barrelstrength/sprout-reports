@@ -47,6 +47,7 @@ class SproutReports extends Plugin
 
 			$event->rules['sproutreports'] = 'sprout-reports/reports/index';
 			$event->rules['sproutreports/reports/<pluginId>/<dataSourceKey:{handle}>/new'] = 'sprout-reports/reports/edit-report';
+			$event->rules['sproutreports/reports/<pluginId>/<dataSourceKey:{handle}>/edit/<reportId:\d+>'] = 'sprout-reports/reports/edit-report';
 
 		});
 

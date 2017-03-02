@@ -1,0 +1,284 @@
+/* BASE STYLES
+-----------------------------------*/
+
+tr {
+	height: 50px;
+	max-height: 50px;
+	overflow: hidden;
+}
+
+td, th {
+	min-width: 180px;
+}
+
+td {
+	border-right: 1px solid #eee;
+}
+
+td:last-child  {
+	border-right: 0px solid transparent;
+}
+
+
+/* SELECT REPORT HEADING
+-----------------------------------*/
+
+.selectreport {
+	margin-left: -25px;
+}
+
+.selectreport h3,
+.selectreport form {
+	margin-left: 25px;
+}
+
+.selectreport form {
+	margin-bottom: 20px;
+}
+
+.selectreport td {
+	min-width: 220px;
+}
+
+
+/* RESULTS DATA
+-----------------------------------*/
+
+.tableview {
+	margin: -30px -30px 0 -30px;
+}
+
+.tableview h1 {
+	padding: 35px 0 0 25px;
+}
+
+table.results {
+	overflow: auto;
+	min-width: 100%;
+}
+
+table.results th h3 {
+	padding-top: 10px;
+}
+
+table.results tbody th,
+table.results tbody td {
+	vertical-align: top;
+	border-top: 1px dotted #e3e5e8;
+	border-right: none;
+}
+
+table.results th:not(:first-child),
+table.results td:not(:first-child) {
+	padding-left: 10px;
+}
+
+th div {
+	position: absolute;
+	top:0;
+	z-index: 20;
+	background-color: #fff;
+	border-bottom: 1px solid #eee;
+}
+
+th div.first {
+	padding-left: 10px;
+	margin-left: -10px;
+}
+
+table.results tbody tr:last-child th,
+table.results tbody tr:last-child td {
+	border-bottom: 1px dotted #e3e5e8;
+}
+
+
+.table_row {
+	background-image: url("../img/arrows.png");
+	background-repeat: no-repeat;
+	background-position: 4px -50px;
+	padding-left: 30px;
+	cursor: pointer;
+	-webkit-transition: background-color linear 0.2s;
+	   -moz-transition: background-color linear 0.2s;
+	     -o-transition: background-color linear 0.2s;
+	        transition: background-color linear 0.2s;
+}
+
+.table_row:hover {
+	background-position: right 10px;
+	background-color: #fafafa;
+}
+
+.table_row.expanded,
+.table_row.expanded .left-border {
+	background-color: #eee;
+}
+
+
+.item_content {
+	min-height: 38px;
+	height: 38px;
+	overflow: hidden;
+	padding: 10px 25px 0 0;
+	display: block;
+}
+
+#main {
+	overflow: hidden;
+}
+
+.left-border {
+	width: 3px;
+	min-width: 3px;
+	height: 50px;
+	position: absolute;
+	left: 0;
+	background-color: #fff;
+	z-index: 10;
+	-webkit-transition: background-color linear 0.2s;
+	   -moz-transition: background-color linear 0.2s;
+	     -o-transition: background-color linear 0.2s;
+	        transition: background-color linear 0.2s;
+}
+
+table.results th.padding,
+table.results td.padding {
+	width: 3px;
+	min-width: 3px;
+	padding: 0;
+}
+
+tr:hover td.left-border,
+.expanded:hover td.left-border {
+	background-color: #0d78f2;
+}
+
+/* SCROLLBAR DESIGN
+-----------------------------------*/
+.jspVerticalBar,
+.jspHorizontalBar {
+	z-index: 200;
+}
+
+.jspVerticalBar {
+	background-color: #fff;
+}
+
+.jspHorizontalBar {
+	background: transparent;
+}
+
+.jspTrack {
+	background-color: rgba( 245, 245, 245, 0.7 );
+	-webkit-transition: background linear 0.2s, box-shadow linear 0.2s;
+	   -moz-transition: background linear 0.2s, box-shadow linear 0.2s;
+	     -o-transition: background linear 0.2s, box-shadow linear 0.2s;
+	        transition: background linear 0.2s, box-shadow linear 0.2s;
+	-webkit-box-shadow: inset 0 0 1px #aaa;
+	   -moz-box-shadow: inset 0 0 1px #aaa; 
+	        box-shadow: inset 0 0 1px #aaa;
+	
+		
+}
+
+.jspTrack:hover,
+.jspTrack:active {
+	background-color: rgba( 235, 235, 235, 0.7 );
+	-webkit-box-shadow: inset 0 0 1px #777;
+	   -moz-box-shadow: inset 0 0 1px #777; 
+	        box-shadow: inset 0 0 1px #777;
+	
+}
+
+.jspDrag {
+	background-color: rgba( 220, 220, 220, 0.7 );
+	-webkit-transition: background linear 0.2s, box-shadow linear 0.2s;
+	   -moz-transition: background linear 0.2s, box-shadow linear 0.2s;
+	     -o-transition: background linear 0.2s, box-shadow linear 0.2s;
+	        transition: background linear 0.2s, box-shadow linear 0.2s;
+	-webkit-box-shadow: inset 0 0 1px #aaa;
+	   -moz-box-shadow: inset 0 0 1px #aaa; 
+	        box-shadow: inset 0 0 1px #aaa;
+}
+
+.jspTrack:hover .jspDrag,
+.jspDrag:active {
+	background-color: rgba( 200, 200, 200, 0.8 );
+	-webkit-box-shadow: inset 0 0 1px #888;
+	   -moz-box-shadow: inset 0 0 1px #888; 
+	        box-shadow: inset 0 0 1px #888;
+}
+
+.jspCorner {
+	background-color: #fff;
+}
+
+.jspArrow,
+.jspArrow.jspDisabled {
+	background-image: url('../img/scroll-arrows.png');
+	background-color: #fff;
+	
+	-webkit-transition: background-color linear 0.1s;
+	   -moz-transition: background-color linear 0.1s;
+	     -o-transition: background-color linear 0.1s;
+	        transition: background-color linear 0.1s;
+	
+}
+
+.jspActive {
+	background-color: #eee;
+}
+
+
+.jspArrowUp {
+	background-position: -16px 0;
+}
+
+.jspArrowUp.jspDisabled,
+.jspArrowUp.jspActive.jspDisabled {
+	background-position: 0 0;
+}
+
+.jspArrowUp.jspActive {
+	background-position: -32px 0;
+}
+
+.jspArrowDown {
+	background-position: -16px -16px;
+}
+
+.jspArrowDown.jspDisabled,
+.jspArrowDown.jspActive.jspDisabled {
+	background-position: 0 -16px;
+}
+
+.jspArrowDown.jspActive {
+	background-position: -32px -16px;
+}
+
+.jspArrowLeft {
+	background-position: -16px -32px;
+}
+
+.jspArrowLeft.jspDisabled,
+.jspArrowLeft.jspActive.jspDisabled {
+	background-position: 0 -32px;
+}
+
+.jspArrowLeft.jspActive {
+	background-position: -32px -32px;
+}
+
+.jspArrowRight {
+	background-position: -16px -48px;
+}
+
+.jspArrowRight.jspDisabled,
+.jspArrowRight.jspActive.jspDisabled {
+	background-position: 0 -48px;
+}
+
+
+.jspArrowRight.jspActive {
+	background-position: -32px -48px;
+}

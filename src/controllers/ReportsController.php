@@ -5,6 +5,7 @@ use Craft;
 use craft\web\Controller;
 use barrelstrength\sproutreports\SproutReports;
 use barrelstrength\sproutreports\models\Report;
+use barrelstrength\sproutreports\records\Report as ReportRecord;
 
 class ReportsController extends Controller
 {
@@ -88,7 +89,7 @@ class ReportsController extends Controller
 	//}
 	//
 	// @todo - reconsider logic
-	public function actionEditReport(string $pluginId, string $dataSourceKey, Report $report = null)
+	public function actionEditReport(string $pluginId, string $dataSourceKey, Report $report = null, int $reportId = null)
 	{
 		$variables = array();
 
@@ -97,6 +98,13 @@ class ReportsController extends Controller
 		if (isset($report))
 		{
 			$variables['report'] = $report;
+		}
+
+		if ($reportId != null)
+		{
+			$reportModel = SproutReports::$api->reports->getReport($reportId);
+
+			$variables['report'] = $reportModel;
 		}
 
 		$variables['report']->dataSourceId = $pluginId . '.' . $dataSourceKey;

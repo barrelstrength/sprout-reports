@@ -27,6 +27,10 @@ class Report extends Model
 
 	public $groupId;
 
+	public $dateCreated;
+
+	public $dateUpdated;
+
 	public function getDataSource()
 	{
 		$dataSource = SproutReports::$api->dataSources->getDataSourceById($this->dataSourceId);
@@ -50,6 +54,16 @@ class Report extends Model
 			[['name', 'handle'], 'required'],
 			[['handle'], HandleValidator::class, 'reservedWords' => ['id', 'dateCreated', 'dateUpdated', 'uid', 'title']],
 			[['name', 'handle'], UniqueValidator::class, 'targetClass' => ReportRecord::class]
+		];
+	}
+
+	public function safeAttributes()
+	{
+		return [
+			'id', 'name', 'handle',
+			'description', 'allowHtml', 'options',
+			'dataSourceId', 'enabled', 'groupId',
+		  'dateCreated', 'dateUpdated'
 		];
 	}
 }

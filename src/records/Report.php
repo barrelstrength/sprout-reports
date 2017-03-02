@@ -16,15 +16,26 @@ use yii\db\ActiveQueryInterface;
  * @property array $options        Options
  * @property string $dataSourceId  Data Source ID
  * @property int $groupId          Group ID
- * @property int $enabled          Enabled
+ * @property bool $enabled          Enabled
+ * @property bool $allowHtml        Allow HTML
  */
 class Report extends ActiveRecord
 {
+	const SCENARIO_ALL = 'all';
 	/**
 	 * @return string
 	 */
 	public static function tableName(): string
 	{
 		return '{{%sproutreports_report}}';
+	}
+
+	public function scenarios()
+	{
+		return [
+			self::SCENARIO_ALL => ['id', 'name', 'handle',
+			                       'description', 'options', 'dataSourceId',
+			                       'groupId', 'enabled', 'allowHtml']
+		];
 	}
 }

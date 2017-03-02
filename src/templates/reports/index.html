@@ -144,5 +144,4 @@
 
 {% endblock %}
 
-{% includeCssFile "sproutreports/css/styles" %}
-{% includeJsFile "sproutreports/js/groups" %}
+{% do view.registerAssetBundle("barrelstrength\\sproutreports\\assetbundles\\reports\\ReportAsset") %}

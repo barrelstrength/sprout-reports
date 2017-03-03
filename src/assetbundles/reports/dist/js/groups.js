@@ -67,7 +67,7 @@ var GroupsAdmin = Garnish.Base.extend({
 				else
 				{
 					var errors = this.flattenErrors(response.errors);
-					alert(Craft.t(settings.newGroupOnErrorMessage)+"\n\n"+errors.join("\n"));
+					alert(Craft.t('sproutReports', settings.newGroupOnErrorMessage)+"\n\n"+errors.join("\n"));
 				}
 
 			}, this));
@@ -91,12 +91,12 @@ var GroupsAdmin = Garnish.Base.extend({
 				if (response.success)
 				{
 					this.$selectedGroup.text(response.group.name);
-					Craft.cp.displayNotice(Craft.t(settings.renameGroupOnSuccessMessage));
+					Craft.cp.displayNotice(Craft.t('sproutReports', (settings.renameGroupOnSuccessMessage)));
 				}
 				else
 				{
 					var errors = this.flattenErrors(response.errors);
-					alert(Craft.t(settings.renameGroupOnErrorMessage)+"\n\n"+errors.join("\n"));
+					alert(Craft.t('sproutReports', settings.renameGroupOnErrorMessage)+"\n\n"+errors.join("\n"));
 				}
 
 			}, this));
@@ -105,12 +105,12 @@ var GroupsAdmin = Garnish.Base.extend({
 
 	promptForGroupName: function(oldName)
 	{
-		return prompt(Craft.t(settings.promptForGroupNameMessage), oldName);
+		return prompt(Craft.t('sproutReports', settings.promptForGroupNameMessage), oldName);
 	},
 
 	deleteSelectedGroup: function()
 	{
-		if (confirm(Craft.t(settings.deleteGroupConfirmMessage)))
+		if (confirm(Craft.t('sproutReports', settings.deleteGroupConfirmMessage)))
 		{
 			var data = {
 				id: this.$selectedGroup.data('id')
@@ -124,7 +124,7 @@ var GroupsAdmin = Garnish.Base.extend({
 				}
 				else
 				{
-					alert(Craft.t(settings.deleteGroupOnErrorMessage));
+					alert(Craft.t('sproutReports', settings.deleteGroupOnErrorMessage));
 				}
 			}, this));
 		}
@@ -151,18 +151,18 @@ Garnish.$doc.ready(function()
 		newGroupButtonSelector: '#newgroupbtn',
 		groupSettingsSelector: '#groupsettingsbtn',
 
-		newGroupAction: 'sproutReports/group/saveGroup',
+		newGroupAction: 'sprout-reports/report-group/save-group',
 		newGroupOnSuccessUrlBase: 'sproutreports/reports/',
 		newGroupOnErrorMessage: 'Could not create the group:',
 
-		renameGroupAction: 'sproutReports/group/saveGroup',
+		renameGroupAction: 'sprout-reports/report-group/save-group',
 		renameGroupOnSuccessMessage: 'Group renamed.',
 		renameGroupOnErrorMessage: 'Could not rename the group:',
 
 		promptForGroupNameMessage: 'What do you want to name your group?',
 
 		deleteGroupConfirmMessage: 'Are you sure you want to delete this group and all its reports?',
-		deleteGroupAction: 'sproutReports/group/deleteGroup',
+		deleteGroupAction: 'sprout-reports/report-group/delete-group',
 		deleteGroupOnSuccessUrl: 'sproutReports',
 		deleteGroupOnErrorMessage: 'Could not delete the group.',
 	});

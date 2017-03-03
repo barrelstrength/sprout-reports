@@ -33,24 +33,14 @@ class Api extends Component
 	public $reportGroups;
 
 	/**
-	 * @var SproutReports_DataSourcesService
+	 * @var DataSources
 	 */
 	public $dataSources;
 
 	/**
-	 * @var SproutReports_ExportsService
-	 */
-	public $exports;
-
-	/**
-	 * @var ReportsService
+	 * @var Reports
 	 */
 	public $reports;
-
-	/**
-	 * @var SproutReports_SettingsService
-	 */
-	public $settings;
 
 	public function init()
 	{

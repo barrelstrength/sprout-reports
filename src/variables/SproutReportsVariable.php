@@ -40,14 +40,14 @@ class SproutReportsVariable
 	{
 		return SproutReports::$api->dataSources->getAllDataSources();
 	}
-	//
-	///**
-	// * @return null|SproutReports_ReportModel[]
-	// */
-	//public function getReports()
-	//{
-	//	return sproutReports()->reports->getAllReports();
-	//}
+
+	/**
+	 * @return null|SproutReports_ReportModel[]
+	 */
+	public function getReports()
+	{
+		return SproutReports::$api->reports->getAllReports();
+	}
 	//
 	///**
 	// * @return null|SproutReports_ReportGroupModel[]
@@ -56,16 +56,16 @@ class SproutReportsVariable
 	{
 		return SproutReports::$api->reportGroups->getAllReportGroups();
 	}
-	//
-	///**
-	// * @param $id
-	// *
-	// * @return null|SproutReports_ReportGroupModel[]
-	// */
-	//public function getReportsByGroupId($groupId)
-	//{
-	//	return sproutReports()->reports->getReportsByGroupId($groupId);
-	//}
+
+	/**
+	 * @param $id
+	 *
+	 * @return null|ReportGroupModel[]
+	 */
+	public function getReportsByGroupId($groupId)
+	{
+		return SproutReports::$api->reports->getReportsByGroupId($groupId);
+	}
 	//
 	///**
 	// * @param int $id

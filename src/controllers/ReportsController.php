@@ -9,10 +9,11 @@ use barrelstrength\sproutreports\records\Report as ReportRecord;
 
 class ReportsController extends Controller
 {
-	public function actionIndex()
+	public function actionIndex($groupId = null)
 	{
-		$report = SproutReports::$api->reports->getReport(2);
-		Craft::dd($report);
+		return $this->renderTemplate('sproutreports/reports/index', [
+			'groupId' => $groupId
+		]);
 	}
 	/**
 	 * Saves a report query to the database

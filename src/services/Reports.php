@@ -3,8 +3,9 @@ namespace barrelstrength\sproutreports\services;
 
 use Craft;
 use yii\base\Component;
-use barrelstrength\sproutreports\models\Report;
+use barrelstrength\sproutreports\models\Report as ReportModel;
 use barrelstrength\sproutreports\records\Report as ReportRecord;
+use barrelstrength\sproutreports\records\ReportGroup as ReportGroupRecord;
 use barrelstrength\sproutreports\SproutReports;
 
 class Reports extends Component
@@ -12,8 +13,7 @@ class Reports extends Component
 	/**
 	 * Returns a report model populated from saved/POSTed data
 	 *
-	 * @throws Exception
-	 * @return SproutReports_ReportModel
+	 * @return ReportModel
 	 */
 	public function prepareFromPost()
 	{
@@ -23,7 +23,7 @@ class Reports extends Component
 
 		if ($reportId && is_numeric($reportId))
 		{
-			$instance = SproutReports::$api->reports->getReport($reportId);
+			$instance = $this->getReport($reportId);
 
 			if (!$instance)
 			{
@@ -32,7 +32,7 @@ class Reports extends Component
 		}
 		else
 		{
-			$instance = new Report();
+			$instance = new ReportModel();
 		}
 
 		$options = $request->getBodyParam('options');
@@ -55,12 +55,12 @@ class Reports extends Component
 	/**
 	 * @param $id
 	 *
-	 * @return SproutReports_ReportModel
+	 * @return ReportModel
 	 */
 	public function getReport($reportId)
 	{
 		$reportRecord  = ReportRecord::findOne($reportId);
-		$reportModel   = new Report();
+		$reportModel   = new ReportModel();
 
 		if ($reportRecord != null)
 		{
@@ -71,7 +71,7 @@ class Reports extends Component
 	}
 
 	/**
-	 * @param SproutReports_ReportModel $model
+	 * @param ReportModel $model
 	 *
 	 * @throws Exception
 	 * @return bool
@@ -83,8 +83,6 @@ class Reports extends Component
 
 			return false;
 		}
-
-		$isNewReport = !$model->id;
 
 		if (empty($model->id))
 		{
@@ -149,5 +147,57 @@ class Reports extends Component
 		}
 
 		return true;
+	}
+
+	/**
+	 * @return null|SproutReports_ReportModel[]
+	 */
+	public function getAllReports()
+	{
+		$reportRecords = ReportRecord::find()->all();
+
+		$reports = $this->populateModels($reportRecords);
+
+		return $reports;
+	}
+
+	/**
+	 * @param int $groupId
+	 *
+	 * @return null|ReportModel[]
+	 */
+	public function getReportsByGroupId($groupId):array
+	{
+		$reports = array();
+
+		$group = ReportGroupRecord::findOne($groupId);
+
+		if ($group != null)
+		{
+			$reportRecords = $group->getReports()->all();
+
+			$reports = $this->populateModels($reportRecords);
+		}
+
+		return $reports;
+	}
+
+	public function populateModels($records)
+	{
+		$models = array();
+
+		if (!empty($records))
+		{
+			foreach ($records as $record)
+			{
+				$recordAttributes = $record->getAttributes();
+				$model = new ReportModel();
+				$model->setAttributes($recordAttributes);
+
+				$models[] = $model;
+			}
+		}
+
+		return $models;
 	}
 }

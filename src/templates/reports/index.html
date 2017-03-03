@@ -1,20 +1,20 @@
 {% extends "sproutreports/_layouts/base" %}
 
 {% set title  = "Reports"|t %}
-{#{% set groups = craft.sproutReports.getReportGroups() %}
+{% set groups = craft.sproutreports.getReportGroups() %}
 
 {% set selectedTab = 'reports' %}
 
-{% if groupId is defined %}
+{% if groupId is not null %}
 	{% if groups[groupId] is not defined %}
 		{% exit 404 %}
 	{% endif %}
 
-	{% set reports = craft.sproutReports.getReportsByGroupId(groupId) %}
+	{% set reports = craft.sproutreports.getReportsByGroupId(groupId) %}
 {% else %}
-	{% set reports = craft.sproutReports.getReports() %}
+	{% set reports = craft.sproutreports.getReports() %}
 {% endif %}
-#}
+
 {% set dataSources = craft.sproutreports.getDataSources() %}
 
 {% set extraPageHeaderHtml %}
@@ -71,31 +71,31 @@
 				</tr>
 				</thead>
 				<tbody>
-				{#{% for report in reports %}#}
-					{#<tr>#}
-						{#<td class="sproutreports-reportname">#}
-							{#<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}"><strong>{{ report.name }}</strong></a>#}
+				{% for report in reports %}
+					<tr>
+						<td class="sproutreports-reportname">
+							<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}"><strong>{{ report.name }}</strong></a>
 
-							{#{% if report.description %}#}
-								{#<span class="info">{{ report.description }}</span>#}
-							{#{% endif %}#}
-						{#</td>#}
-						{#<td class="sproutreports-reportdatasource">#}
-							{#{{ report.getDataSource().getName() }}#}
-						{#</td>#}
+							{% if report.description %}
+								<span class="info">{{ report.description }}</span>
+							{% endif %}
+						</td>
+						<td class="sproutreports-reportdatasource">
+							{{ report.getDataSource().getName() }}
+						</td>
 
-						{#<td class="sproutreports-reportactions">#}
-							{#<a href="{{ actionUrl('sproutReports/reports/exportReport', {reportId: report.id}) }}" class="btn small">{{ "Download"|t }}</a>#}
-						{#</td>#}
+						<td class="sproutreports-reportactions">
+							<a href="{{ actionUrl('sproutReports/reports/exportReport', {reportId: report.id}) }}" class="btn small">{{ "Download"|t }}</a>
+						</td>
 
-						{#{% if currentUser.can('sproutReports-editReports') %}#}
-						{#<td class="sproutreports-reportactions">#}
-							{#<a href="{{ report.getEditUrl() }}" title="Edit Report Settings" data-icon="settings"></a>#}
-						{#</td>#}
-						{#{% endif %}#}
+						{% if currentUser.can('sproutReports-editReports') %}
+						<td class="sproutreports-reportactions">
+							<a href="{{ report.getEditUrl() }}" title="Edit Report Settings" data-icon="settings"></a>
+						</td>
+						{% endif %}
 
-					{#</tr>#}
-				{#{% endfor %}#}
+					</tr>
+				{% endfor %}
 				</tbody>
 			</table>
 		</div>
@@ -117,9 +117,9 @@
 
 			<li><a href="{{ url('sproutreports') }}"{% if groupId is not defined %} class="sel"{% endif %}>{{ "All Reports"|t }}</a></li>
 
-			{#{% for group in groups %}#}
-				{#<li><a href="{{ url('sproutreports/reports/'~group.id) }}"{% if groupId is defined and group.id == groupId %} class="sel"{% endif %} data-id="{{ group.id }}">{{ group.name }}</a></li>#}
-			{#{% endfor %}#}
+			{% for group in groups %}
+				<li><a href="{{ url('sproutreports/reports/'~group.id) }}"{% if groupId is defined and group.id == groupId %} class="sel"{% endif %} data-id="{{ group.id }}">{{ group.name }}</a></li>
+			{% endfor %}
 
 		</ul>
 	</nav>

@@ -66,4 +66,12 @@ class Report extends Model
 		  'dateCreated', 'dateUpdated'
 		];
 	}
+
+	/**
+	 * @return string
+	 */
+	public function getEditUrl()
+	{
+		return $this->getDataSource()->getUrl('edit/'.$this->id);
+	}
 }

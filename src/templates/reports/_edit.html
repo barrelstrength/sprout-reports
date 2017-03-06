@@ -41,7 +41,8 @@
 			<div class="menu">
 				<ul>
 					<li><a class="formsubmit" data-redirect="{{ continueEditingUrl|hash }}">{{ "Save and continue editing"|t }}</a></li>
-					<li><a class="formsubmit" data-redirect="{{ dataSource.getUrl('/new') }}">{{ "Save and add another report"|t }}</a></li>
+					<li><a class="formsubmit" data-redirect="{{ dataSource.getUrl('/new')|hash }}">{{ "Save and add another
+					report"|t }}</a></li>
 				</ul>
 			</div>
 		</div>
@@ -155,7 +156,13 @@
 
 					<div class="right">
 						{% if report is defined %}
-								<input type="button" class="btn small formsubmit" value="Delete" data-param="reportId" data-value="{{ report.id }}" data-action="sproutreports/reports/deleteReport" data-confirm="Are you sure you want to delete this report?" data-redirect="sproutreports" tabindex="0">
+								<input type="button" class="btn small formsubmit" value="Delete"
+									data-param="reportId"
+									data-value="{{ report.id }}"
+									data-action="sprout-reports/reports/delete-report"
+									data-confirm="Are you sure you want to delete this report?"
+									data-redirect="{{ cpUrl('sproutreports/reports')|hash }}"
+									tabindex="0">
 						{% endif %}
 					</div>
 				{% endset %}

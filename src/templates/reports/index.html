@@ -1,5 +1,14 @@
-{% extends "sproutreports/_layouts/base" %}
-
+{% extends "_layouts/cp" %}
+{% set subnav = {
+reports: {
+label: "Reports"|t,
+url: url('sproutreports/reports'),
+settings: {
+label: "Settings"|t,
+url: url('sproutreports/settings')
+}
+}
+} %}
 {% set title  = "Reports"|t %}
 {% set groups = craft.sproutreports.getReportGroups() %}
 
@@ -67,7 +76,6 @@
 					{% if currentUser.can('sproutReports-editReports') %}
 					<th class="thin"></th>
 					{% endif %}
-
 				</tr>
 				</thead>
 				<tbody>

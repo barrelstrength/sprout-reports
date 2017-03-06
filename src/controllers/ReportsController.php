@@ -26,7 +26,7 @@ class ReportsController extends Controller
 
 		if (!SproutReports::$api->reports->saveReport($report))
 		{
-			Craft::$app->getSession()->setError(SproutReports::t('Couldn’t save section.'));
+			Craft::$app->getSession()->setError(SproutReports::t('Couldn’t save report.'));
 
 			// Send the section back to the template
 			Craft::$app->getUrlManager()->setRouteParams([
@@ -176,23 +176,25 @@ class ReportsController extends Controller
 	//	throw new HttpException(404, Craft::t('Report not found.'));
 	//}
 	//
-	//public function actionDeleteReport()
-	//{
-	//	$this->requirePostRequest();
-	//
-	//	$reportId = craft()->request->getRequiredPost('reportId');
-	//
-	//	if ($record = SproutReports_ReportRecord::model()->findById($reportId))
-	//	{
-	//		$record->delete();
-	//
-	//		craft()->userSession->setNotice('Report deleted.');
-	//
-	//		$this->redirectToPostedUrl($record->getAttributes());
-	//	}
-	//
-	//	throw new Exception(Craft::t('Report not found.'));
-	//}
+	public function actionDeleteReport()
+	{
+		$this->requirePostRequest();
+
+		$reportId = Craft::$app->getRequest()->getBodyParam('reportId');
+
+		if ($record = ReportRecord::findOne($reportId))
+		{
+			$record->delete();
+
+			Craft::$app->getSession()->setNotice(SproutReports::t('Report deleted.'));
+
+			return $this->redirectToPostedUrl($record);
+		}
+		else
+		{
+			throw new \Exception(SproutReports::t('Report not found.'));
+		}
+	}
 	//
 	//public function actionExportReport()
 	//{

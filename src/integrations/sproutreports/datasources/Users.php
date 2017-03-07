@@ -145,7 +145,7 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 		$optionErrors = $this->report->getErrors('options');
 		$optionErrors = array_shift($optionErrors);
 
-		return craft()->templates->render('sproutreports/datasources/_options/users', array(
+		return craft()->templates->render('sprout-reports/datasources/_options/users', array(
 			'userGroupOptions' => $userGroupOptions,
 			'options'          => count($options) ? $options : $this->report->getOptions(),
 			'errors'           => $optionErrors

@@ -1,4 +1,4 @@
-{% extends "sproutreports/_layouts/base" %}
+{% extends "sprout-reports/_layouts/base" %}
 {% import "_includes/forms" as forms %}
 
 {% if not currentUser.can('sproutreports-editReports') %}
@@ -31,7 +31,7 @@
 
 	<input type="hidden" name="action" value="sprout-reports/reports/save-report">
 
-	{{ redirectInput('sproutreports/reports') }}
+	{{ redirectInput('sprout-reports/reports') }}
 
 	<div class="button">
 		<div class="btngroup">
@@ -161,7 +161,7 @@
 									data-value="{{ report.id }}"
 									data-action="sprout-reports/reports/delete-report"
 									data-confirm="Are you sure you want to delete this report?"
-									data-redirect="{{ cpUrl('sproutreports/reports')|hash }}"
+									data-redirect="{{ cpUrl('sprout-reports/reports')|hash }}"
 									tabindex="0">
 						{% endif %}
 					</div>

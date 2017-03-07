@@ -10,6 +10,7 @@
 
 namespace barrelstrength\sproutreports;
 
+use Craft;
 use craft\base\Plugin;
 use barrelstrength\sproutreports\models\Settings;
 use barrelstrength\sproutreports\services\DataSources;
@@ -18,6 +19,8 @@ use yii\base\Event;
 use craft\events\RegisterComponentTypesEvent;
 use craft\web\UrlManager;
 use craft\events\RegisterUrlRulesEvent;
+use craft\services\UserPermissions;
+use craft\events\RegisterUserPermissionsEvent;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\Categories;
 /**
  * https://craftcms.com/docs/plugins/introduction
@@ -43,12 +46,23 @@ class SproutReports extends Plugin
 
 		self::$api = $this->get('api');
 
+		Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function (RegisterUserPermissionsEvent $event) {
+
+			$event->permissions['sproutReports']['sproutReports-editReports']     = ['label' => $this::t('Edit Reports')];
+			$event->permissions['sproutReports']['sproutReports-editDataSources'] = ['label' => $this::t('Edit Data Sources')];
+			$event->permissions['sproutReports']['sproutReports-editSettings']    = ['label' => $this::t('Edit Plugin Settings')];
+
+		});
+
 		Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function (RegisterUrlRulesEvent $event) {
 
 			$event->rules['sprout-reports/reports'] = 'sprout-reports/reports/index';
 			$event->rules['sprout-reports/reports/<groupId:\d+>'] = 'sprout-reports/reports/index';
 			$event->rules['sprout-reports/reports/<pluginId>/<dataSourceKey:{handle}>/new'] = 'sprout-reports/reports/edit-report';
 			$event->rules['sprout-reports/reports/<pluginId>/<dataSourceKey:{handle}>/edit/<reportId:\d+>'] = 'sprout-reports/reports/edit-report';
+
+			$event->rules['sprout-reports/datasources'] = ['template' => 'sprout-reports/datasources/index'];
+			$event->rules['sprout-reports/reports/view/<reportId:\d+>'] = 'sprout-reports/reports/results-index';
 
 		});
 
@@ -65,7 +79,7 @@ class SproutReports extends Plugin
 	 */
 	public static function t($message, array $params = [])
 	{
-		return \Craft::t('sproutReports', $message, $params);
+		return Craft::t('sproutReports', $message, $params);
 	}
 
 	protected function createSettingsModel()
@@ -75,7 +89,7 @@ class SproutReports extends Plugin
 
 	protected function settingsHtml()
 	{
-		return \Craft::$app->getView()->renderTemplate('sprout-reports/_cp/settings', [
+		return Craft::$app->getView()->renderTemplate('sprout-reports/_cp/settings', [
 			'settings' => $this->getSettings()
 		]);
 	}

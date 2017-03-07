@@ -1,12 +1,14 @@
 <?php
 namespace barrelstrength\sproutreports\contracts;
 
+use Craft;
 use barrelstrength\sproutreports\records\DataSource;
-use barrelstrength\sproutreports\models\Report;
+use barrelstrength\sproutreports\models\Report as ReportModel;
+use barrelstrength\sproutreports\SproutReports;
 use craft\helpers\UrlHelper;
 
 /**
- * Class SproutReportsBaseDataSource
+ * Class BaseDataSource
  *
  * @package Craft
  */
@@ -28,7 +30,7 @@ abstract class BaseDataSource
 	protected $pluginHandle;
 
 	/**
-	 * @var SproutReports_ReportModel()
+	 * @var ReportModel()
 	 */
 	protected $report;
 
@@ -67,39 +69,39 @@ abstract class BaseDataSource
 	/**
 	 * Set a SproutReports_ReportModel on our data source.
 	 *
-	 * @param SproutReports_ReportModel|null $report
+	 * @param ReportModel|null $report
 	 */
-	public function setReport(Report $report = null)
+	public function setReport(ReportModel $report = null)
 	{
 		if (is_null($report))
 		{
-			$report = new Report();
+			$report = new ReportModel();
 		}
 
 		$this->report = $report;
 	}
-	//
-	///**
-	// * Returns the CP URL for the given data source with the option to append to it once composed
-	// *
-	// * @legend
-	// * Breaks apart the data source id and transforms its components into a URL friendly string
-	// *
-	// * @example
-	// * sproutReports.customQuery > sproutreports/customquery
-	// * sproutreports.customquery > sproutreports/customquery
-	// *
-	// * @see getId()
-	// *
-	// * @param string $append
-	// *
-	// * @return string
-	// */
+
+	/**
+	 * Returns the CP URL for the given data source with the option to append to it once composed
+	 *
+	 * @legend
+	 * Breaks apart the data source id and transforms its components into a URL friendly string
+	 *
+	 * @example
+	 * sproutReports.customQuery > sproutreports/customquery
+	 * sproutreports.customquery > sproutreports/customquery
+	 *
+	 * @see getId()
+	 *
+	 * @param string $append
+	 *
+	 * @return string
+	 */
 	final public function getUrl($append = null)
 	{
 		$url = join('/', explode('.', $this->getId()));
 
-		return UrlHelper::cpUrl(sprintf('sproutreports/reports/%s/%s', $url, ltrim($append, '/')));
+		return UrlHelper::cpUrl(sprintf('sprout-reports/reports/%s/%s', $url, ltrim($append, '/')));
 	}
 
 	/**
@@ -117,7 +119,13 @@ abstract class BaseDataSource
 	 */
 	final public function getPluginName()
 	{
-		return $this->pluginName;
+		$namespaces = explode('\\', __NAMESPACE__);
+
+		$pluginName = $namespaces[1];
+
+		$plugin = Craft::$app->getPlugins()->getPlugin($pluginName);
+
+		return $plugin->name;
 	}
 
 	/**
@@ -135,16 +143,16 @@ abstract class BaseDataSource
 	{
 		return $this->pluginHandle;
 	}
-	//
-	///**
-	// * Returns the total count of reports created based on the given data source
-	// *
-	// * @return [type] [description]
-	// */
-	//final public function getReportCount()
-	//{
-	//	return sproutReports()->reports->getCountByDataSourceId($this->getId());
-	//}
+
+	/**
+	 * Returns the total count of reports created based on the given data source
+	 *
+	 * @return [type] [description]
+	 */
+	final public function getReportCount()
+	{
+		return SproutReports::$api->reports->getCountByDataSourceId($this->getId());
+	}
 
 	/**
 	 * Should return a human readable name for your data source
@@ -162,44 +170,44 @@ abstract class BaseDataSource
 	{
 		return null;
 	}
-	//
-	///**
-	// * Should return an array of strings to be used as column headings in display/output
-	// *
-	// * @return array
-	// */
-	//public function getDefaultLabels(SproutReports_ReportModel &$report, $options = array())
-	//{
-	//	return array();
-	//}
-	//
-	///**
-	// * Should return an array of records to use in the report
-	// *
-	// * @param SproutReports_ReportModel $report
-	// *
-	// * @return null|array
-	// */
-	//public function getResults(SproutReports_ReportModel &$report, $options = array())
-	//{
-	//	return array();
-	//}
-	//
-	///**
-	// * Validate the data sources options
-	// *
-	// * @return boolean
-	// */
-	//public function validateOptions(array $options = array(), array $errors = array())
-	//{
-	//	return true;
-	//}
-	//
-	///**
-	// * Allows a user to disable a Data Source from displaying in the New Report dropdown
-	// *
-	// * @return bool|mixed
-	// */
+
+	/**
+	 * Should return an array of strings to be used as column headings in display/output
+	 *
+	 * @return array
+	 */
+	public function getDefaultLabels(ReportModel &$report, $options = array())
+	{
+		return array();
+	}
+
+	/**
+	 * Should return an array of records to use in the report
+	 *
+	 * @param ReportModel $report
+	 *
+	 * @return null|array
+	 */
+	public function getResults(ReportModel &$report, $options = array())
+	{
+		return array();
+	}
+
+	/**
+	 * Validate the data sources options
+	 *
+	 * @return boolean
+	 */
+	public function validateOptions(array $options = array(), array $errors = array())
+	{
+		return true;
+	}
+
+	/**
+	 * Allows a user to disable a Data Source from displaying in the New Report dropdown
+	 *
+	 * @return bool|mixed
+	 */
 	public function allowNew()
 	{
 		$record = DataSource::findOne(['dataSourceId' => $this->id]);

@@ -150,7 +150,7 @@ class Reports extends Component
 	}
 
 	/**
-	 * @return null|SproutReports_ReportModel[]
+	 * @return null|ReportModel[]
 	 */
 	public function getAllReports()
 	{
@@ -180,6 +180,19 @@ class Reports extends Component
 		}
 
 		return $reports;
+	}
+
+	/**
+	 * Returns the number of reports that have been created based on a given data source
+	 *
+	 * @param $dataSourceId
+	 *
+	 * @return int
+	 *
+	 */
+	public function getCountByDataSourceId($dataSourceId)
+	{
+		return (int) ReportRecord::find()->where(array('dataSourceId' => $dataSourceId))->count();
 	}
 
 	public function populateModels($records)

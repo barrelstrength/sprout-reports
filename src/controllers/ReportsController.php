@@ -11,7 +11,7 @@ class ReportsController extends Controller
 {
 	public function actionIndex($groupId = null)
 	{
-		return $this->renderTemplate('sproutreports/reports/index', [
+		return $this->renderTemplate('sprout-reports/reports/index', [
 			'groupId' => $groupId
 		]);
 	}
@@ -39,21 +39,6 @@ class ReportsController extends Controller
 		Craft::$app->getSession()->setNotice(SproutReports::t('Report saved.'));
 
 		return $this->redirectToPostedUrl($report);
-/*
-
-		if (sproutReports()->reports->saveReport($report))
-		{
-			craft()->userSession->setNotice(Craft::t('Report saved.'));
-			$this->redirectToPostedUrl($report);
-		}
-		else
-		{
-			craft()->userSession->setError(Craft::t('Could not save report.'));
-
-			craft()->urlManager->setRouteVariables(array(
-				'report' => $report
-			));
-		}*/
 	}
 	//
 	///**
@@ -113,69 +98,49 @@ class ReportsController extends Controller
 
 		$variables['continueEditingUrl']   = $variables['dataSource']->getUrl() . '/edit/{id}';
 
-		//\Craft::dd($variables);
-/*		// If we have a Report Model in our $variables, we are handling errors
-		if (isset($variables['report']))
-		{
-			$variables['report']     = $report;
-			$variables['dataSource'] = $variables['report']->getDataSource();
-		}
-		elseif (isset($variables['reportId']) && ($report = sproutReports()->reports->getReport($variables['reportId'])))
-		{
-			$variables['report']     = $report;
-			$variables['dataSource'] = $report->getDataSource();
-		}
-		else
-		{
-			$variables['report']               = new SproutReports_ReportModel();
-			$variables['report']->dataSourceId = $variables['plugin'] . '.' . $variables['dataSourceKey'];
-			$variables['dataSource']           = $variables['report']->getDataSource();
-		}
-*/
-	//	\Craft::dd($variables);
-		return $this->renderTemplate('sproutreports/reports/_edit', $variables);
+		return $this->renderTemplate('sprout-reports/reports/_edit', $variables);
 	}
 
-	//public function actionResultsIndex(array $variables = array())
-	//{
-	//	$reportId = isset($variables['reportId']) ? $variables['reportId'] : null;
-	//	$report   = sproutReports()->reports->getReport($reportId);
-	//
-	//	$options = craft()->request->getPost('options');
-	//	$options = count($options) ? $options : array();
-	//
-	//	if ($report)
-	//	{
-	//		$dataSource = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
-	//		$labels     = $dataSource->getDefaultLabels($report, $options);
-	//
-	//		$variables['dataSource'] = null;
-	//		$variables['report']     = $report;
-	//		$variables['values']     = array();
-	//		$variables['options']    = $options;
-	//
-	//		if ($dataSource)
-	//		{
-	//			$values = $dataSource->getResults($report, $options);
-	//
-	//			if (empty($labels) && !empty($values))
-	//			{
-	//				$firstItemInArray = reset($values);
-	//				$labels           = array_keys($firstItemInArray);
-	//			}
-	//
-	//			$variables['labels']     = $labels;
-	//			$variables['values']     = $values;
-	//			$variables['dataSource'] = $dataSource;
-	//		}
-	//
-	//		// @todo Hand off to the export service when a blank page and 404 issues are sorted out
-	//		return $this->renderTemplate('sproutreports/results/index', $variables);
-	//	}
-	//
-	//	throw new HttpException(404, Craft::t('Report not found.'));
-	//}
-	//
+	public function actionResultsIndex($reportId = null)
+	{
+		$report = SproutReports::$api->reports->getReport($reportId);
+
+		$options = Craft::$app->getRequest()->getBodyParam('options');
+		$options = count($options) ? $options : array();
+
+		if ($report)
+		{
+			$dataSource = SproutReports::$api->dataSources->getDataSourceById($report->dataSourceId);
+			$labels     = $dataSource->getDefaultLabels($report, $options);
+
+			$variables['dataSource'] = null;
+			$variables['report']     = $report;
+			$variables['values']     = array();
+			$variables['options']    = $options;
+			$variables['reportId']   = $reportId;
+
+			if ($dataSource)
+			{
+				$values = $dataSource->getResults($report, $options);
+
+				if (empty($labels) && !empty($values))
+				{
+					$firstItemInArray = reset($values);
+					$labels           = array_keys($firstItemInArray);
+				}
+
+				$variables['labels']     = $labels;
+				$variables['values']     = $values;
+				$variables['dataSource'] = $dataSource;
+			}
+
+			// @todo Hand off to the export service when a blank page and 404 issues are sorted out
+			return $this->renderTemplate('sprout-reports/results/index', $variables);
+		}
+
+		throw new HttpException(404, Craft::t('Report not found.'));
+	}
+
 	public function actionDeleteReport()
 	{
 		$this->requirePostRequest();

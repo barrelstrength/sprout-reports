@@ -1,12 +1,12 @@
-{% extends "sproutreports/_layouts/base" %}
+{% extends "sprout-reports/_layouts/base" %}
 {% import "_includes/forms" as forms %}
 
-{% if not currentUser.can('sproutReports-editDataSources') %}
+{% if not currentUser.can('sproutreports-editDataSources') %}
 	{% redirect 'sproutreports' %}
 {% endif %}
 
 {% set title  = "Data Sources"|t %}
-{% set groups = craft.sproutReports.getReportGroups() %}
+{% set groups = craft.sproutreports.getReportGroups() %}
 
 {% set selectedTab = 'dataSources' %}
 
@@ -15,9 +15,9 @@
 		{% exit 404 %}
 	{% endif %}
 
-	{% set reports = craft.sproutReports.getReportsByGroupId(groupId) %}
+	{% set reports = craft.sproutreports.getReportsByGroupId(groupId) %}
 {% else %}
-	{% set reports = craft.sproutReports.getReports() %}
+	{% set reports = craft.sproutreports.getReports() %}
 {% endif %}
 
 {% block content %}
@@ -34,7 +34,7 @@
 			</tr>
 			</thead>
 			<tbody>
-			{% set dataSources = craft.sproutReports.getDataSources() %}
+			{% set dataSources = craft.sproutreports.getDataSources() %}
 
 			{% for id, dataSource in dataSources %}
 				<tr>
@@ -77,7 +77,7 @@
         var allowNew = $(this).find("[name='allowNew']").val();
         var dataSourceId = $(this).attr('id');
 
-        Craft.postActionRequest('sproutReports/dataSources/updateDataSource', {
+        Craft.postActionRequest('sprout-reports/dataSources/updateDataSource', {
 					dataSourceId: dataSourceId,
 					allowNew: allowNew
 				}, function(response) {

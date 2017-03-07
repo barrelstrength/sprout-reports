@@ -3,11 +3,7 @@
 {% set subnav = {
 	reports: {
 		label: "Reports"|t,
-		url: url('sproutreports/reports'),
-		settings: {
-			label: "Settings"|t,
-			url: url('sproutreports/settings')
-		}
+		url: url('sprout-reports/reports')
 	}
 } %}
 
@@ -15,7 +11,7 @@
 	{% set subnav = subnav|merge({
 		datasources: {
 			label: "Data Sources"|t,
-			url: url('sproutreports/datasources')
+			url: url('sprout-reports/datasources')
 		}
 	}) %}
 {% endif %}
@@ -24,7 +20,7 @@
 	{% set subnav = subnav|merge({
 		settings: {
 			label: "Settings"|t,
-			url: url('sproutreports/settings')
+			url: url('settings/plugins/sprout-reports')
 		}
 	}) %}
 {% endif %}
@@ -36,10 +32,10 @@
 {% endblock %}
 
 {% if craft.request.getSegment(4) == 'results' %}
-	{% includeCssFile "sproutreports/css/jquery.jscrollpane.css" %}
-	{% includeCssFile "sproutreports/css/styles.css" %}
+	{% includeCssFile "sprout-reports/css/jquery.jscrollpane.css" %}
+	{% includeCssFile "sprout-reports/css/styles.css" %}
 
-	{% includeJsFile "sproutreports/js/jquery.jscrollpane.min.js" %}
-	{% includeJsFile "sproutreports/js/jquery.mousewheel.js" %}
-	{% includeJsFile "sproutreports/js/scripts.js" %}
+	{% includeJsFile "sprout-reports/js/jquery.jscrollpane.min.js" %}
+	{% includeJsFile "sprout-reports/js/jquery.mousewheel.js" %}
+	{% includeJsFile "sprout-reports/js/scripts.js" %}
 {% endif %}

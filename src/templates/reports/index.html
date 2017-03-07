@@ -1,14 +1,5 @@
-{% extends "_layouts/cp" %}
-{% set subnav = {
-reports: {
-label: "Reports"|t,
-url: url('sproutreports/reports'),
-settings: {
-label: "Settings"|t,
-url: url('sproutreports/settings')
-}
-}
-} %}
+{% extends "sprout-reports/_layouts/base" %}
+
 {% set title  = "Reports"|t %}
 {% set groups = craft.sproutreports.getReportGroups() %}
 
@@ -82,7 +73,7 @@ url: url('sproutreports/settings')
 				{% for report in reports %}
 					<tr>
 						<td class="sproutreports-reportname">
-							<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}"><strong>{{ report.name }}</strong></a>
+							<a href="{{ cpUrl('sprout-reports/reports/view/' ~ report.id) }}"><strong>{{ report.name }}</strong></a>
 
 							{% if report.description %}
 								<span class="info">{{ report.description }}</span>
@@ -93,7 +84,7 @@ url: url('sproutreports/settings')
 						</td>
 
 						<td class="sproutreports-reportactions">
-							<a href="{{ actionUrl('sproutReports/reports/exportReport', {reportId: report.id}) }}" class="btn small">{{ "Download"|t }}</a>
+							<a href="{{ actionUrl('sprout-reports/reports/exportReport', {reportId: report.id}) }}" class="btn small">{{ "Download"|t }}</a>
 						</td>
 
 						{% if currentUser.can('sproutReports-editReports') %}
@@ -126,7 +117,7 @@ url: url('sproutreports/settings')
 			<li><a href="{{ url('sproutreports') }}"{% if groupId is not defined %} class="sel"{% endif %}>{{ "All Reports"|t }}</a></li>
 
 			{% for group in groups %}
-				<li><a href="{{ url('sproutreports/reports/'~group.id) }}"{% if groupId is defined and group.id == groupId %} class="sel"{% endif %} data-id="{{ group.id }}">{{ group.name }}</a></li>
+				<li><a href="{{ url('sprout-reports/reports/'~group.id) }}"{% if groupId is defined and group.id == groupId %} class="sel"{% endif %} data-id="{{ group.id }}">{{ group.name }}</a></li>
 			{% endfor %}
 
 		</ul>

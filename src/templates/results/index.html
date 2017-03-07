@@ -1,0 +1,123 @@
+{% extends "sprout-reports/_layouts/base" %}
+
+{% set title  = report.name|t %}
+{% set groups = craft.sproutreports.getReportGroups() %}
+
+{% set crumbs = [
+	{ label: "Reports"|t, url: url('sproutreports/reports') },
+	{ label: "Edit "|t ~ report.name|t, url: report.getEditUrl() }
+] %}
+
+{% set selectedTab = 'resultView' %}
+
+{% if dataSource is defined %}
+	{% set optionsHtml = dataSource.getOptionsHtml(options) %}
+{% endif %}
+
+{% set extraPageHeaderHtml %}
+
+  <form method="post" accept-charset="UTF-8">
+    {{ getCsrfInput() }}
+    <input type="hidden" name="action" value="sprout-reports/reports/export-report">
+    <input type="hidden" name="reportId" value="{{ reportId }}">
+
+    <a id="btn-download-csv" class="btn">
+	    {{ "Download"|t }}
+    </a>
+
+		{% if currentUser.can('sproutreports-editReports') %}
+	    <a id="modify-options-icon" class="btn" data-icon="settings"></a>
+		{% endif %}
+  </form>
+
+{% endset %}
+
+{% block content %}
+
+	{% if optionsHtml %}
+
+		<div id="modify-options-panel" style="display:none;">
+
+			<form id="report-options" method="post" accept-charset="UTF-8">
+				{{ getCsrfInput() }}
+				<input type="hidden" name="action" value="sprout-reports/reports/update-report">
+				<input type="hidden" name="redirect" value="sprout-reports/reports/view/{{ reportId }}">
+				<input type="hidden" name="reportId" value="{{ reportId }}">
+
+				{{ optionsHtml | raw }}
+
+				<div class="button">
+					<div class="btngroup">
+						<input type="submit" class="btn submit" value="{{ 'Update Report'|t }}">
+					</div>
+				</div>
+
+			</form>
+
+			<hr>
+
+		</div>
+
+	{% endif %}
+
+	<div class="tableview sproutreports">
+		{% if values is defined and values is iterable and values|length %}
+			<div class="tablecontent">
+				<table class="data fullwidth">
+					<thead>
+						<tr>
+							{% for label in labels %}
+								<th>
+									<div {% if loop.index == "1" %}class="first"{% endif %}><h3>{{ label }}</h3></div>
+								</th>
+							{% endfor %}
+						</tr>
+					</thead>
+					<tbody>
+						{% for value in values %}
+							<tr class="table_row">
+								{% for property in value %}
+									<td>
+										<div class="item_content">
+											{% if report.allowHtml %}
+												{{ property|raw }}
+											{% else %}
+												{{ property }}
+											{% endif %}
+										</div>
+									</td>
+								{% endfor %}
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		{% else %}
+			<p>{{ "This report currently has no results."|t }}</p>
+		{% endif %}
+	</div>
+
+{% endblock %}
+
+{% do view.registerAssetBundle("barrelstrength\\sproutreports\\assetbundles\\reports\\ReportAsset") %}
+
+{% includejs %}
+
+	(function(){
+
+		$('#btn-download-csv').on('click', function(event) {
+
+			event.preventDefault();
+
+            $form = $(this).parents('form');
+            $form.submit();
+
+		});
+
+		$('#modify-options-icon').on('click', function() {
+			$('#modify-options-panel').slideToggle('slow');
+		});
+
+	})();
+
+{% endincludejs %}

@@ -84,7 +84,8 @@
 						</td>
 
 						<td class="sproutreports-reportactions">
-							<a href="{{ actionUrl('sprout-reports/reports/exportReport', {reportId: report.id}) }}" class="btn small">{{ "Download"|t }}</a>
+							<a href="{{ actionUrl('sprout-reports/reports/export-report', {reportId: report.id}) }}"
+								class="btn small">{{ "Download"|t }}</a>
 						</td>
 
 						{% if currentUser.can('sproutReports-editReports') %}

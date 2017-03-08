@@ -40,40 +40,43 @@ class ReportsController extends Controller
 
 		return $this->redirectToPostedUrl($report);
 	}
-	//
-	///**
-	// * Saves a report query to the database
-	// */
-	//public function actionUpdateReport()
-	//{
-	//	$this->requirePostRequest();
-	//
-	//	$reportId = craft()->request->getPost('reportId');
-	//	$options  = craft()->request->getPost('options');
-	//
-	//	if ($reportId && $options)
-	//	{
-	//		$reportModel = sproutReports()->reports->getReport($reportId);
-	//
-	//		if (!$reportModel)
-	//		{
-	//			throw new Exception(Craft::t('No report exists with the id “{id}”', array('id' => $reportId)));
-	//		}
-	//
-	//		$reportModel->options = is_array($options) ? $options : array();
-	//
-	//		if (sproutReports()->reports->saveReport($reportModel))
-	//		{
-	//			craft()->userSession->setNotice(Craft::t('Query updated.'));
-	//			$this->redirectToPostedUrl($reportModel);
-	//		}
-	//	}
-	//
-	//	craft()->userSession->setError(Craft::t('Could not update report.'));
-	//
-	//	$this->redirectToPostedUrl();
-	//}
-	//
+
+	/**
+	 * Saves a report query to the database
+	 */
+	public function actionUpdateReport()
+	{
+		$this->requirePostRequest();
+
+		$request = Craft::$app->getRequest();
+
+		$reportId = $request->getBodyParam('reportId');
+		$options  = $request->getBodyParam('options');
+
+		if ($reportId && $options)
+		{
+			$reportModel = SproutReports::$api->reports->getReport($reportId);
+
+			if (!$reportModel)
+			{
+				throw new \Exception(Craft::t('No report exists with the id “{id}”', array('id' => $reportId)));
+			}
+
+			$reportModel->options = is_array($options) ? $options : array();
+
+			if (SproutReports::$api->reports->saveReport($reportModel))
+			{
+				Craft::$app->getSession()->setNotice(SproutReports::t('Query updated.'));
+
+				return $this->redirectToPostedUrl($reportModel);
+			}
+		}
+
+		Craft::$app->getSession()->setError(SproutReports::t('Could not update report.'));
+
+		return $this->redirectToPostedUrl();
+	}
+
 	// @todo - reconsider logic
 	public function actionEditReport(string $pluginId, string $dataSourceKey, Report $report = null, int $reportId = null)
 	{
@@ -160,60 +163,30 @@ class ReportsController extends Controller
 			throw new \Exception(SproutReports::t('Report not found.'));
 		}
 	}
-	//
-	//public function actionExportReport()
-	//{
-	//	$reportId = craft()->request->getParam('reportId');
-	//	$report   = sproutReports()->reports->getReport($reportId);
-	//
-	//	$options = craft()->request->getPost('options');
-	//	$options = count($options) ? $options : array();
-	//
-	//	if ($report)
-	//	{
-	//		$dataSource = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
-	//
-	//		if ($dataSource)
-	//		{
-	//			$date = date("Ymd-his");
-	//
-	//			$filename = $report->name . '-' . $date;
-	//			$labels   = $dataSource->getDefaultLabels($report, $options);
-	//			$values   = $dataSource->getResults($report, $options);
-	//
-	//			sproutReports()->exports->toCsv($values, $labels, $filename);
-	//		}
-	//	}
-	//}
-	//
-	///**
-	// * Export Data as CSV
-	// *
-	// * @param  object $results Results from SQL query
-	// *
-	// * @return buffer        The CSV output
-	// */
-	//protected function exportDataToCsv($report, $results)
-	//{
-	//	$worksheet = new Worksheet();
-	//
-	//	foreach ($results as $key => $row)
-	//	{
-	//		if ($key == 0)
-	//		{
-	//			$columnNames = array_keys($row);
-	//			$worksheet->insertRecord($columnNames);
-	//		}
-	//
-	//		$worksheet->insertRecord($row);
-	//	}
-	//
-	//	$excel = new SimpleExcel();
-	//	$excel->insertWorksheet($worksheet);
-	//
-	//	$reportName = str_replace(' ', '', $report['name']);
-	//	$filename   = $reportName . '-' . date('Ymd-hms') . '.csv';
-	//
-	//	$excel->exportFile('php://output', 'CSV', array('filename' => $filename));
-	//}
+
+	public function actionExportReport()
+	{
+		$reportId = Craft::$app->getRequest()->getParam('reportId');
+
+		$report   = SproutReports::$api->reports->getReport($reportId);
+
+		$options = Craft::$app->getRequest()->getBodyParam('options');
+		$options = count($options) ? $options : array();
+
+		if ($report)
+		{
+			$dataSource = SproutReports::$api->dataSources->getDataSourceById($report->dataSourceId);
+
+			if ($dataSource)
+			{
+				$date = date("Ymd-his");
+
+				$filename = $report->name . '-' . $date;
+				$labels   = $dataSource->getDefaultLabels($report, $options);
+				$values   = $dataSource->getResults($report, $options);
+
+				SproutReports::$api->exports->toCsv($values, $labels, $filename);
+			}
+		}
+	}
 }

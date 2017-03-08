@@ -42,10 +42,16 @@ class Api extends Component
 	 */
 	public $reports;
 
+	/**
+	 * @var Exports
+	 */
+	public $exports;
+
 	public function init()
 	{
 		$this->reportGroups = new ReportGroups();
 		$this->dataSources  = new DataSources();
 		$this->reports      = new Reports();
+		$this->exports      = new Exports();
 	}
 }

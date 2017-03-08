@@ -10,18 +10,16 @@
         "craft-plugin",
         "sprout reports"
     ],
-    "support": {
-        "docs": "???",
-        "issues": "???"
-    },
     "license": "MIT",
     "authors": [
         {
             "name": "Barrelstrength",
-            "homepage": "barrelstrengthdesign.com"
+            "email": "ben@barrelstrengthdesign.com",
+            "homepage": "https://barrelstrengthdesign.com"
         }
     ],
     "require": {
+        "league/csv": "^7.2"
     },
     "autoload": {
         "psr-4": {

@@ -41,7 +41,7 @@
 			<form id="report-options" method="post" accept-charset="UTF-8">
 				{{ getCsrfInput() }}
 				<input type="hidden" name="action" value="sprout-reports/reports/update-report">
-				<input type="hidden" name="redirect" value="sprout-reports/reports/view/{{ reportId }}">
+				{{ redirectInput('sprout-reports/reports/view/' ~ reportId) }}
 				<input type="hidden" name="reportId" value="{{ reportId }}">
 
 				{{ optionsHtml | raw }}

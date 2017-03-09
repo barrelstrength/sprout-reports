@@ -198,7 +198,7 @@ abstract class BaseDataSource
 	 *
 	 * @return boolean
 	 */
-	public function validateOptions(array $options = array(), array $errors = array())
+	public function validateOptions(array $options = array(), array &$errors = array())
 	{
 		return true;
 	}
@@ -212,7 +212,7 @@ abstract class BaseDataSource
 	{
 		$record = DataSource::findOne(['dataSourceId' => $this->id]);
 
-		if ($record != null && $record->allowNew != null)
+		if ($record != null)
 		{
 			return $record->allowNew;
 		}

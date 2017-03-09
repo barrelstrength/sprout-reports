@@ -30,12 +30,3 @@
 {% block content %}
 
 {% endblock %}
-
-{% if craft.request.getSegment(4) == 'results' %}
-	{% includeCssFile "sprout-reports/css/jquery.jscrollpane.css" %}
-	{% includeCssFile "sprout-reports/css/styles.css" %}
-
-	{% includeJsFile "sprout-reports/js/jquery.jscrollpane.min.js" %}
-	{% includeJsFile "sprout-reports/js/jquery.mousewheel.js" %}
-	{% includeJsFile "sprout-reports/js/scripts.js" %}
-{% endif %}

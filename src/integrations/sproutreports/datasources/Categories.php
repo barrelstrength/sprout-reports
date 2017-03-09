@@ -130,7 +130,7 @@ class Categories extends BaseDataSource
 	 * @param array $options
 	 * @return array|bool
 	 */
-	public function validateOptions(array $options = array(), array $errors = array())
+	public function validateOptions(array $options = array(), array &$errors = array())
 	{
 		if (empty($options['sectionId']))
 		{

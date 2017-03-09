@@ -30,6 +30,7 @@
 					url: dataSource.getUrl('/new')
 				}]) %}
 			{% endif %}
+
 		{% endfor %}
 
 		{% if newReportOptions|length %}
@@ -115,7 +116,8 @@
 	<nav>
 		<ul id="groups">
 
-			<li><a href="{{ url('sproutreports') }}"{% if groupId is not defined %} class="sel"{% endif %}>{{ "All Reports"|t }}</a></li>
+			<li><a href="{{ url('sproutreports') }}"{% if groupId is null %} class="sel"{% endif %}>
+					{{ "All Reports"|t }}</a></li>
 
 			{% for group in groups %}
 				<li><a href="{{ url('sprout-reports/reports/'~group.id) }}"{% if groupId is defined and group.id == groupId %} class="sel"{% endif %} data-id="{{ group.id }}">{{ group.name }}</a></li>

@@ -1,16 +1,22 @@
 <?php
-namespace Craft;
+namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
+
+use Craft;
+use barrelstrength\sproutreports\contracts\BaseDataSource;
+use barrelstrength\sproutreports\models\Report as ReportModel;
+use barrelstrength\sproutreports\SproutReports;
+use craft\db\Query;
 
 /**
  * Class SproutReportsQueryDataSource
  *
  * @package Craft
  */
-class SproutReportsQueryDataSource extends SproutReportsBaseDataSource
+class CustomQuery extends BaseDataSource
 {
 	public function getName()
 	{
-		return Craft::t('Custom Query');
+		return SproutReports::t('Custom Query');
 	}
 
 	/**
@@ -18,7 +24,7 @@ class SproutReportsQueryDataSource extends SproutReportsBaseDataSource
 	 */
 	public function getDescription()
 	{
-		return Craft::t('Create reports using a custom database query');
+		return SproutReports::t('Create reports using a custom database query');
 	}
 
 	/**
@@ -32,17 +38,16 @@ class SproutReportsQueryDataSource extends SproutReportsBaseDataSource
 	/**
 	 * @todo:so Let's bring back a little sanity checks back into raw queries
 	 *
-	 * @param SproutReports_ReportModel $report
+	 * @param ReportModel $report
 	 *
-	 * @return \CDbDataReader
 	 */
-	public function getResults(SproutReports_ReportModel &$report)
+	public function getResults(ReportModel &$report, $options = array())
 	{
 		$query = $report->getOption('query');
 
 		try
 		{
-			return craft()->db->createCommand($query)->queryAll();
+			return Craft::$app->getDb()->createCommand($query)->queryAll();
 		}
 		catch (\Exception $e)
 		{
@@ -60,7 +65,7 @@ class SproutReportsQueryDataSource extends SproutReportsBaseDataSource
 		$optionErrors = $this->report->getErrors('options');
 		$optionErrors = array_shift($optionErrors);
 
-		return craft()->templates->render('sprout-reports/datasources/_options/query', array(
+		return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_options/query', array(
 			'options' => count($options) ? $options : $this->report->getOptions(),
 			'errors' => $optionErrors
 		));
@@ -74,7 +79,7 @@ class SproutReportsQueryDataSource extends SproutReportsBaseDataSource
 	{
 		if (empty($options['query']))
 		{
-			$errors['query'][] = Craft::t('Query cannot be blank.');
+			$errors['query'][] = SproutReports::t('Query cannot be blank.');
 
 			return false;
 		}

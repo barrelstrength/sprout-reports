@@ -1,24 +1,30 @@
 <?php
-namespace Craft;
+namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 
-class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
+use barrelstrength\sproutreports\SproutReports;
+use Craft;
+use barrelstrength\sproutreports\contracts\BaseDataSource;
+use barrelstrength\sproutreports\models\Report as ReportModel;
+use craft\db\Query;
+
+class Users extends BaseDataSource
 {
 	public function getName()
 	{
-		return Craft::t('Users');
+		return SproutReports::t('Users');
 	}
 
 	public function getDescription()
 	{
-		return Craft::t('Create reports about your users and user groups.');
+		return SproutReports::t('Create reports about your users and user groups.');
 	}
 
 	/**
-	 * @param  SproutReports_ReportModel &$report
+	 * @param ReportModel &$report
 	 *
 	 * @return array|null
 	 */
-	public function getResults(SproutReports_ReportModel &$report, $options = array())
+	public function getResults(ReportModel &$report, $options = array())
 	{
 		// First, use dynamic options, fallback to report options
 		if (!count($options))
@@ -26,8 +32,8 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 			$options = $report->getOptions();
 		}
 
-		$userGroupIds            = $options['userGroups'];
-		$displayUserGroupColumns = $options['displayUserGroupColumns'];
+		$userGroupIds            = $options->userGroups;
+		$displayUserGroupColumns = $options->displayUserGroupColumns;
 
 		$includeAdmins = false;
 
@@ -39,7 +45,7 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 			unset($userGroupIds[0]);
 		}
 
-		$userGroups = craft()->userGroups->getAllGroups();
+		$userGroups = Craft::$app->getUserGroups()->getAllGroups();
 
 		$userGroupsByName = array();
 		foreach ($userGroups as $userGroup)
@@ -47,36 +53,36 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 			$userGroupsByName[$userGroup->name] = 0;
 		}
 
-		$selectQueryString = '{{users.id}},
-			{{users.username}} AS Username,
-			{{users.email}} AS Email,
-			{{users.firstName}} AS First Name,
-			{{users.lastName}} AS Last Name';
+		$selectQueryString = "users.id,
+			users.username AS Username,
+			users.email AS Email,
+			(users.firstName) AS 'First Name',
+			(users.lastName) AS 'Last Name'";
 
 		if ($displayUserGroupColumns)
 		{
-			$selectQueryString = $selectQueryString . ',{{users.admin}} AS Admin';
+			$selectQueryString = $selectQueryString . ',users.admin AS Admin';
 		}
-
-		$userQuery = craft()->db->createCommand()
+		$query = new Query();
+		$userQuery = $query
 			->select($selectQueryString)
 			->from('users')
-			->join('usergroups_users', '{{users.id}} = {{usergroups_users.userId}}');
+			->join('LEFT JOIN', 'usergroups_users', 'users.id = usergroups_users.userId');
 
 		if (is_array($userGroupIds))
 		{
-			$userQuery->where(array('in', '{{usergroups_users.groupId}}', $userGroupIds));
+			$userQuery->where(array('in', 'usergroups_users.groupId', $userGroupIds));
 		}
 
 		if ($includeAdmins)
 		{
-			$userQuery->orWhere('{{users.admin}} = 1');
+			$userQuery->orWhere('users.admin = 1');
 		}
 
-		$userQuery->group('{{users.id}}');
+		$userQuery->groupBy('users.id');
 
 		// @todo - can we query users and user their ids as the array key?
-		$users = $userQuery->queryAll();
+		$users = $userQuery->all();
 
 		// Update users to be indexed by their ids
 		$usersById = array();
@@ -86,11 +92,12 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 			unset ($usersById[$user['id']]['id']);
 		}
 
-		$userGroupsMapQuery = craft()->db->createCommand()
+		$query = new Query();
+		$userGroupsMapQuery = $query
 			->select('*')
 			->from('usergroups_users')
-			->join('usergroups', '{{usergroups.id}} = {{usergroups_users.groupId}}')
-			->queryAll();
+			->join('LEFT JOIN', 'usergroups', 'usergroups.id = usergroups_users.groupId')
+			->all();
 
 		// Create a map of all users and which user groups they are in
 		$userGroupsMap = array();
@@ -127,7 +134,7 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 	 */
 	public function getOptionsHtml(array $options = array())
 	{
-		$userGroups = craft()->userGroups->getAllGroups();
+		$userGroups = Craft::$app->getUserGroups()->getAllGroups();
 
 		$userGroupOptions[] = array(
 			'label' => 'Admin',
@@ -145,7 +152,7 @@ class SproutReportsUsersDataSource extends SproutReportsBaseDataSource
 		$optionErrors = $this->report->getErrors('options');
 		$optionErrors = array_shift($optionErrors);
 
-		return craft()->templates->render('sprout-reports/datasources/_options/users', array(
+		return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_options/users', array(
 			'userGroupOptions' => $userGroupOptions,
 			'options'          => count($options) ? $options : $this->report->getOptions(),
 			'errors'           => $optionErrors

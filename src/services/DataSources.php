@@ -1,7 +1,9 @@
 <?php
 namespace barrelstrength\sproutreports\services;
 
-use barrelstrength\sproutreports\models\DataSource;
+use Craft;
+use barrelstrength\sproutreports\models\DataSource as DataSourceModel;
+use barrelstrength\sproutreports\records\DataSource as DataSourceRecord;
 use yii\base\Component;
 use craft\events\RegisterComponentTypesEvent;
 use barrelstrength\sproutreports\contracts\BaseDataSource;
@@ -66,9 +68,6 @@ class DataSources  extends Component
 
 					if ($dataSource && $dataSource instanceof BaseDataSource)
 					{
-						//$dataSource->setPluginName(\Craft::$app->getPlugin($plugin)->getName());
-					//	$dataSource->setPluginHandle($plugin);
-
 						$this->dataSources[$dataSource->getId()] = $dataSource;
 
 						$names[] = $dataSource->getName();
@@ -83,29 +82,6 @@ class DataSources  extends Component
 		return $this->dataSources;
 	}
 
-	///**
-	// * @param string $pluginHandle
-	// * @param string $dataSourceClass
-	// *
-	// * @return string
-	// * @throws Exception
-	// */
-	//public function generateId($pluginHandle, $dataSourceClass)
-	//{
-	//	$pluginHandle    = strtolower($pluginHandle);
-	//	$dataSourceClass = strtolower($dataSourceClass);
-	//	$dataSourceClass = str_replace($pluginHandle, '', $dataSourceClass);
-	//	$dataSourceClass = str_replace('datasource', '', $dataSourceClass);
-	//
-	//	return sprintf('%s.%s', $pluginHandle, $dataSourceClass);
-	//}
-	//
-	///**
-	// * @param $names
-	// * @param $secondaryArray
-	// *
-	// * @return null
-	// */
 	private function _sortDataSources(&$names, &$secondaryArray)
 	{
 		// TODO: Remove this check for Craft 3.
@@ -122,17 +98,17 @@ class DataSources  extends Component
 		}
 	}
 
-    public function saveDataSource(DataSource $model)
+    public function saveDataSource(DataSourceModel $model)
     {
         $result = false;
 
-        $record = SproutReports_DataSourceRecord::model()->findByAttributes(array(
+        $record = DataSourceRecord::find([
             'dataSourceId' => $model->dataSourceId
-        ));
+        ])->one();
 
         if ($record == null)
         {
-            $record = new SproutReports_DataSourceRecord();
+            $record = new DataSourceRecord();
         }
 
         $attributes = $model->getAttributes();
@@ -148,7 +124,8 @@ class DataSources  extends Component
             }
         }
 
-        $transaction = craft()->db->getCurrentTransaction() === null ? craft()->db->beginTransaction() : null;
+		    $db = Craft::$app->getDb();
+		    $transaction = $db->beginTransaction();
 
         if ($record->validate())
         {
@@ -156,7 +133,7 @@ class DataSources  extends Component
             {
                 $model->id = $record->id;
 
-                if ($transaction && $transaction->active)
+                if ($transaction)
                 {
                     $transaction->commit();
                 }

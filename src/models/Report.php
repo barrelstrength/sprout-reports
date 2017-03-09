@@ -31,6 +31,11 @@ class Report extends Model
 
 	public $dateUpdated;
 
+	public function getDataSourceId()
+	{
+		return $this->dataSourceId;
+	}
+
 	public function getDataSource()
 	{
 		$dataSource = SproutReports::$api->dataSources->getDataSourceById($this->dataSourceId);
@@ -43,6 +48,26 @@ class Report extends Model
 	public function getOptions()
 	{
 		return json_decode($this->options);
+	}
+
+	/**
+	 * Returns a user supplied option if it exists or $default otherwise
+	 *
+	 * @param string     $name
+	 * @param null|mixed $default
+	 *
+	 * @return null
+	 */
+	public function getOption($name, $default = null)
+	{
+		$options = $this->getOptions();
+
+		if (is_string($name) && !empty($name) && isset($options->$name))
+		{
+			return $options->$name;
+		}
+
+		return $default;
 	}
 
 	/**
@@ -73,5 +98,21 @@ class Report extends Model
 	public function getEditUrl()
 	{
 		return $this->getDataSource()->getUrl('edit/'.$this->id);
+	}
+
+	/**
+	 * @param array $results
+	 */
+	public function setResults(array $results = array())
+	{
+		$this->results = $results;
+	}
+
+	/**
+	 * @param string $message
+	 */
+	public function setResultsError($message)
+	{
+		$this->addError('results', $message);
 	}
 }

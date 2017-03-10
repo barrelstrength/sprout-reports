@@ -1,6 +1,8 @@
 <?php
 namespace barrelstrength\sproutreports\services;
 
+use barrelstrength\sproutreports\contracts\BaseReport;
+use barrelstrength\sproutreports\models\ReportGroup as ReportGroupModel;
 use Craft;
 use yii\base\Component;
 use barrelstrength\sproutreports\models\Report as ReportModel;
@@ -73,7 +75,7 @@ class Reports extends Component
 	/**
 	 * @param ReportModel $model
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @return bool
 	 */
 	public function saveReport(&$model)
@@ -133,7 +135,7 @@ class Reports extends Component
 	 *
 	 * @return bool
 	 */
-	protected function validateOptions(&$report)
+	protected function validateOptions(ReportModel &$report)
 	{
 		$errors = array();
 
@@ -161,12 +163,41 @@ class Reports extends Component
 		return $reports;
 	}
 
+	public function registerReports($reports, ReportGroupModel $group)
+	{
+		if (!is_array($reports))
+		{
+			$reports = array($reports);
+		}
+
+		foreach ($reports as $report)
+		{
+			if ($report instanceof BaseReport)
+			{
+				$record = new ReportRecord();
+
+				$record->name         = $report->getName();
+				$record->handle       = $report->getHandle();
+				$record->description  = $report->getDescription();
+				$record->options      = $report->getOptions();
+				$record->dataSourceId = $report->getDataSource()->getId();
+				$record->enabled      = true;
+				$record->groupId      = $group->id;
+
+				if (!$record->save())
+				{
+					Craft::warning(print_r($record->getErrors(), true), 'sproutReports');
+				}
+			}
+		}
+	}
+
 	/**
 	 * @param int $groupId
 	 *
 	 * @return null|ReportModel[]
 	 */
-	public function getReportsByGroupId($groupId):array
+	public function getReportsByGroupId($groupId)
 	{
 		$reports = array();
 
@@ -195,7 +226,7 @@ class Reports extends Component
 		return (int) ReportRecord::find()->where(array('dataSourceId' => $dataSourceId))->count();
 	}
 
-	public function populateModels($records)
+	public function populateModels(array $records)
 	{
 		$models = array();
 

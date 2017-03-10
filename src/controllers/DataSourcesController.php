@@ -11,6 +11,7 @@ class DataSourcesController extends Controller
 {
 	/**
 	 * Save the Data Source
+	 * @return \yii\web\Response
 	 */
 	public function actionUpdateDataSource()
 	{

@@ -43,7 +43,7 @@ class Exports extends Component
 	/**
 	 * @param array $values
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @return string
 	 */
 	public function toJson(array &$values)
@@ -52,7 +52,7 @@ class Exports extends Component
 
 		if (json_last_error())
 		{
-			throw new Exception(json_last_error_msg());
+			throw new \Exception(json_last_error_msg());
 		}
 
 		return $json;

@@ -5,15 +5,17 @@ use yii\base\Component;
 use barrelstrength\sproutreports\records\ReportGroup as ReportGroupRecord;
 use barrelstrength\sproutreports\models\ReportGroup as ReportGroupModel;
 use barrelstrength\sproutreports\SproutReports;
+
 /**
- * Class SproutReports_ReportGroupsService
+ * Class ReportGroups
  *
- * @package Craft
+ * @package barrelstrength\sproutreports\services
  */
 class ReportGroups extends Component
 {
+
 	/**
-	 * @param SproutReports_ReportGroupModel &$model
+	 * @param ReportGroupModel $group
 	 *
 	 * @return bool
 	 */
@@ -43,7 +45,7 @@ class ReportGroups extends Component
 
 	public function createGroupByName($name)
 	{
-		$group = new SproutReports_ReportGroupModel();
+		$group = new ReportGroupModel();
 		$group->name = $name;
 
 		if ($this->saveGroup($group))
@@ -54,44 +56,9 @@ class ReportGroups extends Component
 		return false;
 	}
 
-	/**
-	 * @param int $id
-	 *
-	 * @throws Exception
-	 * @return SproutReports_ReportGroupModel
-	 */
-	public function getGroupById($id)
-	{
-		$group = SproutReports_ReportGroupRecord::model()->findByAttributes(compact('id'));
-
-		if (!$group)
-		{
-			throw new Exception(Craft::t('Cannot find group with id {id}.', compact('id')));
-		}
-
-		return SproutReports_ReportGroupModel::populateModel($group);
-	}
 
 	/**
-	 * @param string $handle
-	 *
-	 * @throws Exception
-	 * @return SproutReports_ReportGroupModel
-	 */
-	public function getGroupByHandle($handle)
-	{
-		$group = SproutReports_ReportGroupRecord::model()->findByAttributes(compact('handle'));
-
-		if (!$group)
-		{
-			throw new Exception(Craft::t('Cannot find group with handle {handle}.', compact('handle')));
-		}
-
-		return SproutReports_ReportGroupModel::populateModel($group->getAttributes());
-	}
-
-	/**
-	 * @return null|SproutReports_ReportGroupModel[]
+	 * @return array|\yii\db\ActiveRecord[]
 	 */
 	public function getAllReportGroups()
 	{

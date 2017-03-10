@@ -24,6 +24,8 @@ use craft\services\UserPermissions;
 use craft\events\RegisterUserPermissionsEvent;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\Categories;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\Users;
+use yii\log\Logger;
+
 /**
  * https://craftcms.com/docs/plugins/introduction
  *
@@ -34,7 +36,7 @@ use barrelstrength\sproutreports\integrations\sproutreports\datasources\Users;
 class SproutReports extends Plugin
 {
 	/**
-	 * Enable use of SproutEncodeEmail::$plugin-> in place of Craft::$app->
+	 * Enable use of SproutReports::$plugin-> in place of Craft::$app->
 	 *
 	 * @var \barrelstrength\sproutreports\services\Api
 	 */
@@ -70,9 +72,28 @@ class SproutReports extends Plugin
 
 		Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent $event) {
 		  $event->types[] = new Categories();
-		  $event->types[] = new Users();
 		  $event->types[] = new CustomQuery();
+
+			$isCraftPro = Craft::$app->getEdition() == Craft::Pro ? true : false;
+
+			if ($isCraftPro == true)
+			{
+				$event->types[] = new Users();
+			}
 		});
+  }
+
+	/**
+	 * Installs default group "Sprout Reports" after installation
+	 */
+  public function afterInstall()
+  {
+	  $defaultGroup = SproutReports::$api->reportGroups->createGroupByName('Sprout Reports');
+
+	  if (Craft::$app->getPlugins()->getPlugin('sproutreports'))
+	  {
+		 SproutReports::$api->reports->registerReports(new Users(), $defaultGroup);
+	  }
   }
 
 	/**
@@ -86,11 +107,17 @@ class SproutReports extends Plugin
 		return Craft::t('sproutReports', $message, $params);
 	}
 
+	/**
+	 * @return Settings
+	 */
 	protected function createSettingsModel()
 	{
 		return new Settings();
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function settingsHtml()
 	{
 		return Craft::$app->getView()->renderTemplate('sprout-reports/_cp/settings', [
@@ -98,6 +125,9 @@ class SproutReports extends Plugin
 		]);
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function defineTemplateComponent()
 	{
 		return SproutReportsVariable::class;

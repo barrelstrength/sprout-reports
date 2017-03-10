@@ -9,7 +9,10 @@ use barrelstrength\sproutreports\SproutReports;
 
 class ReportGroupController extends Controller
 {
-
+	/**
+	 * Saves
+	 * @return \yii\web\Response
+	 */
 	public function actionSaveGroup()
 	{
 		$this->requirePostRequest();
@@ -40,7 +43,8 @@ class ReportGroupController extends Controller
 	}
 
 	/**
-	 * Deletes a group.
+	 * Deletes a report group.
+	 * @return \yii\web\Response
 	 */
 	public function actionDeleteGroup()
 	{

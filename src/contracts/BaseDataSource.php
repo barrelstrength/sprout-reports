@@ -57,7 +57,7 @@ abstract class BaseDataSource
 	 *
 	 * @example
 	 * - SproutFormsSubmissionsDataSource   > sproutforms.submissions
-	 * - SproutReportsQueryDataSource > sproutreports.customquery
+	 * - CustomQuery > sproutreports.customquery
 	 *
 	 * @return string
 	 */
@@ -67,7 +67,7 @@ abstract class BaseDataSource
 	}
 
 	/**
-	 * Set a SproutReports_ReportModel on our data source.
+	 * Set a ReportModel on our data source.
 	 *
 	 * @param ReportModel|null $report
 	 */
@@ -223,7 +223,7 @@ abstract class BaseDataSource
 	/**
 	 * Allow a user to toggle the Allow Html setting.
 	 *
-	 * @return null|string
+	 * @return bool
 	 */
 	public function isAllowHtmlEditable()
 	{
@@ -234,7 +234,7 @@ abstract class BaseDataSource
 	 * Define the default value for the Allow HTML setting. Setting Allow HTML
 	 * to true enables a report to output HTML on the Results page.
 	 *
-	 * @return null|string
+	 * @return bool
 	 */
 	public function getDefaultAllowHtml()
 	{

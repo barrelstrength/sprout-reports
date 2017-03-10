@@ -1,12 +1,12 @@
 <?php
-namespace barrelstrength\sproutreports;
+namespace barrelstrength\sproutreports\contracts;
 
 /**
  * Class SproutReportsBaseReport
  *
  * @package Craft
  */
-abstract BaseReport
+abstract class BaseReport
 {
 	/**
 	 * @return string
@@ -34,7 +34,7 @@ abstract BaseReport
 	abstract public function getOptions();
 
 	/**
-	 * @return SproutReportsBaseDataSource
+	 * @return BaseDataSource
 	 */
 	abstract public function getDataSource();
 }

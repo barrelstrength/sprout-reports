@@ -9,14 +9,21 @@ use barrelstrength\sproutreports\records\Report as ReportRecord;
 
 class ReportsController extends Controller
 {
+	/**
+	 * @param null $groupId
+	 *
+	 * @return \yii\web\Response
+	 */
 	public function actionIndex($groupId = null)
 	{
 		return $this->renderTemplate('sprout-reports/reports/index', [
 			'groupId' => $groupId
 		]);
 	}
+
 	/**
 	 * Saves a report query to the database
+	 * @return null|\yii\web\Response
 	 */
 	public function actionSaveReport()
 	{
@@ -141,7 +148,7 @@ class ReportsController extends Controller
 			return $this->renderTemplate('sprout-reports/results/index', $variables);
 		}
 
-		throw new HttpException(404, Craft::t('Report not found.'));
+		throw new \HttpException(404, SproutReports::t('Report not found.'));
 	}
 
 	public function actionDeleteReport()

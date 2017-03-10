@@ -82,70 +82,71 @@ class DataSources  extends Component
 		return $this->dataSources;
 	}
 
+	/**
+	 * @param $names
+	 * @param $secondaryArray
+	 */
 	private function _sortDataSources(&$names, &$secondaryArray)
 	{
-		// TODO: Remove this check for Craft 3.
-		if (PHP_VERSION_ID < 50400)
-		{
-			// Sort plugins by name
-			array_multisort($names, $secondaryArray);
-		}
-		else
-		{
-
-			// Sort plugins by name
-			array_multisort($names, SORT_NATURAL | SORT_FLAG_CASE, $secondaryArray);
-		}
+		// Sort plugins by name
+		array_multisort($names, SORT_NATURAL | SORT_FLAG_CASE, $secondaryArray);
 	}
 
-    public function saveDataSource(DataSourceModel $model)
-    {
-        $result = false;
+	/**
+	 * Save attributes to datasources record table
+	 *
+	 * @param DataSourceModel $model
+	 *
+	 * @return bool
+	 */
+  public function saveDataSource(DataSourceModel $model)
+  {
+      $result = false;
 
-        $record = DataSourceRecord::find([
-            'dataSourceId' => $model->dataSourceId
-        ])->one();
+      $record = DataSourceRecord::find([
+          'dataSourceId' => $model->dataSourceId
+      ])->one();
 
-        if ($record == null)
-        {
-            $record = new DataSourceRecord();
-        }
+      if ($record == null)
+      {
+          $record = new DataSourceRecord();
+      }
 
-        $attributes = $model->getAttributes();
+      $attributes = $model->getAttributes();
 
-        if (!empty($attributes))
-        {
-            foreach ($attributes as $handle => $value)
-            {
-                // Ignore id for dataSourceId
-                if ($handle == 'id') continue;
+      if (!empty($attributes))
+      {
+          foreach ($attributes as $handle => $value)
+          {
+              // Ignore id for dataSourceId
+              if ($handle == 'id') continue;
 
-                $record->setAttribute($handle, $value);
-            }
-        }
+              $record->setAttribute($handle, $value);
+          }
+      }
 
-		    $db = Craft::$app->getDb();
-		    $transaction = $db->beginTransaction();
+	    $db = Craft::$app->getDb();
+	    $transaction = $db->beginTransaction();
 
-        if ($record->validate())
-        {
-            if ($record->save(false))
-            {
-                $model->id = $record->id;
+      if ($record->validate())
+      {
+          if ($record->save(false))
+          {
+              $model->id = $record->id;
 
-                if ($transaction)
-                {
-                    $transaction->commit();
-                }
+              if ($transaction)
+              {
+                  $transaction->commit();
+              }
 
-                $result = true;
-            }
-        }
-        else
-        {
-            $model->addErrors($record->getErrors());
-        }
+              $result = true;
+          }
+      }
+      else
+      {
+          $model->addErrors($record->getErrors());
+      }
 
-        return $result;
-    }
+      return $result;
+  }
 }

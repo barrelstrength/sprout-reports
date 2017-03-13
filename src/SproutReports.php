@@ -104,7 +104,7 @@ class SproutReports extends Plugin
 	 */
 	public static function t($message, array $params = [])
 	{
-		return Craft::t('sproutReports', $message, $params);
+		return Craft::t('sproutreports', $message, $params);
 	}
 
 	/**

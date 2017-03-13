@@ -3,7 +3,7 @@ namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 
 use Craft;
 use barrelstrength\sproutreports\contracts\BaseDataSource;
-use barrelstrength\sproutreports\sproutReports;
+use barrelstrength\sproutreports\SproutReports;
 use barrelstrength\sproutreports\models\Report as ReportModel;
 use craft\records\Category as CategoryRecord;
 use craft\records\Entry as EntryRecord;
@@ -13,12 +13,12 @@ class Categories extends BaseDataSource
 {
 	public function getName()
 	{
-		return sproutReports::t('Category Usage by Section');
+		return SproutReports::t('Category Usage by Section');
 	}
 
 	public function getDescription()
 	{
-		return sproutReports::t('Returns a breakdown of Categories used by Entries.');
+		return SproutReports::t('Returns a breakdown of Categories used by Entries.');
 	}
 
 	/**
@@ -134,12 +134,12 @@ class Categories extends BaseDataSource
 	{
 		if (empty($options['sectionId']))
 		{
-			$errors['sectionId'][] = sproutReports::t('Section is required.');
+			$errors['sectionId'][] = SproutReports::t('Section is required.');
 		}
 
 		if (empty($options['categoryGroupId']))
 		{
-			$errors['categoryGroupId'][] = sproutReports::t('Category Group is required.');
+			$errors['categoryGroupId'][] = SproutReports::t('Category Group is required.');
 		}
 
 		if (count($errors) > 0)

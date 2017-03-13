@@ -24,7 +24,6 @@ use craft\services\UserPermissions;
 use craft\events\RegisterUserPermissionsEvent;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\Categories;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\Users;
-use yii\log\Logger;
 
 /**
  * https://craftcms.com/docs/plugins/introduction

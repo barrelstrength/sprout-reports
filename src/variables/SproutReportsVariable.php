@@ -7,35 +7,6 @@ use barrelstrength\sproutreports\SproutReports;
 
 class SproutReportsVariable
 {
-	///**
-	// * @var SproutReportsPlugin
-	// */
-	//protected $plugin;
-	//
-	//public function __construct()
-	//{
-	//	$this->plugin = craft()->plugins->getPlugin('sproutreports');
-	//}
-	//
-	///**
-	// * @return string
-	// */
-	//public function getName()
-	//{
-	//	return $this->plugin->getName();
-	//}
-	//
-	///**
-	// * @return string
-	// */
-	//public function getVersion()
-	//{
-	//	return $this->plugin->getVersion();
-	//}
-	//
-	///**
-	// * @return SproutReportsBaseDataSource[]
-	// */
 	public function getDataSources()
 	{
 		return SproutReports::$api->dataSources->getAllDataSources();

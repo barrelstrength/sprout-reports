@@ -169,7 +169,7 @@ class Users extends BaseDataSource
 	{
 		if (empty($options['userGroups']))
 		{
-			$errors['userGroups'][] = Craft::t('Select at least one User Group.');
+			$errors['userGroups'][] = SproutReports::t('Select at least one User Group.');
 
 			return false;
 		}

@@ -39,20 +39,24 @@ class CustomQuery extends BaseDataSource
 	 * @todo:so Let's bring back a little sanity checks back into raw queries
 	 *
 	 * @param ReportModel $report
-	 *
+	 * @return array
 	 */
 	public function getResults(ReportModel &$report, $options = array())
 	{
 		$query = $report->getOption('query');
 
+		$result = [];
+
 		try
 		{
-			return Craft::$app->getDb()->createCommand($query)->queryAll();
+			$result = Craft::$app->getDb()->createCommand($query)->queryAll();
 		}
 		catch (\Exception $e)
 		{
 			$report->setResultsError($e->getMessage());
 		}
+
+		return $result;
 	}
 
 	/**

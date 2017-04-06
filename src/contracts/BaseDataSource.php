@@ -5,6 +5,7 @@ use Craft;
 use barrelstrength\sproutreports\records\DataSource;
 use barrelstrength\sproutreports\models\Report as ReportModel;
 use barrelstrength\sproutreports\SproutReports;
+use craft\base\Plugin;
 use craft\helpers\UrlHelper;
 
 /**
@@ -40,6 +41,7 @@ abstract class BaseDataSource
 	public function __construct()
 	{
 		$namespaces = explode('\\', __NAMESPACE__);
+
 		$class = basename(get_class($this));
 
 		// get plugin name on second array
@@ -212,6 +214,7 @@ abstract class BaseDataSource
 	{
 		$record = DataSource::findOne(['dataSourceId' => $this->id]);
 
+		// $record->allowNew != null
 		if ($record != null)
 		{
 			return $record->allowNew;

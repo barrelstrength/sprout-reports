@@ -114,6 +114,11 @@ class SproutReports extends Plugin
 		return new Settings();
 	}
 
+	public function getSettingsUrl()
+	{
+		return 'sprout-reports/settings';
+	}
+
 	/**
 	 * @return string
 	 */

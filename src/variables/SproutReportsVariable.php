@@ -2,7 +2,7 @@
 
 namespace barrelstrength\sproutreports\variables;
 
-use Craft;
+use barrelstrength\sproutreports\models\Report;
 use barrelstrength\sproutreports\SproutReports;
 
 class SproutReportsVariable
@@ -13,85 +13,28 @@ class SproutReportsVariable
 	}
 
 	/**
-	 * @return null|SproutReports_ReportModel[]
+	 * @return null|Report[]
 	 */
 	public function getReports()
 	{
 		return SproutReports::$api->reports->getAllReports();
 	}
-	//
-	///**
-	// * @return null|SproutReports_ReportGroupModel[]
-	// */
+
+	/**
+	 * @return null|Report[]
+	 */
 	public function getReportGroups()
 	{
 		return SproutReports::$api->reportGroups->getAllReportGroups();
 	}
 
 	/**
-	 * @param $id
+	 * @param $groupId
 	 *
-	 * @return null|ReportGroupModel[]
+	 * @return null|Report[]
 	 */
 	public function getReportsByGroupId($groupId)
 	{
 		return SproutReports::$api->reports->getReportsByGroupId($groupId);
-	}
-	//
-	///**
-	// * @param int $id
-	// *
-	// * @return SproutReports_ReportModel
-	// */
-	//public function getReportById($reportId)
-	//{
-	//	return sproutReports()->reports->getReport($reportId);
-	//}
-	//
-	//public function getReportsAsSelectFieldOptions()
-	//{
-	//	$options = array();
-	//	$reports = $this->getReports();
-	//
-	//	if ($reports)
-	//	{
-	//		foreach ($reports as $report)
-	//		{
-	//			$options[] = array(
-	//				'label' => $report->name,
-	//				'value' => $report->id,
-	//			);
-	//		}
-	//	}
-	//	return $options;
-	//}
-
-	// @todo - figure out how this best works with Labels and Values before making available
-	//public function getResults($reportHandle, array $options = array())
-	//{
-	//	$report = sproutReports()->reports->getReportByHandle($reportHandle);
-	//
-	//	if ($report)
-	//	{
-	//		$dataSource = sproutReports()->dataSources->getDataSourceById($report->dataSourceId);
-	//
-	//		if ($dataSource)
-	//		{
-	//			$values = $dataSource->getResults($report);
-	//
-	//			if (!empty($values) && empty($labels))
-	//			{
-	//				$firstItemInArray = reset($values);
-	//				$labels = array_keys($firstItemInArray);
-	//			}
-	//
-	//			return compact('labels', 'values');
-	//		}
-	//	}
-	//}
-
-	public function test()
-	{
-		return 'this is test';
 	}
 }

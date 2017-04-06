@@ -2,7 +2,6 @@
 namespace barrelstrength\sproutreports\records;
 
 use craft\db\ActiveRecord;
-use yii\db\ActiveQueryInterface;
 
 /**
  * Class SproutReports_ReportRecord

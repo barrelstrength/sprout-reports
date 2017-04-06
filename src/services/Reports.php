@@ -81,6 +81,7 @@ class Reports extends Component
 	public function saveReport(&$model)
 	{
 		if (!$model->validate()) {
+
 			Craft::info('Report not saved due to validation error.', __METHOD__);
 
 			return false;

@@ -47,7 +47,14 @@ class Report extends Model
 
 	public function getOptions()
 	{
-		return json_decode($this->options);
+		$options = $this->options;
+
+		if (is_string($this->options))
+		{
+			$options = json_decode($this->options);
+		}
+
+		return $options;
 	}
 
 	/**

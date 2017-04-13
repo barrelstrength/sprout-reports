@@ -5,6 +5,7 @@
 	instructions: "Select the user groups to include in your report. All by default."|t,
 	name: "options[userGroups]",
 	options: userGroupOptions,
+	errors: errors is defined ? errors.userGroups : '',
 	values: options.userGroups is defined ? options.userGroups : null,
 	first: true
 }) }}

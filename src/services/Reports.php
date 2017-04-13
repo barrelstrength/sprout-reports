@@ -50,7 +50,7 @@ class Reports extends Component
 		$dataSource = SproutReports::$api->dataSources->getDataSourceById($instance->dataSourceId);
 
 		$instance->allowHtml = $request->getBodyParam('allowHtml', $dataSource->getDefaultAllowHtml());
-
+	
 		return $instance;
 	}
 

@@ -8,7 +8,7 @@
 {% set title = report['id'] is defined and report['id'] is not empty ? "Edit Report" : "New Report" %}
 
 {% set crumbs = [
-	{ label: "Reports"|t, url: url('sproutreports') }
+	{ label: "Reports"|t('sproutreports'), url: url('sproutreports') }
 ] %}
 
 {% set groups = craft.sproutreports.getReportGroups() %}
@@ -35,14 +35,14 @@
 
 	<div class="button">
 		<div class="btngroup">
-			<input type="submit" class="btn submit" value="{{ 'Save Report'|t }}">
+			<input type="submit" class="btn submit" value="{{ 'Save Report'|t('sproutreports') }}">
 
 			<div class="btn submit menubtn"></div>
 			<div class="menu">
 				<ul>
-					<li><a class="formsubmit" data-redirect="{{ continueEditingUrl|hash }}">{{ "Save and continue editing"|t }}</a></li>
+					<li><a class="formsubmit" data-redirect="{{ continueEditingUrl|hash }}">{{ "Save and continue editing"|t('sproutreports') }}</a></li>
 					<li><a class="formsubmit" data-redirect="{{ dataSource.getUrl('/new')|hash }}">{{ "Save and add another
-					report"|t }}</a></li>
+					report"|t('sproutreports') }}</a></li>
 				</ul>
 			</div>
 		</div>
@@ -62,7 +62,7 @@
 				{% endif %}
 
 				{{ forms.textField({
-					label: "Name"|t,
+					label: "Name"|t('sproutreports'),
 					id: "name",
 					name: 'name',
 					value: report is defined ? report.name : "",
@@ -73,7 +73,7 @@
 				}) }}
 
 				{{ forms.textField({
-					label: "Description"|t,
+					label: "Description"|t('sproutreports'),
 					name: 'description',
 					rows: 3,
 					value: report is defined ? report.description : "",
@@ -104,7 +104,7 @@
 				{% set dataSourceNameLabel = "<h6>" ~ dataSource.name ~ "</h6>" %}
 
 				{{ forms.field({
-					label: "Data Source"|t,
+					label: "Data Source"|t('sproutreports'),
 				}, dataSourceNameLabel) }}
 
 				{% if groups | length %}
@@ -116,7 +116,7 @@
 
 					{{ forms.selectField({
 						first: true,
-						label: "Group <span class='info'>Which group should this report be displayed in?</span>"|t,
+						label: "Group <span class='info'>Which group should this report be displayed in?</span>"|t('sproutreports'),
 						id: 'groupId',
 						name: 'groupId',
 						options: groupOptions,
@@ -130,7 +130,7 @@
 			<div class="pane meta">
 
 				{{ forms.textField({
-					label: "Handle"|t,
+					label: "Handle"|t('sproutreports'),
 					id: 'handle',
 					name: 'handle',
 					required: true,
@@ -140,7 +140,7 @@
 
 				{% if dataSource.isAllowHtmlEditable() %}
 					{{ forms.lightSwitchField({
-						label: 'Allow HTML <span class="info">Render HTML in your report results. Don\'t enable this setting if you allow user submitted content.</span>'|t,
+						label: 'Allow HTML <span class="info">Render HTML in your report results. Don\'t enable this setting if you allow user submitted content.</span>'|t('sproutreports'),
 						name: 'allowHtml',
 						on: report.allowHtml is defined ? report.allowHtml : dataSource.getDefaultAllowHtml()
 					})}}
@@ -168,7 +168,7 @@
 				{% endset %}
 
 				{{ forms.field({
-					label: "Enabled"|t,
+					label: "Enabled"|t('sproutreports'),
 				}, statusInput) }}
 
 			</div>

@@ -2,7 +2,7 @@
 
 {% set subnav = {
 	reports: {
-		label: "Reports"|t,
+		label: "Reports"|t('sproutreports'),
 		url: url('sprout-reports/reports')
 	}
 } %}
@@ -10,7 +10,7 @@
 {% if currentUser.can('sproutReports-editDataSources') %}
 	{% set subnav = subnav|merge({
 		datasources: {
-			label: "Data Sources"|t,
+			label: "Data Sources"|t('sproutreports'),
 			url: url('sprout-reports/datasources')
 		}
 	}) %}
@@ -19,13 +19,13 @@
 {% if currentUser.can('sproutReports-editSettings') %}
 	{% set subnav = subnav|merge({
 		settings: {
-			label: "Settings"|t,
+			label: "Settings"|t('sproutreports'),
 			url: url('sprout-reports/settings')
 		}
 	}) %}
 {% endif %}
 
-{% set title  = "Settings"|t %}
+{% set title  = "Settings"|t('sproutreports') %}
 {% set bodyClass = craft.request.getSegments()|slice(0, 3)|join(' ') %}
 
 {% set selectedSubnavItem = craft.request.segment(2) %}

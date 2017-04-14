@@ -29,9 +29,9 @@ class ReportsController extends Controller
 	{
 		$this->requirePostRequest();
 
-		$report = SproutReports::$api->reports->prepareFromPost();
+		$report = SproutReports::$app->reports->prepareFromPost();
 
-		if (!SproutReports::$api->reports->saveReport($report))
+		if (!SproutReports::$app->reports->saveReport($report))
 		{
 			Craft::$app->getSession()->setError(SproutReports::t('Couldn’t save report.'));
 
@@ -62,7 +62,7 @@ class ReportsController extends Controller
 
 		if ($reportId && $options)
 		{
-			$reportModel = SproutReports::$api->reports->getReport($reportId);
+			$reportModel = SproutReports::$app->reports->getReport($reportId);
 
 			if (!$reportModel)
 			{
@@ -71,7 +71,7 @@ class ReportsController extends Controller
 
 			$reportModel->options = is_array($options) ? $options : array();
 
-			if (SproutReports::$api->reports->saveReport($reportModel))
+			if (SproutReports::$app->reports->saveReport($reportModel))
 			{
 				Craft::$app->getSession()->setNotice(SproutReports::t('Query updated.'));
 
@@ -98,7 +98,7 @@ class ReportsController extends Controller
 
 		if ($reportId != null)
 		{
-			$reportModel = SproutReports::$api->reports->getReport($reportId);
+			$reportModel = SproutReports::$app->reports->getReport($reportId);
 
 			$variables['report'] = $reportModel;
 		}
@@ -113,14 +113,14 @@ class ReportsController extends Controller
 
 	public function actionResultsIndex($reportId = null)
 	{
-		$report = SproutReports::$api->reports->getReport($reportId);
+		$report = SproutReports::$app->reports->getReport($reportId);
 
 		$options = Craft::$app->getRequest()->getBodyParam('options');
 		$options = count($options) ? $options : array();
 
 		if ($report)
 		{
-			$dataSource = SproutReports::$api->dataSources->getDataSourceById($report->dataSourceId);
+			$dataSource = SproutReports::$app->dataSources->getDataSourceById($report->dataSourceId);
 			$labels     = $dataSource->getDefaultLabels($report, $options);
 
 			$variables['dataSource'] = null;
@@ -175,14 +175,14 @@ class ReportsController extends Controller
 	{
 		$reportId = Craft::$app->getRequest()->getParam('reportId');
 
-		$report   = SproutReports::$api->reports->getReport($reportId);
+		$report   = SproutReports::$app->reports->getReport($reportId);
 
 		$options = Craft::$app->getRequest()->getBodyParam('options');
 		$options = count($options) ? $options : array();
 
 		if ($report)
 		{
-			$dataSource = SproutReports::$api->dataSources->getDataSourceById($report->dataSourceId);
+			$dataSource = SproutReports::$app->dataSources->getDataSourceById($report->dataSourceId);
 
 			if ($dataSource)
 			{
@@ -192,7 +192,7 @@ class ReportsController extends Controller
 				$labels   = $dataSource->getDefaultLabels($report, $options);
 				$values   = $dataSource->getResults($report, $options);
 
-				SproutReports::$api->exports->toCsv($values, $labels, $filename);
+				SproutReports::$app->exports->toCsv($values, $labels, $filename);
 			}
 		}
 	}

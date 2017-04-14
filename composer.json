@@ -34,7 +34,7 @@
         "hasCpSection": true,
         "changelogUrl": "???",
         "components": {
-            "api": "barrelstrength\\sproutreports\\services\\Api"
+            "app": "barrelstrength\\sproutreports\\services\\App"
         },
         "class": "barrelstrength\\sproutreports\\SproutReports"
     }

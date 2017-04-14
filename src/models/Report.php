@@ -38,7 +38,7 @@ class Report extends Model
 
 	public function getDataSource()
 	{
-		$dataSource = SproutReports::$api->dataSources->getDataSourceById($this->dataSourceId);
+		$dataSource = SproutReports::$app->dataSources->getDataSourceById($this->dataSourceId);
 
 		$dataSource->setReport($this);
 

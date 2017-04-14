@@ -47,7 +47,7 @@ class Reports extends Component
 		$instance->enabled      = $request->getBodyParam('enabled');
 		$instance->groupId      = $request->getBodyParam('groupId', null);
 
-		$dataSource = SproutReports::$api->dataSources->getDataSourceById($instance->dataSourceId);
+		$dataSource = SproutReports::$app->dataSources->getDataSourceById($instance->dataSourceId);
 
 		$instance->allowHtml = $request->getBodyParam('allowHtml', $dataSource->getDefaultAllowHtml());
 	
@@ -140,7 +140,7 @@ class Reports extends Component
 	{
 		$errors = array();
 
-		$dataSource = SproutReports::$api->dataSources->getDataSourceById($report->dataSourceId);
+		$dataSource = SproutReports::$app->dataSources->getDataSourceById($report->dataSourceId);
 
 		if (!$dataSource->validateOptions($report->options, $errors))
 		{

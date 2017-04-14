@@ -9,8 +9,8 @@
 {% else %}
 
 	{{ forms.selectField({
-		label: "Section"|t,
-		instructions: "Section for which you want to report category usage"|t,
+		label: "Section"|t('sproutreports'),
+		instructions: "Section for which you want to report category usage"|t('sproutreports'),
 		name: 'options[sectionId]',
 		options: sectionOptions,
 		value: options.sectionId is defined ? options.sectionId : null,
@@ -19,8 +19,8 @@
 	}) }}
 
 	{{ forms.selectField({
-		label: "Category Group"|t,
-		instructions: "Category group for which you want report category usage"|t,
+		label: "Category Group"|t('sproutreports'),
+		instructions: "Category group for which you want report category usage"|t('sproutreports'),
 		name: 'options[categoryGroupId]',
 		options: categoryGroupOptions,
 		value: options.categoryGroupId is defined ? options.categoryGroupId : null,

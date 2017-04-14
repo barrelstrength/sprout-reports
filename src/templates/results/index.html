@@ -1,11 +1,11 @@
 {% extends "sprout-reports/_layouts/base" %}
 
-{% set title  = report.name|t %}
+{% set title  = report.name|t('sproutreports') %}
 {% set groups = craft.sproutreports.getReportGroups() %}
 
 {% set crumbs = [
-	{ label: "Reports"|t, url: url('sproutreports/reports') },
-	{ label: "Edit "|t ~ report.name|t, url: report.getEditUrl() }
+	{ label: "Reports"|t('sproutreports'), url: url('sprout-reports/reports') },
+	{ label: "Edit "|t('sproutreports') ~ report.name, url: report.getEditUrl() }
 ] %}
 
 {% set selectedTab = 'resultView' %}
@@ -22,7 +22,7 @@
     <input type="hidden" name="reportId" value="{{ reportId }}">
 
     <a id="btn-download-csv" class="btn">
-	    {{ "Download"|t }}
+	    {{ "Download"|t('sproutreports') }}
     </a>
 
 		{% if currentUser.can('sproutreports-editReports') %}
@@ -48,7 +48,7 @@
 
 				<div class="button">
 					<div class="btngroup">
-						<input type="submit" class="btn submit" value="{{ 'Update Report'|t }}">
+						<input type="submit" class="btn submit" value="{{ 'Update Report'|t('sproutreports') }}">
 					</div>
 				</div>
 
@@ -93,7 +93,7 @@
 				</table>
 			</div>
 		{% else %}
-			<p>{{ "This report currently has no results."|t }}</p>
+			<p>{{ "This report currently has no results."|t('sproutreports') }}</p>
 		{% endif %}
 	</div>
 

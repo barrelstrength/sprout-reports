@@ -25,7 +25,7 @@ class ReportGroupController extends Controller
 		$group->id   = $request->getBodyParam('id');
 		$group->name = $groupName;
 
-		if (SproutReports::$api->reportGroups->saveGroup($group))
+		if (SproutReports::$app->reportGroups->saveGroup($group))
 		{
 			Craft::$app->getSession()->setNotice(SproutReports::t('Report group saved.'));
 
@@ -51,7 +51,7 @@ class ReportGroupController extends Controller
 		$this->requirePostRequest();
 
 		$groupId = Craft::$app->getRequest()->getBodyParam('id');
-		$success = SproutReports::$api->reportGroups->deleteGroup($groupId);
+		$success = SproutReports::$app->reportGroups->deleteGroup($groupId);
 
 		Craft::$app->getSession()->setNotice(SproutReports::t('Group deleted..'));
 

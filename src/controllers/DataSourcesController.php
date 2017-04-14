@@ -33,7 +33,7 @@ class DataSourcesController extends Controller
 
 		$model->setAttributes($attributes);
 
-		if (SproutReports::$api->dataSources->saveDataSource($model))
+		if (SproutReports::$app->dataSources->saveDataSource($model))
 		{
 			return $this->asJson(true);
 		}

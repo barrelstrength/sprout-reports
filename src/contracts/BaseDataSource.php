@@ -153,7 +153,7 @@ abstract class BaseDataSource
 	 */
 	final public function getReportCount()
 	{
-		return SproutReports::$api->reports->getCountByDataSourceId($this->getId());
+		return SproutReports::$app->reports->getCountByDataSourceId($this->getId());
 	}
 
 	/**

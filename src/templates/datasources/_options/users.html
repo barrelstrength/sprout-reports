@@ -1,11 +1,11 @@
 {% import "_includes/forms" as forms %}
 
 {{ forms.checkboxSelectField({
-	label: "User Groups"|t,
-	instructions: "Select the user groups to include in your report. All by default."|t,
+	label: "User Groups"|t('sproutreports'),
+	instructions: "Select the user groups to include in your report. All by default."|t('sproutreports'),
 	name: "options[userGroups]",
 	options: userGroupOptions,
-	errors: errors is defined ? errors.userGroups : '',
+	errors: errors.userGroups is defined ? errors.userGroups : '',
 	values: options.userGroups is defined ? options.userGroups : null,
 	first: true
 }) }}

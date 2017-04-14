@@ -25,7 +25,7 @@ use craft\base\Component;
  * @package   SproutReports
  * @since     3
  */
-class Api extends Component
+class App extends Component
 {
 	/**
 	 * @var ReportGroups

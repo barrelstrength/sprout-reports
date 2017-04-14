@@ -5,7 +5,7 @@
 	{% redirect 'sproutreports' %}
 {% endif %}
 
-{% set title  = "Data Sources"|t %}
+{% set title  = "Data Sources"|t('sproutreports') %}
 {% set groups = craft.sproutreports.getReportGroups() %}
 
 {% set selectedTab = 'dataSources' %}
@@ -25,11 +25,11 @@
 		<table class="data fullwidth">
 			<thead>
 			<tr>
-				<th scope="col" data-attribute="datasource">{{ "Data Source"|t }}</th>
-				<th scope="col" data-attribute="description">{{ "Description"|t }}</th>
-				<th scope="col" data-attribute="plugin">{{ "Plugin"|t }}</th>
-				<th scope="col" data-attribute="totalReports">{{ "Total Reports"|t }}</th>
-				<th scope="col" data-attribute="allowNew">{{ "Allow New?"|t }} <span class="info">{{ "Allow users to create a new Report from this Data Source from the New Report dropdown. If disabled, any existing Reports using this Data Source will still be visible to all users in the list of Reports. Users with the 'Edit Data Sources' permission can always create a new Report from this page. "|t }}</span></th>
+				<th scope="col" data-attribute="datasource">{{ "Data Source"|t('sproutreports') }}</th>
+				<th scope="col" data-attribute="description">{{ "Description"|t('sproutreports') }}</th>
+				<th scope="col" data-attribute="plugin">{{ "Plugin"|t('sproutreports') }}</th>
+				<th scope="col" data-attribute="totalReports">{{ "Total Reports"|t('sproutreports') }}</th>
+				<th scope="col" data-attribute="allowNew">{{ "Allow New?"|t('sproutreports') }} <span class="info">{{ "Allow users to create a new Report from this Data Source from the New Report dropdown. If disabled, any existing Reports using this Data Source will still be visible to all users in the list of Reports. Users with the 'Edit Data Sources' permission can always create a new Report from this page. "|t('sproutreports') }}</span></th>
 				<th class="thin"></th>
 			</tr>
 			</thead>
@@ -53,7 +53,7 @@
 						}) }}
 					</td>
 					<td>
-						<a href="{{ dataSource.getUrl('/new') }}" class="btn small">{{ "New Report"|t }}</a>
+						<a href="{{ dataSource.getUrl('/new') }}" class="btn small">{{ "New Report"|t('sproutreports') }}</a>
 					</td>
 				</tr>
 			{% endfor %}

@@ -39,7 +39,7 @@ class SproutReports extends Plugin
 	 *
 	 * @var \barrelstrength\sproutreports\services\Api
 	 */
-	public static $api;
+	public static $app;
 
 	public $hasSettings = true;
 
@@ -47,7 +47,7 @@ class SproutReports extends Plugin
   {
 		parent::init();
 
-		self::$api = $this->get('api');
+		self::$app = $this->get('app');
 
 		Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function (RegisterUserPermissionsEvent $event) {
 
@@ -87,11 +87,11 @@ class SproutReports extends Plugin
 	 */
   public function afterInstall()
   {
-	  $defaultGroup = SproutReports::$api->reportGroups->createGroupByName('Sprout Reports');
+	  $defaultGroup = SproutReports::$app->reportGroups->createGroupByName('Sprout Reports');
 
 	  if (Craft::$app->getPlugins()->getPlugin('sproutreports'))
 	  {
-		 SproutReports::$api->reports->registerReports(new Users(), $defaultGroup);
+		 SproutReports::$app->reports->registerReports(new Users(), $defaultGroup);
 	  }
   }
 

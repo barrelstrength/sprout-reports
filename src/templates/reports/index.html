@@ -1,6 +1,6 @@
 {% extends "sprout-reports/_layouts/base" %}
 
-{% set title  = "Reports"|t %}
+{% set title  = "Reports"|t('sproutreports') %}
 {% set groups = craft.sproutreports.getReportGroups() %}
 
 {% set selectedTab = 'reports' %}
@@ -35,7 +35,7 @@
 
 		{% if newReportOptions|length %}
 			<div class="btngroup submit first">
-				<a class="btn submit add icon" href="{{ newReportOptions[0].url }}">{{ "New Report"|t }}</a>
+				<a class="btn submit add icon" href="{{ newReportOptions[0].url }}">{{ "New Report"|t('sproutreports') }}</a>
 				{% if dataSources %}
 					<div class="btn submit menubtn"></div>
 					<div class="menu">
@@ -61,8 +61,8 @@
 			<table class="data fullwidth">
 				<thead>
 				<tr>
-					<th class="sproutreports-reportname" style="width:60%;">{{ "Name"|t }}</th>
-					<th class="sproutreports-datasource" style="width:35%;">{{ "Data Source"|t }}</th>
+					<th class="sproutreports-reportname" style="width:60%;">{{ "Name"|t('sproutreports') }}</th>
+					<th class="sproutreports-datasource" style="width:35%;">{{ "Data Source"|t('sproutreports') }}</th>
 					<th class="thin"></th>
 
 					{% if currentUser.can('sproutReports-editReports') %}
@@ -86,7 +86,7 @@
 
 						<td class="sproutreports-reportactions">
 							<a href="{{ actionUrl('sprout-reports/reports/export-report', {reportId: report.id}) }}"
-								class="btn small">{{ "Download"|t }}</a>
+								class="btn small">{{ "Download"|t('sproutreports') }}</a>
 						</td>
 
 						{% if currentUser.can('sproutReports-editReports') %}
@@ -117,7 +117,7 @@
 		<ul id="groups">
 
 			<li><a href="{{ url('sproutreports') }}"{% if groupId is null %} class="sel"{% endif %}>
-					{{ "All Reports"|t }}</a></li>
+					{{ "All Reports"|t('sproutreports') }}</a></li>
 
 			{% for group in groups %}
 				<li><a href="{{ url('sprout-reports/reports/'~group.id) }}"{% if groupId is defined and group.id == groupId %} class="sel"{% endif %} data-id="{{ group.id }}">{{ group.name }}</a></li>
@@ -129,14 +129,14 @@
 	{% if currentUser.can('sproutReports-editReports') %}
 
 		<div class="buttons">
-			<div id="newgroupbtn" class="btn add icon">{{ "New Group"|t }}</div>
+			<div id="newgroupbtn" class="btn add icon">{{ "New Group"|t('sproutreports') }}</div>
 
 			{% if groupId is defined %}
 				<div id="groupsettingsbtn" class="btn settings icon menubtn" title="{{ 'Settings' }}"></div>
 				<div class="menu">
 					<ul>
-						<li><a data-action="rename" role="button">{{ "Rename selected group"|t }}</a></li>
-						<li><a data-action="delete" role="button">{{ "Delete selected group"|t }}</a></li>
+						<li><a data-action="rename" role="button">{{ "Rename selected group"|t('sproutreports') }}</a></li>
+						<li><a data-action="delete" role="button">{{ "Delete selected group"|t('sproutreports') }}</a></li>
 					</ul>
 				</div>
 			{% endif %}

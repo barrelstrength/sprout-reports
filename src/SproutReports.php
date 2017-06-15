@@ -59,13 +59,13 @@ class SproutReports extends Plugin
 
 		Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function (RegisterUrlRulesEvent $event) {
 
-			$event->rules['sprout-reports/reports'] = 'sprout-reports/reports/index';
-			$event->rules['sprout-reports/reports/<groupId:\d+>'] = 'sprout-reports/reports/index';
-			$event->rules['sprout-reports/reports/<pluginId>/<dataSourceKey:{handle}>/new'] = 'sprout-reports/reports/edit-report';
-			$event->rules['sprout-reports/reports/<pluginId>/<dataSourceKey:{handle}>/edit/<reportId:\d+>'] = 'sprout-reports/reports/edit-report';
+			$event->rules['sproutreports/reports'] = 'sprout-reports/reports/index';
+			$event->rules['sproutreports/reports/<groupId:\d+>'] = 'sprout-reports/reports/index';
+			$event->rules['sproutreports/reports/<pluginId>/<dataSourceKey:{handle}>/new'] = 'sprout-reports/reports/edit-report';
+			$event->rules['sproutreports/reports/<pluginId>/<dataSourceKey:{handle}>/edit/<reportId:\d+>'] = 'sprout-reports/reports/edit-report';
 
-			$event->rules['sprout-reports/datasources'] = ['template' => 'sprout-reports/datasources/index'];
-			$event->rules['sprout-reports/reports/view/<reportId:\d+>'] = 'sprout-reports/reports/results-index';
+			$event->rules['sproutreports/datasources'] = ['template' => 'sprout-reports/datasources/index'];
+			$event->rules['sproutreports/reports/view/<reportId:\d+>'] = 'sprout-reports/reports/results-index';
 
 		});
 
@@ -116,7 +116,7 @@ class SproutReports extends Plugin
 
 	public function getSettingsUrl()
 	{
-		return 'sprout-reports/settings';
+		return 'sproutreports/settings';
 	}
 
 	/**
@@ -124,7 +124,7 @@ class SproutReports extends Plugin
 	 */
 	protected function settingsHtml()
 	{
-		return Craft::$app->getView()->renderTemplate('sprout-reports/_cp/settings', [
+		return Craft::$app->getView()->renderTemplate('sproutreports/_cp/settings', [
 			'settings' => $this->getSettings()
 		]);
 	}

@@ -115,7 +115,7 @@ class Categories extends BaseDataSource
 			$setupRequiredMessage = SproutReports::t('This report requires a Channel or Structure section using Categories. Please update your settings to include at least one Channel or Structure and at least one Category Group with Categories available to assign to that section.');
 		}
 
-		return \Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_options/categories', array(
+		return \Craft::$app->getView()->renderTemplate('sproutreports/datasources/_options/categories', array(
 			'options'              => count($options) ? $options : $this->report->getOptions(),
 			'sectionOptions'       => $sectionOptions,
 			'categoryGroupOptions' => $categoryGroupOptions,

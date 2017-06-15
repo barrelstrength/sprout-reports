@@ -103,7 +103,7 @@ abstract class BaseDataSource
 	{
 		$url = join('/', explode('.', $this->getId()));
 
-		return UrlHelper::cpUrl(sprintf('sprout-reports/reports/%s/%s', $url, ltrim($append, '/')));
+		return UrlHelper::cpUrl(sprintf('sproutreports/reports/%s/%s', $url, ltrim($append, '/')));
 	}
 
 	/**

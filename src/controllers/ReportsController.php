@@ -16,7 +16,7 @@ class ReportsController extends Controller
 	 */
 	public function actionIndex($groupId = null)
 	{
-		return $this->renderTemplate('sprout-reports/reports/index', [
+		return $this->renderTemplate('sproutreports/reports/index', [
 			'groupId' => $groupId
 		]);
 	}
@@ -108,7 +108,7 @@ class ReportsController extends Controller
 
 		$variables['continueEditingUrl']   = $variables['dataSource']->getUrl() . '/edit/{id}';
 
-		return $this->renderTemplate('sprout-reports/reports/_edit', $variables);
+		return $this->renderTemplate('sproutreports/reports/_edit', $variables);
 	}
 
 	public function actionResultsIndex($reportId = null)
@@ -145,7 +145,7 @@ class ReportsController extends Controller
 			}
 
 			// @todo Hand off to the export service when a blank page and 404 issues are sorted out
-			return $this->renderTemplate('sprout-reports/results/index', $variables);
+			return $this->renderTemplate('sproutreports/results/index', $variables);
 		}
 
 		throw new \HttpException(404, SproutReports::t('Report not found.'));

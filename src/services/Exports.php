@@ -37,7 +37,7 @@ class Exports extends Component
 		$variables['labels'] = $labels;
 		$variables['values'] = $values;
 
-		return \Craft::$app->getView()->renderTemplate('sprout-reports/results/index', $variables);
+		return \Craft::$app->getView()->renderTemplate('sproutreports/results/index', $variables);
 	}
 
 	/**

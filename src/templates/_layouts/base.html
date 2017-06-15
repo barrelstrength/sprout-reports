@@ -3,7 +3,7 @@
 {% set subnav = {
 	reports: {
 		label: "Reports"|t('sproutreports'),
-		url: url('sprout-reports/reports')
+		url: url('sproutreports/reports')
 	}
 } %}
 
@@ -11,7 +11,7 @@
 	{% set subnav = subnav|merge({
 		datasources: {
 			label: "Data Sources"|t('sproutreports'),
-			url: url('sprout-reports/datasources')
+			url: url('sproutreports/datasources')
 		}
 	}) %}
 {% endif %}
@@ -20,7 +20,7 @@
 	{% set subnav = subnav|merge({
 		settings: {
 			label: "Settings"|t('sproutreports'),
-			url: url('settings/plugins/sprout-reports')
+			url: url('settings/plugins/sproutreports')
 		}
 	}) %}
 {% endif %}

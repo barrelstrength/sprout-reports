@@ -1,8 +1,7 @@
 <?php
 namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 
-use Craft;
-use barrelstrength\sproutreports\contracts\BaseDataSource;
+use barrelstrength\sproutcore\integrations\sproutreports\contracts\BaseDataSource;
 use barrelstrength\sproutreports\SproutReports;
 use barrelstrength\sproutreports\models\Report as ReportModel;
 use craft\records\Category as CategoryRecord;

@@ -1,12 +1,12 @@
 <?php
 namespace barrelstrength\sproutreports\services;
 
+use barrelstrength\sproutcore\integrations\sproutreports\contracts\BaseDataSource;
 use Craft;
 use barrelstrength\sproutreports\models\DataSource as DataSourceModel;
 use barrelstrength\sproutreports\records\DataSource as DataSourceRecord;
 use yii\base\Component;
 use craft\events\RegisterComponentTypesEvent;
-use barrelstrength\sproutreports\contracts\BaseDataSource;
 
 /**
  * Class DataSources
@@ -65,7 +65,6 @@ class DataSources  extends Component
 				 */
 				foreach ($responses as $dataSource)
 				{
-
 					if ($dataSource && $dataSource instanceof BaseDataSource)
 					{
 						$this->dataSources[$dataSource->getId()] = $dataSource;

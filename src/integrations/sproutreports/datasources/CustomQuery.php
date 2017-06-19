@@ -1,11 +1,10 @@
 <?php
 namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 
+use barrelstrength\sproutcore\integrations\sproutreports\contracts\BaseDataSource;
 use Craft;
-use barrelstrength\sproutreports\contracts\BaseDataSource;
 use barrelstrength\sproutreports\models\Report as ReportModel;
 use barrelstrength\sproutreports\SproutReports;
-use craft\db\Query;
 
 /**
  * Class SproutReportsQueryDataSource

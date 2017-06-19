@@ -10,12 +10,14 @@
 
 namespace barrelstrength\sproutreports;
 
+use barrelstrength\sproutcore\SproutCoreHelper;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomQuery;
 use Craft;
 use craft\base\Plugin;
 use barrelstrength\sproutreports\models\Settings;
 use barrelstrength\sproutreports\services\DataSources;
 use barrelstrength\sproutreports\variables\SproutReportsVariable;
+use craft\helpers\DateTimeHelper;
 use yii\base\Event;
 use craft\events\RegisterComponentTypesEvent;
 use craft\web\UrlManager;
@@ -27,7 +29,7 @@ use barrelstrength\sproutreports\integrations\sproutreports\datasources\Users;
 
 /**
  * https://craftcms.com/docs/plugins/introduction
- *
+ *asd
  * @author    Barrelstrength
  * @package   SproutReports
  * @since     3
@@ -47,6 +49,8 @@ class SproutReports extends Plugin
   {
 		parent::init();
 
+	  SproutCoreHelper::registerModule();
+
 		self::$app = $this->get('app');
 
 		Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function (RegisterUserPermissionsEvent $event) {
@@ -65,8 +69,7 @@ class SproutReports extends Plugin
 			$event->rules['sproutreports/reports/<pluginId>/<dataSourceKey:{handle}>/edit/<reportId:\d+>'] = 'sprout-reports/reports/edit-report';
 
 			$event->rules['sproutreports/datasources'] = ['template' => 'sprout-reports/datasources/index'];
-			$event->rules['sproutreports/reports/view/<reportId:\d+>'] = 'sprout-reports/reports/results-index';
-
+			//$event->rules['sproutreports/reports/view/<reportId:\d+>'] = 'sprout-reports/reports/results-index';
 		});
 
 		Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent $event) {

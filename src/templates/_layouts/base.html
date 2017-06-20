@@ -1,32 +1,5 @@
 {% extends "_layouts/cp" %}
 
-{% set subnav = {
-	reports: {
-		label: "Reports"|t('sproutreports'),
-		url: url('sproutreports/reports')
-	}
-} %}
-
-{% if currentUser.can('sproutReports-editDataSources') %}
-	{% set subnav = subnav|merge({
-		datasources: {
-			label: "Data Sources"|t('sproutreports'),
-			url: url('sproutreports/datasources')
-		}
-	}) %}
-{% endif %}
-
-{% if currentUser.can('sproutReports-editSettings') %}
-	{% set subnav = subnav|merge({
-		settings: {
-			label: "Settings"|t('sproutreports'),
-			url: url('settings/plugins/sproutreports')
-		}
-	}) %}
-{% endif %}
-
-{% set selectedSubnavItem = craft.request.segment(2) ? craft.request.segment(2) : 'reports' %}
-
 {% block content %}
 
 {% endblock %}

@@ -196,4 +196,9 @@ class ReportsController extends Controller
 			}
 		}
 	}
+
+	public function actionTest()
+	{
+		\Craft::dd('action test sprout reports');
+	}
 }

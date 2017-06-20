@@ -69,7 +69,8 @@ class SproutReports extends Plugin
 			$event->rules['sproutreports/reports/<pluginId>/<dataSourceKey:{handle}>/edit/<reportId:\d+>'] = 'sprout-reports/reports/edit-report';
 
 			$event->rules['sproutreports/datasources'] = ['template' => 'sprout-reports/datasources/index'];
-			//$event->rules['sproutreports/reports/view/<reportId:\d+>'] = 'sprout-reports/reports/results-index';
+
+			$event->rules['sproutreports/reports/view/<reportId:\d+>'] = 'sprout-reports/reports/results-index';
 		});
 
 		Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent $event) {
@@ -129,6 +130,30 @@ class SproutReports extends Plugin
 	{
 		return Craft::$app->getView()->renderTemplate('sproutreports/_cp/settings', [
 			'settings' => $this->getSettings()
+		]);
+	}
+
+	public function getCpNavItem()
+	{
+		$parent = parent::getCpNavItem();
+
+		$parent['url'] = 'sproutreports';
+
+		return array_merge($parent, [
+			'subnav' => [
+				'reports' => [
+					'label' => static::t('Reports'),
+					'url' => 'sproutreports/reports'
+				],
+				'datasources' => [
+					'label' => static::t('Data Sources'),
+					'url' => 'sproutreports/datasources'
+				],
+				'settings' => [
+					'label' => static::t('Settings'),
+					'url' => 'settings/plugins/sproutreports'
+				]
+			]
 		]);
 	}
 

@@ -120,7 +120,7 @@ class ReportsController extends Controller
 
 		if ($report)
 		{
-			$dataSource = SproutReports::$app->dataSources->getDataSourceById($report->dataSourceId);
+			$dataSource = SproutReports::$app->dataSourcesCore->getDataSourceById($report->dataSourceId);
 			$labels     = $dataSource->getDefaultLabels($report, $options);
 
 			$variables['dataSource'] = null;
@@ -182,7 +182,7 @@ class ReportsController extends Controller
 
 		if ($report)
 		{
-			$dataSource = SproutReports::$app->dataSources->getDataSourceById($report->dataSourceId);
+			$dataSource = SproutReports::$app->dataSourcesCore->getDataSourceById($report->dataSourceId);
 
 			if ($dataSource)
 			{

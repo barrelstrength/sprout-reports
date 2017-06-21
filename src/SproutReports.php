@@ -10,14 +10,13 @@
 
 namespace barrelstrength\sproutreports;
 
+use barrelstrength\sproutreports\models\Settings;
+use barrelstrength\sproutcore\services\sproutreports\DataSourcesCore;
 use barrelstrength\sproutcore\SproutCoreHelper;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomQuery;
 use Craft;
 use craft\base\Plugin;
-use barrelstrength\sproutreports\models\Settings;
-use barrelstrength\sproutreports\services\DataSources;
 use barrelstrength\sproutreports\variables\SproutReportsVariable;
-use craft\helpers\DateTimeHelper;
 use yii\base\Event;
 use craft\events\RegisterComponentTypesEvent;
 use craft\web\UrlManager;
@@ -39,7 +38,7 @@ class SproutReports extends Plugin
 	/**
 	 * Enable use of SproutReports::$plugin-> in place of Craft::$app->
 	 *
-	 * @var \barrelstrength\sproutreports\services\Api
+	 * @var \barrelstrength\sproutreports\services\App
 	 */
 	public static $app;
 
@@ -68,12 +67,16 @@ class SproutReports extends Plugin
 			$event->rules['sproutreports/reports/<pluginId>/<dataSourceKey:{handle}>/new'] = 'sprout-reports/reports/edit-report';
 			$event->rules['sproutreports/reports/<pluginId>/<dataSourceKey:{handle}>/edit/<reportId:\d+>'] = 'sprout-reports/reports/edit-report';
 
-			$event->rules['sproutreports/datasources'] = ['template' => 'sprout-reports/datasources/index'];
+			$event->rules['sproutreports/datasources'] = ['template' => 'sproutreports/datasources/index'];
 
 			$event->rules['sproutreports/reports/view/<reportId:\d+>'] = 'sprout-reports/reports/results-index';
+
+			$event->rules['sproutreports/settings']         = 'sprout-core/settings/edit-settings';
+			$event->rules['sproutreports/settings/general'] = 'sprout-core/settings/edit-settings';
 		});
 
-		Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent $event) {
+		Event::on(DataSourcesCore::class, DataSourcesCore::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent
+		                                                                                  $event) {
 		  $event->types[] = new Categories();
 		  $event->types[] = new CustomQuery();
 
@@ -118,21 +121,6 @@ class SproutReports extends Plugin
 		return new Settings();
 	}
 
-	public function getSettingsUrl()
-	{
-		return 'sproutreports/settings';
-	}
-
-	/**
-	 * @return string
-	 */
-	protected function settingsHtml()
-	{
-		return Craft::$app->getView()->renderTemplate('sproutreports/_cp/settings', [
-			'settings' => $this->getSettings()
-		]);
-	}
-
 	public function getCpNavItem()
 	{
 		$parent = parent::getCpNavItem();
@@ -151,7 +139,7 @@ class SproutReports extends Plugin
 				],
 				'settings' => [
 					'label' => static::t('Settings'),
-					'url' => 'settings/plugins/sproutreports'
+					'url' => 'sproutreports/settings/general'
 				]
 			]
 		]);

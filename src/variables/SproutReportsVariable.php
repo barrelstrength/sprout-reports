@@ -9,7 +9,7 @@ class SproutReportsVariable
 {
 	public function getDataSources()
 	{
-		return SproutReports::$app->dataSources->getAllDataSources();
+		return SproutReports::$app->dataSourcesCore->getAllDataSources();
 	}
 
 	/**

@@ -10,10 +10,11 @@
 
 namespace barrelstrength\sproutreports\services;
 
+use barrelstrength\sproutcore\services\sproutreports\DataSourcesCore;
 use craft\base\Component;
 
 /**
- * Api Service
+ * App Service
  *
  * All of your plugin’s business logic should go in services, including saving data,
  * retrieving data, etc. They provide APIs that your controllers, template variables,
@@ -38,6 +39,11 @@ class App extends Component
 	public $dataSources;
 
 	/**
+	 * @var DataSourcesCore
+	 */
+	public $dataSourcesCore;
+
+	/**
 	 * @var Reports
 	 */
 	public $reports;
@@ -47,11 +53,18 @@ class App extends Component
 	 */
 	public $exports;
 
+	/**
+	 * @var Settings
+	 */
+	public $settings;
+
 	public function init()
 	{
-		$this->reportGroups = new ReportGroups();
-		$this->dataSources  = new DataSources();
-		$this->reports      = new Reports();
-		$this->exports      = new Exports();
+		$this->reportGroups    = new ReportGroups();
+		$this->dataSources     = new DataSources();
+		$this->dataSourcesCore = new DataSourcesCore();
+		$this->reports         = new Reports();
+		$this->exports         = new Exports();
+		$this->settings        = new Settings();
 	}
 }

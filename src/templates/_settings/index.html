@@ -1,0 +1,27 @@
+{% import "_includes/forms" as forms %}
+
+<form method="post" accept-charset="UTF-8"
+	data-saveshortcut-redirect="sproutreports/settings/general">
+	{{ getCsrfInput() }}
+	<input type="hidden" name="action" value="sprout-reports/settings/save-settings">
+
+	<div id="settings-cp">
+		{% namespace 'settings' %}
+		{{ forms.textField({
+			label: "Plugin Name"|t,
+			instructions: "Intuitive, human-readable plugin name for the end user."|t,
+			id: 'pluginNameOverride',
+			name: 'pluginNameOverride',
+			value: settings.pluginNameOverride,
+			autofocus: true,
+			first: true,
+			errors: ''
+		}) }}
+		{% endnamespace %}
+	</div>
+
+	<div class="buttons">
+		<input class="btn submit" type="submit" value="{{ 'Save'|t }}">
+	</div>
+
+</form>

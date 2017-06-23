@@ -2,6 +2,8 @@
 namespace barrelstrength\sproutreports\controllers;
 
 use Craft;
+use craft\helpers\DateTimeHelper;
+use craft\web\assets\cp\CpAsset;
 use craft\web\Controller;
 use barrelstrength\sproutreports\SproutReports;
 use barrelstrength\sproutreports\models\Report;
@@ -121,6 +123,7 @@ class ReportsController extends Controller
 		if ($report)
 		{
 			$dataSource = SproutReports::$app->dataSourcesCore->getDataSourceById($report->dataSourceId);
+
 			$labels     = $dataSource->getDefaultLabels($report, $options);
 
 			$variables['dataSource'] = null;
@@ -143,6 +146,8 @@ class ReportsController extends Controller
 				$variables['values']     = $values;
 				$variables['dataSource'] = $dataSource;
 			}
+
+			$this->getView()->registerAssetBundle(CpAsset::class);
 
 			// @todo Hand off to the export service when a blank page and 404 issues are sorted out
 			return $this->renderTemplate('sproutreports/results/index', $variables);
@@ -195,10 +200,5 @@ class ReportsController extends Controller
 				SproutReports::$app->exports->toCsv($values, $labels, $filename);
 			}
 		}
-	}
-
-	public function actionTest()
-	{
-		\Craft::dd('action test sprout reports');
 	}
 }

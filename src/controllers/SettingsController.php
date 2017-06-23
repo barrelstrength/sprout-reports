@@ -20,7 +20,6 @@ class SettingsController extends Controller
 	 */
 	public function actionSettingsIndex()
 	{
-		\Craft::dd('xx');
 		$settingsModel = new Settings();
 
 		$settings = (new Query())

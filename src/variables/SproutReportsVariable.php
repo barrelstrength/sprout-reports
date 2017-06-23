@@ -2,7 +2,7 @@
 
 namespace barrelstrength\sproutreports\variables;
 
-use barrelstrength\sproutreports\models\Report;
+use barrelstrength\sproutcore\integrations\sproutreports\models\Report;
 use barrelstrength\sproutreports\SproutReports;
 
 class SproutReportsVariable

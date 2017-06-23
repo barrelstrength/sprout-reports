@@ -6,7 +6,7 @@ use craft\helpers\DateTimeHelper;
 use craft\web\assets\cp\CpAsset;
 use craft\web\Controller;
 use barrelstrength\sproutreports\SproutReports;
-use barrelstrength\sproutreports\models\Report;
+use barrelstrength\sproutcore\integrations\sproutreports\models\Report;
 use barrelstrength\sproutreports\records\Report as ReportRecord;
 
 class ReportsController extends Controller
@@ -123,6 +123,8 @@ class ReportsController extends Controller
 		if ($report)
 		{
 			$dataSource = SproutReports::$app->dataSourcesCore->getDataSourceById($report->dataSourceId);
+
+			$dataSource->setReport($report);
 
 			$labels     = $dataSource->getDefaultLabels($report, $options);
 

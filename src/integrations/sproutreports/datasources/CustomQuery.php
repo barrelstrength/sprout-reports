@@ -3,7 +3,7 @@ namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 
 use barrelstrength\sproutcore\integrations\sproutreports\contracts\BaseDataSource;
 use Craft;
-use barrelstrength\sproutreports\models\Report as ReportModel;
+use barrelstrength\sproutcore\integrations\sproutreports\models\Report as ReportModel;
 use barrelstrength\sproutreports\SproutReports;
 
 /**

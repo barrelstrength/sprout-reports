@@ -1,9 +1,9 @@
 <?php
 namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 
-use barrelstrength\sproutcore\integrations\sproutreports\contracts\BaseDataSource;
+use barrelstrength\sproutcore\contracts\sproutreports\BaseDataSource;
 use Craft;
-use barrelstrength\sproutcore\integrations\sproutreports\models\Report as ReportModel;
+use barrelstrength\sproutcore\models\sproutreports\Report as ReportModel;
 use barrelstrength\sproutreports\SproutReports;
 
 /**

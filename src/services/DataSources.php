@@ -1,12 +1,10 @@
 <?php
 namespace barrelstrength\sproutreports\services;
 
-use barrelstrength\sproutcore\integrations\sproutreports\contracts\BaseDataSource;
 use Craft;
 use barrelstrength\sproutreports\models\DataSource as DataSourceModel;
 use barrelstrength\sproutreports\records\DataSource as DataSourceRecord;
 use yii\base\Component;
-use craft\events\RegisterComponentTypesEvent;
 
 /**
  * Class DataSources

@@ -2,11 +2,10 @@
 namespace barrelstrength\sproutreports\controllers;
 
 use Craft;
-use craft\helpers\DateTimeHelper;
 use craft\web\assets\cp\CpAsset;
 use craft\web\Controller;
 use barrelstrength\sproutreports\SproutReports;
-use barrelstrength\sproutcore\integrations\sproutreports\models\Report;
+use barrelstrength\sproutcore\models\sproutreports\Report;
 use barrelstrength\sproutreports\records\Report as ReportRecord;
 
 class ReportsController extends Controller

@@ -5,7 +5,7 @@ use barrelstrength\sproutreports\contracts\BaseReport;
 use barrelstrength\sproutreports\models\ReportGroup as ReportGroupModel;
 use Craft;
 use yii\base\Component;
-use barrelstrength\sproutcore\integrations\sproutreports\models\Report as ReportModel;
+use barrelstrength\sproutcore\models\sproutreports\Report as ReportModel;
 use barrelstrength\sproutreports\records\Report as ReportRecord;
 use barrelstrength\sproutreports\records\ReportGroup as ReportGroupRecord;
 use barrelstrength\sproutreports\SproutReports;

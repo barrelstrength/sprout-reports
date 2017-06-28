@@ -2,23 +2,46 @@
 
 namespace barrelstrength\sproutreports\migrations;
 
+use barrelstrength\sproutreports\SproutReports;
+
 class Install extends \craft\db\Migration
 {
+	private $reportTable      = '{{%sproutreports_report}}';
+	private $reportGroupTable = '{{%sproutreports_reportgroups}}';
+	private $dataSourcesTable = '{{%sproutreports_datasources}}';
+
 	public function safeUp()
 	{
-		$this->createTables();
+		SproutReports::$app->sproutReportMigration->createTables();
 	}
 
 	public function safeDown()
 	{
-		$this->dropTable('{{%sproutreports_report}}');
-		$this->dropTable('{{%sproutreports_reportgroups}}');
-		$this->dropTable('{{%sproutreports_datasources}}');
+		$reportTable = $this->getDb()->getTableSchema($this->reportTable);
+
+		if ($reportTable != null)
+		{
+			$this->dropTable($this->reportTable);
+		}
+
+		$reportGroupTable = $this->getDb()->getTableSchema($this->reportGroupTable);
+
+		if ($reportGroupTable != null)
+		{
+			$this->dropTable($this->reportGroupTable);
+		}
+
+		$dataSourcesTable = $this->getDb()->getTableSchema($this->dataSourcesTable);
+
+		if ($dataSourcesTable != null)
+		{
+			$this->dropTable($this->dataSourcesTable);
+		}
 	}
 
 	public function createTables()
 	{
-		$this->createTable('{{%sproutreports_report}}', [
+/*		$this->createTable('{{%sproutreports_report}}', [
 			'id'     => $this->primaryKey(),
 			'name'   => $this->string()->notNull(),
 			'handle' => $this->string()->notNull(),
@@ -31,9 +54,9 @@ class Install extends \craft\db\Migration
 			'dateCreated'  => $this->dateTime()->notNull(),
 			'dateUpdated'  => $this->dateTime()->notNull(),
 			'uid'          => $this->uid()
-		]);
+		]);*/
 
-		$this->createTable('{{%sproutreports_reportgroups}}', [
+		/*$this->createTable('{{%sproutreports_reportgroups}}', [
 			'id'          => $this->primaryKey(),
 			'name'        => $this->string()->notNull(),
 			'dateCreated' => $this->dateTime()->notNull(),
@@ -61,6 +84,6 @@ class Install extends \craft\db\Migration
 			'{{%sproutreports_report}}', 'dataSourceId', false);
 
 		$this->createIndex($this->db->getIndexName('{{%sproutreports_reportgroups}}', 'name', false, true),
-			'{{%sproutreports_reportgroups}}', 'name', false);
+			'{{%sproutreports_reportgroups}}', 'name', false);*/
 	}
 }

@@ -94,12 +94,12 @@ class SproutReports extends Plugin
 	 */
   public function afterInstall()
   {
-	  $defaultGroup = SproutReports::$app->reportGroups->createGroupByName('Sprout Reports');
-
-	  if (Craft::$app->getPlugins()->getPlugin('sproutreports'))
-	  {
-		 SproutReports::$app->reports->registerReports(new Users(), $defaultGroup);
-	  }
+	  //$defaultGroup = SproutReports::$app->reportGroups->createGroupByName('Sprout Reports');
+	  //
+	  //if (Craft::$app->getPlugins()->getPlugin('sproutreports'))
+	  //{
+		 //SproutReports::$app->reports->registerReports(new Users(), $defaultGroup);
+	  //}
   }
 
 	/**

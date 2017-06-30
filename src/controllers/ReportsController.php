@@ -1,6 +1,7 @@
 <?php
 namespace barrelstrength\sproutreports\controllers;
 
+use barrelstrength\sproutcore\SproutCore;
 use Craft;
 use craft\web\assets\cp\CpAsset;
 use craft\web\Controller;
@@ -121,7 +122,7 @@ class ReportsController extends Controller
 
 		if ($report)
 		{
-			$dataSource = SproutReports::$app->dataSourcesCore->getDataSourceById($report->dataSourceId);
+			$dataSource = SproutCore::$app->dataSources->getDataSourceById($report->dataSourceId);
 
 			$dataSource->setReport($report);
 
@@ -188,7 +189,7 @@ class ReportsController extends Controller
 
 		if ($report)
 		{
-			$dataSource = SproutReports::$app->dataSourcesCore->getDataSourceById($report->dataSourceId);
+			$dataSource = SproutCore::$app->dataSources->getDataSourceById($report->dataSourceId);
 
 			if ($dataSource)
 			{

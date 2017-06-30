@@ -11,7 +11,7 @@
 namespace barrelstrength\sproutreports;
 
 use barrelstrength\sproutreports\models\Settings;
-use barrelstrength\sproutcore\services\sproutreports\DataSourcesCore;
+use barrelstrength\sproutcore\services\sproutreports\DataSources;
 use barrelstrength\sproutcore\SproutCoreHelper;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomQuery;
 use Craft;
@@ -64,7 +64,8 @@ class SproutReports extends Plugin
 
 			$event->rules['sproutreports/reports'] = 'sprout-reports/reports/index';
 			$event->rules['sproutreports/reports/<groupId:\d+>'] = 'sprout-reports/reports/index';
-			$event->rules['sproutreports/reports/<pluginId>/<dataSourceKey:{handle}>/new'] = 'sprout-reports/reports/edit-report';
+			//$event->rules['sproutreports/reports/<pluginId>/<dataSourceKey:{handle}>/new'] =
+			// 'sprout-reports/reports/edit-report';
 			$event->rules['sproutreports/reports/<pluginId>/<dataSourceKey:{handle}>/edit/<reportId:\d+>'] = 'sprout-reports/reports/edit-report';
 
 			$event->rules['sproutreports/datasources'] = ['template' => 'sproutreports/datasources/index'];
@@ -75,7 +76,7 @@ class SproutReports extends Plugin
 			$event->rules['sproutreports/settings/general'] = 'sprout-core/settings/edit-settings';
 		});
 
-		Event::on(DataSourcesCore::class, DataSourcesCore::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent
+		Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent
 		                                                                                  $event) {
 		  $event->types[] = new Categories();
 		  $event->types[] = new CustomQuery();
@@ -94,12 +95,12 @@ class SproutReports extends Plugin
 	 */
   public function afterInstall()
   {
-	  //$defaultGroup = SproutReports::$app->reportGroups->createGroupByName('Sprout Reports');
-	  //
-	  //if (Craft::$app->getPlugins()->getPlugin('sproutreports'))
-	  //{
-		 //SproutReports::$app->reports->registerReports(new Users(), $defaultGroup);
-	  //}
+	  $defaultGroup = SproutReports::$app->reportGroups->createGroupByName('Sprout Reports');
+
+	  if (Craft::$app->getPlugins()->getPlugin('sproutreports'))
+	  {
+		 SproutReports::$app->reports->registerReports(new Users(), $defaultGroup);
+	  }
   }
 
 	/**

@@ -22,6 +22,7 @@ class ReportGroups extends Component
 	public function saveGroup(ReportGroupModel &$group)
 	{
 		$groupRecord = $this->_getGroupRecord($group);
+
 		$groupRecord->name = $group->name;
 
 		if ($groupRecord->validate())

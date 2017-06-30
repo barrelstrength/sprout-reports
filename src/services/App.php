@@ -10,7 +10,7 @@
 
 namespace barrelstrength\sproutreports\services;
 
-use barrelstrength\sproutcore\services\sproutreports\DataSourcesCore;
+use barrelstrength\sproutcore\services\sproutreports\DataSources;
 use barrelstrength\sproutcore\services\sproutreports\Migration;
 use craft\base\Component;
 
@@ -40,11 +40,6 @@ class App extends Component
 	public $dataSources;
 
 	/**
-	 * @var DataSourcesCore
-	 */
-	public $dataSourcesCore;
-
-	/**
 	 * @var Reports
 	 */
 	public $reports;
@@ -68,7 +63,6 @@ class App extends Component
 	{
 		$this->reportGroups    = new ReportGroups();
 		$this->dataSources     = new DataSources();
-		$this->dataSourcesCore = new DataSourcesCore();
 		$this->reports         = new Reports();
 		$this->exports         = new Exports();
 		$this->settings        = new Settings();

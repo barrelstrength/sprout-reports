@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutreports\migrations;
 
+use barrelstrength\sproutcore\SproutCore;
 use barrelstrength\sproutreports\SproutReports;
 
 class Install extends \craft\db\Migration
@@ -12,6 +13,6 @@ class Install extends \craft\db\Migration
 
 	public function safeUp()
 	{
-		SproutReports::$app->sproutReportMigration->createTables();
+		SproutCore::$app->reportsMigration->createTables();
 	}
 }

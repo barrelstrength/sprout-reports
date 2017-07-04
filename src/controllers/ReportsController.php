@@ -7,7 +7,7 @@ use craft\web\assets\cp\CpAsset;
 use craft\web\Controller;
 use barrelstrength\sproutreports\SproutReports;
 use barrelstrength\sproutcore\models\sproutreports\Report;
-use barrelstrength\sproutreports\records\Report as ReportRecord;
+use barrelstrength\sproutcore\records\sproutreports\Report as ReportRecord;
 
 class ReportsController extends Controller
 {
@@ -87,7 +87,7 @@ class ReportsController extends Controller
 	}
 
 	// @todo - reconsider logic
-	public function actionEditReport(string $pluginId, string $dataSourceKey, Report $report = null, int $reportId = null)
+	public function actionEditReport(string $dataSourceKey, Report $report = null, int $reportId = null)
 	{
 		$variables = array();
 
@@ -105,7 +105,7 @@ class ReportsController extends Controller
 			$variables['report'] = $reportModel;
 		}
 
-		$variables['report']->dataSourceId = $pluginId . '.' . $dataSourceKey;
+		$variables['report']->dataSourceId = $dataSourceKey;
 		$variables['dataSource']           = $variables['report']->getDataSource();
 
 		$variables['continueEditingUrl']   = $variables['dataSource']->getUrl() . '/edit/{id}';
@@ -175,32 +175,6 @@ class ReportsController extends Controller
 		else
 		{
 			throw new \Exception(SproutReports::t('Report not found.'));
-		}
-	}
-
-	public function actionExportReport()
-	{
-		$reportId = Craft::$app->getRequest()->getParam('reportId');
-
-		$report   = SproutReports::$app->reports->getReport($reportId);
-
-		$options = Craft::$app->getRequest()->getBodyParam('options');
-		$options = count($options) ? $options : array();
-
-		if ($report)
-		{
-			$dataSource = SproutCore::$app->dataSources->getDataSourceById($report->dataSourceId);
-
-			if ($dataSource)
-			{
-				$date = date("Ymd-his");
-
-				$filename = $report->name . '-' . $date;
-				$labels   = $dataSource->getDefaultLabels($report, $options);
-				$values   = $dataSource->getResults($report, $options);
-
-				SproutReports::$app->exports->toCsv($values, $labels, $filename);
-			}
 		}
 	}
 }

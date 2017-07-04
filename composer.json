@@ -19,7 +19,6 @@
         }
     ],
     "require": {
-        "league/csv": "^7.2",
         "barrelstrength/sproutcore": "^1.0.0"
     },
     "autoload": {

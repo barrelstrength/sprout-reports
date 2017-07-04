@@ -8,7 +8,7 @@
 {% set title  = "Data Sources"|t('sproutreports') %}
 {% set groups = craft.sproutreports.getReportGroups() %}
 
-{% set selectedTab = 'dataSources' %}
+{% set selectedSubnavItem = 'datasources' %}
 
 {% if groupId is defined %}
 	{% if groups[groupId] is not defined %}

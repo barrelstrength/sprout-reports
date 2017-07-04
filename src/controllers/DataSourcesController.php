@@ -2,7 +2,7 @@
 
 namespace barrelstrength\sproutreports\controllers;
 
-use barrelstrength\sproutreports\models\DataSource as DataSourceModel;
+use barrelstrength\sproutcore\models\sproutreports\DataSource as DataSourceModel;
 use barrelstrength\sproutreports\SproutReports;
 use Craft;
 use craft\web\Controller;

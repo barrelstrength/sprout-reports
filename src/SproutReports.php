@@ -65,12 +65,8 @@ class SproutReports extends Plugin
 			$event->rules['sproutreports/reports'] = 'sprout-reports/reports/index';
 			$event->rules['sproutreports/reports/<groupId:\d+>'] = 'sprout-reports/reports/index';
 
-			$event->rules['sproutreports/reports/<pluginId>/<dataSourceKey:{handle}>/new'] = 'sprout-reports/reports/edit-report';
-			$event->rules['sproutreports/reports/<pluginId>/<dataSourceKey:{handle}>/edit/<reportId:\d+>'] = 'sprout-reports/reports/edit-report';
-
-			$event->rules['sproutreports/reports/<dataSourceKey>/new'] = 'sprout-reports/reports/edit-report';
-			$event->rules['sproutreports/reports/<dataSourceKey>/edit/<reportId:\d+>'] = 'sprout-reports/reports/edit-report';
-
+			$event->rules['sproutreports/reports/<dataSourceId>/new'] = 'sprout-core/reports/edit-report';
+			$event->rules['sproutreports/reports/<dataSourceId>/edit/<reportId:\d+>'] = 'sprout-core/reports/edit-report';
 
 			$event->rules['sproutreports/datasources'] = ['template' => 'sproutreports/datasources/index'];
 

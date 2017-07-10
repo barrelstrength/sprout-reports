@@ -32,8 +32,8 @@ class Users extends BaseDataSource
 			$options = $report->getOptions();
 		}
 
-		$userGroupIds            = $options->userGroups;
-		$displayUserGroupColumns = $options->displayUserGroupColumns;
+		$userGroupIds            = (isset($options->userGroups))? $options->userGroups : false;
+		$displayUserGroupColumns = (isset($options->displayUserGroupColumns))? $options->displayUserGroupColumns: false;
 
 		$includeAdmins = false;
 

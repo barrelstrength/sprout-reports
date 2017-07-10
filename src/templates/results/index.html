@@ -11,7 +11,7 @@
 {% set selectedTab = 'resultView' %}
 
 {% if dataSource is defined %}
-	{% set optionsHtml = dataSource.getOptionsHtml(options) %}
+	{% set optionsHtml = dataSource.getOptionsHtml() %}
 {% endif %}
 
 {% set extraPageHeaderHtml %}

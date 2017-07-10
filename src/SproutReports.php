@@ -70,7 +70,7 @@ class SproutReports extends Plugin
 
 			$event->rules['sproutreports/datasources'] = ['template' => 'sproutreports/datasources/index'];
 
-			$event->rules['sproutreports/reports/view/<reportId:\d+>'] = 'sprout-reports/reports/results-index';
+			$event->rules['sproutreports/reports/view/<reportId:\d+>'] = 'sprout-core/reports/results-index';
 
 			$event->rules['sproutreports/settings']         = 'sprout-core/settings/edit-settings';
 			$event->rules['sproutreports/settings/general'] = 'sprout-core/settings/edit-settings';

@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutreports\assetbundles\reports;
 
+use barrelstrength\sproutcore\web\assets\sproutreports\ReportCoreAsset;
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
@@ -12,15 +13,11 @@ class ReportAsset extends AssetBundle
 		$this->sourcePath = "@barrelstrength/sproutreports/assetbundles/reports/dist";
 
 		$this->depends = [
-			CpAsset::class,
+			ReportCoreAsset::class,
 		];
 
 		$this->js = [
 			'js/groups.js',
-		];
-
-		$this->css = [
-			'css/styles.css',
 		];
 
 		parent::init();

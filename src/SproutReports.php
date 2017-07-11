@@ -17,6 +17,8 @@ use barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomQu
 use Craft;
 use craft\base\Plugin;
 use barrelstrength\sproutreports\variables\SproutReportsVariable;
+use craft\events\DefineComponentsEvent;
+use craft\web\twig\variables\CraftVariable;
 use yii\base\Event;
 use craft\events\RegisterComponentTypesEvent;
 use craft\web\UrlManager;
@@ -26,6 +28,8 @@ use craft\events\RegisterUserPermissionsEvent;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\Categories;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\Users;
 
+use craft\web\View;
+use craft\events\RegisterTemplateRootsEvent;
 /**
  * https://craftcms.com/docs/plugins/introduction
  *asd
@@ -51,6 +55,15 @@ class SproutReports extends Plugin
 	  SproutCoreHelper::registerModule();
 
 		self::$app = $this->get('app');
+
+	  // Register our base template path
+	  Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
+		  $e->roots['sproutreports'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
+	  });
+
+	  Event::on(CraftVariable::class, CraftVariable::EVENT_DEFINE_COMPONENTS, function(DefineComponentsEvent $e) {
+		  $e->components['sproutreports'] = SproutReportsVariable::class;
+	  });
 
 		Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function (RegisterUserPermissionsEvent $event) {
 
@@ -111,7 +124,7 @@ class SproutReports extends Plugin
 	 */
 	public static function t($message, array $params = [])
 	{
-		return Craft::t('sproutreports', $message, $params);
+		return Craft::t('sprout-reports', $message, $params);
 	}
 
 	/**
@@ -144,13 +157,5 @@ class SproutReports extends Plugin
 				]
 			]
 		]);
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function defineTemplateComponent()
-	{
-		return SproutReportsVariable::class;
 	}
 }

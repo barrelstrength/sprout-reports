@@ -18,7 +18,7 @@ class ReportsController extends Controller
 	 */
 	public function actionIndex($groupId = null)
 	{
-		return $this->renderTemplate('sproutreports/reports/index', [
+		return $this->renderTemplate('sprout-reports/reports/index', [
 			'groupId' => $groupId
 		]);
 	}

@@ -1,10 +1,10 @@
-{% extends "sproutreports/_layouts/base" %}
+{% extends "sprout-reports/_layouts/base" %}
 
 {% set title  = report.name|t('sproutreports') %}
 {% set groups = craft.sproutreports.getReportGroups() %}
 
 {% set crumbs = [
-	{ label: "Reports"|t('sproutreports'), url: url('sproutreports/reports') },
+	{ label: "Reports"|t('sproutreports'), url: url('sprout-reports/reports') },
 	{ label: "Edit "|t('sproutreports') ~ report.name, url: report.getEditUrl() }
 ] %}
 
@@ -41,7 +41,7 @@
 			<form id="report-options" method="post" accept-charset="UTF-8">
 				{{ getCsrfInput() }}
 				<input type="hidden" name="action" value="sprout-reports/reports/update-report">
-				{{ redirectInput('sproutreports/reports/view/' ~ reportId) }}
+				{{ redirectInput('sprout-reports/reports/view/' ~ reportId) }}
 				<input type="hidden" name="reportId" value="{{ reportId }}">
 
 				{{ optionsHtml | raw }}

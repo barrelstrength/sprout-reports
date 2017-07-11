@@ -1,8 +1,8 @@
-{% extends "sproutreports/_layouts/base" %}
+{% extends "sprout-reports/_layouts/base" %}
 {% import "_includes/forms" as forms %}
 
 {% if not currentUser.can('sproutreports-editDataSources') %}
-	{% redirect 'sproutreports' %}
+	{% redirect 'sprout-reports' %}
 {% endif %}
 
 {% set title  = "Data Sources"|t('sproutreports') %}

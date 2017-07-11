@@ -33,7 +33,7 @@ class SettingsController extends Controller
 
 		$settingsTemplate = Craft::$app->request->getSegment(3);
 
-		return $this->renderTemplate('sproutreports/settings/' . $settingsTemplate, [
+		return $this->renderTemplate('sprout-reports/settings/' . $settingsTemplate, [
 			'settings' => $settingsModel
 		]);
 	}

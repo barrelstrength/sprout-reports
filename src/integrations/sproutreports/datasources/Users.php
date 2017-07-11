@@ -152,7 +152,7 @@ class Users extends BaseDataSource
 		$optionErrors = $this->report->getErrors('options');
 		$optionErrors = array_shift($optionErrors);
 
-		return Craft::$app->getView()->renderTemplate('sproutreports/datasources/_options/users', array(
+		return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_options/users', array(
 			'userGroupOptions' => $userGroupOptions,
 			'options'          => count($options) ? $options : $this->report->getOptions(),
 			'errors'           => $optionErrors

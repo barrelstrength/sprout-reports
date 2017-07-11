@@ -3,7 +3,7 @@
 {% set subnav = {
 	reports: {
 		label: "Reports"|t('sproutreports'),
-		url: url('sproutreports/reports')
+		url: url('sprout-reports/reports')
 	}
 } %}
 
@@ -11,7 +11,7 @@
 	{% set subnav = subnav|merge({
 		datasources: {
 			label: "Data Sources"|t('sproutreports'),
-			url: url('sproutreports/datasources')
+			url: url('sprout-reports/datasources')
 		}
 	}) %}
 {% endif %}
@@ -20,7 +20,7 @@
 	{% set subnav = subnav|merge({
 		settings: {
 			label: "Settings"|t('sproutreports'),
-			url: url('sproutreports/settings')
+			url: url('sprout-reports/settings')
 		}
 	}) %}
 {% endif %}
@@ -39,7 +39,7 @@
 
 <nav class="last">
 	<ul>
-		<li><a href="{{ cpUrl('sproutreports/settings') }}" {% if selectedSidebarItem == 'settings' %}class="sel"{% endif
+		<li><a href="{{ cpUrl('sprout-reports/settings') }}" {% if selectedSidebarItem == 'settings' %}class="sel"{% endif
 			%}>General Settings</a></li>
 	</ul>
 </nav>

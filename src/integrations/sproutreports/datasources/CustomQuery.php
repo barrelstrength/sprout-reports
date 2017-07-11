@@ -68,7 +68,7 @@ class CustomQuery extends BaseDataSource
 		$optionErrors = $this->report->getErrors('options');
 		$optionErrors = array_shift($optionErrors);
 
-		return Craft::$app->getView()->renderTemplate('sproutreports/datasources/_options/query', array(
+		return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_options/query', array(
 			'options' => count($options) ? $options : $this->report->getOptions(),
 			'errors' => $optionErrors
 		));

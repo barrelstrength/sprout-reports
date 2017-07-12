@@ -14,9 +14,9 @@ class Settings extends Model
 		return [
 			'general' => [
 				'label' => SproutReports::t('General'),
-				'url' => 'sproutreports/settings',
+				'url' => 'sprout-reports/settings/general',
 				'selected' => 'general',
-				'template' => 'sproutreports/_settings/index'
+				'template' => 'sprout-reports/_settings/general'
 			]
 		];
 	}

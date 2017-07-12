@@ -16,7 +16,7 @@ class Settings extends Component
 	 */
 	public function saveSettings($settings)
 	{
-		$plugin      = Craft::$app->plugins->getPlugin('sproutReports');
+		$plugin      = Craft::$app->plugins->getPlugin('sprout-reports');
 
 		$reportSettings = $plugin->getSettings();
 

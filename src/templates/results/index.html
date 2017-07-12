@@ -17,7 +17,7 @@
 {% set extraPageHeaderHtml %}
 
   <form method="post" accept-charset="UTF-8">
-    {{ getCsrfInput() }}
+    {{ csrfInput() }}
     <input type="hidden" name="action" value="sprout-reports/reports/export-report">
     <input type="hidden" name="reportId" value="{{ reportId }}">
 
@@ -39,7 +39,7 @@
 		<div id="modify-options-panel" style="display:none;">
 
 			<form id="report-options" method="post" accept-charset="UTF-8">
-				{{ getCsrfInput() }}
+				{{ csrfInput() }}
 				<input type="hidden" name="action" value="sprout-reports/reports/update-report">
 				{{ redirectInput('sprout-reports/reports/view/' ~ reportId) }}
 				<input type="hidden" name="reportId" value="{{ reportId }}">
@@ -101,7 +101,7 @@
 
 {% do view.registerAssetBundle("barrelstrength\\sproutreports\\assetbundles\\reports\\ReportAsset") %}
 
-{% includejs %}
+{% js %}
 
 	(function(){
 
@@ -120,4 +120,4 @@
 
 	})();
 
-{% endincludejs %}
+{% endjs %}

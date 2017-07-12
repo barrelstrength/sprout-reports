@@ -26,10 +26,10 @@
 {% endif %}
 
 {% set title  = "Settings"|t('sproutreports') %}
-{% set bodyClass = craft.request.getSegments()|slice(0, 3)|join(' ') %}
+{% set bodyClass = craft.app.request.getSegments()|slice(0, 3)|join(' ') %}
 
-{% set selectedSubnavItem = craft.request.segment(2) %}
-{% set selectedSidebarItem = craft.request.getSegment(3) ? craft.request.getSegment(3) : craft.request.getSegment(2) %}
+{% set selectedSubnavItem = craft.app.request.segment(2) %}
+{% set selectedSidebarItem = craft.app.request.getSegment(3) ? craft.request.getSegment(3) : craft.request.getSegment(2) %}
 
 {% block content %}
 

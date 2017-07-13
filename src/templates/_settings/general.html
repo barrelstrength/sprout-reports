@@ -8,8 +8,8 @@
 	<div id="settings-cp">
 		{% namespace 'settings' %}
 		{{ forms.textField({
-			label: "Plugin Name"|t,
-			instructions: "Intuitive, human-readable plugin name for the end user."|t,
+			label: "Plugin Name"|t('sprout-reports'),
+			instructions: "Intuitive, human-readable plugin name for the end user."|t('sprout-reports'),
 			id: 'pluginNameOverride',
 			name: 'pluginNameOverride',
 			value: settings.pluginNameOverride,
@@ -21,7 +21,7 @@
 	</div>
 
 	<div class="buttons">
-		<input class="btn submit" type="submit" value="{{ 'Save'|t }}">
+		<input class="btn submit" type="submit" value="{{ 'Save'|t('sprout-reports') }}">
 	</div>
 
 </form>

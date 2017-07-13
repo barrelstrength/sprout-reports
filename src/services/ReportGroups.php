@@ -3,7 +3,7 @@ namespace barrelstrength\sproutreports\services;
 
 use yii\base\Component;
 use barrelstrength\sproutcore\records\sproutreports\ReportGroup as ReportGroupRecord;
-use barrelstrength\sproutcore\models\sproutreports\ReportGroup as ReportGroupModel;
+use barrelstrength\sproutreports\models\ReportGroup as ReportGroupModel;
 use barrelstrength\sproutreports\SproutReports;
 
 /**

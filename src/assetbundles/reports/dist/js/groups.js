@@ -110,7 +110,7 @@ var GroupsAdmin = Garnish.Base.extend({
 
 	deleteSelectedGroup: function()
 	{
-		if (confirm(Craft.t('sproutReports', settings.deleteGroupConfirmMessage)))
+		if (confirm(Craft.t('sprout-reports', settings.deleteGroupConfirmMessage)))
 		{
 			var data = {
 				id: this.$selectedGroup.data('id')
@@ -124,7 +124,7 @@ var GroupsAdmin = Garnish.Base.extend({
 				}
 				else
 				{
-					alert(Craft.t('sproutReports', settings.deleteGroupOnErrorMessage));
+					alert(Craft.t('sprout-reports', settings.deleteGroupOnErrorMessage));
 				}
 			}, this));
 		}
@@ -163,7 +163,7 @@ Garnish.$doc.ready(function()
 
 		deleteGroupConfirmMessage: 'Are you sure you want to delete this group and all its reports?',
 		deleteGroupAction: 'sprout-reports/report-group/delete-group',
-		deleteGroupOnSuccessUrl: 'sproutReports',
+		deleteGroupOnSuccessUrl: 'sprout-reports/reports',
 		deleteGroupOnErrorMessage: 'Could not delete the group.',
 	});
 });

@@ -1,5 +1,9 @@
 {% import "_includes/forms" as forms %}
 
+{% if not currentUser.can('sproutReports-editSettings') %}
+	{% redirect 'sprout-reports' %}
+{% endif %}
+
 <form method="post" accept-charset="UTF-8"
 	data-saveshortcut-redirect="sprout-reports/settings/general">
 	{{ csrfInput() }}

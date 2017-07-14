@@ -67,10 +67,11 @@ class SproutReports extends Plugin
 
 		Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function (RegisterUserPermissionsEvent $event) {
 
-			$event->permissions['sproutReports']['sproutReports-editReports']     = ['label' => $this::t('Edit Reports')];
-			$event->permissions['sproutReports']['sproutReports-editDataSources'] = ['label' => $this::t('Edit Data Sources')];
-			$event->permissions['sproutReports']['sproutReports-editSettings']    = ['label' => $this::t('Edit Plugin Settings')];
+			$name = static::t('Sprout Reports');
 
+			$event->permissions[$name]['sproutReports-editReports']     = ['label' => $this::t('Edit Reports')];
+			$event->permissions[$name]['sproutReports-editDataSources'] = ['label' => $this::t('Edit Data Sources')];
+			$event->permissions[$name]['sproutReports-editSettings']    = ['label' => $this::t('Edit Plugin Settings')];
 		});
 
 		Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function (RegisterUrlRulesEvent $event) {

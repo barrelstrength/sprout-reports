@@ -14,31 +14,6 @@ use yii\web\BadRequestHttpException;
 class SettingsController extends Controller
 {
 	/**
-	 * Loads the Settings Index page
-	 *
-	 * @throws InvalidParamException
-	 */
-	public function actionSettingsIndex()
-	{
-		$settingsModel = new Settings();
-
-		$settings = (new Query())
-			->select('settings')
-			->from(['{{%plugins}}'])
-			->where('class=:class', [':class' => 'SproutReports'])
-			->scalar();
-
-		$settings = Json::decode($settings);
-		$settingsModel->setAttributes($settings);
-
-		$settingsTemplate = Craft::$app->request->getSegment(3);
-
-		return $this->renderTemplate('sprout-reports/settings/' . $settingsTemplate, [
-			'settings' => $settingsModel
-		]);
-	}
-
-	/**
 	 * Saves Plugin Settings
 	 *
 	 * @throws BadRequestHttpException

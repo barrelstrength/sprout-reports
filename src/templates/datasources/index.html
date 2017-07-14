@@ -1,7 +1,7 @@
 {% extends "sprout-reports/_layouts/base" %}
 {% import "_includes/forms" as forms %}
 
-{% if not currentUser.can('sproutreports-editDataSources') %}
+{% if not currentUser.can('sproutReports-editDataSources') %}
 	{% redirect 'sprout-reports' %}
 {% endif %}
 

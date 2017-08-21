@@ -33,9 +33,6 @@
         "hasSettings": true,
         "hasCpSection": true,
         "changelogUrl": "???",
-        "components": {
-            "app": "barrelstrength\\sproutreports\\services\\App"
-        },
         "class": "barrelstrength\\sproutreports\\SproutReports"
     }
 }

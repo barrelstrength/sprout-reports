@@ -14,6 +14,7 @@ use barrelstrength\sproutreports\models\Settings;
 use barrelstrength\sproutcore\services\sproutreports\DataSources;
 use barrelstrength\sproutcore\SproutCoreHelper;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomQuery;
+use barrelstrength\sproutreports\services\App;
 use Craft;
 use craft\base\Plugin;
 use barrelstrength\sproutreports\variables\SproutReportsVariable;
@@ -53,6 +54,10 @@ class SproutReports extends Plugin
 		parent::init();
 
 	  SproutCoreHelper::registerModule();
+
+	  $this->setComponents([
+		  'app' => App::class
+	  ]);
 
 		self::$app = $this->get('app');
 

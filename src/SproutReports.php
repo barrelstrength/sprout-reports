@@ -10,6 +10,7 @@
 
 namespace barrelstrength\sproutreports;
 
+use barrelstrength\sproutcore\traits\PlugAble;
 use barrelstrength\sproutreports\models\Settings;
 use barrelstrength\sproutcore\services\sproutreports\DataSources;
 use barrelstrength\sproutcore\SproutCoreHelper;
@@ -40,6 +41,7 @@ use craft\events\RegisterTemplateRootsEvent;
  */
 class SproutReports extends Plugin
 {
+	use PlugAble;
 	/**
 	 * Enable use of SproutReports::$plugin-> in place of Craft::$app->
 	 *
@@ -48,6 +50,7 @@ class SproutReports extends Plugin
 	public static $app;
 
 	public $hasSettings = true;
+	public static $pluginId = 'sprout-reports';
 
   public function init()
   {
@@ -121,17 +124,6 @@ class SproutReports extends Plugin
 		 SproutReports::$app->reports->registerReports(new Users(), $defaultGroup);
 	  }
   }
-
-	/**
-	 * @param string $message
-	 * @param array  $params
-	 *
-	 * @return string
-	 */
-	public static function t($message, array $params = [])
-	{
-		return Craft::t('sprout-reports', $message, $params);
-	}
 
 	/**
 	 * @return Settings

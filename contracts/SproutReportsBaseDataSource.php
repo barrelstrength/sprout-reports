@@ -169,12 +169,12 @@ abstract class SproutReportsBaseDataSource
 	 * Should return an array of records to use in the report
 	 *
 	 * @param SproutReports_ReportModel $report
-	 *
-	 * @return null|array
+	 * @param array                     $options
+	 * @return bool|\CDbDataReader
 	 */
 	public function getResults(SproutReports_ReportModel &$report, $options = array())
 	{
-		return array();
+		return true;
 	}
 
 	/**

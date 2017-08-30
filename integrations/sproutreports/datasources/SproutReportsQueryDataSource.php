@@ -33,10 +33,10 @@ class SproutReportsQueryDataSource extends SproutReportsBaseDataSource
 	 * @todo:so Let's bring back a little sanity checks back into raw queries
 	 *
 	 * @param SproutReports_ReportModel $report
-	 *
-	 * @return \CDbDataReader
+	 * @param array                     $options
+	 * @return bool|\CDbDataReader
 	 */
-	public function getResults(SproutReports_ReportModel &$report)
+	public function getResults(SproutReports_ReportModel &$report, $options = array())
 	{
 		$query = $report->getOption('query');
 
@@ -48,6 +48,8 @@ class SproutReportsQueryDataSource extends SproutReportsBaseDataSource
 		{
 			$report->setResultsError($e->getMessage());
 		}
+
+		return false;
 	}
 
 	/**

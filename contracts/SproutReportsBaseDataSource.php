@@ -170,11 +170,11 @@ abstract class SproutReportsBaseDataSource
 	 *
 	 * @param SproutReports_ReportModel $report
 	 * @param array                     $options
-	 * @return bool|\CDbDataReader
+	 * @return array
 	 */
 	public function getResults(SproutReports_ReportModel &$report, $options = array())
 	{
-		return true;
+		return array();
 	}
 
 	/**

@@ -46,14 +46,20 @@ class SproutReports extends Plugin
 	use BaseSproutTrait;
 
 	/**
-	 * Enable use of SproutReports::$plugin-> in place of Craft::$app->
+	 * Enable use of SproutReports::$app-> in place of Craft::$app->
 	 *
 	 * @var \barrelstrength\sproutreports\services\App
 	 */
 	public static $app;
 
-	public $hasSettings = true;
+	/**
+	 * Identify our plugin for BaseSproutTrait
+	 *
+	 * @var string
+	 */
 	public static $pluginId = 'sprout-reports';
+
+	public $hasSettings = true;
 
 	public function init()
 	{

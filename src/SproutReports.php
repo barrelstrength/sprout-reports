@@ -10,7 +10,7 @@
 
 namespace barrelstrength\sproutreports;
 
-use barrelstrength\sproutcore\base\BaseSprout;
+use barrelstrength\sproutcore\base\BaseSproutTrait;
 use barrelstrength\sproutreports\models\Settings;
 use barrelstrength\sproutcore\services\sproutreports\DataSources;
 use barrelstrength\sproutcore\SproutCoreHelper;
@@ -43,7 +43,7 @@ use craft\events\RegisterTemplateRootsEvent;
  */
 class SproutReports extends Plugin
 {
-	use BaseSprout;
+	use BaseSproutTrait;
 
 	/**
 	 * Enable use of SproutReports::$plugin-> in place of Craft::$app->

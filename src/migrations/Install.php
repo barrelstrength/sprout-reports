@@ -1,18 +1,40 @@
 <?php
+/**
+ * @link      https://sprout.barrelstrengthdesign.com/
+ * @copyright Copyright (c) Barrel Strength Design LLC
+ * @license   http://sprout.barrelstrengthdesign.com/license
+ */
 
-namespace barrelstrength\sproutreports\migrations;
+namespace barrelstrength\sproutimport\migrations;
 
-use barrelstrength\sproutcore\SproutCore;
-use barrelstrength\sproutreports\SproutReports;
+use barrelstrength\sproutcore\migrations\sproutreports\Install as SproutCoreReportsInstall;
+use craft\db\Migration;
+use Craft;
 
-class Install extends \craft\db\Migration
+class Install extends Migration
 {
-	private $reportTable      = '{{%sproutreports_report}}';
-	private $reportGroupTable = '{{%sproutreports_reportgroups}}';
-	private $dataSourcesTable = '{{%sproutreports_datasources}}';
+	// Public Methods
+	// =========================================================================
 
+	/**
+	 * @inheritdoc
+	 */
 	public function safeUp()
 	{
-		SproutCore::$app->reportsMigration->createTables();
+		$this->runSproutCoreInstall();
+
+		return true;
+	}
+
+	// Protected Methods
+	// =========================================================================
+
+	protected function runSproutCoreInstall()
+	{
+		$migration = new SproutCoreReportsInstall();
+
+		ob_start();
+		$migration->safeUp();
+		ob_end_clean();
 	}
 }

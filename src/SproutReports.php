@@ -151,7 +151,11 @@ class SproutReports extends Plugin
 	{
 		$parent = parent::getCpNavItem();
 
-		$parent['url'] = 'sprout-reports';
+		// Allow user to override plugin name in sidebar
+		if ($this->getSettings()->pluginNameOverride)
+		{
+			$parent['label'] = $this->getSettings()->pluginNameOverride;
+		}
 
 		return array_merge($parent, [
 			'subnav' => [

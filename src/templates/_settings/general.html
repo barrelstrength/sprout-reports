@@ -4,10 +4,13 @@
 	{% redirect 'sprout-reports' %}
 {% endif %}
 
+{% set redirectUrl = "sprout-reports/settings/general"|hash %}
+
 <form method="post" accept-charset="UTF-8"
-	data-saveshortcut-redirect="sprout-reports/settings/general">
+	  data-saveshortcut data-saveshortcut-redirect="{{ redirectUrl }}">
 	{{ csrfInput() }}
-	<input type="hidden" name="action" value="sprout-reports/settings/save-settings">
+	<input type="hidden" name="action" value="sprout-core/settings/save-settings">
+	<input type="hidden" name="redirect" value="{{ redirectUrl }}">
 
 	<div id="settings-cp">
 		{% namespace 'settings' %}

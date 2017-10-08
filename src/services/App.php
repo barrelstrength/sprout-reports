@@ -50,17 +50,11 @@ class App extends Component
 	 */
 	public $exports;
 
-	/**
-	 * @var Settings
-	 */
-	public $settings;
-
 	public function init()
 	{
 		$this->reportGroups    = new ReportGroups();
 		$this->dataSources     = new DataSources();
 		$this->reports         = new Reports();
 		$this->exports         = new Exports();
-		$this->settings        = new Settings();
 	}
 }

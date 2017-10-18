@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutimport\migrations;
+namespace barrelstrength\sproutreports\migrations;
 
 use barrelstrength\sproutcore\migrations\sproutreports\Install as SproutCoreReportsInstall;
 use craft\db\Migration;

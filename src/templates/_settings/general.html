@@ -4,31 +4,13 @@
 	{% redirect 'sprout-reports' %}
 {% endif %}
 
-{% set redirectUrl = "sprout-reports/settings/general"|hash %}
-
-<form method="post" accept-charset="UTF-8"
-	  data-saveshortcut data-saveshortcut-redirect="{{ redirectUrl }}">
-	{{ csrfInput() }}
-	<input type="hidden" name="action" value="sprout-core/settings/save-settings">
-	<input type="hidden" name="redirect" value="{{ redirectUrl }}">
-
-	<div id="settings-cp">
-		{% namespace 'settings' %}
-		{{ forms.textField({
-			label: "Plugin Name"|t('sprout-reports'),
-			instructions: "Intuitive, human-readable plugin name for the end user."|t('sprout-reports'),
-			id: 'pluginNameOverride',
-			name: 'pluginNameOverride',
-			value: settings.pluginNameOverride,
-			autofocus: true,
-			first: true,
-			errors: ''
-		}) }}
-		{% endnamespace %}
-	</div>
-
-	<div class="buttons">
-		<input class="btn submit" type="submit" value="{{ 'Save'|t('sprout-reports') }}">
-	</div>
-
-</form>
+{{ forms.textField({
+    label: "Plugin Name"|t('sprout-reports'),
+    instructions: "Intuitive, human-readable plugin name for the end user."|t('sprout-reports'),
+    id: 'pluginNameOverride',
+    name: 'pluginNameOverride',
+    value: settings.pluginNameOverride,
+    autofocus: true,
+    first: true,
+    errors: ''
+}) }}

@@ -146,6 +146,18 @@ abstract class SproutReportsBaseDataSource
 	abstract public function getName();
 
 	/**
+	 * Give a Data Source a chance to prepare options before they are processed by the Dynamic Name field
+	 *
+	 * @param array $options
+	 *
+	 * @return null
+	 */
+	public function prepOptions(array $options)
+	{
+		return $options;
+	}
+
+	/**
 	 * Should return an string containing the necessary HTML to capture user input
 	 *
 	 * @return null|string

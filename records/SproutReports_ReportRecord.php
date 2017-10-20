@@ -35,7 +35,8 @@ class SproutReports_ReportRecord extends BaseRecord
 			'name'         => array(AttributeType::String, 'required' => true),
 			'handle'       => array(AttributeType::Handle, 'required' => true),
 			'description'  => array(AttributeType::String, 'default' => null),
-			'allowHtml'   => array(AttributeType::Bool, 'required' => false),
+			'dynamicName'  => array(AttributeType::String, 'default' => null),
+			'allowHtml'    => array(AttributeType::Bool, 'required' => false),
 			'dataSourceId' => array(AttributeType::String, 'required' => true),
 			'options'      => array(AttributeType::Mixed, 'required' => false),
 			'enabled'      => array(AttributeType::Bool, 'default' => true)

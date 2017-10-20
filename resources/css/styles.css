@@ -73,3 +73,20 @@ form.btn-download input {
 .tableview.sproutreports {
     overflow: auto
 }
+
+/* Override default a tag fieldtoggle behavior to play more nicely with instructions text
+@todo - merge into global sprout stylesheet. Used in Sprout SEO too.
+*/
+body.ltr a.instructionstoggle {
+	padding-left: 0;
+}
+a.instructionstoggle {
+	display: inline;
+}
+a.instructionstoggle:before {
+	content: '';
+}
+
+a.fieldtoggle.instructionstoggle {
+	color: #0d78f2;
+}

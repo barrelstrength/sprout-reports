@@ -1,5 +1,6 @@
 <?php
 namespace Craft;
+use Calendar\Library\DateHelper;
 
 /**
  * Class SproutReportsModel
@@ -103,6 +104,7 @@ class SproutReports_ReportModel extends BaseModel
 			'name'         => array(AttributeType::String, 'required' => true),
 			'handle'       => array(AttributeType::Handle, 'required' => true),
 			'description'  => array(AttributeType::String, 'default' => null),
+			'dynamicName'  => array(AttributeType::String, 'default' => null),
 			'allowHtml'    => array(AttributeType::Bool, 'default' => false),
 			'options'      => array(AttributeType::Mixed, 'default' => array()),
 			'dataSourceId' => array(AttributeType::String, 'required' => true),
@@ -111,5 +113,13 @@ class SproutReports_ReportModel extends BaseModel
 			# @related
 			'groupId'      => array(AttributeType::Number, 'required' => true)
 		);
+	}
+
+	public function processDynamicName()
+	{
+		$dataSource = $this->getDataSource();
+		$options = $dataSource->prepOptions($this->options);
+
+		return craft()->templates->renderObjectTemplate($this->dynamicName, $options);
 	}
 }

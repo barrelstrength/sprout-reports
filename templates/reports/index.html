@@ -73,7 +73,15 @@
 				{% for report in reports %}
 					<tr>
 						<td class="sproutreports-reportname">
-							<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}"><strong>{{ report.name }}</strong></a>
+							<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}">
+								<strong>
+									{% if report.dynamicName %}
+                                        {{ report.processDynamicName() }}
+									{% else %}
+										{{ report.name }}
+                                    {% endif %}
+								</strong>
+							</a>
 
 							{% if report.description %}
 								<span class="info">{{ report.description }}</span>

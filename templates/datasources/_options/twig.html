@@ -1,0 +1,38 @@
+{% import "_includes/forms" as forms %}
+
+{% set resultsTemplate = options.resultsTemplate is defined ? options.resultsTemplate : "" %}
+{% set settingsTemplate = options.settingsTemplate is defined ? options.settingsTemplate : "" %}
+
+{% if optionContents %}
+
+	{{ optionContents|raw }}
+
+	{% if craft.request.getSegment(3) != 'view' %}
+	<a href='#' class='fieldtoggle settings' data-target='toggle-templatesettings'>{{ "Template Settings"|t }}</a>
+	{% endif %}
+
+{% endif %}
+
+<div id="toggle-templatesettings" class="{{ resultsTemplate and optionContents ? 'hidden' : '' }}">
+
+	{{ forms.textField({
+		name: "options[resultsTemplate]",
+		label: "Results Template"|t,
+		instructions: "The file in your templates folder to use to display results for this report.",
+		class: "nicetext code",
+		required: true,
+		first: true,
+		value: resultsTemplate,
+		errors: errors['resultsTemplate'] is defined ? errors['resultsTemplate'] : null
+	}) }}
+
+	{{ forms.textField({
+		name: "options[settingsTemplate]",
+		label: "Settings Template"|t,
+		instructions: "The file in your templates folder to use to display options for this report.",
+		class: "nicetext code",
+		value: options.settingsTemplate is defined ? options.settingsTemplate : "",
+		errors: errors['settingsTemplate'] is defined ? errors['settingsTemplate'] : null
+	}) }}
+
+</div>

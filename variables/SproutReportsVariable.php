@@ -96,6 +96,45 @@ class SproutReportsVariable
 		return $options;
 	}
 
+	/**
+	 * @param array $row
+	 *
+	 * @return bool
+	 */
+	public function addHeaderRow(array $row)
+	{
+		sproutReports()->twigDataSource->addHeaderRow($row);
+	}
+
+	/**
+	 * Add a single row of data to your report
+	 *
+	 * @example array()
+	 *
+	 * @param array $row
+	 *
+	 * @return null
+	 */
+	public function addRow(array $row)
+	{
+		sproutReports()->twigDataSource->addRow($row);
+	}
+
+	/**
+	 * Add multiple rows of data to your report
+	 *
+	 * @example array(
+	 *   array( ... ),
+	 *   array( ... )
+	 * )
+	 *
+	 * @param array $rows
+	 */
+	public function addRows(array $rows)
+	{
+		sproutReports()->twigDataSource->addRows($rows);
+	}
+
 	// @todo - figure out how this best works with Labels and Values before making available
 	//public function getResults($reportHandle, array $options = array())
 	//{

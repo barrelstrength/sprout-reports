@@ -184,6 +184,7 @@ class SproutReportsPlugin extends BasePlugin
 		$sources =  array(
 			new SproutReportsCategoriesDataSource(),
 			new SproutReportsQueryDataSource(),
+			new SproutReportsTwigDataSource()
 		);
 
 		if ($isCraftPro)

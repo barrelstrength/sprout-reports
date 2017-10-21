@@ -59,7 +59,7 @@ class SproutReportsVariable
 	}
 
 	/**
-	 * @param $id
+	 * @param $groupId
 	 *
 	 * @return null|SproutReports_ReportGroupModel[]
 	 */
@@ -69,7 +69,7 @@ class SproutReportsVariable
 	}
 
 	/**
-	 * @param int $id
+	 * @param int $reportId
 	 *
 	 * @return SproutReports_ReportModel
 	 */

@@ -70,14 +70,14 @@
 				}) }}
 
 				<div id="toggle-dynamicname" class="{{ report.dynamicName ?: 'hidden' }}">
-                    {{ forms.textField({
-                        label: "Dynamic Name"|t,
-                        instructions: "Generate your Report Name using dynamic variables from your selected options, such as {startDate|date('Y-m-d')}."|t,
-                        name: 'dynamicName',
-                        value: report.dynamicName,
-                        errors: '',
-                        class: 'nicetext'
-                    }) }}
+		      {{ forms.textField({
+	          label: "Dynamic Name"|t,
+	          instructions: "Generate your Report Name using dynamic variables from your selected options, such as {startDate|date('Y-m-d')}."|t,
+	          name: 'dynamicName',
+	          value: report.dynamicName,
+	          errors: '',
+	          class: 'nicetext'
+		      }) }}
 				</div>
 
 				{{ forms.textField({

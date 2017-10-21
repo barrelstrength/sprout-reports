@@ -84,32 +84,29 @@ class SproutReportsTwigDataSource extends SproutReportsBaseDataSource
 	{
 		$optionErrors        = $this->report->getErrors('options');
 		$optionErrors        = array_shift($optionErrors);
-		$optionsTwigTemplate = null;
 
 		// @todo - refactor? We pass $options to this method from the template, but the options
 		// may already exist on the report.... maybe we can simplify?
 		$options = count($options) ? array_merge($options, $this->report->getOptions()) : $this->report->getOptions();
 
-		$optionFileContent = null;
-
 		// If options template exists as setting, look for it on the front-end.
+		// If not, return a nice message explain how to handle options.
+		$customOptionsHtml = null;
 
-		// If not, return a nice message explain how to handle settings.
-
-		if (isset($options['settingsTemplate']) && $options['settingsTemplate'] != '')
+		if (isset($options['optionsTemplate']) && $options['optionsTemplate'] != '')
 		{
-			$optionTemplatePath = craft()->path->getSiteTemplatesPath() . $options['settingsTemplate'];
+			$customOptionsTemplatePath = craft()->path->getSiteTemplatesPath() . $options['optionsTemplate'];
 
 			foreach (craft()->config->get('defaultTemplateExtensions') as $extension)
 			{
-				if (IOHelper::fileExists($optionTemplatePath . '.' . $extension))
+				if (IOHelper::fileExists($customOptionsTemplatePath . '.' . $extension))
 				{
-					$optionFileContent = IOHelper::getFileContents($optionTemplatePath . '.' . $extension);
+					$customOptionsFileContent = IOHelper::getFileContents($customOptionsTemplatePath . '.' . $extension);
 					break;
 				}
 			}
 
-			$optionRenderedContent = craft()->templates->renderString($optionFileContent, array(
+			$customOptionsHtml = craft()->templates->renderString($customOptionsFileContent, array(
 				'options' => count($options) ? $options : $this->report->getOptions(),
 				'errors'  => $optionErrors
 			));
@@ -118,7 +115,7 @@ class SproutReportsTwigDataSource extends SproutReportsBaseDataSource
 		return craft()->templates->render('sproutreports/datasources/_options/twig', array(
 			'options'        => count($options) ? $options : $this->report->getOptions(),
 			'errors'         => $optionErrors,
-			'optionContents' => $optionRenderedContent
+			'optionContents' => $customOptionsHtml ?? null
 		));
 	}
 

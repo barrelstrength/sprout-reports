@@ -1,7 +1,7 @@
 {% import "_includes/forms" as forms %}
 
 {% set resultsTemplate = options.resultsTemplate is defined ? options.resultsTemplate : "" %}
-{% set settingsTemplate = options.settingsTemplate is defined ? options.settingsTemplate : "" %}
+{% set optionsTemplate = options.optionsTemplate is defined ? options.optionsTemplate : "" %}
 
 {% if optionContents %}
 
@@ -12,16 +12,28 @@
 		<hr>
 
 		<p>
-			<a href='#' class='fieldtoggle settings' data-target='toggle-templatesettings'>
+			<a href='#' class='fieldtoggle settings' data-target='toggle-templateoptions'>
 				{{ "Template Settings"|t }}
 			</a>
 		</p>
 
 	{% endif %}
 
+{% else %}
+
+	{{ forms.field({
+		label: "Custom Options"|t,
+		instructions: "Add an Options Template below to create Custom Options for your Twig report. Follow the Twig
+		Template Report Custom Options Guidelines to ensure your options use the right conventions so that can be saved
+		and are styled like other fields in the Craft Control Panel. Once you identify your options template, the options
+		 you define in that file will display in place of this message."|t,
+	}, null) }}
+
+	<hr>
+
 {% endif %}
 
-<div id="toggle-templatesettings" class="{{ resultsTemplate and optionContents ? 'hidden' : '' }}">
+<div id="toggle-templateoptions" class="{{ resultsTemplate and optionContents ? 'hidden' : '' }}">
 
 	{{ forms.textField({
 		name: "options[resultsTemplate]",
@@ -35,12 +47,12 @@
 	}) }}
 
 	{{ forms.textField({
-		name: "options[settingsTemplate]",
-		label: "Settings Template"|t,
+		name: "options[optionsTemplate]",
+		label: "Options Template"|t,
 		instructions: "The file in your templates folder to use to display options for this report.",
 		class: "nicetext code",
-		value: options.settingsTemplate is defined ? options.settingsTemplate : "",
-		errors: errors['settingsTemplate'] is defined ? errors['settingsTemplate'] : null
+		value: options.optionsTemplate is defined ? options.optionsTemplate : "",
+		errors: errors['optionsTemplate'] is defined ? errors['optionsTemplate'] : null
 	}) }}
 
 </div>

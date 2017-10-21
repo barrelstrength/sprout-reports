@@ -8,7 +8,15 @@
 	{{ optionContents|raw }}
 
 	{% if craft.request.getSegment(3) != 'view' %}
-	<a href='#' class='fieldtoggle settings' data-target='toggle-templatesettings'>{{ "Template Settings"|t }}</a>
+
+		<hr>
+
+		<p>
+			<a href='#' class='fieldtoggle settings' data-target='toggle-templatesettings'>
+				{{ "Template Settings"|t }}
+			</a>
+		</p>
+
 	{% endif %}
 
 {% endif %}

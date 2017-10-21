@@ -106,7 +106,12 @@ class SproutReportsTwigDataSource extends SproutReportsBaseDataSource
 				}
 			}
 
-			$customOptionsHtml = craft()->templates->renderString($customOptionsFileContent, array(
+			// Add support for processing Template Options by including Craft CP Form Macros and
+			// wrapping all option fields in the `options` namespace
+			$customOptionsHtmlWithExtras = '{% import "_includes/forms" as forms %}{% namespace "options" %}' .
+				$customOptionsFileContent . '{% endnamespace %}';
+
+			$customOptionsHtml = craft()->templates->renderString($customOptionsHtmlWithExtras, array(
 				'options' => count($options) ? $options : $this->report->getOptions(),
 				'errors'  => $optionErrors
 			));
@@ -151,9 +156,6 @@ class SproutReportsTwigDataSource extends SproutReportsBaseDataSource
 
 		craft()->templates->setTemplateMode(TemplateMode::Site);
 
-		// Process our front-end Results template which adds Labels and Rows to:
-		// sproutReports()->reports->twigReportLabels;
-		// sproutReports()->reports->twigReportRows;
 		craft()->templates->render($resultsTemplate, array(
 			'options' => count($options) ? $options : $report->getOptions()
 		));

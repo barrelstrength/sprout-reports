@@ -30,8 +30,6 @@ class SproutReportsQueryDataSource extends SproutReportsBaseDataSource
 	}
 
 	/**
-	 * @todo:so Let's bring back a little sanity checks back into raw queries
-	 *
 	 * @param SproutReports_ReportModel $report
 	 * @param array                     $options
 	 * @return bool|\CDbDataReader

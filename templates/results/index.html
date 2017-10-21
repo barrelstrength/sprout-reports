@@ -25,7 +25,7 @@
 	    {{ "Download"|t }}
     </a>
 
-		{% if currentUser.can('sproutReports-editReports') %}
+		{% if currentUser.can('sproutReports-editReports') and optionsHtml %}
 	    <a id="modify-options-icon" class="btn" data-icon="settings"></a>
 		{% endif %}
   </form>
@@ -37,6 +37,8 @@
 	{% if optionsHtml %}
 
 		<div id="modify-options-panel" style="display:none;">
+
+			{% if optionsHtml %}
 
 			<form id="report-options" method="post" accept-charset="UTF-8">
 				{{ getCsrfInput() }}
@@ -55,6 +57,8 @@
 			</form>
 
 			<hr>
+
+			{% endif %}
 
 		</div>
 

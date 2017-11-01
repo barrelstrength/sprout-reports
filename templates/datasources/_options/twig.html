@@ -5,7 +5,10 @@
 {%- set showTemplateSettings = craft.request.getSegment(3) == 'view' ? false : true -%}
 
 {%- if optionContents %}
-	{{- optionContents|raw -}}
+
+	{%- namespace 'options' %}
+		{{- optionContents|raw -}}
+	{% endnamespace -%}
 
 	<hr>
 {%- endif -%}

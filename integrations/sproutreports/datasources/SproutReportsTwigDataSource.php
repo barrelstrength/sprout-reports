@@ -108,8 +108,7 @@ class SproutReportsTwigDataSource extends SproutReportsBaseDataSource
 
 			// Add support for processing Template Options by including Craft CP Form Macros and
 			// wrapping all option fields in the `options` namespace
-			$customOptionsHtmlWithExtras = '{% import "_includes/forms" as forms %}{% namespace "options" %}' .
-				$customOptionsFileContent . '{% endnamespace %}';
+			$customOptionsHtmlWithExtras = $customOptionsFileContent;
 
 			$customOptionsHtml = craft()->templates->renderString($customOptionsHtmlWithExtras, array(
 				'options' => count($options) ? $options : $this->report->getOptions(),

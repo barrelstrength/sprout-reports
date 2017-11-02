@@ -14,7 +14,7 @@ class SproutReportsTwigDataSource extends SproutReportsBaseDataSource
 	 */
 	public function getName()
 	{
-		return Craft::t('Twig Template');
+		return Craft::t('Custom Twig Template');
 	}
 
 	/**
@@ -22,7 +22,7 @@ class SproutReportsTwigDataSource extends SproutReportsBaseDataSource
 	 */
 	public function getDescription()
 	{
-		return Craft::t('Create a report using Twig in your templates folder.');
+		return Craft::t('Create a report using Twig in your front-end templates folder.');
 	}
 
 	/**

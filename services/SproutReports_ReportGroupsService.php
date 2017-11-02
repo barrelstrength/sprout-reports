@@ -91,7 +91,10 @@ class SproutReports_ReportGroupsService extends BaseApplicationComponent
 	 */
 	public function getAllReportGroups()
 	{
-		$groups = SproutReports_ReportGroupRecord::model()->findAll(array('index'=>'id'));
+		$groups = SproutReports_ReportGroupRecord::model()->findAll(array(
+			'index'=>'id',
+			'order'=>'name'
+		));
 
 		if ($groups)
 		{

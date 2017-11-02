@@ -1,6 +1,6 @@
 {% extends "sproutreports/_layouts/base" %}
 
-{% set title  = report.name|t %}
+{% set title  = report.dynamicName ? report.processDynamicName()|t : report.name|t %}
 {% set groups = craft.sproutReports.getReportGroups() %}
 
 {% set crumbs = [

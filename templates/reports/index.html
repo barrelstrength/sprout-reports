@@ -76,10 +76,10 @@
 							<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}">
 								<strong>
 									{% if report.dynamicName %}
-                                        {{ report.processDynamicName() }}
+										{{ report.processDynamicName() }}
 									{% else %}
 										{{ report.name }}
-                                    {% endif %}
+									{% endif %}
 								</strong>
 							</a>
 

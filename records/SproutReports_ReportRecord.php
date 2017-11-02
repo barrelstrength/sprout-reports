@@ -1,4 +1,5 @@
 <?php
+
 namespace Craft;
 
 /**
@@ -6,14 +7,14 @@ namespace Craft;
  *
  * @package Craft
  * --
- * @property int $id
+ * @property int    $id
  * @property string $name
  * @property string $handle
  * @property string $description
- * @property array $options
+ * @property array  $options
  * @property string $dataSourceId
- * @property int $groupId
- * @property int $enabled
+ * @property int    $groupId
+ * @property int    $enabled
  */
 class SproutReports_ReportRecord extends BaseRecord
 {
@@ -35,7 +36,7 @@ class SproutReports_ReportRecord extends BaseRecord
 			'name'         => array(AttributeType::String, 'required' => true),
 			'handle'       => array(AttributeType::Handle, 'required' => true),
 			'description'  => array(AttributeType::String, 'default' => null),
-			'dynamicName'  => array(AttributeType::String, 'default' => null),
+			'nameFormat'   => array(AttributeType::String, 'default' => null),
 			'allowHtml'    => array(AttributeType::Bool, 'required' => false),
 			'dataSourceId' => array(AttributeType::String, 'required' => true),
 			'options'      => array(AttributeType::Mixed, 'required' => false),

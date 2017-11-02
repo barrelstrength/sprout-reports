@@ -1,4 +1,5 @@
 <?php
+
 namespace Craft;
 
 /**
@@ -217,7 +218,7 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 		$options = craft()->request->getPost('options');
 
 		$instance->name         = craft()->request->getPost('name');
-		$instance->dynamicName  = craft()->request->getPost('dynamicName');
+		$instance->nameFormat   = craft()->request->getPost('nameFormat');
 		$instance->handle       = craft()->request->getPost('handle');
 		$instance->description  = craft()->request->getPost('description');
 		$instance->options      = is_array($options) ? $options : array();

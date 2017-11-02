@@ -59,7 +59,8 @@
 
 				{{ forms.textField({
 					label: "Name"|t,
-					instructions: "What this report will be called in the CP. <a href='#' class='fieldtoggle instructionstoggle' data-target='toggle-dynamicname'>Add a Dynamic Name</a>."|t,
+					instructions: "What this report will be called in the CP. <a href='#' class='fieldtoggle
+					instructionstoggle' data-target='toggle-nameformat'>Add a Name Format</a>."|t,
 					id: "name",
 					name: 'name',
 					value: report is defined ? report.name : "",
@@ -69,12 +70,13 @@
 					autofocus: true
 				}) }}
 
-				<div id="toggle-dynamicname" class="{{ report.dynamicName ?: 'hidden' }}">
+				<div id="toggle-nameformat" class="{{ report.nameFormat ?: 'hidden' }}">
 		      {{ forms.textField({
-	          label: "Dynamic Name"|t,
-	          instructions: "Generate your Report Name using dynamic variables from your selected options, such as {startDate|date('F d, Y')}."|t,
-	          name: 'dynamicName',
-	          value: report.dynamicName,
+	          label: "Name Format"|t,
+	          instructions: "Auto-generate your Report Name using option values, such as <code>{startDate|date('F d,
+	          Y')}</code>"|t|raw,
+	          name: 'nameFormat',
+	          value: report.nameFormat,
 	          errors: '',
 	          class: 'nicetext'
 		      }) }}

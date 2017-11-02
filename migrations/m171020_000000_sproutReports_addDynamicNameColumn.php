@@ -3,7 +3,7 @@ namespace Craft;
 /**
  * The class name is the UTC timestamp in the format of mYYMMDD_HHMMSS_pluginHandle_migrationName
  */
-class m171020_000000_sproutReports_addDynamicNameColumn extends BaseMigration
+class m171020_000000_sproutReports_addNameFormatColumn extends BaseMigration
 {
 	/**
 	 * @return bool
@@ -11,7 +11,7 @@ class m171020_000000_sproutReports_addDynamicNameColumn extends BaseMigration
 	public function safeUp()
 	{
 		$tableName  = 'sproutreports_reports';
-		$columnName = 'dynamicName';
+		$columnName = 'nameFormat';
 
 		$this->addColumnAfter($tableName, $columnName,
 			array(

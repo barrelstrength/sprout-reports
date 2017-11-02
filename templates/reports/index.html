@@ -75,8 +75,8 @@
 						<td class="sproutreports-reportname">
 							<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}">
 								<strong>
-									{% if report.dynamicName %}
-										{{ report.processDynamicName() }}
+									{% if report.nameFormat %}
+										{{ report.processNameFormat() }}
 									{% else %}
 										{{ report.name }}
 									{% endif %}

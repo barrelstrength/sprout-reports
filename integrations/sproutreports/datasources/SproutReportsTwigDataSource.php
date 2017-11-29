@@ -119,7 +119,7 @@ class SproutReportsTwigDataSource extends SproutReportsBaseDataSource
 		return craft()->templates->render('sproutreports/datasources/_options/twig', array(
 			'options'        => count($options) ? $options : $this->report->getOptions(),
 			'errors'         => $optionErrors,
-			'optionContents' => $customOptionsHtml ?? null
+			'optionContents' => isset($customOptionsHtml) ? $customOptionsHtml : null
 		));
 	}
 

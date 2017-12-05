@@ -110,16 +110,7 @@ class SproutReportsTwigDataSource extends SproutReportsBaseDataSource
 			// wrapping all option fields in the `options` namespace
 			$customOptionsHtmlWithExtras = $customOptionsFileContent;
 
-			foreach ($options as $name => $option)
-			{
-				$datetime = strpos($name, 'datetime');
-				// Date time field
-				if ($datetime === 0)
-				{
-					$value =  DateTime::createFromString($options[$name]);
-					$options[$name] = $value;
-				}
-			}
+			$options = $this->prepOptions($options);
 
 			$customOptionsHtml = craft()->templates->renderString($customOptionsHtmlWithExtras, array(
 				'options' => count($options) ? $options : $this->report->getOptions(),
@@ -196,5 +187,27 @@ class SproutReportsTwigDataSource extends SproutReportsBaseDataSource
 
 			array_unshift($rows, $headerRow);
 		}
+	}
+
+	/**
+	 * @param array $options
+	 *
+	 * @return array|null
+	 */
+	public function prepOptions(array $options): array
+	{
+		foreach ($options as $name => $option)
+		{
+			$datetime = strpos($name, 'datetime');
+
+			// Date time field
+			if ($datetime === 0)
+			{
+				$value          = DateTime::createFromString($options[$name]);
+				$options[$name] = $value;
+			}
+		}
+
+		return $options;
 	}
 }

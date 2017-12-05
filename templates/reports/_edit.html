@@ -95,7 +95,7 @@
 
 			{% if dataSource is defined %}
 
-				{% set optionsHtml = dataSource.getOptionsHtml() %}
+				{% set optionsHtml = dataSource.getOptionsHtml(report.options) %}
 
 				{% if optionsHtml %}
 

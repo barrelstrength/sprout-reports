@@ -194,7 +194,7 @@ class SproutReportsTwigDataSource extends SproutReportsBaseDataSource
 	 *
 	 * @return array|null
 	 */
-	public function prepOptions(array $options): array
+	public function prepOptions(array $options)
 	{
 		foreach ($options as $name => $option)
 		{
@@ -203,7 +203,7 @@ class SproutReportsTwigDataSource extends SproutReportsBaseDataSource
 			// Date time field
 			if ($datetime === 0)
 			{
-				$value          = DateTime::createFromString($options[$name]);
+				$value          = DateTime::createFromString($options[$name], craft()->timezone);
 				$options[$name] = $value;
 			}
 		}

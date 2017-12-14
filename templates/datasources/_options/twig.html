@@ -2,8 +2,8 @@
 {%- import 'sproutseo/_includes/sproutcp' as sprout -%}
 
 {%- set resultsTemplate = options.resultsTemplate is defined ? options.resultsTemplate : "" -%}
-{% set optionsTemplate = options.optionsTemplate is defined ? options.optionsTemplate : "" -%}
-{#{%- set showTemplateSettings = craft.request.getSegment(3) == 'view' ? false : true -%}#}
+{%- set optionsTemplate = options.optionsTemplate is defined ? options.optionsTemplate : "" -%}
+{%- set reportSettingsPage = craft.request.getSegment(5) == 'edit' ? true : false -%}
 
 {%- if optionContents %}
 
@@ -30,51 +30,43 @@
 
 <hr>
 
-{#{%- if showTemplateSettings %}#}
+	<div class="{{ not reportSettingsPage ? 'hidden' }}">
 
-	{#{% if not resultsTemplate and not optionsTemplate %}#}
+		<p>
+			<a href='#' class='fieldtoggle settings {{ optionContents ? 'collapsed' : 'expanded' }}'
+				data-target='toggle-templateoptions'>
+				{{ "Template Settings"|t }}
+			</a>
+		</p>
 
-		{##}
-		{#<hr>#}
+		<div id="toggle-templateoptions" class="{{ optionContents ? 'hidden' : 'expanded' }}">
 
-	{#{% endif %}#}
+			{{ forms.textField({
+				name: "options[resultsTemplate]",
+				label: "Results Template"|t,
+				instructions: "The template to use to display results. Learn more about <a
+				href='https://sprout.barrelstrengthdesign.com/craft-plugins/reports'>Results Templates</a>."|raw|t,
+				class: "nicetext code",
+				required: true,
+				first: true,
+				placeholder: "_reports/results",
+				value: resultsTemplate,
+				errors: errors['resultsTemplate'] is defined ? errors['resultsTemplate'] : null
+			}) }}
 
-	<p>
-		<a href='#' class='fieldtoggle settings {{ optionContents ? 'collapsed' : 'expanded' }}'
-			data-target='toggle-templateoptions'>
-			{{ "Template Settings"|t }}
-		</a>
-	</p>
+			{{ forms.textField({
+				name: "options[optionsTemplate]",
+				label: "Options Template"|t,
+				instructions: "The template to use to display options. Learn more about <a
+				href='https://sprout.barrelstrengthdesign.com/craft-plugins/reports'>Options Templates</a>."|raw|t,
+				class: "nicetext code",
+				placeholder: "_reports/options",
+				value: options.optionsTemplate is defined ? options.optionsTemplate : "",
+				errors: errors['optionsTemplate'] is defined ? errors['optionsTemplate'] : null
+			}) }}
 
-
-	<div id="toggle-templateoptions" class="{{ optionContents ? 'hidden' : 'expanded' }}">
-
-		{{ forms.textField({
-			name: "options[resultsTemplate]",
-			label: "Results Template"|t,
-			instructions: "The template to use to display results. Learn more about <a
-			href='https://sprout.barrelstrengthdesign.com/craft-plugins/reports'>Results Templates</a>."|raw|t,
-			class: "nicetext code",
-			required: true,
-			first: true,
-			placeholder: "_reports/results",
-			value: resultsTemplate,
-			errors: errors['resultsTemplate'] is defined ? errors['resultsTemplate'] : null
-		}) }}
-
-		{{ forms.textField({
-			name: "options[optionsTemplate]",
-			label: "Options Template"|t,
-			instructions: "The template to use to display options. Learn more about <a
-			href='https://sprout.barrelstrengthdesign.com/craft-plugins/reports'>Options Templates</a>."|raw|t,
-			class: "nicetext code",
-			placeholder: "_reports/options",
-			value: options.optionsTemplate is defined ? options.optionsTemplate : "",
-			errors: errors['optionsTemplate'] is defined ? errors['optionsTemplate'] : null
-		}) }}
+		</div>
 
 	</div>
-
-{#{% endif -%}#}
 
 {% includeCssResource "sproutseo/css/sproutcp.css" %}

@@ -3,7 +3,7 @@
 
 {%- set resultsTemplate = options.resultsTemplate is defined ? options.resultsTemplate : "" -%}
 {%- set optionsTemplate = options.optionsTemplate is defined ? options.optionsTemplate : "" -%}
-{%- set reportSettingsPage = craft.request.getSegment(5) == 'edit' ? true : false -%}
+{%- set reportSettingsPage = craft.request.getSegment(3) != 'view' ? true : false -%}
 
 {%- if optionContents %}
 
@@ -16,7 +16,9 @@
 		{% set boxBody %}
 			<p>{{ "Give your users the ability to refine their results with a date range, lightswitch, and more. Build
 			custom Twig Template reports with a Craft-friendly look and feel.
-			[Learn more]({url})."|t }}</p>
+			[Learn more]({url})."|t({
+					url: "https://sprout.barrelstrengthdesign.com/craft-plugins/reports/docs/custom-reports/custom-twig-template-report"
+				})|markdown }}</p>
 		{% endset %}
 
 		{{ sprout.mediaBox({

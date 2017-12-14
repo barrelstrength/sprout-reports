@@ -97,6 +97,8 @@ class SproutReportsTwigDataSource extends SproutReportsBaseDataSource
 		{
 			$customOptionsTemplatePath = craft()->path->getSiteTemplatesPath() . $options['optionsTemplate'];
 
+			$customOptionsFileContent = null;
+
 			foreach (craft()->config->get('defaultTemplateExtensions') as $extension)
 			{
 				if (IOHelper::fileExists($customOptionsTemplatePath . '.' . $extension))

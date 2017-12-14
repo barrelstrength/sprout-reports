@@ -45,11 +45,11 @@
 				name: "options[resultsTemplate]",
 				label: "Results Template"|t,
 				instructions: "The template to use to display results. Learn more about <a
-				href='https://sprout.barrelstrengthdesign.com/craft-plugins/reports'>Results Templates</a>."|raw|t,
+				href='https://sprout.barrelstrengthdesign.com/craft-plugins/reports/docs/custom-reports/custom-twig-template-report'>Results Templates</a>."|raw|t,
 				class: "nicetext code",
 				required: true,
 				first: true,
-				placeholder: "_reports/results",
+				placeholder: "_reports/reportname/results",
 				value: resultsTemplate,
 				errors: errors['resultsTemplate'] is defined ? errors['resultsTemplate'] : null
 			}) }}
@@ -58,9 +58,9 @@
 				name: "options[optionsTemplate]",
 				label: "Options Template"|t,
 				instructions: "The template to use to display options. Learn more about <a
-				href='https://sprout.barrelstrengthdesign.com/craft-plugins/reports'>Options Templates</a>."|raw|t,
+				href='https://sprout.barrelstrengthdesign.com/craft-plugins/reports/docs/custom-reports/custom-twig-template-report'>Options Templates</a>."|raw|t,
 				class: "nicetext code",
-				placeholder: "_reports/options",
+				placeholder: "_reports/reportname/options",
 				value: options.optionsTemplate is defined ? options.optionsTemplate : "",
 				errors: errors['optionsTemplate'] is defined ? errors['optionsTemplate'] : null
 			}) }}

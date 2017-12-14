@@ -1,8 +1,9 @@
 {%- import "_includes/forms" as forms -%}
+{%- import 'sproutseo/_includes/sproutcp' as sprout -%}
 
 {%- set resultsTemplate = options.resultsTemplate is defined ? options.resultsTemplate : "" -%}
 {% set optionsTemplate = options.optionsTemplate is defined ? options.optionsTemplate : "" -%}
-{%- set showTemplateSettings = craft.request.getSegment(3) == 'view' ? false : true -%}
+{#{%- set showTemplateSettings = craft.request.getSegment(3) == 'view' ? false : true -%}#}
 
 {%- if optionContents %}
 
@@ -10,40 +11,53 @@
 		{{- optionContents|raw -}}
 	{% endnamespace -%}
 
-	<hr>
+	{% else %}
+
+		{% set boxBody %}
+			<p>{{ "Give your users the ability to refine their results with a date range, lightswitch, and more. Build
+			custom Twig Template reports with a Craft-friendly look and feel.
+			[Learn more]({url})."|t }}</p>
+		{% endset %}
+
+		{{ sprout.mediaBox({
+			heading: "Give your users options"|t,
+			body: boxBody,
+			resourceUrl: resourceUrl('sproutreports/icon.svg'),
+			resourceAltText: "Sprout Reports Icon"|t,
+		}) }}
+
 {%- endif -%}
 
-{%- if showTemplateSettings %}
+<hr>
 
-	{% if not optionsTemplate %}
+{#{%- if showTemplateSettings %}#}
 
-		{{ forms.field({
-			label: "Custom Options"|t,
-			instructions: "Add an Options Template and 'Save and continue editing' this Custom Twig Report to display your
-			Custom Options settings here. See the Custom Twig Template Report page in the Sprout Reports documentation to
-			ensure your options can be saved and display with a Craft-friendly look and feel."|t,
-		}, null) }}
+	{#{% if not resultsTemplate and not optionsTemplate %}#}
 
-		<hr>
+		{##}
+		{#<hr>#}
 
-	{% endif %}
+	{#{% endif %}#}
 
 	<p>
-		<a href='#' class='fieldtoggle settings {{ resultsTemplate or optionsTemplate ?: 'expanded' }}' data-target='toggle-templateoptions'>
+		<a href='#' class='fieldtoggle settings {{ optionContents ? 'collapsed' : 'expanded' }}'
+			data-target='toggle-templateoptions'>
 			{{ "Template Settings"|t }}
 		</a>
 	</p>
 
 
-	<div id="toggle-templateoptions" class="{{ resultsTemplate or optionsTemplate ? 'hidden' : 'expanded' }}">
+	<div id="toggle-templateoptions" class="{{ optionContents ? 'hidden' : 'expanded' }}">
 
 		{{ forms.textField({
 			name: "options[resultsTemplate]",
 			label: "Results Template"|t,
-			instructions: "The file in your templates folder to use to display results for this report.",
+			instructions: "The template to use to display results. Learn more about <a
+			href='https://sprout.barrelstrengthdesign.com/craft-plugins/reports'>Results Templates</a>."|raw|t,
 			class: "nicetext code",
 			required: true,
 			first: true,
+			placeholder: "_reports/results",
 			value: resultsTemplate,
 			errors: errors['resultsTemplate'] is defined ? errors['resultsTemplate'] : null
 		}) }}
@@ -51,12 +65,16 @@
 		{{ forms.textField({
 			name: "options[optionsTemplate]",
 			label: "Options Template"|t,
-			instructions: "The file in your templates folder to use to display options for this report.",
+			instructions: "The template to use to display options. Learn more about <a
+			href='https://sprout.barrelstrengthdesign.com/craft-plugins/reports'>Options Templates</a>."|raw|t,
 			class: "nicetext code",
+			placeholder: "_reports/options",
 			value: options.optionsTemplate is defined ? options.optionsTemplate : "",
 			errors: errors['optionsTemplate'] is defined ? errors['optionsTemplate'] : null
 		}) }}
 
 	</div>
 
-{% endif -%}
+{#{% endif -%}#}
+
+{% includeCssResource "sproutseo/css/sproutcp.css" %}

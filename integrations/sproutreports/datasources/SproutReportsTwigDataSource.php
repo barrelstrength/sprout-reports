@@ -152,6 +152,8 @@ class SproutReportsTwigDataSource extends SproutReportsBaseDataSource
 	 *
 	 * @param SproutReports_ReportModel $report
 	 * @param array                     $options
+	 *
+	 * @throws Exception
 	 */
 	public function processFrontEndResultsTemplate(SproutReports_ReportModel $report, $options = array())
 	{
@@ -159,8 +161,10 @@ class SproutReportsTwigDataSource extends SproutReportsBaseDataSource
 
 		craft()->templates->setTemplateMode(TemplateMode::Site);
 
+		$options = count($options) ? $this->prepOptions($options) : $this->prepOptions($report->getOptions());
+
 		craft()->templates->render($resultsTemplate, array(
-			'options' => count($options) ? $options : $report->getOptions()
+			'options' => $options
 		));
 
 		craft()->templates->setTemplateMode(TemplateMode::CP);

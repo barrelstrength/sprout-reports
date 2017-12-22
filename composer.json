@@ -28,7 +28,7 @@
     },
     "extra": {
         "name": "Sprout Reports",
-        "handle": "sproutReports",
+        "handle": "sprout-reports",
         "schemaVersion": "3",
         "hasSettings": true,
         "hasCpSection": true,

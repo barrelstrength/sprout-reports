@@ -100,15 +100,15 @@ class SproutReports extends Plugin
 			$event->rules['sprout-reports/reports'] = 'sprout-reports/reports/index';
 			$event->rules['sprout-reports/reports/<groupId:\d+>'] = 'sprout-reports/reports/index';
 
-			$event->rules['sprout-reports/reports/<dataSourceId>/new'] = 'sprout-core/reports/edit-report';
-			$event->rules['sprout-reports/reports/<dataSourceId>/edit/<reportId:\d+>'] = 'sprout-core/reports/edit-report';
+			$event->rules['sprout-reports/reports/<dataSourceId>/new'] = 'sprout-base/reports/edit-report';
+			$event->rules['sprout-reports/reports/<dataSourceId>/edit/<reportId:\d+>'] = 'sprout-base/reports/edit-report';
 
 			$event->rules['sprout-reports/datasources'] = ['template' => 'sprout-reports/datasources/index'];
 
-			$event->rules['sprout-reports/reports/view/<reportId:\d+>'] = 'sprout-core/reports/results-index';
+			$event->rules['sprout-reports/reports/view/<reportId:\d+>'] = 'sprout-base/reports/results-index';
 
-			$event->rules['sprout-reports/settings'] = 'sprout-core/settings/edit-settings';
-			$event->rules['sprout-reports/settings/general'] = 'sprout-core/settings/edit-settings';
+			$event->rules['sprout-reports/settings'] = 'sprout-base/settings/edit-settings';
+			$event->rules['sprout-reports/settings/general'] = 'sprout-base/settings/edit-settings';
 		});
 
 		Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(

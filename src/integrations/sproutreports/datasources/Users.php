@@ -1,10 +1,10 @@
 <?php
 namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 
-use barrelstrength\sproutcore\contracts\sproutreports\BaseDataSource;
+use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
 use barrelstrength\sproutreports\SproutReports;
 use Craft;
-use barrelstrength\sproutcore\models\sproutreports\Report as ReportModel;
+use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
 use craft\db\Query;
 
 class Users extends BaseDataSource

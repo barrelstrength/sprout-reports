@@ -10,9 +10,9 @@
 
 namespace barrelstrength\sproutreports\services;
 
-use barrelstrength\sproutcore\services\sproutreports\DataSources;
-use barrelstrength\sproutcore\services\sproutreports\Exports;
-use barrelstrength\sproutcore\services\sproutreports\Reports;
+use barrelstrength\sproutbase\services\sproutreports\DataSources;
+use barrelstrength\sproutbase\services\sproutreports\Exports;
+use barrelstrength\sproutbase\services\sproutreports\Reports;
 use craft\base\Component;
 
 /**

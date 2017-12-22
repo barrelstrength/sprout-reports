@@ -2,7 +2,7 @@
 namespace barrelstrength\sproutreports\services;
 
 use yii\base\Component;
-use barrelstrength\sproutcore\records\sproutreports\ReportGroup as ReportGroupRecord;
+use barrelstrength\sproutbase\records\sproutreports\ReportGroup as ReportGroupRecord;
 use barrelstrength\sproutreports\models\ReportGroup as ReportGroupModel;
 use barrelstrength\sproutreports\SproutReports;
 

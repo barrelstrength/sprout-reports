@@ -1,13 +1,13 @@
 <?php
 namespace barrelstrength\sproutreports\controllers;
 
-use barrelstrength\sproutcore\SproutCore;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\web\assets\cp\CpAsset;
 use craft\web\Controller;
 use barrelstrength\sproutreports\SproutReports;
-use barrelstrength\sproutcore\models\sproutreports\Report;
-use barrelstrength\sproutcore\records\sproutreports\Report as ReportRecord;
+use barrelstrength\sproutbase\models\sproutreports\Report;
+use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
 
 class ReportsController extends Controller
 {

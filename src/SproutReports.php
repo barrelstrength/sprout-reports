@@ -10,10 +10,10 @@
 
 namespace barrelstrength\sproutreports;
 
-use barrelstrength\sproutcore\base\BaseSproutTrait;
+use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutreports\models\Settings;
-use barrelstrength\sproutcore\services\sproutreports\DataSources;
-use barrelstrength\sproutcore\SproutCoreHelper;
+use barrelstrength\sproutbase\services\sproutreports\DataSources;
+use barrelstrength\sproutbase\SproutBaseHelper;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomQuery;
 use barrelstrength\sproutreports\services\App;
 use Craft;
@@ -65,7 +65,7 @@ class SproutReports extends Plugin
 	{
 		parent::init();
 
-		SproutCoreHelper::registerModule();
+		SproutBaseHelper::registerModule();
 
 		$this->setComponents([
 			'app' => App::class

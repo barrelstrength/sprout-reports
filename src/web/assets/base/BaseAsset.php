@@ -2,7 +2,7 @@
 
 namespace barrelstrength\sproutreports\web\assets\base;
 
-use barrelstrength\sproutcore\web\assets\sproutreports\SproutReportsAsset;
+use barrelstrength\sproutbase\web\assets\sproutreports\SproutReportsAsset;
 use craft\web\AssetBundle;
 
 class BaseAsset extends AssetBundle

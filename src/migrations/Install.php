@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutreports\migrations;
 
-use barrelstrength\sproutcore\migrations\sproutreports\Install as SproutCoreReportsInstall;
+use barrelstrength\sproutbase\migrations\sproutreports\Install as SproutBaseReportsInstall;
 use craft\db\Migration;
 use Craft;
 
@@ -21,7 +21,7 @@ class Install extends Migration
 	 */
 	public function safeUp()
 	{
-		$this->runSproutCoreInstall();
+		$this->runSproutBaseInstall();
 
 		return true;
 	}
@@ -29,9 +29,9 @@ class Install extends Migration
 	// Protected Methods
 	// =========================================================================
 
-	protected function runSproutCoreInstall()
+	protected function runSproutBaseInstall()
 	{
-		$migration = new SproutCoreReportsInstall();
+		$migration = new SproutBaseReportsInstall();
 
 		ob_start();
 		$migration->safeUp();

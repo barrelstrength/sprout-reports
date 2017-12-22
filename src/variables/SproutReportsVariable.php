@@ -2,15 +2,15 @@
 
 namespace barrelstrength\sproutreports\variables;
 
-use barrelstrength\sproutcore\models\sproutreports\Report;
-use barrelstrength\sproutcore\SproutCore;
+use barrelstrength\sproutbase\models\sproutreports\Report;
+use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutreports\SproutReports;
 
 class SproutReportsVariable
 {
 	public function getDataSources()
 	{
-		return SproutCore::$app->dataSources->getAllDataSources();
+		return SproutBase::$app->dataSources->getAllDataSources();
 	}
 
 	/**

@@ -9,35 +9,35 @@ use craft\web\Controller;
 
 class DataSourcesController extends Controller
 {
-	/**
-	 * Save the Data Source
-	 * @return \yii\web\Response
-	 */
-	public function actionUpdateDataSource()
-	{
-		$this->requirePostRequest();
+    /**
+     * Save the Data Source
+     *
+     * @return \yii\web\Response
+     */
+    public function actionUpdateDataSource()
+    {
+        $this->requirePostRequest();
 
-		$request = Craft::$app->getRequest();
+        $request = Craft::$app->getRequest();
 
-		$allowNew     = $request->getBodyParam('allowNew');
-		$dataSourceId = $request->getBodyParam('dataSourceId');
+        $allowNew = $request->getBodyParam('allowNew');
+        $dataSourceId = $request->getBodyParam('dataSourceId');
 
-		$allowNew = (empty($allowNew)) ? false : true;
+        $allowNew = (empty($allowNew)) ? false : true;
 
-		$attributes = array(
-			'allowNew'     => $allowNew,
-			'dataSourceId' => $dataSourceId
-		);
+        $attributes = [
+            'allowNew' => $allowNew,
+            'dataSourceId' => $dataSourceId
+        ];
 
-		$model = new DataSourceModel;
+        $model = new DataSourceModel;
 
-		$model->setAttributes($attributes);
+        $model->setAttributes($attributes);
 
-		if (SproutReports::$app->dataSources->saveDataSource($model))
-		{
-			return $this->asJson(true);
-		}
+        if (SproutReports::$app->dataSources->saveDataSource($model)) {
+            return $this->asJson(true);
+        }
 
-		return $this->asJson(false);
-	}
+        return $this->asJson(false);
+    }
 }

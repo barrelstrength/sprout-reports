@@ -30,31 +30,31 @@ use craft\base\Component;
  */
 class App extends Component
 {
-	/**
-	 * @var ReportGroups
-	 */
-	public $reportGroups;
+    /**
+     * @var ReportGroups
+     */
+    public $reportGroups;
 
-	/**
-	 * @var DataSources
-	 */
-	public $dataSources;
+    /**
+     * @var DataSources
+     */
+    public $dataSources;
 
-	/**
-	 * @var Reports
-	 */
-	public $reports;
+    /**
+     * @var Reports
+     */
+    public $reports;
 
-	/**
-	 * @var Exports
-	 */
-	public $exports;
+    /**
+     * @var Exports
+     */
+    public $exports;
 
-	public function init()
-	{
-		$this->reportGroups    = new ReportGroups();
-		$this->dataSources     = new DataSources();
-		$this->reports         = new Reports();
-		$this->exports         = new Exports();
-	}
+    public function init()
+    {
+        $this->reportGroups = new ReportGroups();
+        $this->dataSources = new DataSources();
+        $this->reports = new Reports();
+        $this->exports = new Exports();
+    }
 }

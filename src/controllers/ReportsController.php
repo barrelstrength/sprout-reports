@@ -1,4 +1,5 @@
 <?php
+
 namespace barrelstrength\sproutreports\controllers;
 
 use barrelstrength\sproutbase\SproutBase;
@@ -11,15 +12,15 @@ use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
 
 class ReportsController extends Controller
 {
-	/**
-	 * @param null $groupId
-	 *
-	 * @return \yii\web\Response
-	 */
-	public function actionIndex($groupId = null)
-	{
-		return $this->renderTemplate('sprout-reports/reports/index', [
-			'groupId' => $groupId
-		]);
-	}
+    /**
+     * @param null $groupId
+     *
+     * @return \yii\web\Response
+     */
+    public function actionIndex($groupId = null)
+    {
+        return $this->renderTemplate('sprout-reports/reports/index', [
+            'groupId' => $groupId
+        ]);
+    }
 }

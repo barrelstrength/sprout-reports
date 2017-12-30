@@ -9,54 +9,53 @@ use barrelstrength\sproutreports\SproutReports;
 
 class ReportGroupController extends Controller
 {
-	/**
-	 * Saves
-	 * @return \yii\web\Response
-	 */
-	public function actionSaveGroup()
-	{
-		$this->requirePostRequest();
+    /**
+     * Saves
+     *
+     * @return \yii\web\Response
+     */
+    public function actionSaveGroup()
+    {
+        $this->requirePostRequest();
 
-		$request = Craft::$app->getRequest();
+        $request = Craft::$app->getRequest();
 
-		$groupName = $request->getBodyParam('name');
+        $groupName = $request->getBodyParam('name');
 
-		$group       = new ReportGroup();
-		$group->id   = $request->getBodyParam('id');
-		$group->name = $groupName;
+        $group = new ReportGroup();
+        $group->id = $request->getBodyParam('id');
+        $group->name = $groupName;
 
-		if (SproutReports::$app->reportGroups->saveGroup($group))
-		{
-			Craft::$app->getSession()->setNotice(SproutReports::t('Report group saved.'));
+        if (SproutReports::$app->reportGroups->saveGroup($group)) {
+            Craft::$app->getSession()->setNotice(SproutReports::t('Report group saved.'));
 
-			return $this->asJson(array(
-				'success' => true,
-				'group'   => $group->getAttributes(),
-			));
-		}
-		else
-		{
-			return $this->asJson(array(
-				'errors' => $group->getErrors(),
-			));
-		}
-	}
+            return $this->asJson([
+                'success' => true,
+                'group' => $group->getAttributes(),
+            ]);
+        } else {
+            return $this->asJson([
+                'errors' => $group->getErrors(),
+            ]);
+        }
+    }
 
-	/**
-	 * Deletes a report group.
-	 * @return \yii\web\Response
-	 */
-	public function actionDeleteGroup()
-	{
-		$this->requirePostRequest();
+    /**
+     * Deletes a report group.
+     *
+     * @return \yii\web\Response
+     */
+    public function actionDeleteGroup()
+    {
+        $this->requirePostRequest();
 
-		$groupId = Craft::$app->getRequest()->getBodyParam('id');
-		$success = SproutReports::$app->reportGroups->deleteGroup($groupId);
+        $groupId = Craft::$app->getRequest()->getBodyParam('id');
+        $success = SproutReports::$app->reportGroups->deleteGroup($groupId);
 
-		Craft::$app->getSession()->setNotice(SproutReports::t('Group deleted..'));
+        Craft::$app->getSession()->setNotice(SproutReports::t('Group deleted..'));
 
-		return $this->asJson(array(
-			'success' => $success,
-		));
-	}
+        return $this->asJson([
+            'success' => $success,
+        ]);
+    }
 }

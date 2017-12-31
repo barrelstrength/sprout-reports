@@ -60,6 +60,7 @@ class SproutReports extends Plugin
     public static $pluginId = 'sprout-reports';
 
     public $hasSettings = true;
+    public $hasCpSection = true;
 
     public function init()
     {

@@ -29,7 +29,7 @@ class DataSourcesController extends Controller
         $dataSource = new DataSourceModel();
         $dataSource->dataSourceId = $dataSourceId;
         $dataSource->allowNew = $allowNew;
-        
+
         if (SproutReports::$app->dataSources->saveDataSource($dataSource)) {
             return $this->asJson(true);
         }

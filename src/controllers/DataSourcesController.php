@@ -13,28 +13,24 @@ class DataSourcesController extends Controller
      * Save the Data Source
      *
      * @return \yii\web\Response
+     * @throws \yii\web\BadRequestHttpException
      */
-    public function actionUpdateDataSource()
+    public function actionSaveDataSource()
     {
         $this->requirePostRequest();
 
         $request = Craft::$app->getRequest();
 
-        $allowNew = $request->getBodyParam('allowNew');
         $dataSourceId = $request->getBodyParam('dataSourceId');
+        $allowNew = $request->getBodyParam('allowNew');
 
-        $allowNew = (empty($allowNew)) ? false : true;
+        $allowNew = empty($allowNew) ? false : true;
 
-        $attributes = [
-            'allowNew' => $allowNew,
-            'dataSourceId' => $dataSourceId
-        ];
-
-        $model = new DataSourceModel;
-
-        $model->setAttributes($attributes);
-
-        if (SproutReports::$app->dataSources->saveDataSource($model)) {
+        $dataSource = new DataSourceModel();
+        $dataSource->dataSourceId = $dataSourceId;
+        $dataSource->allowNew = $allowNew;
+        
+        if (SproutReports::$app->dataSources->saveDataSource($dataSource)) {
             return $this->asJson(true);
         }
 

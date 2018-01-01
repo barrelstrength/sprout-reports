@@ -8,6 +8,7 @@ use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
 use craft\records\Category as CategoryRecord;
 use craft\records\Entry as EntryRecord;
 use craft\db\Query;
+use Craft;
 
 class Categories extends BaseDataSource
 {

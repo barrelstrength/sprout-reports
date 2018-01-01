@@ -46,13 +46,6 @@ class SproutReports extends Plugin
     use BaseSproutTrait;
 
     /**
-     * Enable use of SproutReports::$app-> in place of Craft::$app->
-     *
-     * @var \barrelstrength\sproutreports\services\App
-     */
-    public static $app;
-
-    /**
      * Identify our plugin for BaseSproutTrait
      *
      * @var string
@@ -67,12 +60,6 @@ class SproutReports extends Plugin
         parent::init();
 
         SproutBaseHelper::registerModule();
-
-        $this->setComponents([
-            'app' => App::class
-        ]);
-
-        self::$app = $this->get('app');
 
         // Register our base template path
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {

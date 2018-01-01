@@ -4,7 +4,6 @@ namespace barrelstrength\sproutreports\variables;
 
 use barrelstrength\sproutbase\models\sproutreports\Report;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutreports\SproutReports;
 
 class SproutReportsVariable
 {
@@ -18,7 +17,7 @@ class SproutReportsVariable
      */
     public function getReports()
     {
-        return SproutReports::$app->reports->getAllReports();
+        return SproutBase::$app->reports->getAllReports();
     }
 
     /**
@@ -36,6 +35,6 @@ class SproutReportsVariable
      */
     public function getReportsByGroupId($groupId)
     {
-        return SproutReports::$app->reports->getReportsByGroupId($groupId);
+        return SproutBase::$app->reports->getReportsByGroupId($groupId);
     }
 }

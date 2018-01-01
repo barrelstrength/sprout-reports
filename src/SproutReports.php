@@ -15,7 +15,6 @@ use barrelstrength\sproutreports\models\Settings;
 use barrelstrength\sproutbase\services\sproutreports\DataSources;
 use barrelstrength\sproutbase\SproutBaseHelper;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomQuery;
-use barrelstrength\sproutreports\services\App;
 use Craft;
 use craft\base\Plugin;
 use barrelstrength\sproutreports\variables\SproutReportsVariable;

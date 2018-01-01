@@ -13,12 +13,12 @@ class Categories extends BaseDataSource
 {
     public function getName()
     {
-        return SproutReports::t('Category Usage by Section');
+        return Craft::t('sprout-reports','Category Usage by Section');
     }
 
     public function getDescription()
     {
-        return SproutReports::t('Returns a breakdown of Categories used by Entries.');
+        return Craft::t('sprout-reports','Returns a breakdown of Categories used by Entries.');
     }
 
     /**
@@ -108,7 +108,7 @@ class Categories extends BaseDataSource
         $setupRequiredMessage = null;
 
         if (empty($sectionOptions) OR empty($categoryGroupOptions)) {
-            $setupRequiredMessage = SproutReports::t('This report requires a Channel or Structure section using Categories. Please update your settings to include at least one Channel or Structure and at least one Category Group with Categories available to assign to that section.');
+            $setupRequiredMessage = Craft::t('sprout-reports','This report requires a Channel or Structure section using Categories. Please update your settings to include at least one Channel or Structure and at least one Category Group with Categories available to assign to that section.');
         }
 
         return \Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_options/categories', [
@@ -130,11 +130,11 @@ class Categories extends BaseDataSource
     public function validateOptions(array $options = [], array &$errors = [])
     {
         if (empty($options['sectionId'])) {
-            $errors['sectionId'][] = SproutReports::t('Section is required.');
+            $errors['sectionId'][] = Craft::t('sprout-reports','Section is required.');
         }
 
         if (empty($options['categoryGroupId'])) {
-            $errors['categoryGroupId'][] = SproutReports::t('Category Group is required.');
+            $errors['categoryGroupId'][] = Craft::t('sprout-reports','Category Group is required.');
         }
 
         if (count($errors) > 0) {

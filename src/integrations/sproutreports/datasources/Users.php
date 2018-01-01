@@ -12,12 +12,12 @@ class Users extends BaseDataSource
 {
     public function getName()
     {
-        return SproutReports::t('Users');
+        return Craft::t('sprout-reports','Users');
     }
 
     public function getDescription()
     {
-        return SproutReports::t('Create reports about your users and user groups.');
+        return Craft::t('sprout-reports','Create reports about your users and user groups.');
     }
 
     /**
@@ -158,7 +158,7 @@ class Users extends BaseDataSource
     public function validateOptions(array $options = [], array &$errors = [])
     {
         if (empty($options['userGroups'])) {
-            $errors['userGroups'][] = SproutReports::t('Select at least one User Group.');
+            $errors['userGroups'][] = Craft::t('sprout-reports','Select at least one User Group.');
 
             return false;
         }

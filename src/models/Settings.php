@@ -13,7 +13,7 @@ class Settings extends Model
     {
         return [
             'general' => [
-                'label' => SproutReports::t('General'),
+                'label' => Craft::t('sprout-reports','General'),
                 'url' => 'sprout-reports/settings/general',
                 'selected' => 'general',
                 'template' => 'sprout-reports/_settings/general'

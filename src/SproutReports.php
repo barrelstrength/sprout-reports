@@ -72,7 +72,7 @@ class SproutReports extends Plugin
 
         Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
 
-            $name = SproutReports::t('Sprout Reports');
+            $name = Craft::t('sprout-reports','Sprout Reports');
 
             $event->permissions[$name]['sproutReports-editReports'] = ['label' => $this::t('Edit Reports')];
             $event->permissions[$name]['sproutReports-editDataSources'] = ['label' => $this::t('Edit Data Sources')];
@@ -129,15 +129,15 @@ class SproutReports extends Plugin
         return array_merge($parent, [
             'subnav' => [
                 'reports' => [
-                    'label' => SproutReports::t('Reports'),
+                    'label' => Craft::t('sprout-reports','Reports'),
                     'url' => 'sprout-reports/reports'
                 ],
                 'datasources' => [
-                    'label' => SproutReports::t('Data Sources'),
+                    'label' => Craft::t('sprout-reports','Data Sources'),
                     'url' => 'sprout-reports/datasources'
                 ],
                 'settings' => [
-                    'label' => SproutReports::t('Settings'),
+                    'label' => Craft::t('sprout-reports','Settings'),
                     'url' => 'sprout-reports/settings/general'
                 ]
             ]

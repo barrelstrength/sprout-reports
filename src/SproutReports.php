@@ -123,18 +123,6 @@ class SproutReports extends Plugin
     }
 
     /**
-     * Installs default group "Sprout Reports" after installation
-     */
-    public function afterInstall()
-    {
-        $defaultGroup = SproutReports::$app->reportGroups->createGroupByName('Sprout Reports');
-
-        if (Craft::$app->getPlugins()->getPlugin('sprout-reports')) {
-            SproutReports::$app->reports->registerReports(new Users(), $defaultGroup);
-        }
-    }
-
-    /**
      * @return Settings
      */
     protected function createSettingsModel()

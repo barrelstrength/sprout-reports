@@ -31,11 +31,6 @@ use craft\base\Component;
 class App extends Component
 {
     /**
-     * @var ReportGroups
-     */
-    public $reportGroups;
-
-    /**
      * @var DataSources
      */
     public $dataSources;
@@ -52,7 +47,6 @@ class App extends Component
 
     public function init()
     {
-        $this->reportGroups = new ReportGroups();
         $this->dataSources = new DataSources();
         $this->reports = new Reports();
         $this->exports = new Exports();

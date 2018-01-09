@@ -6,7 +6,7 @@
 {% endif %}
 
 {% set title  = "Data Sources"|t('sprout-reports') %}
-{% set groups = craft.sproutreports.getReportGroups() %}
+{% set groups = craft.sproutReports.getReportGroups() %}
 
 {% set selectedSubnavItem = 'datasources' %}
 
@@ -15,9 +15,9 @@
         {% exit 404 %}
     {% endif %}
 
-    {% set reports = craft.sproutreports.getReportsByGroupId(groupId) %}
+    {% set reports = craft.sproutReports.getReportsByGroupId(groupId) %}
 {% else %}
-    {% set reports = craft.sproutreports.getReports() %}
+    {% set reports = craft.sproutReports.getReports() %}
 {% endif %}
 
 {% block content %}
@@ -41,7 +41,7 @@
             </tr>
             </thead>
             <tbody>
-            {% set dataSources = craft.sproutreports.getDataSources() %}
+            {% set dataSources = craft.sproutReports.getDataSources() %}
 
             {% for id, dataSource in dataSources %}
                 <tr>

@@ -11,10 +11,12 @@
 namespace barrelstrength\sproutreports;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
+use barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomTwigTemplate;
 use barrelstrength\sproutreports\models\Settings;
 use barrelstrength\sproutbase\services\sproutreports\DataSources;
 use barrelstrength\sproutbase\SproutBaseHelper;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomQuery;
+use barrelstrength\sproutreports\services\App;
 use Craft;
 use craft\base\Plugin;
 use barrelstrength\sproutreports\variables\SproutReportsVariable;
@@ -45,6 +47,13 @@ class SproutReports extends Plugin
     use BaseSproutTrait;
 
     /**
+     * Enable use of SproutReports::$app-> in place of Craft::$app->
+     *
+     * @var App
+     */
+    public static $app;
+
+    /**
      * Identify our plugin for BaseSproutTrait
      *
      * @var string
@@ -60,13 +69,19 @@ class SproutReports extends Plugin
 
         SproutBaseHelper::registerModule();
 
+        $this->setComponents([
+            'app' => App::class
+        ]);
+
+        self::$app = $this->get('app');
+
         // Register our base template path
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
             $e->roots['sprout-reports'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
         });
 
         Event::on(CraftVariable::class, CraftVariable::EVENT_DEFINE_COMPONENTS, function(DefineComponentsEvent $e) {
-            $e->components['sproutreports'] = SproutReportsVariable::class;
+            $e->components['sproutReports'] = SproutReportsVariable::class;
         });
 
         Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
@@ -99,6 +114,7 @@ class SproutReports extends Plugin
         ) {
             $event->types[] = new Categories();
             $event->types[] = new CustomQuery();
+            $event->types[] = new CustomTwigTemplate();
 
             $isCraftPro = Craft::$app->getEdition() == Craft::Pro ? true : false;
 

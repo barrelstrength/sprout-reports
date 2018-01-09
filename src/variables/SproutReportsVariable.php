@@ -4,6 +4,7 @@ namespace barrelstrength\sproutreports\variables;
 
 use barrelstrength\sproutbase\models\sproutreports\Report;
 use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutreports\SproutReports;
 
 class SproutReportsVariable
 {
@@ -36,5 +37,44 @@ class SproutReportsVariable
     public function getReportsByGroupId($groupId)
     {
         return SproutBase::$app->reports->getReportsByGroupId($groupId);
+    }
+
+    /**
+     * @param array $row
+     *
+     * @return bool
+     */
+    public function addHeaderRow(array $row)
+    {
+        SproutReports::$app->twigDataSource->addHeaderRow($row);
+    }
+
+    /**
+     * Add a single row of data to your report
+     *
+     * @example array()
+     *
+     * @param array $row
+     *
+     * @return null
+     */
+    public function addRow(array $row)
+    {
+        SproutReports::$app->twigDataSource->addRow($row);
+    }
+
+    /**
+     * Add multiple rows of data to your report
+     *
+     * @example array(
+     *   array( ... ),
+     *   array( ... )
+     * )
+     *
+     * @param array $rows
+     */
+    public function addRows(array $rows)
+    {
+        SproutReports::$app->twigDataSource->addRows($rows);
     }
 }

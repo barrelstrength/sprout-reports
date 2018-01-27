@@ -4,7 +4,7 @@
 
 {%- set resultsTemplate = options.resultsTemplate is defined ? options.resultsTemplate : "" -%}
 {%- set optionsTemplate = options.optionsTemplate is defined ? options.optionsTemplate : "" -%}
-{%- set reportSettingsPage = craft.request.getSegment(3) != 'view' ? true : false -%}
+{%- set reportSettingsPage = craft.app.request.getSegment(3) != 'view' ? true : false -%}
 
 {%- if optionContents %}
 

@@ -25,7 +25,7 @@ class Users extends BaseDataSource
      *
      * @return array|null
      */
-    public function getResults(ReportModel &$report, $options = [])
+    public function getResults(ReportModel &$report, array $options = [])
     {
         // First, use dynamic options, fallback to report options
         if (!count($options)) {
@@ -120,7 +120,9 @@ class Users extends BaseDataSource
     /**
      * @param array $options
      *
-     * @return string
+     * @return null|string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function getOptionsHtml(array $options = [])
     {

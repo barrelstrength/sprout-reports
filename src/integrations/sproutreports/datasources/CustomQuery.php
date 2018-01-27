@@ -42,7 +42,7 @@ class CustomQuery extends BaseDataSource
      *
      * @return array
      */
-    public function getResults(ReportModel &$report, $options = [])
+    public function getResults(ReportModel &$report, array $options = [])
     {
         $query = $report->getOption('query');
 

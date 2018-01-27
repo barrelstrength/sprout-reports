@@ -27,7 +27,7 @@ class Categories extends BaseDataSource
      *
      * @return array|null
      */
-    public function getResults(ReportModel &$report, $options = [])
+    public function getResults(ReportModel &$report, array $options = [])
     {
         $options = $report->getOptions();
 

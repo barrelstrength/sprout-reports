@@ -1,4 +1,5 @@
 <?php
+
 namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 
 use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
@@ -9,171 +10,161 @@ use craft\db\Query;
 
 class Users extends BaseDataSource
 {
-	public function getName()
-	{
-		return SproutReports::t('Users');
-	}
+    public function getName()
+    {
+        return Craft::t('sprout-reports','Users');
+    }
 
-	public function getDescription()
-	{
-		return SproutReports::t('Create reports about your users and user groups.');
-	}
+    public function getDescription()
+    {
+        return Craft::t('sprout-reports','Create reports about your users and user groups.');
+    }
 
-	/**
-	 * @param ReportModel &$report
-	 *
-	 * @return array|null
-	 */
-	public function getResults(ReportModel &$report, $options = array())
-	{
-		// First, use dynamic options, fallback to report options
-		if (!count($options))
-		{
-			$options = $report->getOptions();
-		}
+    /**
+     * @param ReportModel &$report
+     *
+     * @return array|null
+     */
+    public function getResults(ReportModel &$report, array $options = [])
+    {
+        // First, use dynamic options, fallback to report options
+        if (!count($options)) {
+            $options = $report->getOptions();
+        }
 
-		$userGroupIds            = (isset($options->userGroups))? $options->userGroups : false;
-		$displayUserGroupColumns = (isset($options->displayUserGroupColumns))? $options->displayUserGroupColumns: false;
+        $userGroupIds = (isset($options->userGroups)) ? $options->userGroups : false;
+        $displayUserGroupColumns = (isset($options->displayUserGroupColumns)) ? $options->displayUserGroupColumns : false;
 
-		$includeAdmins = false;
+        $includeAdmins = false;
 
-		if (is_array($userGroupIds) && in_array('admin', $userGroupIds))
-		{
-			$includeAdmins = true;
+        if (is_array($userGroupIds) && in_array('admin', $userGroupIds)) {
+            $includeAdmins = true;
 
-			// Admin is always the first in our array if it exists
-			unset($userGroupIds[0]);
-		}
+            // Admin is always the first in our array if it exists
+            unset($userGroupIds[0]);
+        }
 
-		$userGroups = Craft::$app->getUserGroups()->getAllGroups();
+        $userGroups = Craft::$app->getUserGroups()->getAllGroups();
 
-		$userGroupsByName = array();
-		foreach ($userGroups as $userGroup)
-		{
-			$userGroupsByName[$userGroup->name] = 0;
-		}
+        $userGroupsByName = [];
+        foreach ($userGroups as $userGroup) {
+            $userGroupsByName[$userGroup->name] = 0;
+        }
 
-		$selectQueryString = "users.id,
+        $selectQueryString = "users.id,
 			users.username AS Username,
 			users.email AS Email,
 			(users.firstName) AS 'First Name',
 			(users.lastName) AS 'Last Name'";
 
-		if ($displayUserGroupColumns)
-		{
-			$selectQueryString = $selectQueryString . ',users.admin AS Admin';
-		}
-		$query = new Query();
-		$userQuery = $query
-			->select($selectQueryString)
-			->from('users')
-			->join('LEFT JOIN', 'usergroups_users', 'users.id = usergroups_users.userId');
+        if ($displayUserGroupColumns) {
+            $selectQueryString = $selectQueryString.',users.admin AS Admin';
+        }
+        $query = new Query();
+        $userQuery = $query
+            ->select($selectQueryString)
+            ->from('users')
+            ->join('LEFT JOIN', 'usergroups_users', 'users.id = usergroups_users.userId');
 
-		if (is_array($userGroupIds))
-		{
-			$userQuery->where(array('in', 'usergroups_users.groupId', $userGroupIds));
-		}
+        if (is_array($userGroupIds)) {
+            $userQuery->where(['in', 'usergroups_users.groupId', $userGroupIds]);
+        }
 
-		if ($includeAdmins)
-		{
-			$userQuery->orWhere('users.admin = 1');
-		}
+        if ($includeAdmins) {
+            $userQuery->orWhere('users.admin = 1');
+        }
 
-		$userQuery->groupBy('users.id');
+        $userQuery->groupBy('users.id');
 
-		// @todo - can we query users and user their ids as the array key?
-		$users = $userQuery->all();
+        // @todo - can we query users and user their ids as the array key?
+        $users = $userQuery->all();
 
-		// Update users to be indexed by their ids
-		$usersById = array();
-		foreach ($users as $user)
-		{
-			$usersById[$user['id']] = $user;
-			unset ($usersById[$user['id']]['id']);
-		}
+        // Update users to be indexed by their ids
+        $usersById = [];
+        foreach ($users as $user) {
+            $usersById[$user['id']] = $user;
+            unset ($usersById[$user['id']]['id']);
+        }
 
-		$query = new Query();
-		$userGroupsMapQuery = $query
-			->select('*')
-			->from('usergroups_users')
-			->join('LEFT JOIN', 'usergroups', 'usergroups.id = usergroups_users.groupId')
-			->all();
+        $query = new Query();
+        $userGroupsMapQuery = $query
+            ->select('*')
+            ->from('usergroups_users')
+            ->join('LEFT JOIN', 'usergroups', 'usergroups.id = usergroups_users.groupId')
+            ->all();
 
-		// Create a map of all users and which user groups they are in
-		$userGroupsMap = array();
-		foreach ($userGroupsMapQuery as $userGroupsUser)
-		{
-			$userGroupsMap[$userGroupsUser['userId']][$userGroupsUser['name']] = true;
-		}
+        // Create a map of all users and which user groups they are in
+        $userGroupsMap = [];
+        foreach ($userGroupsMapQuery as $userGroupsUser) {
+            $userGroupsMap[$userGroupsUser['userId']][$userGroupsUser['name']] = true;
+        }
 
-		// Add and identify User Groups as columns
-		foreach ($usersById as $key => $user)
-		{
-			if ($displayUserGroupColumns)
-			{
-				// Add User Groups as columns to user array
-				$user = array_merge($user, $userGroupsByName);
+        // Add and identify User Groups as columns
+        foreach ($usersById as $key => $user) {
+            if ($displayUserGroupColumns) {
+                // Add User Groups as columns to user array
+                $user = array_merge($user, $userGroupsByName);
 
-				if (isset($userGroupsMap[$key]))
-				{
-					// Match users to the user groups they are in
-					$user = array_merge($user, $userGroupsMap[$key]);
-				}
-			}
+                if (isset($userGroupsMap[$key])) {
+                    // Match users to the user groups they are in
+                    $user = array_merge($user, $userGroupsMap[$key]);
+                }
+            }
 
-			$usersById[$key] = $user;
-		}
+            $usersById[$key] = $user;
+        }
 
-		return $usersById;
-	}
+        return $usersById;
+    }
 
-	/**
-	 * @param array $options
-	 *
-	 * @return string
-	 */
-	public function getOptionsHtml(array $options = array())
-	{
-		$userGroups = Craft::$app->getUserGroups()->getAllGroups();
+    /**
+     * @param array $options
+     *
+     * @return null|string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
+     */
+    public function getOptionsHtml(array $options = [])
+    {
+        $userGroups = Craft::$app->getUserGroups()->getAllGroups();
 
-		$userGroupOptions[] = array(
-			'label' => 'Admin',
-			'value' => 'admin'
-		);
+        $userGroupOptions[] = [
+            'label' => 'Admin',
+            'value' => 'admin'
+        ];
 
-		foreach ($userGroups as $userGroup)
-		{
-			$userGroupOptions[] = array(
-				'label' => $userGroup->name,
-				'value' => $userGroup->id
-			);
-		}
+        foreach ($userGroups as $userGroup) {
+            $userGroupOptions[] = [
+                'label' => $userGroup->name,
+                'value' => $userGroup->id
+            ];
+        }
 
-		$optionErrors = $this->report->getErrors('options');
-		$optionErrors = array_shift($optionErrors);
+        $optionErrors = $this->report->getErrors('options');
+        $optionErrors = array_shift($optionErrors);
 
-		return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_options/users', array(
-			'userGroupOptions' => $userGroupOptions,
-			'options'          => count($options) ? $options : $this->report->getOptions(),
-			'errors'           => $optionErrors
-		));
-	}
+        return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_options/users', [
+            'userGroupOptions' => $userGroupOptions,
+            'options' => count($options) ? $options : $this->report->getOptions(),
+            'errors' => $optionErrors
+        ]);
+    }
 
-	/**
-	 * Validate our data source options
-	 *
-	 * @param array $options
-	 * @return array|bool
-	 */
-	public function validateOptions(array $options = array(), array &$errors = array())
-	{
-		if (empty($options['userGroups']))
-		{
-			$errors['userGroups'][] = SproutReports::t('Select at least one User Group.');
+    /**
+     * Validate our data source options
+     *
+     * @param array $options
+     *
+     * @return array|bool
+     */
+    public function validateOptions(array $options = [], array &$errors = [])
+    {
+        if (empty($options['userGroups'])) {
+            $errors['userGroups'][] = Craft::t('sprout-reports','Select at least one User Group.');
 
-			return false;
-		}
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

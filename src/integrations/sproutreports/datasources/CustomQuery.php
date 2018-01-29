@@ -1,4 +1,5 @@
 <?php
+
 namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 
 use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
@@ -13,80 +14,78 @@ use barrelstrength\sproutreports\SproutReports;
  */
 class CustomQuery extends BaseDataSource
 {
-	public function getName()
-	{
-		return SproutReports::t('Custom Query');
-	}
+    public function getName()
+    {
+        return Craft::t('sprout-reports','Custom Query');
+    }
 
-	/**
-	 * @return null|string
-	 */
-	public function getDescription()
-	{
-		return SproutReports::t('Create reports using a custom database query');
-	}
+    /**
+     * @return null|string
+     */
+    public function getDescription()
+    {
+        return Craft::t('sprout-reports','Create reports using a custom database query');
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function isAllowHtmlEditable()
-	{
-		return true;
-	}
+    /**
+     * @return bool
+     */
+    public function isAllowHtmlEditable()
+    {
+        return true;
+    }
 
-	/**
-	 * @todo:so Let's bring back a little sanity checks back into raw queries
-	 *
-	 * @param ReportModel $report
-	 * @return array
-	 */
-	public function getResults(ReportModel &$report, $options = array())
-	{
-		$query = $report->getOption('query');
+    /**
+     * @todo:so Let's bring back a little sanity checks back into raw queries
+     *
+     * @param ReportModel $report
+     *
+     * @return array
+     */
+    public function getResults(ReportModel &$report, array $options = [])
+    {
+        $query = $report->getOption('query');
 
-		$result = [];
+        $result = [];
 
-		try
-		{
-			$result = Craft::$app->getDb()->createCommand($query)->queryAll();
-		}
-		catch (\Exception $e)
-		{
-			$report->setResultsError($e->getMessage());
-		}
+        try {
+            $result = Craft::$app->getDb()->createCommand($query)->queryAll();
+        } catch (\Exception $e) {
+            $report->setResultsError($e->getMessage());
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
-	/**
-	 * @param array $options
-	 *
-	 * @return string
-	 */
-	public function getOptionsHtml(array $options = array())
-	{
-		$optionErrors = $this->report->getErrors('options');
-		$optionErrors = array_shift($optionErrors);
+    /**
+     * @param array $options
+     *
+     * @return string
+     */
+    public function getOptionsHtml(array $options = [])
+    {
+        $optionErrors = $this->report->getErrors('options');
+        $optionErrors = array_shift($optionErrors);
 
-		return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_options/query', array(
-			'options' => count($options) ? $options : $this->report->getOptions(),
-			'errors' => $optionErrors
-		));
-	}
+        return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_options/query', [
+            'options' => count($options) ? $options : $this->report->getOptions(),
+            'errors' => $optionErrors
+        ]);
+    }
 
-	/**
-	 * @param array $options
-	 * @return bool
-	 */
-	public function validateOptions(array $options = array(), array &$errors = array())
-	{
-		if (empty($options['query']))
-		{
-			$errors['query'][] = SproutReports::t('Query cannot be blank.');
+    /**
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function validateOptions(array $options = [], array &$errors = [])
+    {
+        if (empty($options['query'])) {
+            $errors['query'][] = Craft::t('sprout-reports','Query cannot be blank.');
 
-			return false;
-		}
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

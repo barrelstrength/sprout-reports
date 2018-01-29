@@ -10,9 +10,6 @@
 
 namespace barrelstrength\sproutreports\services;
 
-use barrelstrength\sproutbase\services\sproutreports\DataSources;
-use barrelstrength\sproutbase\services\sproutreports\Exports;
-use barrelstrength\sproutbase\services\sproutreports\Reports;
 use craft\base\Component;
 
 /**
@@ -30,31 +27,13 @@ use craft\base\Component;
  */
 class App extends Component
 {
-	/**
-	 * @var ReportGroups
-	 */
-	public $reportGroups;
+    /**
+     * @var TwigDataSource
+     */
+    public $twigDataSource;
 
-	/**
-	 * @var DataSources
-	 */
-	public $dataSources;
-
-	/**
-	 * @var Reports
-	 */
-	public $reports;
-
-	/**
-	 * @var Exports
-	 */
-	public $exports;
-
-	public function init()
-	{
-		$this->reportGroups    = new ReportGroups();
-		$this->dataSources     = new DataSources();
-		$this->reports         = new Reports();
-		$this->exports         = new Exports();
-	}
+    public function init()
+    {
+        $this->twigDataSource = new TwigDataSource();
+    }
 }

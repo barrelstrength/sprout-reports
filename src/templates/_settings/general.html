@@ -1,7 +1,7 @@
 {% import "_includes/forms" as forms %}
 
 {% if not currentUser.can('sproutReports-editSettings') %}
-	{% redirect 'sprout-reports' %}
+    {% redirect 'sprout-reports' %}
 {% endif %}
 
 {{ forms.textField({

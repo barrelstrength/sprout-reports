@@ -3,41 +3,37 @@
 namespace barrelstrength\sproutreports\controllers;
 
 use barrelstrength\sproutbase\models\sproutreports\DataSource as DataSourceModel;
-use barrelstrength\sproutreports\SproutReports;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\web\Controller;
 
 class DataSourcesController extends Controller
 {
-	/**
-	 * Save the Data Source
-	 * @return \yii\web\Response
-	 */
-	public function actionUpdateDataSource()
-	{
-		$this->requirePostRequest();
+    /**
+     * Save the Data Source
+     *
+     * @return \yii\web\Response
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function actionSaveDataSource()
+    {
+        $this->requirePostRequest();
 
-		$request = Craft::$app->getRequest();
+        $request = Craft::$app->getRequest();
 
-		$allowNew     = $request->getBodyParam('allowNew');
-		$dataSourceId = $request->getBodyParam('dataSourceId');
+        $dataSourceId = $request->getBodyParam('dataSourceId');
+        $allowNew = $request->getBodyParam('allowNew');
 
-		$allowNew = (empty($allowNew)) ? false : true;
+        $allowNew = empty($allowNew) ? false : true;
 
-		$attributes = array(
-			'allowNew'     => $allowNew,
-			'dataSourceId' => $dataSourceId
-		);
+        $dataSource = new DataSourceModel();
+        $dataSource->dataSourceId = $dataSourceId;
+        $dataSource->allowNew = $allowNew;
 
-		$model = new DataSourceModel;
+        if (SproutBase::$app->dataSources->saveDataSource($dataSource)) {
+            return $this->asJson(true);
+        }
 
-		$model->setAttributes($attributes);
-
-		if (SproutReports::$app->dataSources->saveDataSource($model))
-		{
-			return $this->asJson(true);
-		}
-
-		return $this->asJson(false);
-	}
+        return $this->asJson(false);
+    }
 }

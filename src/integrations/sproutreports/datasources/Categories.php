@@ -1,25 +1,25 @@
 <?php
 
-namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
+    namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 
-use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
-use barrelstrength\sproutreports\SproutReports;
-use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
-use craft\records\Category as CategoryRecord;
-use craft\records\Entry as EntryRecord;
-use craft\db\Query;
-use Craft;
+    use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
+    use barrelstrength\sproutreports\SproutReports;
+    use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
+    use craft\records\Category as CategoryRecord;
+    use craft\records\Entry as EntryRecord;
+    use craft\db\Query;
+    use Craft;
 
-class Categories extends BaseDataSource
-{
+    class Categories extends BaseDataSource
+    {
     public function getName()
     {
-        return Craft::t('sprout-reports','Category Usage by Section');
+        return Craft::t('sprout-reports', 'Category Usage by Section');
     }
 
     public function getDescription()
     {
-        return Craft::t('sprout-reports','Returns a breakdown of Categories used by Entries.');
+        return Craft::t('sprout-reports', 'Returns a breakdown of Categories used by Entries.');
     }
 
     /**
@@ -27,7 +27,7 @@ class Categories extends BaseDataSource
      *
      * @return array|null
      */
-    public function getResults(ReportModel &$report, array $options = [])
+    public function getResults(ReportModel $report, array $paramOptions = [])
     {
         $options = $report->getOptions();
 
@@ -59,9 +59,9 @@ class Categories extends BaseDataSource
         $query = new Query();
         $entries = $query
             ->select("(content.title) AS 'Category Name',
-			COUNT(relations.sourceId) AS 'Total Entries Assigned Category',
-								(COUNT(relations.sourceId) / $totalCategories) * 100 AS '% of Total Categories used'
-			")
+            COUNT(relations.sourceId) AS 'Total Entries Assigned Category',
+                                (COUNT(relations.sourceId) / $totalCategories) * 100 AS '% of Total Categories used'
+            ")
             ->from('content')
             ->join('LEFT JOIN', 'categories', 'content.elementId = categories.id')
             ->join('LEFT JOIN', 'relations', 'relations.targetId = categories.id')
@@ -109,7 +109,7 @@ class Categories extends BaseDataSource
         $setupRequiredMessage = null;
 
         if (empty($sectionOptions) OR empty($categoryGroupOptions)) {
-            $setupRequiredMessage = Craft::t('sprout-reports','This report requires a Channel or Structure section using Categories. Please update your settings to include at least one Channel or Structure and at least one Category Group with Categories available to assign to that section.');
+            $setupRequiredMessage = Craft::t('sprout-reports', 'This report requires a Channel or Structure section using Categories. Please update your settings to include at least one Channel or Structure and at least one Category Group with Categories available to assign to that section.');
         }
 
         return \Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_options/categories', [
@@ -131,11 +131,11 @@ class Categories extends BaseDataSource
     public function validateOptions(array $options = [], array &$errors = [])
     {
         if (empty($options['sectionId'])) {
-            $errors['sectionId'][] = Craft::t('sprout-reports','Section is required.');
+            $errors['sectionId'][] = Craft::t('sprout-reports', 'Section is required.');
         }
 
         if (empty($options['categoryGroupId'])) {
-            $errors['categoryGroupId'][] = Craft::t('sprout-reports','Category Group is required.');
+            $errors['categoryGroupId'][] = Craft::t('sprout-reports', 'Category Group is required.');
         }
 
         if (count($errors) > 0) {
@@ -144,4 +144,4 @@ class Categories extends BaseDataSource
 
         return true;
     }
-}
+    }

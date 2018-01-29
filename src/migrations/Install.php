@@ -9,7 +9,6 @@ namespace barrelstrength\sproutreports\migrations;
 
 use barrelstrength\sproutbase\migrations\sproutreports\Install as SproutBaseReportsInstall;
 use craft\db\Migration;
-use Craft;
 
 class Install extends Migration
 {

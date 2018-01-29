@@ -42,7 +42,7 @@ class CustomTwigTemplate extends BaseDataSource
     /**
      * @inheritdoc
      */
-    public function getDefaultLabels(ReportModel &$report, array $options = [])
+    public function getDefaultLabels(ReportModel $report, array $options = [])
     {
         if (!SproutReports::$app->twigDataSource->hasRun) {
             $this->processFrontEndResultsTemplate($report, $options);
@@ -61,7 +61,7 @@ class CustomTwigTemplate extends BaseDataSource
     /**
      * @inheritdoc
      */
-    public function getResults(ReportModel &$report, array $options = [])
+    public function getResults(ReportModel $report, array $options = [])
     {
         if (!SproutReports::$app->twigDataSource->hasRun) {
             $this->processFrontEndResultsTemplate($report, $options);

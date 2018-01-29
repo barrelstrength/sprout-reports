@@ -25,7 +25,7 @@ class Users extends BaseDataSource
      *
      * @return array|null
      */
-    public function getResults(ReportModel &$report, array $options = [])
+    public function getResults(ReportModel $report, array $options = [])
     {
         // First, use dynamic options, fallback to report options
         if (!count($options)) {

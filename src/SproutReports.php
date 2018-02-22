@@ -80,9 +80,14 @@ class SproutReports extends Plugin
             $e->roots['sprout-reports'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
         });
 
-        Event::on(CraftVariable::class, CraftVariable::EVENT_DEFINE_COMPONENTS, function(DefineComponentsEvent $e) {
-            $e->components['sproutReports'] = SproutReportsVariable::class;
-        });
+        Event::on(
+            CraftVariable::class,
+            CraftVariable::EVENT_INIT,
+            function(Event $event) {
+                $variable = $event->sender;
+                $variable->set('sproutReports', SproutReportsVariable::class);
+            }
+        );
 
         Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
 

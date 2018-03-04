@@ -11,6 +11,7 @@
 namespace barrelstrength\sproutreports;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
+use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomTwigTemplate;
 use barrelstrength\sproutreports\models\Settings;
 use barrelstrength\sproutbase\services\sproutreports\DataSources;
@@ -95,8 +96,8 @@ class SproutReports extends Plugin
             $event->rules['sprout-reports/reports'] = 'sprout-base/reports/index';
             $event->rules['sprout-reports/reports/<groupId:\d+>'] = 'sprout-base/reports/index';
 
-            $event->rules['sprout-reports/reports/<dataSourceId>/new'] = 'sprout-base/reports/edit-report';
-            $event->rules['sprout-reports/reports/<dataSourceId>/edit/<reportId:\d+>'] = 'sprout-base/reports/edit-report';
+            $event->rules['sprout-reports/reports/<dataSourceId>-<dataSourceSlug>/new'] = 'sprout-base/reports/edit-report';
+            $event->rules['sprout-reports/reports/<dataSourceId>-<dataSourceSlug>/edit/<reportId:\d+>'] = 'sprout-base/reports/edit-report';
 
             $event->rules['sprout-reports/datasources'] = ['template' => 'sprout-reports/datasources/index'];
 
@@ -107,8 +108,8 @@ class SproutReports extends Plugin
         });
 
         Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent $event) {
-            $event->types[] = new CustomQuery();
-            $event->types[] = new CustomTwigTemplate();
+            $event->types[] = CustomQuery::class;
+            $event->types[] = CustomTwigTemplate::class;
         });
     }
 
@@ -148,5 +149,18 @@ class SproutReports extends Plugin
                 ]
             ]
         ]);
+    }
+
+    /**
+     * Performs actions after the plugin is installed.
+     */
+    protected function afterInstall()
+    {
+        $dataSourceClasses = [
+            CustomQuery::class,
+            CustomTwigTemplate::class
+        ];
+
+        SproutBase::$app->dataSources->installDataSources($dataSourceClasses);
     }
 }

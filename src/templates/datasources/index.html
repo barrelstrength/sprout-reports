@@ -55,7 +55,7 @@
                     <td>
                         {% set allowNew = dataSource.allowNew() %}
                         {{ forms.lightswitchField({
-                            id: dataSource.getId(),
+                            id: dataSource.databaseId,
                             on: allowNew,
                             name: 'allowNew',
                             small: true
@@ -85,18 +85,20 @@
     $('.lightswitch').change(function() {
 
     var allowNew = $(this).find("[name='allowNew']").val();
-    var dataSourceId = $(this).attr('id');
+    var databaseId = $(this).attr('id');
+
+    console.log(databaseId);
 
     Craft.postActionRequest('sprout-reports/data-sources/save-data-source', {
-    dataSourceId: dataSourceId,
-    allowNew: allowNew
-    }, function(response) {
-    if (response)
-    {
-    Craft.cp.displayNotice(Craft.t('sprout-reports', 'Data Source saved.'));
-    }
-    });
-    })
+                dataSourceId: databaseId,
+                allowNew: allowNew
+            }, function(response) {
+                if (response)
+                {
+                    Craft.cp.displayNotice(Craft.t('sprout-reports', 'Data Source saved.'));
+                }
+            });
+        })
     });
 
 {% endjs %}

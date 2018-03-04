@@ -28,7 +28,7 @@ class DataSourcesController extends Controller
         $allowNew = empty($allowNew) ? false : true;
 
         $dataSource = new DataSourceModel();
-        $dataSource->dataSourceId = $dataSourceId;
+        $dataSource->id = $dataSourceId;
         $dataSource->allowNew = $allowNew;
 
         if (SproutBase::$app->dataSources->saveDataSource($dataSource)) {

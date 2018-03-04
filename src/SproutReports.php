@@ -91,11 +91,11 @@ class SproutReports extends Plugin
 
         Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
 
-            $name = Craft::t('sprout-reports','Sprout Reports');
+            $name = Craft::t('sprout-reports', 'Sprout Reports');
 
-            $event->permissions[$name]['sproutReports-editReports'] = ['label' => Craft::t('sprout-reports','Edit Reports')];
-            $event->permissions[$name]['sproutReports-editDataSources'] = ['label' => Craft::t('sprout-reports','Edit Data Sources')];
-            $event->permissions[$name]['sproutReports-editSettings'] = ['label' => Craft::t('sprout-reports','Edit Plugin Settings')];
+            $event->permissions[$name]['sproutReports-editReports'] = ['label' => Craft::t('sprout-reports', 'Edit Reports')];
+            $event->permissions[$name]['sproutReports-editDataSources'] = ['label' => Craft::t('sprout-reports', 'Edit Data Sources')];
+            $event->permissions[$name]['sproutReports-editSettings'] = ['label' => Craft::t('sprout-reports', 'Edit Plugin Settings')];
         });
 
         Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function(RegisterUrlRulesEvent $event) {
@@ -149,15 +149,15 @@ class SproutReports extends Plugin
         return array_merge($parent, [
             'subnav' => [
                 'reports' => [
-                    'label' => Craft::t('sprout-reports','Reports'),
+                    'label' => Craft::t('sprout-reports', 'Reports'),
                     'url' => 'sprout-reports/reports'
                 ],
                 'datasources' => [
-                    'label' => Craft::t('sprout-reports','Data Sources'),
+                    'label' => Craft::t('sprout-reports', 'Data Sources'),
                     'url' => 'sprout-reports/datasources'
                 ],
                 'settings' => [
-                    'label' => Craft::t('sprout-reports','Settings'),
+                    'label' => Craft::t('sprout-reports', 'Settings'),
                     'url' => 'sprout-reports/settings/general'
                 ]
             ]

@@ -1,17 +1,17 @@
 <?php
 
-    namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
+namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 
-    use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
-    use barrelstrength\sproutreports\SproutReports;
-    use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
-    use craft\records\Category as CategoryRecord;
-    use craft\records\Entry as EntryRecord;
-    use craft\db\Query;
-    use Craft;
+use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
+use barrelstrength\sproutreports\SproutReports;
+use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
+use craft\records\Category as CategoryRecord;
+use craft\records\Entry as EntryRecord;
+use craft\db\Query;
+use Craft;
 
-    class Categories extends BaseDataSource
-    {
+class Categories extends BaseDataSource
+{
     public function getName()
     {
         return Craft::t('sprout-reports', 'Category Usage by Section');
@@ -144,4 +144,4 @@
 
         return true;
     }
-    }
+}

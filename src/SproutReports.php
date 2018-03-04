@@ -21,6 +21,7 @@ use barrelstrength\sproutreports\services\App;
 use Craft;
 use craft\base\Plugin;
 use barrelstrength\sproutreports\variables\SproutReportsVariable;
+use craft\helpers\UrlHelper;
 use craft\web\twig\variables\CraftVariable;
 use yii\base\Event;
 use craft\events\RegisterComponentTypesEvent;
@@ -58,12 +59,12 @@ class SproutReports extends Plugin
     /**
      * @var bool
      */
-    public $hasSettings = true;
+    public $hasCpSection = true;
 
     /**
      * @var bool
      */
-    public $hasCpSection = true;
+    public $hasCpSettings = true;
 
     public function init()
     {
@@ -114,11 +115,23 @@ class SproutReports extends Plugin
     }
 
     /**
-     * @return Settings
+     * @inheritdoc
      */
     protected function createSettingsModel()
     {
         return new Settings();
+    }
+
+    /**
+     * Redirect to Sprout Reports settings
+     *
+     * @inheritdoc
+     */
+    public function getSettingsResponse()
+    {
+        $url = UrlHelper::cpUrl('sprout-reports/settings');
+
+        return Craft::$app->getResponse()->redirect($url);
     }
 
     /**

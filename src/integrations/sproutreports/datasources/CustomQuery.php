@@ -14,7 +14,7 @@ use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
 class CustomQuery extends BaseDataSource
 {
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getName()
     {
@@ -22,7 +22,7 @@ class CustomQuery extends BaseDataSource
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getDescription()
     {
@@ -30,7 +30,7 @@ class CustomQuery extends BaseDataSource
     }
 
     /**
-     * @return bool
+     * @inheritdoc
      */
     public function isAllowHtmlEditable()
     {
@@ -38,10 +38,7 @@ class CustomQuery extends BaseDataSource
     }
 
     /**
-     * @param ReportModel $report
-     * @param array       $settings
-     *
-     * @return array
+     * @inheritdoc
      */
     public function getResults(ReportModel $report, array $settings = [])
     {
@@ -59,11 +56,7 @@ class CustomQuery extends BaseDataSource
     }
 
     /**
-     * @param array $settings
-     *
-     * @return null|string
-     * @throws \Twig_Error_Loader
-     * @throws \yii\base\Exception
+     * @inheritdoc
      */
     public function getSettingsHtml(array $settings = [])
     {
@@ -77,10 +70,7 @@ class CustomQuery extends BaseDataSource
     }
 
     /**
-     * @param array $settings
-     * @param array $errors
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function validateSettings(array $settings = [], array &$errors)
     {

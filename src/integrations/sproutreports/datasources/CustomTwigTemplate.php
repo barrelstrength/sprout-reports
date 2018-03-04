@@ -132,6 +132,24 @@ class CustomTwigTemplate extends BaseDataSource
     /**
      * @inheritdoc
      */
+    public function prepSettings(array $settings)
+    {
+        foreach ($settings as $name => $setting) {
+            $datetime = strpos($name, 'datetime');
+
+            // Date time field
+            if ($datetime === 0) {
+                $value = DateTimeHelper::toDateTime($settings[$name]);
+                $settings[$name] = $value;
+            }
+        }
+
+        return $settings;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function validateSettings(array $settings = [], array &$errors)
     {
         if (empty($settings['resultsTemplate'])) {
@@ -201,25 +219,5 @@ class CustomTwigTemplate extends BaseDataSource
 
             array_unshift($rows, $headerRow);
         }
-    }
-
-    /**
-     * @param array $settings
-     *
-     * @return array|null
-     */
-    public function prepSettings(array $settings)
-    {
-        foreach ($settings as $name => $setting) {
-            $datetime = strpos($name, 'datetime');
-
-            // Date time field
-            if ($datetime === 0) {
-                $value = DateTimeHelper::toDateTime($settings[$name]);
-                $settings[$name] = $value;
-            }
-        }
-
-        return $settings;
     }
 }

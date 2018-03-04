@@ -15,19 +15,19 @@
 {% else %}
 
     {% set boxBody %}
-        <p>{{ "Migrate to Craft with all of your existing website metadata using Sprout SEO and <a href='{url}' target='_blank'>Sprout Import</a>. Sprout Import makes it easy to keep your Search, Social Sharing, Geo, and Robots metadata, and gives you the opportunity to enhance it with additional Structured Data and improve your workflow."|t({
+        <p>{{ "Migrate to Craft with all of your existing website metadata using Sprout SEO and <a href='{url}' target='_blank'>Sprout Import</a>. Sprout Import makes it easy to keep your Search, Social Sharing, Geo, and Robots metadata, and gives you the opportunity to enhance it with additional Structured Data and improve your workflow."|t('sprout-reports', {
                 url: "https://sprout.barrelstrengthdesign.com/craft-plugins/import"
             })|raw }}</p>
     {% endset %}
 
     {% set boxBody %}
-        <p>{{ "Give your users the ability to refine their results with a date range, lightswitch, and more. Build custom Twig Template reports with a Craft-friendly look and feel. [Learn more]({url})."|t({
+        <p>{{ "Give your users the ability to refine their results with a date range, lightswitch, and more. Build custom Twig Template reports with a Craft-friendly look and feel. [Learn more]({url})."|t('sprout-reports', {
                 url: "https://sprout.barrelstrengthdesign.com/craft-plugins/reports/docs/custom-reports/custom-twig-template-report"
             })|markdown }}</p>
     {% endset %}
 
     {{ sprout.mediaBox({
-        heading: "Give your users options"|t,
+        heading: "Give your users options"|t('sprout-reports'),
         body: boxBody,
         resourcePath: '@sproutbase/web/assets/sproutreports/dist/images/sproutreports-icon.svg'
     }) }}
@@ -42,7 +42,7 @@
         <a href='#'
            class='fieldtoggle settings {{ optionContents ? 'collapsed' : 'expanded' }}'
            data-target='toggle-templateoptions'>
-            {{ "Template Settings"|t }}
+            {{ "Template Settings"|t('sprout-reports') }}
         </a>
     </p>
 
@@ -51,8 +51,10 @@
 
         {{ forms.textField({
             name: "options[resultsTemplate]",
-            label: "Results Template"|t,
-            instructions: "The template to use to display results. Learn more about <a href='https://sprout.barrelstrengthdesign.com/craft-plugins/reports/docs/custom-reports/custom-twig-template-report'>Results Templates</a>."|raw|t,
+            label: "Results Template"|t('sprout-reports'),
+            instructions: "The template to use to display results. Learn more about <a href='{url}'>Results Templates</a>."|raw|t('sprout-reports', {
+                url: 'https://sprout.barrelstrengthdesign.com/craft-plugins/reports/docs/custom-reports/custom-twig-template-report'
+            }),
             class: "nicetext code",
             required: true,
             first: true,
@@ -63,8 +65,10 @@
 
         {{ forms.textField({
             name: "options[optionsTemplate]",
-            label: "Options Template"|t,
-            instructions: "The template to use to display options. Learn more about <a href='https://sprout.barrelstrengthdesign.com/craft-plugins/reports/docs/custom-reports/custom-twig-template-report'>Options Templates</a>."|raw|t,
+            label: "Options Template"|t('sprout-reports'),
+            instructions: "The template to use to display options. Learn more about <a href='{url}'>Options Templates</a>."|raw|t('sprout-reports', {
+                url: 'https://sprout.barrelstrengthdesign.com/craft-plugins/reports/docs/custom-reports/custom-twig-template-report'
+            }),
             class: "nicetext code",
             placeholder: "_reports/reportname/options",
             value: options.optionsTemplate is defined ? options.optionsTemplate : "",

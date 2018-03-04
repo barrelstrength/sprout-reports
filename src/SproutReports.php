@@ -20,7 +20,6 @@ use barrelstrength\sproutreports\services\App;
 use Craft;
 use craft\base\Plugin;
 use barrelstrength\sproutreports\variables\SproutReportsVariable;
-use craft\events\DefineComponentsEvent;
 use craft\web\twig\variables\CraftVariable;
 use yii\base\Event;
 use craft\events\RegisterComponentTypesEvent;
@@ -121,7 +120,7 @@ class SproutReports extends Plugin
             $event->types[] = new CustomQuery();
             $event->types[] = new CustomTwigTemplate();
 
-            $isCraftPro = Craft::$app->getEdition() == Craft::Pro ? true : false;
+            $isCraftPro = (Craft::$app->getEdition() == Craft::Pro);
 
             if ($isCraftPro == true) {
                 $event->types[] = new Users();

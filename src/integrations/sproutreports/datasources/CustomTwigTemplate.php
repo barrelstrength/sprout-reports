@@ -124,14 +124,14 @@ class CustomTwigTemplate extends BaseDataSource
         return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_options/twig', [
             'options' => $this->report->getOptions(),
             'errors' => $optionErrors,
-            'optionContents' => isset($customOptionsHtml) ? $customOptionsHtml : null
+            'optionContents' => $customOptionsHtml ?? null
         ]);
     }
 
     /**
      * @inheritdoc
      */
-    public function validateOptions(array $options = [], array &$errors = [])
+    public function validateOptions(array $options = [], array &$errors)
     {
         if (empty($options['resultsTemplate'])) {
             $errors['resultsTemplate'][] = Craft::t('sprout-reports', 'Results template cannot be blank.');
@@ -155,7 +155,7 @@ class CustomTwigTemplate extends BaseDataSource
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function processFrontEndResultsTemplate(ReportModel $report, $options = [])
+    public function processFrontEndResultsTemplate(ReportModel $report, array $options = [])
     {
         $resultsTemplate = $report->getOption('resultsTemplate');
 

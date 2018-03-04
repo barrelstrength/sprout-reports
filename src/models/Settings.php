@@ -2,7 +2,6 @@
 
 namespace barrelstrength\sproutreports\models;
 
-use barrelstrength\sproutreports\SproutReports;
 use craft\base\Model;
 use Craft;
 

@@ -3,7 +3,6 @@
 namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 
 use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
-use barrelstrength\sproutreports\SproutReports;
 use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
 use craft\records\Category as CategoryRecord;
 use craft\records\Entry as EntryRecord;
@@ -12,20 +11,27 @@ use Craft;
 
 class Categories extends BaseDataSource
 {
+    /**
+     * @return string
+     */
     public function getName()
     {
         return Craft::t('sprout-reports', 'Category Usage by Section');
     }
 
+    /**
+     * @return string
+     */
     public function getDescription()
     {
         return Craft::t('sprout-reports', 'Returns a breakdown of Categories used by Entries.');
     }
 
     /**
-     * @param  ReportModel &$report
+     * @param ReportModel $report
+     * @param array       $paramOptions
      *
-     * @return array|null
+     * @return array
      */
     public function getResults(ReportModel $report, array $paramOptions = [])
     {
@@ -52,8 +58,8 @@ class Categories extends BaseDataSource
         $totalCategories = $query
             ->select('COUNT(*)')
             ->from('relations')
-            ->where(['in', "relations.sourceId", $entryIds])
-            ->andWhere(['in', "relations.targetId", $categoryIds])
+            ->where(['in', 'relations.sourceId', $entryIds])
+            ->andWhere(['in', 'relations.targetId', $categoryIds])
             ->scalar();
 
         $query = new Query();
@@ -65,8 +71,8 @@ class Categories extends BaseDataSource
             ->from('content')
             ->join('LEFT JOIN', 'categories', 'content.elementId = categories.id')
             ->join('LEFT JOIN', 'relations', 'relations.targetId = categories.id')
-            ->where(['in', "relations.sourceId", $entryIds])
-            ->andWhere(['in', "relations.targetId", $categoryIds])
+            ->where(['in', 'relations.sourceId', $entryIds])
+            ->andWhere(['in', 'relations.targetId', $categoryIds])
             ->groupBy('relations.targetId')
             ->all();
 
@@ -76,7 +82,9 @@ class Categories extends BaseDataSource
     /**
      * @param array $options
      *
-     * @return string
+     * @return null|string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function getOptionsHtml(array $options = [])
     {
@@ -125,10 +133,11 @@ class Categories extends BaseDataSource
      * Validate our data source options
      *
      * @param array $options
+     * @param array $errors
      *
-     * @return array|bool
+     * @return bool
      */
-    public function validateOptions(array $options = [], array &$errors = [])
+    public function validateOptions(array $options = [], array &$errors)
     {
         if (empty($options['sectionId'])) {
             $errors['sectionId'][] = Craft::t('sprout-reports', 'Section is required.');

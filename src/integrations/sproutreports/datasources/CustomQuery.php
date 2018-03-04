@@ -5,7 +5,6 @@ namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
 use Craft;
 use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
-use barrelstrength\sproutreports\SproutReports;
 
 /**
  * Class SproutReportsQueryDataSource
@@ -14,13 +13,16 @@ use barrelstrength\sproutreports\SproutReports;
  */
 class CustomQuery extends BaseDataSource
 {
+    /**
+     * @return string
+     */
     public function getName()
     {
         return Craft::t('sprout-reports', 'Custom Query');
     }
 
     /**
-     * @return null|string
+     * @return string
      */
     public function getDescription()
     {
@@ -36,9 +38,8 @@ class CustomQuery extends BaseDataSource
     }
 
     /**
-     * @todo:so Let's bring back a little sanity checks back into raw queries
-     *
      * @param ReportModel $report
+     * @param array       $options
      *
      * @return array
      */
@@ -60,7 +61,9 @@ class CustomQuery extends BaseDataSource
     /**
      * @param array $options
      *
-     * @return string
+     * @return null|string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function getOptionsHtml(array $options = [])
     {
@@ -75,10 +78,11 @@ class CustomQuery extends BaseDataSource
 
     /**
      * @param array $options
+     * @param array $errors
      *
      * @return bool
      */
-    public function validateOptions(array $options = [], array &$errors = [])
+    public function validateOptions(array $options = [], array &$errors)
     {
         if (empty($options['query'])) {
             $errors['query'][] = Craft::t('sprout-reports', 'Query cannot be blank.');

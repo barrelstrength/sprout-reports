@@ -13,6 +13,7 @@ class DataSourcesController extends Controller
      * Save the Data Source
      *
      * @return \yii\web\Response
+     * @throws \yii\db\Exception
      * @throws \yii\web\BadRequestHttpException
      */
     public function actionSaveDataSource()

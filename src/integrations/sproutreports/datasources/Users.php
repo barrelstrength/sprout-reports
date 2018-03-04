@@ -3,27 +3,33 @@
 namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 
 use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
-use barrelstrength\sproutreports\SproutReports;
 use Craft;
 use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
 use craft\db\Query;
 
 class Users extends BaseDataSource
 {
+    /**
+     * @return string
+     */
     public function getName()
     {
         return Craft::t('sprout-reports', 'Users');
     }
 
+    /**
+     * @return string
+     */
     public function getDescription()
     {
         return Craft::t('sprout-reports', 'Create reports about your users and user groups.');
     }
 
     /**
-     * @param ReportModel &$report
+     * @param ReportModel $report
+     * @param array       $options
      *
-     * @return array|null
+     * @return array
      */
     public function getResults(ReportModel $report, array $options = [])
     {
@@ -32,12 +38,12 @@ class Users extends BaseDataSource
             $options = $report->getOptions();
         }
 
-        $userGroupIds = (isset($options->userGroups)) ? $options->userGroups : false;
-        $displayUserGroupColumns = (isset($options->displayUserGroupColumns)) ? $options->displayUserGroupColumns : false;
+        $userGroupIds = $options->userGroups ?? false;
+        $displayUserGroupColumns = $options->displayUserGroupColumns ?? false;
 
         $includeAdmins = false;
 
-        if (is_array($userGroupIds) && in_array('admin', $userGroupIds)) {
+        if (is_array($userGroupIds) && in_array('admin', $userGroupIds, false)) {
             $includeAdmins = true;
 
             // Admin is always the first in our array if it exists
@@ -52,14 +58,15 @@ class Users extends BaseDataSource
         }
 
         $selectQueryString = "users.id,
-			users.username AS Username,
-			users.email AS Email,
-			(users.firstName) AS 'First Name',
-			(users.lastName) AS 'Last Name'";
+            users.username AS Username,
+            users.email AS Email,
+            (users.firstName) AS 'First Name',
+            (users.lastName) AS 'Last Name'";
 
         if ($displayUserGroupColumns) {
-            $selectQueryString = $selectQueryString.',users.admin AS Admin';
+            $selectQueryString .= ',users.admin AS Admin';
         }
+
         $query = new Query();
         $userQuery = $query
             ->select($selectQueryString)
@@ -154,10 +161,11 @@ class Users extends BaseDataSource
      * Validate our data source options
      *
      * @param array $options
+     * @param array $errors
      *
-     * @return array|bool
+     * @return bool
      */
-    public function validateOptions(array $options = [], array &$errors = [])
+    public function validateOptions(array $options = [], array &$errors)
     {
         if (empty($options['userGroups'])) {
             $errors['userGroups'][] = Craft::t('sprout-reports', 'Select at least one User Group.');

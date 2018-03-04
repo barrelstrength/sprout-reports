@@ -32,7 +32,8 @@ class SproutReportsVariable
     /**
      * @param $groupId
      *
-     * @return null|Report[]
+     * @return array
+     * @throws \yii\base\Exception
      */
     public function getReportsByGroupId($groupId)
     {

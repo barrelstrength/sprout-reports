@@ -67,5 +67,6 @@ return [
     'Twig Template' => 'Twig Template',
     'Results template cannot be blank.' => 'Results template cannot be blank.',
     'Create a report using Twig in your templates folder.' => 'Create a report using Twig in your templates folder.',
-    'Edit Reports' => 'Edit Reports'
+    'Edit Reports' => 'Edit Reports',
+    'Options Template' => 'Options Template'
 ];

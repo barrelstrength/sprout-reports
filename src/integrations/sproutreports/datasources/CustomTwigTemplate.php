@@ -87,7 +87,8 @@ class CustomTwigTemplate extends BaseDataSource
         $settingsErrors = $this->report->getErrors('settings');
         $settingsErrors = array_shift($settingsErrors);
 
-        // @todo - refactor? We pass $settings to this method from the template, but the settings
+        // @todo - refactor?
+        // We pass $settings to this method from the template, but the settings
         // may already exist on the report.... maybe we can simplify?
         $settings = count($settings) ? array_merge($settings, $this->report->getSettings()) : $this->report->getSettings();
 
@@ -116,14 +117,14 @@ class CustomTwigTemplate extends BaseDataSource
 
                 $customSettingsHtml = Craft::$app->getView()->renderString($customSettingsHtmlWithExtras, [
                     'settings' => count($settings) ? $settings : $this->report->getSettings(),
-                    'errors' => $settingErrors
+                    'errors' => $settingsErrors
                 ]);
             }
         }
 
         return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_settings/twig', [
             'settings' => $this->report->getSettings(),
-            'errors' => $settingErrors,
+            'errors' => $settingsErrors,
             'settingContents' => $customSettingsHtml ?? null
         ]);
     }
@@ -176,6 +177,9 @@ class CustomTwigTemplate extends BaseDataSource
         $view->setTemplateMode($view::TEMPLATE_MODE_CP);
     }
 
+    /**
+     * @param $rows
+     */
     public function processHeaderRow(&$rows)
     {
         $labels = SproutReports::$app->twigDataSource->labels;

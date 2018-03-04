@@ -59,7 +59,14 @@ class SproutReports extends Plugin
      */
     public static $pluginId = 'sprout-reports';
 
+    /**
+     * @var bool
+     */
     public $hasSettings = true;
+
+    /**
+     * @var bool
+     */
     public $hasCpSection = true;
 
     public function init()
@@ -74,19 +81,10 @@ class SproutReports extends Plugin
 
         self::$app = $this->get('app');
 
-        // Register our base template path
-        Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
-            $e->roots['sprout-reports'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
+        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
+            $variable = $event->sender;
+            $variable->set('sproutReports', SproutReportsVariable::class);
         });
-
-        Event::on(
-            CraftVariable::class,
-            CraftVariable::EVENT_INIT,
-            function(Event $event) {
-                $variable = $event->sender;
-                $variable->set('sproutReports', SproutReportsVariable::class);
-            }
-        );
 
         Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
 
@@ -113,9 +111,7 @@ class SproutReports extends Plugin
             $event->rules['sprout-reports/settings/general'] = 'sprout-base/settings/edit-settings';
         });
 
-        Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(
-            RegisterComponentTypesEvent $event
-        ) {
+        Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent $event) {
             $event->types[] = new Categories();
             $event->types[] = new CustomQuery();
             $event->types[] = new CustomTwigTemplate();
@@ -136,6 +132,9 @@ class SproutReports extends Plugin
         return new Settings();
     }
 
+    /**
+     * @return array|null
+     */
     public function getCpNavItem()
     {
         $parent = parent::getCpNavItem();

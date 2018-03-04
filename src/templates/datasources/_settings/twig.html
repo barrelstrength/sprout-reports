@@ -2,14 +2,14 @@
 {% import 'sprout-base/sproutbase/_includes/sproutcp' as sprout %}
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutbase\\cp\\CpAsset") %}
 
-{%- set resultsTemplate = options.resultsTemplate is defined ? options.resultsTemplate : "" -%}
-{%- set optionsTemplate = options.optionsTemplate is defined ? options.optionsTemplate : "" -%}
+{%- set resultsTemplate = settings.resultsTemplate is defined ? settings.resultsTemplate : "" -%}
+{%- set settingsTemplate = settings.settingsTemplate is defined ? settings.settingsTemplate : "" -%}
 {%- set reportSettingsPage = craft.app.request.getSegment(3) != 'view' ? true : false -%}
 
-{%- if optionContents %}
+{%- if settingsContents %}
 
-    {%- namespace 'options' %}
-        {{- optionContents|raw -}}
+    {%- namespace 'settings' %}
+        {{- settingsContents|raw -}}
     {% endnamespace -%}
 
 {% else %}
@@ -40,17 +40,17 @@
 
     <p>
         <a href='#'
-           class='fieldtoggle settings {{ optionContents ? 'collapsed' : 'expanded' }}'
-           data-target='toggle-templateoptions'>
+           class='fieldtoggle settings {{ settingsContents ? 'collapsed' : 'expanded' }}'
+           data-target='toggle-templatsettings'>
             {{ "Template Settings"|t('sprout-reports') }}
         </a>
     </p>
 
-    <div id="toggle-templateoptions"
-         class="{{ optionContents ? 'hidden' : 'expanded' }}">
+    <div id="toggle-templatesettings"
+         class="{{ settingsContents ? 'hidden' : 'expanded' }}">
 
         {{ forms.textField({
-            name: "options[resultsTemplate]",
+            name: "settings[resultsTemplate]",
             label: "Results Template"|t('sprout-reports'),
             instructions: "The template to use to display results. Learn more about <a href='{url}'>Results Templates</a>."|raw|t('sprout-reports', {
                 url: 'https://sprout.barrelstrengthdesign.com/craft-plugins/reports/docs/custom-reports/custom-twig-template-report'
@@ -64,15 +64,15 @@
         }) }}
 
         {{ forms.textField({
-            name: "options[optionsTemplate]",
-            label: "Options Template"|t('sprout-reports'),
-            instructions: "The template to use to display options. Learn more about <a href='{url}'>Options Templates</a>."|raw|t('sprout-reports', {
+            name: "settings[settingsTemplate]",
+            label: "Settings Template"|t('sprout-reports'),
+            instructions: "The template to use to display settings. Learn more about <a href='{url}'>Settings Templates</a>."|raw|t('sprout-reports', {
                 url: 'https://sprout.barrelstrengthdesign.com/craft-plugins/reports/docs/custom-reports/custom-twig-template-report'
             }),
             class: "nicetext code",
-            placeholder: "_reports/reportname/options",
-            value: options.optionsTemplate is defined ? options.optionsTemplate : "",
-            errors: errors['optionsTemplate'] is defined ? errors['optionsTemplate'] : null
+            placeholder: "_reports/reportname/settings",
+            value: settings.settingsTemplate is defined ? settings.settingsTemplate : "",
+            errors: errors['settingsTemplate'] is defined ? errors['settingsTemplate'] : null
         }) }}
 
     </div>

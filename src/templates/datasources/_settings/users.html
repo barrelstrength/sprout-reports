@@ -3,16 +3,16 @@
 {{ forms.checkboxSelectField({
     label: "User Groups"|t('sprout-reports'),
     instructions: "Select the user groups to include in your report. All by default."|t('sprout-reports'),
-    name: "options[userGroups]",
-    options: userGroupOptions,
+    name: "settings[userGroups]",
+    settings: userGroupSettings,
     errors: errors.userGroups is defined ? errors.userGroups : '',
-    values: options.userGroups is defined ? options.userGroups : null,
+    values: settings.userGroups is defined ? settings.userGroups : null,
     first: true
 }) }}
 
 {{ forms.lightswitchField({
     label: "Display User Groups",
     instructions: "Display user groups as columns in your results",
-    name: 'options[displayUserGroupColumns]',
-    on: options.displayUserGroupColumns is defined ? options.displayUserGroupColumns : null
+    name: 'settings[displayUserGroupColumns]',
+    on: settings.displayUserGroupColumns is defined ? settings.displayUserGroupColumns : null
 }) }}

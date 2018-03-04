@@ -63,7 +63,7 @@ return [
     'Give your users the ability to refine their results with a date range, lightswitch, and more. Build custom Twig Template reports with a Craft-friendly look and feel. [Learn more]({url}).' => 'Give your users the ability to refine their results with a date range, lightswitch, and more. Build custom Twig Template reports with a Craft-friendly look and feel. [Learn more]({url}).',
     'Results Template' => 'Results Template',
     'Give your users options' => 'Give your users options',
-    'Options Template' => 'Options Template',
+    'Settings Template' => 'Settings Template',
     'Twig Template' => 'Twig Template',
     'Results template cannot be blank.' => 'Results template cannot be blank.',
     'Create a report using Twig in your templates folder.' => 'Create a report using Twig in your templates folder.',

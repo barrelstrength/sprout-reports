@@ -39,13 +39,13 @@ class CustomQuery extends BaseDataSource
 
     /**
      * @param ReportModel $report
-     * @param array       $options
+     * @param array       $settings
      *
      * @return array
      */
-    public function getResults(ReportModel $report, array $options = [])
+    public function getResults(ReportModel $report, array $settings = [])
     {
-        $query = $report->getOption('query');
+        $query = $report->getSetting('query');
 
         $result = [];
 
@@ -59,32 +59,32 @@ class CustomQuery extends BaseDataSource
     }
 
     /**
-     * @param array $options
+     * @param array $settings
      *
      * @return null|string
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function getOptionsHtml(array $options = [])
+    public function getSettingsHtml(array $settings = [])
     {
-        $optionErrors = $this->report->getErrors('options');
-        $optionErrors = array_shift($optionErrors);
+        $settingsErrors = $this->report->getErrors('settings');
+        $settingsErrors = array_shift($settingsErrors);
 
-        return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_options/query', [
-            'options' => count($options) ? $options : $this->report->getOptions(),
-            'errors' => $optionErrors
+        return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_settings/query', [
+            'settings' => count($settings) ? $settings : $this->report->getSettings(),
+            'errors' => $settingsErrors
         ]);
     }
 
     /**
-     * @param array $options
+     * @param array $settings
      * @param array $errors
      *
      * @return bool
      */
-    public function validateOptions(array $options = [], array &$errors)
+    public function validateSettings(array $settings = [], array &$errors)
     {
-        if (empty($options['query'])) {
+        if (empty($settings['query'])) {
             $errors['query'][] = Craft::t('sprout-reports', 'Query cannot be blank.');
 
             return false;

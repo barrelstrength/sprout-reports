@@ -29,16 +29,16 @@ class Categories extends BaseDataSource
 
     /**
      * @param ReportModel $report
-     * @param array       $paramOptions
+     * @param array       $settings
      *
      * @return array
      */
-    public function getResults(ReportModel $report, array $paramOptions = [])
+    public function getResults(ReportModel $report, array $settings = [])
     {
-        $options = $report->getOptions();
+        $reportSettings = $report->getSettings();
 
-        $sectionId = $options->sectionId;
-        $categoryGroupId = $options->categoryGroupId;
+        $sectionId = $reportSettings->sectionId;
+        $categoryGroupId = $reportSettings->categoryGroupId;
 
         $categoryQuery = CategoryRecord::find()
             ->where(['groupId' => $categoryGroupId])
@@ -80,22 +80,22 @@ class Categories extends BaseDataSource
     }
 
     /**
-     * @param array $options
+     * @param array $settings
      *
      * @return null|string
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function getOptionsHtml(array $options = [])
+    public function getSettingsHtml(array $settings = [])
     {
-        $sectionOptions = [];
-        $categoryGroupOptions = [];
+        $sectionSettings = [];
+        $categoryGroupSettings = [];
 
         $sections = \Craft::$app->getSections()->getAllSections();
 
         foreach ($sections as $section) {
             if ($section->type != 'single') {
-                $sectionOptions[] = [
+                $sectionSettings[] = [
                     'label' => $section->name,
                     'value' => $section->id
                 ];
@@ -105,45 +105,45 @@ class Categories extends BaseDataSource
         $categoryGroups = \Craft::$app->getCategories()->getAllGroups();
 
         foreach ($categoryGroups as $categoryGroup) {
-            $categoryGroupOptions[] = [
+            $categoryGroupSettings[] = [
                 'label' => $categoryGroup->name,
                 'value' => $categoryGroup->id
             ];
         }
 
-        $optionErrors = $this->report->getErrors('options');
-        $optionErrors = array_shift($optionErrors);
+        $settingsErrors = $this->report->getErrors('settings');
+        $settingsErrors = array_shift($settingsErrors);
 
         $setupRequiredMessage = null;
 
-        if (empty($sectionOptions) OR empty($categoryGroupOptions)) {
+        if (empty($sectionSettings) OR empty($categoryGroupSettings)) {
             $setupRequiredMessage = Craft::t('sprout-reports', 'This report requires a Channel or Structure section using Categories. Please update your settings to include at least one Channel or Structure and at least one Category Group with Categories available to assign to that section.');
         }
 
-        return \Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_options/categories', [
-            'options' => count($options) ? $options : $this->report->getOptions(),
-            'sectionOptions' => $sectionOptions,
-            'categoryGroupOptions' => $categoryGroupOptions,
-            'errors' => $optionErrors,
+        return \Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_settings/categories', [
+            'settings' => count($settings) ? $settings : $this->report->getSettings(),
+            'sectionSettings' => $sectionSettings,
+            'categoryGroupSettings' => $categoryGroupSettings,
+            'errors' => $settingsErrors,
             'setupRequiredMessage' => $setupRequiredMessage
         ]);
     }
 
     /**
-     * Validate our data source options
+     * Validate our data source settings
      *
-     * @param array $options
+     * @param array $settings
      * @param array $errors
      *
      * @return bool
      */
-    public function validateOptions(array $options = [], array &$errors)
+    public function validateSettings(array $settings = [], array &$errors)
     {
-        if (empty($options['sectionId'])) {
+        if (empty($settings['sectionId'])) {
             $errors['sectionId'][] = Craft::t('sprout-reports', 'Section is required.');
         }
 
-        if (empty($options['categoryGroupId'])) {
+        if (empty($settings['categoryGroupId'])) {
             $errors['categoryGroupId'][] = Craft::t('sprout-reports', 'Category Group is required.');
         }
 

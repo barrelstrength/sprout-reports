@@ -27,19 +27,19 @@ class Users extends BaseDataSource
 
     /**
      * @param ReportModel $report
-     * @param array       $options
+     * @param array       $settings
      *
      * @return array
      */
-    public function getResults(ReportModel $report, array $options = [])
+    public function getResults(ReportModel $report, array $settings = [])
     {
         // First, use dynamic options, fallback to report options
-        if (!count($options)) {
-            $options = $report->getOptions();
+        if (!count($settings)) {
+            $settings = $report->getSettings();
         }
 
-        $userGroupIds = $options->userGroups ?? false;
-        $displayUserGroupColumns = $options->displayUserGroupColumns ?? false;
+        $userGroupIds = $settings->userGroups ?? false;
+        $displayUserGroupColumns = $settings->displayUserGroupColumns ?? false;
 
         $includeAdmins = false;
 
@@ -125,49 +125,49 @@ class Users extends BaseDataSource
     }
 
     /**
-     * @param array $options
+     * @param array $settings
      *
      * @return null|string
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function getOptionsHtml(array $options = [])
+    public function getSettingsHtml(array $settings = [])
     {
         $userGroups = Craft::$app->getUserGroups()->getAllGroups();
 
-        $userGroupOptions[] = [
+        $userGroupSettings[] = [
             'label' => 'Admin',
             'value' => 'admin'
         ];
 
         foreach ($userGroups as $userGroup) {
-            $userGroupOptions[] = [
+            $userGroupSettings[] = [
                 'label' => $userGroup->name,
                 'value' => $userGroup->id
             ];
         }
 
-        $optionErrors = $this->report->getErrors('options');
-        $optionErrors = array_shift($optionErrors);
+        $settingsErrors = $this->report->getErrors('settings');
+        $settingsErrors = array_shift($settingsErrors);
 
-        return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_options/users', [
-            'userGroupOptions' => $userGroupOptions,
-            'options' => count($options) ? $options : $this->report->getOptions(),
-            'errors' => $optionErrors
+        return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_settings/users', [
+            'userGroupSettings' => $userGroupSettings,
+            'settings' => count($settings) ? $settings : $this->report->getSettings(),
+            'errors' => $settingsErrors
         ]);
     }
 
     /**
-     * Validate our data source options
+     * Validate our data source settings
      *
-     * @param array $options
+     * @param array $settings
      * @param array $errors
      *
      * @return bool
      */
-    public function validateOptions(array $options = [], array &$errors)
+    public function validateSettings(array $settings = [], array &$errors)
     {
-        if (empty($options['userGroups'])) {
+        if (empty($settings['userGroups'])) {
             $errors['userGroups'][] = Craft::t('sprout-reports', 'Select at least one User Group.');
 
             return false;

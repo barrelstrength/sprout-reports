@@ -27,8 +27,6 @@ use craft\web\UrlManager;
 use craft\events\RegisterUrlRulesEvent;
 use craft\services\UserPermissions;
 use craft\events\RegisterUserPermissionsEvent;
-use barrelstrength\sproutreports\integrations\sproutreports\datasources\Users;
-
 
 /**
  * https://craftcms.com/docs/plugins/introduction
@@ -111,12 +109,6 @@ class SproutReports extends Plugin
         Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent $event) {
             $event->types[] = new CustomQuery();
             $event->types[] = new CustomTwigTemplate();
-
-            $isCraftPro = (Craft::$app->getEdition() == Craft::Pro);
-
-            if ($isCraftPro == true) {
-                $event->types[] = new Users();
-            }
         });
     }
 

@@ -125,7 +125,7 @@ class CustomTwigTemplate extends BaseDataSource
         return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_settings/twig', [
             'settings' => $this->report->getSettings(),
             'errors' => $settingsErrors,
-            'settingContents' => $customSettingsHtml ?? null
+            'settingsContents' => $customSettingsHtml ?? null
         ]);
     }
 
@@ -170,6 +170,7 @@ class CustomTwigTemplate extends BaseDataSource
         // Process our front-end Results template which adds Labels and Rows to:
         // sproutReports()->reports->twigReportLabels;
         // sproutReports()->reports->twigReportRows;
+
         $view->renderTemplate($resultsTemplate, [
             'settings' => $settings
         ]);

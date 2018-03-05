@@ -166,6 +166,8 @@ class SproutReports extends Plugin
 
     /**
      * Performs actions after the plugin is installed.
+     *
+     * @throws \yii\db\Exception
      */
     protected function afterInstall()
     {

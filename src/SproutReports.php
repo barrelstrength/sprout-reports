@@ -11,6 +11,7 @@
 namespace barrelstrength\sproutreports;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
+use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomTwigTemplate;
 use barrelstrength\sproutreports\models\Settings;
 use barrelstrength\sproutbase\services\sproutreports\DataSources;
@@ -20,7 +21,7 @@ use barrelstrength\sproutreports\services\App;
 use Craft;
 use craft\base\Plugin;
 use barrelstrength\sproutreports\variables\SproutReportsVariable;
-use craft\events\DefineComponentsEvent;
+use craft\helpers\UrlHelper;
 use craft\web\twig\variables\CraftVariable;
 use yii\base\Event;
 use craft\events\RegisterComponentTypesEvent;
@@ -28,11 +29,6 @@ use craft\web\UrlManager;
 use craft\events\RegisterUrlRulesEvent;
 use craft\services\UserPermissions;
 use craft\events\RegisterUserPermissionsEvent;
-use barrelstrength\sproutreports\integrations\sproutreports\datasources\Categories;
-use barrelstrength\sproutreports\integrations\sproutreports\datasources\Users;
-
-use craft\web\View;
-use craft\events\RegisterTemplateRootsEvent;
 
 /**
  * https://craftcms.com/docs/plugins/introduction
@@ -60,8 +56,15 @@ class SproutReports extends Plugin
      */
     public static $pluginId = 'sprout-reports';
 
-    public $hasSettings = true;
+    /**
+     * @var bool
+     */
     public $hasCpSection = true;
+
+    /**
+     * @var bool
+     */
+    public $hasCpSettings = true;
 
     public function init()
     {
@@ -75,22 +78,18 @@ class SproutReports extends Plugin
 
         self::$app = $this->get('app');
 
-        // Register our base template path
-        Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
-            $e->roots['sprout-reports'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
-        });
-
-        Event::on(CraftVariable::class, CraftVariable::EVENT_DEFINE_COMPONENTS, function(DefineComponentsEvent $e) {
-            $e->components['sproutReports'] = SproutReportsVariable::class;
+        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
+            $variable = $event->sender;
+            $variable->set('sproutReports', SproutReportsVariable::class);
         });
 
         Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
 
-            $name = Craft::t('sprout-reports','Sprout Reports');
+            $name = Craft::t('sprout-reports', 'Sprout Reports');
 
-            $event->permissions[$name]['sproutReports-editReports'] = ['label' => Craft::t('sprout-reports','Edit Reports')];
-            $event->permissions[$name]['sproutReports-editDataSources'] = ['label' => Craft::t('sprout-reports','Edit Data Sources')];
-            $event->permissions[$name]['sproutReports-editSettings'] = ['label' => Craft::t('sprout-reports','Edit Plugin Settings')];
+            $event->permissions[$name]['sproutReports-editReports'] = ['label' => Craft::t('sprout-reports', 'Edit Reports')];
+            $event->permissions[$name]['sproutReports-editDataSources'] = ['label' => Craft::t('sprout-reports', 'Edit Data Sources')];
+            $event->permissions[$name]['sproutReports-editSettings'] = ['label' => Craft::t('sprout-reports', 'Edit Plugin Settings')];
         });
 
         Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function(RegisterUrlRulesEvent $event) {
@@ -98,8 +97,8 @@ class SproutReports extends Plugin
             $event->rules['sprout-reports/reports'] = 'sprout-base/reports/index';
             $event->rules['sprout-reports/reports/<groupId:\d+>'] = 'sprout-base/reports/index';
 
-            $event->rules['sprout-reports/reports/<dataSourceId>/new'] = 'sprout-base/reports/edit-report';
-            $event->rules['sprout-reports/reports/<dataSourceId>/edit/<reportId:\d+>'] = 'sprout-base/reports/edit-report';
+            $event->rules['sprout-reports/reports/<dataSourceId>-<dataSourceSlug>/new'] = 'sprout-base/reports/edit-report';
+            $event->rules['sprout-reports/reports/<dataSourceId>-<dataSourceSlug>/edit/<reportId:\d+>'] = 'sprout-base/reports/edit-report';
 
             $event->rules['sprout-reports/datasources'] = ['template' => 'sprout-reports/datasources/index'];
 
@@ -109,29 +108,35 @@ class SproutReports extends Plugin
             $event->rules['sprout-reports/settings/general'] = 'sprout-base/settings/edit-settings';
         });
 
-        Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(
-            RegisterComponentTypesEvent $event
-        ) {
-            $event->types[] = new Categories();
-            $event->types[] = new CustomQuery();
-            $event->types[] = new CustomTwigTemplate();
-
-            $isCraftPro = Craft::$app->getEdition() == Craft::Pro ? true : false;
-
-            if ($isCraftPro == true) {
-                $event->types[] = new Users();
-            }
+        Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent $event) {
+            $event->types[] = CustomQuery::class;
+            $event->types[] = CustomTwigTemplate::class;
         });
     }
 
     /**
-     * @return Settings
+     * @inheritdoc
      */
     protected function createSettingsModel()
     {
         return new Settings();
     }
 
+    /**
+     * Redirect to Sprout Reports settings
+     *
+     * @inheritdoc
+     */
+    public function getSettingsResponse()
+    {
+        $url = UrlHelper::cpUrl('sprout-reports/settings');
+
+        return Craft::$app->getResponse()->redirect($url);
+    }
+
+    /**
+     * @return array|null
+     */
     public function getCpNavItem()
     {
         $parent = parent::getCpNavItem();
@@ -144,18 +149,33 @@ class SproutReports extends Plugin
         return array_merge($parent, [
             'subnav' => [
                 'reports' => [
-                    'label' => Craft::t('sprout-reports','Reports'),
+                    'label' => Craft::t('sprout-reports', 'Reports'),
                     'url' => 'sprout-reports/reports'
                 ],
                 'datasources' => [
-                    'label' => Craft::t('sprout-reports','Data Sources'),
+                    'label' => Craft::t('sprout-reports', 'Data Sources'),
                     'url' => 'sprout-reports/datasources'
                 ],
                 'settings' => [
-                    'label' => Craft::t('sprout-reports','Settings'),
+                    'label' => Craft::t('sprout-reports', 'Settings'),
                     'url' => 'sprout-reports/settings/general'
                 ]
             ]
         ]);
+    }
+
+    /**
+     * Performs actions after the plugin is installed.
+     *
+     * @throws \yii\db\Exception
+     */
+    protected function afterInstall()
+    {
+        $dataSourceClasses = [
+            CustomQuery::class,
+            CustomTwigTemplate::class
+        ];
+
+        SproutBase::$app->dataSources->installDataSources($dataSourceClasses);
     }
 }

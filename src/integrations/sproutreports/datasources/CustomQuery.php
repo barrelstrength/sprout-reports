@@ -5,7 +5,6 @@ namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
 use Craft;
 use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
-use barrelstrength\sproutreports\SproutReports;
 
 /**
  * Class SproutReportsQueryDataSource
@@ -14,21 +13,24 @@ use barrelstrength\sproutreports\SproutReports;
  */
 class CustomQuery extends BaseDataSource
 {
+    /**
+     * @inheritdoc
+     */
     public function getName()
     {
-        return Craft::t('sprout-reports','Custom Query');
+        return Craft::t('sprout-reports', 'Custom Query');
     }
 
     /**
-     * @return null|string
+     * @inheritdoc
      */
     public function getDescription()
     {
-        return Craft::t('sprout-reports','Create reports using a custom database query');
+        return Craft::t('sprout-reports', 'Create reports using a custom database query');
     }
 
     /**
-     * @return bool
+     * @inheritdoc
      */
     public function isAllowHtmlEditable()
     {
@@ -36,15 +38,11 @@ class CustomQuery extends BaseDataSource
     }
 
     /**
-     * @todo:so Let's bring back a little sanity checks back into raw queries
-     *
-     * @param ReportModel $report
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function getResults(ReportModel $report, array $options = [])
+    public function getResults(ReportModel $report, array $settings = [])
     {
-        $query = $report->getOption('query');
+        $query = $report->getSetting('query');
 
         $result = [];
 
@@ -58,30 +56,26 @@ class CustomQuery extends BaseDataSource
     }
 
     /**
-     * @param array $options
-     *
-     * @return string
+     * @inheritdoc
      */
-    public function getOptionsHtml(array $options = [])
+    public function getSettingsHtml(array $settings = [])
     {
-        $optionErrors = $this->report->getErrors('options');
-        $optionErrors = array_shift($optionErrors);
+        $settingsErrors = $this->report->getErrors('settings');
+        $settingsErrors = array_shift($settingsErrors);
 
-        return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_options/query', [
-            'options' => count($options) ? $options : $this->report->getOptions(),
-            'errors' => $optionErrors
+        return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_settings/query', [
+            'settings' => count($settings) ? $settings : $this->report->getSettings(),
+            'errors' => $settingsErrors
         ]);
     }
 
     /**
-     * @param array $options
-     *
-     * @return bool
+     * @inheritdoc
      */
-    public function validateOptions(array $options = [], array &$errors = [])
+    public function validateSettings(array $settings = [], array &$errors)
     {
-        if (empty($options['query'])) {
-            $errors['query'][] = Craft::t('sprout-reports','Query cannot be blank.');
+        if (empty($settings['query'])) {
+            $errors['query'][] = Craft::t('sprout-reports', 'Query cannot be blank.');
 
             return false;
         }

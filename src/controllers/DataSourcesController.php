@@ -13,6 +13,7 @@ class DataSourcesController extends Controller
      * Save the Data Source
      *
      * @return \yii\web\Response
+     * @throws \yii\db\Exception
      * @throws \yii\web\BadRequestHttpException
      */
     public function actionSaveDataSource()
@@ -27,7 +28,7 @@ class DataSourcesController extends Controller
         $allowNew = empty($allowNew) ? false : true;
 
         $dataSource = new DataSourceModel();
-        $dataSource->dataSourceId = $dataSourceId;
+        $dataSource->id = $dataSourceId;
         $dataSource->allowNew = $allowNew;
 
         if (SproutBase::$app->dataSources->saveDataSource($dataSource)) {

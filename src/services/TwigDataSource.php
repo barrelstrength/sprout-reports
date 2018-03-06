@@ -1,4 +1,5 @@
 <?php
+
 namespace barrelstrength\sproutreports\services;
 
 use craft\base\Component;
@@ -31,14 +32,14 @@ class TwigDataSource extends Component
      * (
      *   0 => array
      *   (
-     * 		'column' => 1,
-     * 		'column2' => 2
+     *        'column' => 1,
+     *        'column2' => 2
      *   ),
-     * 	 1 => array
-     * 	 (
-     * 	  'column' => 1,
-     * 		'column2' => 2
-     * 	 )
+     *     1 => array
+     *     (
+     *      'column' => 1,
+     *        'column2' => 2
+     *     )
      * );
      *
      * @var $rows
@@ -73,8 +74,7 @@ class TwigDataSource extends Component
      */
     public function addRows(array $rows)
     {
-        foreach ($rows as $key => $row)
-        {
+        foreach ($rows as $key => $row) {
             $this->addRow($row);
         }
     }

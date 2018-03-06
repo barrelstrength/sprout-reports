@@ -2,7 +2,6 @@
 
 namespace barrelstrength\sproutreports\models;
 
-use barrelstrength\sproutreports\SproutReports;
 use craft\base\Model;
 use Craft;
 
@@ -14,7 +13,7 @@ class Settings extends Model
     {
         return [
             'general' => [
-                'label' => Craft::t('sprout-reports','General'),
+                'label' => Craft::t('sprout-reports', 'General'),
                 'url' => 'sprout-reports/settings/general',
                 'selected' => 'general',
                 'template' => 'sprout-reports/_settings/general'

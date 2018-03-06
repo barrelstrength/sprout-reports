@@ -32,7 +32,8 @@ class SproutReportsVariable
     /**
      * @param $groupId
      *
-     * @return null|Report[]
+     * @return array
+     * @throws \yii\base\Exception
      */
     public function getReportsByGroupId($groupId)
     {
@@ -41,8 +42,6 @@ class SproutReportsVariable
 
     /**
      * @param array $row
-     *
-     * @return bool
      */
     public function addHeaderRow(array $row)
     {
@@ -52,11 +51,7 @@ class SproutReportsVariable
     /**
      * Add a single row of data to your report
      *
-     * @example array()
-     *
      * @param array $row
-     *
-     * @return null
      */
     public function addRow(array $row)
     {

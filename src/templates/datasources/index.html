@@ -48,14 +48,14 @@
                     <td><strong>{{ dataSource.getName() }}</strong></td>
                     <td>{{ dataSource.getDescription() }}</td>
                     <td>
-                        <span class="light">{{ dataSource.getPluginName() }}</span>
+                        <span class="light">{{ dataSource.getPlugin().name }}</span>
                     </td>
 
                     <td>{{ dataSource.getReportCount() }}</td>
                     <td>
                         {% set allowNew = dataSource.allowNew() %}
                         {{ forms.lightswitchField({
-                            id: dataSource.getId(),
+                            id: dataSource.dataSourceId,
                             on: allowNew,
                             name: 'allowNew',
                             small: true
@@ -87,16 +87,18 @@
     var allowNew = $(this).find("[name='allowNew']").val();
     var dataSourceId = $(this).attr('id');
 
+    console.log(dataSourceId);
+
     Craft.postActionRequest('sprout-reports/data-sources/save-data-source', {
-    dataSourceId: dataSourceId,
-    allowNew: allowNew
-    }, function(response) {
-    if (response)
-    {
-    Craft.cp.displayNotice(Craft.t('sprout-reports', 'Data Source saved.'));
-    }
-    });
-    })
+                dataSourceId: dataSourceId,
+                allowNew: allowNew
+            }, function(response) {
+                if (response)
+                {
+                    Craft.cp.displayNotice(Craft.t('sprout-reports', 'Data Source saved.'));
+                }
+            });
+        })
     });
 
 {% endjs %}

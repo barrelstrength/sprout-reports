@@ -87,8 +87,6 @@
     var allowNew = $(this).find("[name='allowNew']").val();
     var dataSourceId = $(this).attr('id');
 
-    console.log(dataSourceId);
-
     Craft.postActionRequest('sprout-reports/data-sources/save-data-source', {
                 dataSourceId: dataSourceId,
                 allowNew: allowNew

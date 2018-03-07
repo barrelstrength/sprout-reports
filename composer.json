@@ -1,7 +1,7 @@
 {
     "name": "barrelstrength/sprout-reports",
     "description": "Powerful custom reports.",
-    "version": "1.0.0",
+    "version": "3.0.0",
     "type": "craft-plugin",
     "keywords": [
         "craft",
@@ -36,7 +36,7 @@
     "extra": {
         "name": "Sprout Reports",
         "handle": "sprout-reports",
-        "schemaVersion": "1.0.0",
+        "schemaVersion": "3.0.0",
         "developer": "Barrel Strength",
         "developerUrl": "https://barrelstrengthdesign.com",
         "documentationUrl": "https://sprout.barrelstrengthdesign.com/craft-plugins/reports",

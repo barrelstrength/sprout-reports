@@ -12,9 +12,9 @@ use barrelstrength\sproutreportsusers\integrations\sproutreports\datasources\Use
 use Craft;
 
 /**
- * m180307_042132_sprout_reports_report migration.
+ * m180307_042132_sprout_reports migration.
  */
-class m180307_042132_sprout_reports_report extends Migration
+class m180307_042132_sprout_reports extends Migration
 {
     /**
      * @inheritdoc
@@ -42,6 +42,7 @@ class m180307_042132_sprout_reports_report extends Migration
         $this->dropColumn('{{%sproutreports_datasources}}', 'options');
 
         $this->addColumn('{{%sproutreports_reports}}', 'hasNameFormat', $this->integer()->after('name'));
+        $this->addColumn('{{%sproutreports_reports}}', 'nameFormat', $this->integer()->after('name'));
 
         $this->updateChangedDataSourceId();
 

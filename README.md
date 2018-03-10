@@ -1,37 +1,33 @@
-# Sprout Reports plugin for Craft CMS 3.x
+# Sprout Reports
 
-Powerful custom reports.
+Sprout Reports allows you to create and group custom reports. Sprout Reports comes with two flexible Data Sources out of the box and additional Data Sources are available via custom plugins.
 
-![Screenshot](resources/img/plugin-logo.png)
+- Custom Query - Create reports using custom MySQL queries
+- Twig Template - Create reports using Twig Templates
+- [Sprout Reports - Categories](https://github.com/barrelstrength/craft-sprout-reports-categories)
+- [Sprout Reports - Users](https://github.com/barrelstrength/craft-sprout-reports-users)
+- Sprout Reports for Craft Commerce (will become available after Craft Commerce 2 is released)
 
-## Installation
+## Usage
 
-To install Sprout Reports, follow these steps:
+### Custom Query Reports
 
-1. Download & unzip the file and place the `sproutreports` directory into your `craft/plugins` directory
-2.  -OR- do a `git clone ???` directly into your `craft/plugins` folder.  You can then update it with `git pull`
-3.  -OR- install with Composer via `composer require /sproutreports`
-4. Install plugin in the Craft Control Panel under Settings > Plugins
-5. The plugin folder should be named `sproutreports` for Craft to see it.  GitHub recently started appending `-master` (the branch name) to the name of the folder for zip file downloads.
 
-Sprout Reports works on Craft 3.x.
+### Custom Twig Template Reports 
 
-## Sprout Reports Overview
+<iframe src="https://player.vimeo.com/video/248062317" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
--Insert text here-
+See Sprout Reports documentation to learn more about Sprout Reports.
 
-## Configuring Sprout Reports
+## Documentation
 
--Insert text here-
+See the [Sprout Website](https://sprout.barrelstrengthdesign.com/craft-plugins/reports/docs) for documentation, guides, and additional resources. 
 
-## Using Sprout Reports
+## Support
 
--Insert text here-
+- [Send a Support Ticket](https://sprout.barrelstrengthdesign.com/craft-plugins/request/support) via the Sprout Website.
+- [Create an issue](https://github.com/barrelstrength/craft-sprout-reports-categories/issues) on Github.
 
-## Sprout Reports Roadmap
-
-Some things to do, and ideas for potential features:
-
-* Release it
-
-Brought to you by [Barrelstrength](barrelstrengthdesign.com)
+<a href="https://sprout.barrelstrengthdesign.com" target="_blank">
+  <img src="https://sprout.barrelstrengthdesign.com/content/plugins/sprout-icon.svg" width="72" align="right">
+</a>

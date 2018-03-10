@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.0-beta2 - 2018-03-10
+
+### Added
+- Updated README
+
 ## 1.0.0-beta1 - 2018-03-10
 
 ### Added
@@ -8,6 +13,9 @@
 ### Changed
 - Moved Categories integration to separate plugin [Sprout Reports - Categories](https://github.com/barrelstrength/craft-sprout-reports-categories)
 - Moved Users integration to separate plugin [Sprout Reports - Users](https://github.com/barrelstrength/craft-sprout-reports-users)
+
+### Removed
+- Removed Report integrations in favor of Sprout Import
 
 ## 0.9.3 - 2018-01-08
 

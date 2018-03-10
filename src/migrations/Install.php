@@ -5,35 +5,24 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutreports\migrations;
+namespace barrelstrength\sproutbase\sproutreports\migrations;
 
 use barrelstrength\sproutbase\migrations\sproutreports\Install as SproutBaseReportsInstall;
 use craft\db\Migration;
 
 class Install extends Migration
 {
-    // Public Methods
-    // =========================================================================
-
     /**
      * @inheritdoc
      */
     public function safeUp()
-    {
-        $this->runSproutBaseInstall();
-
-        return true;
-    }
-
-    // Protected Methods
-    // =========================================================================
-
-    protected function runSproutBaseInstall()
     {
         $migration = new SproutBaseReportsInstall();
 
         ob_start();
         $migration->safeUp();
         ob_end_clean();
+
+        return true;
     }
 }

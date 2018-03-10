@@ -207,13 +207,17 @@ class CustomTwigTemplate extends BaseDataSource
         // We do so by making the first row the keys of the second row
         if (empty($labels) && count($rows)) {
             $headerRow = [];
-            $firstRow = array_shift($rows);
 
-            if (count($firstRow)) {
+            /**
+             * @var $firstRowColumns array
+             */
+            $firstRowColumns = array_shift($rows);
+
+            if (count($firstRowColumns)) {
                 $secondRow = array_shift($rows);
 
-                foreach ($firstRow as $key => $attribute) {
-                    $headerRow[$attribute] = $secondRow[$key];
+                foreach ($firstRowColumns as $key => $column) {
+                    $headerRow[$column] = $secondRow[$key];
                 }
             }
 

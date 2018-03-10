@@ -12,6 +12,7 @@ namespace barrelstrength\sproutreports;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutreports\widgets\Number as NumberWidget;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomTwigTemplate;
 use barrelstrength\sproutreports\models\Settings;
 use barrelstrength\sproutbase\services\sproutreports\DataSources;
@@ -21,7 +22,10 @@ use barrelstrength\sproutreports\services\App;
 use Craft;
 use craft\base\Plugin;
 use barrelstrength\sproutreports\variables\SproutReportsVariable;
+use craft\db\Migration;
+use craft\db\Query;
 use craft\helpers\UrlHelper;
+use craft\services\Dashboard;
 use craft\web\twig\variables\CraftVariable;
 use yii\base\Event;
 use craft\events\RegisterComponentTypesEvent;
@@ -77,6 +81,10 @@ class SproutReports extends Plugin
         ]);
 
         self::$app = $this->get('app');
+
+        Event::on(Dashboard::class, Dashboard::EVENT_REGISTER_WIDGET_TYPES, function(RegisterComponentTypesEvent $event) {
+            $event->types[] = NumberWidget::class;
+        });
 
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
             $variable = $event->sender;

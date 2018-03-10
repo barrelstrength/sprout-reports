@@ -1,0 +1,16 @@
+{% import "_includes/forms" as forms %}
+
+{% if not currentUser.can('sproutReports-editSettings') %}
+    {% redirect 'sprout-reports' %}
+{% endif %}
+
+{{ forms.textField({
+    label: "Plugin Name"|t('sprout-reports'),
+    instructions: "Intuitive, human-readable plugin name for the end user."|t('sprout-reports'),
+    id: 'pluginNameOverride',
+    name: 'pluginNameOverride',
+    value: settings.pluginNameOverride,
+    autofocus: true,
+    first: true,
+    errors: ''
+}) }}

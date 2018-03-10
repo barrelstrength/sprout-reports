@@ -1,5 +1,47 @@
 {
+    "name": "barrelstrength/sprout-reports",
+    "description": "Powerful custom reports.",
+    "version": "1.0.0-beta2",
+    "type": "craft-plugin",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "reports",
+        "sprout reports"
+    ],
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Barrel Strength",
+            "homepage": "https://barrelstrengthdesign.com"
+        }
+    ],
+    "support": {
+        "email": "sprout@barrelstrengthdesign.com",
+        "issues": "https://github.com/barrelstrength/sprout-reports/issues?state=open",
+        "source": "https://github.com/barrelstrength/sprout-reports",
+        "docs": "https://sprout.barrelstrengthdesign.com/craft-plugins/reports/docs",
+        "rss": "https://github.com/barrelstrength/sprout-reports/commits/v2.atom"
+    },
     "require": {
-        "league/csv": "^7.2"
+        "craftcms/cms": "^3.0.0-RC1",
+        "barrelstrength/sprout-base": "^1.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "barrelstrength\\sproutreports\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Sprout Reports",
+        "handle": "sprout-reports",
+        "schemaVersion": "1.0.0",
+        "developer": "Barrel Strength",
+        "developerUrl": "https://barrelstrengthdesign.com",
+        "documentationUrl": "https://sprout.barrelstrengthdesign.com/craft-plugins/reports",
+        "changelogUrl": "https://raw.githubusercontent.com/BarrelStrength/sprout-reports/master/CHANGELOG.md",
+        "downloadUrl": "https://github.com/BarrelStrength/sprout-reports/archive/master.zip",
+        "class": "barrelstrength\\sproutreports\\SproutReports"
     }
 }

@@ -1,0 +1,83 @@
+{# Tutorial Report - Results Template - Twig Template Report
+
+This template shows how to access settings from your Settings Template in your Results Template. All values saved as Report Settings when creating a report will be available to your Results Template via the 'settings' variable. Depending on the Field Type, those values may be strings or arrays. Below, you will see an example of how to output each type of setting.
+
+This example is unrealistic, and just outputs each setting into a Report so that when you run it in the Craft CP you can see each setting being output. In real reports, it's more likely you will use the values from the Settings Template to customize queries and conditional logic in your Reports Template to generate more useful results.
+#}
+
+{# You can define your Header Row column values anywhere in your template. If no Header Row is set, the first row of your results will be used for your header column values. #}
+{% do craft.sproutReports.addHeaderRow([
+    "Setting Name",
+    "Setting Value"
+]) %}
+
+{# Add several settings to our report one by one #}
+{% do craft.sproutReports.addRow([
+    "Example Text Field",
+    settings.exampleTextField is defined ? settings.exampleTextField : null
+]) %}
+
+{% do craft.sproutReports.addRow([
+    "Example Textarea Field",
+    settings.exampleTextareaField is defined ? settings.exampleTextareaField : null
+]) %}
+
+{% do craft.sproutReports.addRow([
+    "Example Number Field",
+    settings.exampleNumberField is defined ? settings.exampleNumberField : null
+]) %}
+
+{% do craft.sproutReports.addRow([
+    "Example Dropdown Field (Text)",
+    settings.exampleDropdownFieldText is defined ? settings.exampleDropdownFieldText : null
+]) %}
+
+{% do craft.sproutReports.addRow([
+    "Example Dropdown Field (Numbers)",
+    settings.exampleDropdownFieldNumbers is defined ? settings.exampleDropdownFieldNumbers : null
+]) %}
+
+{% do craft.sproutReports.addRow([
+    "Example Radio Buttons Field",
+    settings.exampleRadioButtonsField is defined ? settings.exampleRadioButtonsField : null
+]) %}
+
+{% do craft.sproutReports.addRow([
+    "Example Standalone Checkbox Field",
+    settings.exampleStandaloneCheckboxField is defined ? settings.exampleStandaloneCheckboxField : null
+]) %}
+
+{# We can output all the values of an array in a cell using Twig's 'join' function #}
+{% do craft.sproutReports.addRow([
+    "Example Checkbox Select Field",
+    settings.exampleCheckboxSelectField is defined ? settings.exampleCheckboxSelectField|join(', ') : null
+]) %}
+
+{% do craft.sproutReports.addRow([
+    "Example Display Conditional Options Field",
+    settings.exampleDisplayConditionalSettings is defined ? settings.exampleDisplayConditionalSettings : null
+]) %}
+
+{# Display Multiple Rows using an array #}
+{% do craft.sproutReports.addRows([
+    [
+        "Example Hidden Number Field",
+        settings.exampleHiddenNumberField is defined ? settings.exampleHiddenNumberField : null
+    ],
+    [
+        "Example Hidden Dropdown Field",
+        settings.exampleHiddenDropdownField is defined ? settings.exampleHiddenDropdownField : null
+    ]
+]) %}
+
+{# Display Multiple Rows using a hash #}
+{% do craft.sproutReports.addRows([
+    {
+        optionName: "Example Start Date Field",
+        optionValue: settings.datetimeStartDate is defined ? settings.datetimeStartDate|date('F d, Y') : null
+    },
+    {
+        optionName: "Example End Date Field",
+        optionValue: settings.datetimeEndDate is defined ? settings.datetimeEndDate|date('F d, Y') : null
+    }
+]) %}

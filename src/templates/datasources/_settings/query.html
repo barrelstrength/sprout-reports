@@ -1,0 +1,13 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textareaField({
+    name: "settings[query]",
+    label: "Custom Query"|t('sprout-reports'),
+    instructions: "Build a custom database query.",
+    class: "nicetext code",
+    rows: 5,
+    required: true,
+    first: true,
+    value: settings.query is defined ? settings.query : "",
+    errors: errors['query'] is defined ? errors['query'] : null
+}) }}

@@ -1,0 +1,19 @@
+{% set users = craft.users.status('active') %}
+
+{% if settings.limitByDateRange is defined and settings.limitByDateRange %}
+    {% set users = users.lastLoginDate('and, >= ' ~ settings.datetimeStartDate ~ ', <= ' ~ settings.datetimeEndDate) %}
+{% endif %}
+
+{{ craft.sproutReports.addHeaderRow([
+    'Username',
+    'Name',
+    'Email'
+]) }} #}
+
+{% for user in users %}
+    {% do craft.sproutReports.addRow([
+        user.username,
+        user.name,
+        user.email
+    ]) %}
+{% endfor %}

@@ -2,20 +2,11 @@
 
 Sprout Reports allows you to create and group custom reports. Sprout Reports comes with two flexible Data Sources out of the box and additional Data Sources are available via custom plugins.
 
-- Custom Query - Create reports using custom MySQL queries
-- Twig Template - Create reports using Twig Templates
+- Custom Query - _Create reports using custom MySQL queries_
+- Twig Template - _Create reports using Twig Templates_
 - [Sprout Reports - Categories](https://github.com/barrelstrength/craft-sprout-reports-categories)
 - [Sprout Reports - Users](https://github.com/barrelstrength/craft-sprout-reports-users)
-- Sprout Reports for Craft Commerce (will become available after Craft Commerce 2 is released)
-
-## Usage
-
-### Custom Query Reports
-
-
-### Custom Twig Template Reports 
-
-<iframe src="https://player.vimeo.com/video/248062317" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+- Sprout Reports for Craft Commerce - _Available after Craft Commerce 2 is released_
 
 See Sprout Reports documentation to learn more about Sprout Reports.
 

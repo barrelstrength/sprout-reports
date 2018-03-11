@@ -91,15 +91,6 @@ class SproutReports extends Plugin
             $variable->set('sproutReports', SproutReportsVariable::class);
         });
 
-        Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
-
-            $name = Craft::t('sprout-reports', 'Sprout Reports');
-
-            $event->permissions[$name]['sproutReports-editReports'] = ['label' => Craft::t('sprout-reports', 'Edit Reports')];
-            $event->permissions[$name]['sproutReports-editDataSources'] = ['label' => Craft::t('sprout-reports', 'Edit Data Sources')];
-            $event->permissions[$name]['sproutReports-editSettings'] = ['label' => Craft::t('sprout-reports', 'Edit Plugin Settings')];
-        });
-
         Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function(RegisterUrlRulesEvent $event) {
 
             $event->rules['sprout-reports/reports'] = 'sprout-base/reports/index';
@@ -115,6 +106,17 @@ class SproutReports extends Plugin
             $event->rules['sprout-reports/settings'] = 'sprout-base/settings/edit-settings';
             $event->rules['sprout-reports/settings/general'] = 'sprout-base/settings/edit-settings';
         });
+
+        if (Craft::$app->getEdition() === Craft::Pro) {
+            Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
+
+                $name = Craft::t('sprout-reports', 'Sprout Reports');
+
+                $event->permissions[$name]['sproutReports-editReports'] = ['label' => Craft::t('sprout-reports', 'Edit Reports')];
+                $event->permissions[$name]['sproutReports-editDataSources'] = ['label' => Craft::t('sprout-reports', 'Edit Data Sources')];
+                $event->permissions[$name]['sproutReports-editSettings'] = ['label' => Craft::t('sprout-reports', 'Edit Plugin Settings')];
+            });
+        }
 
         Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent $event) {
             $event->types[] = CustomQuery::class;

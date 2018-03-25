@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.0.0-beta.4 - 2018-03-25
+
+## Updated
+- Updated to Sprout Base v1.1.0
+
+### Fixed
+- Fixed incorrect link in README
+
+## 1.0.0-beta.3 - 2018-03-11
+
+## Updated
+- Updated to Sprout Base v1.0.9
+
+### Fixed
+- Added check for Craft edition before adding UserPermissions
+- Fixed beta version naming convention
+- Fixed namespace conflict on install migration
+
 ## 1.0.0-beta2 - 2018-03-10
 
 ### Added

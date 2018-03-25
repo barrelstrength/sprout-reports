@@ -7,8 +7,14 @@ use Craft;
 
 class Settings extends Model
 {
+    /**
+     * @var string
+     */
     public $pluginNameOverride = '';
 
+    /**
+     * @return array
+     */
     public function getSettingsNavItems()
     {
         return [

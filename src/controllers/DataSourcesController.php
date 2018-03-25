@@ -6,17 +6,18 @@ use barrelstrength\sproutbase\models\sproutreports\DataSource as DataSourceModel
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\web\Controller;
+use yii\web\Response;
 
 class DataSourcesController extends Controller
 {
     /**
      * Save the Data Source
      *
-     * @return \yii\web\Response
+     * @return Response
      * @throws \yii\db\Exception
      * @throws \yii\web\BadRequestHttpException
      */
-    public function actionSaveDataSource()
+    public function actionSaveDataSource() : Response
     {
         $this->requirePostRequest();
 

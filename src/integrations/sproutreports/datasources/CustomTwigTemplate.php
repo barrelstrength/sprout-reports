@@ -4,6 +4,7 @@ namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 
 use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
 use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
+use barrelstrength\sproutreports\elements\Report;
 use barrelstrength\sproutreports\SproutReports;
 use Craft;
 use craft\helpers\DateTimeHelper;
@@ -42,7 +43,7 @@ class CustomTwigTemplate extends BaseDataSource
     /**
      * @inheritdoc
      */
-    public function getDefaultLabels(ReportModel $report, array $settings = [])
+    public function getDefaultLabels(Report $report, array $settings = [])
     {
         if (!SproutReports::$app->twigDataSource->hasRun) {
             $this->processFrontEndResultsTemplate($report, $settings);
@@ -61,7 +62,7 @@ class CustomTwigTemplate extends BaseDataSource
     /**
      * @inheritdoc
      */
-    public function getResults(ReportModel $report, array $settings = [])
+    public function getResults(Report $report, array $settings = [])
     {
         if (!SproutReports::$app->twigDataSource->hasRun) {
             $this->processFrontEndResultsTemplate($report, $settings);
@@ -168,13 +169,13 @@ class CustomTwigTemplate extends BaseDataSource
      * Since we need data from the template in both the getDefaultLabels and getResults
      * methods we have to check in both places
      *
-     * @param ReportModel $report
+     * @param Report $report
      * @param array       $settings
      *
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function processFrontEndResultsTemplate(ReportModel $report, array $settings = [])
+    public function processFrontEndResultsTemplate(Report $report, array $settings = [])
     {
         $resultsTemplate = $report->getSetting('resultsTemplate');
 

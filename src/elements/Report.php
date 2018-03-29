@@ -9,20 +9,14 @@ namespace barrelstrength\sproutreports\elements;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutreports\SproutReports;
 use barrelstrength\sproutreports\elements\db\ReportQuery;
 use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
-
 use Craft;
 use craft\helpers\UrlHelper;
-use craft\elements\actions\Delete;
-use craft\elements\actions\Edit;
 use craft\base\Element;
 use craft\elements\db\ElementQueryInterface;
 use craft\validators\HandleValidator;
-use yii\base\ErrorHandler;
-use yii\base\Exception;
-use yii\validators\UniqueValidator;
+use craft\validators\UniqueValidator;
 
 /**
  * SproutReports - Report element type
@@ -243,10 +237,10 @@ class Report extends Element
         $dataSources = SproutBase::$app->dataSources->getDataSourcePlugins();
 
         foreach ($dataSources as $dataSource) {
-
             $plugin = Craft::$app->plugins->getPlugin($dataSource['pluginId']);
 
             $key = 'pluginId:'.$plugin->getHandle();
+
             $sources[] = [
                 'key' => $key,
                 'label' => $plugin->name,

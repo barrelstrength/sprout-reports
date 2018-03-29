@@ -67,22 +67,22 @@ class ReportQuery extends ElementQuery
             'sproutreports_datasources.pluginId'
         ]);
 
-        $this->subQuery->innerJoin('sproutreports_datasources', "[[sproutreports_datasources.id]] = [[sproutreports_reports.dataSourceId]]");
+        $this->query->innerJoin('{{%sproutreports_datasources}} sproutreports_datasources', "[[sproutreports_datasources.id]] = [[sproutreports_reports.dataSourceId]]");
 
         if ($this->pluginId) {
-            $this->subQuery->andWhere(Db::parseParam(
+            $this->query->andWhere(Db::parseParam(
                 'sproutreports_datasources.pluginId', $this->pluginId)
             );
         }
 
         if ($this->dataSourceId) {
-            $this->subQuery->andWhere(Db::parseParam(
+            $this->query->andWhere(Db::parseParam(
                 'sproutreports_reports.dataSourceId', $this->dataSourceId)
             );
         }
-
+        
         if ($this->groupId) {
-            $this->subQuery->andWhere(Db::parseParam(
+            $this->query->andWhere(Db::parseParam(
                 'sproutreports_reports.groupId', $this->groupId)
             );
         }

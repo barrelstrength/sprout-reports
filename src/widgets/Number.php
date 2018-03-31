@@ -73,26 +73,25 @@ class Number extends Widget
     {
         $report = SproutBase::$app->reports->getReport($this->reportId);
 
-        if ($report)
-        {
+        if ($report) {
             $dataSource = SproutBase::$app->dataSources->getDataSourceById($report->dataSourceId);
 
-            if ($dataSource)
-            {
+            if ($dataSource) {
                 $result = $dataSource->getResults($report);
 
                 return Craft::$app->getView()->renderTemplate('sprout-reports/widgets/Number/body',
-                    array(
+                    [
                         'widget' => $this,
-                        'result'   => $this->getScalarValue($result)
-                    )
+                        'result' => $this->getScalarValue($result)
+                    ]
                 );
             }
         }
 
-        return Craft::$app->getView()->renderTemplate('sprout-notes/widgets/Notes/notes',
+        return Craft::$app->getView()->renderTemplate('sprout-reports/widgets/Number/body',
             [
-                'widget' => $this
+                'widget' => $this,
+                'result' => Craft::t('sprout-reports', 'NaN')
             ]);
     }
 
@@ -105,20 +104,14 @@ class Number extends Widget
     {
         $value = null;
 
-        if (is_array($result))
-        {
+        if (is_array($result)) {
 
-            if (count($result) == 1 && isset($result[0]) && count($result[0]) == 1)
-            {
+            if (count($result) == 1 && isset($result[0]) && count($result[0]) == 1) {
                 $value = array_shift($result[0]);
-            }
-            else
-            {
+            } else {
                 $value = count($result);
             }
-        }
-        else
-        {
+        } else {
             $value = $result;
         }
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.0-beta.7 - 2018-04-17
+
+### Fixed
+- Fixed bug where report data source could return null
+
 ## 1.0.0-beta.6 - 2018-04-17
 
 ### Added

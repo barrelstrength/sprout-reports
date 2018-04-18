@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0-beta.6 - 2018-04-17
+
+### Added
+- Added Report Element
+- Added Data Source Plugin ID
+
 ## 1.0.0-beta.5 - 2018-04-05
 
 ### Fixed

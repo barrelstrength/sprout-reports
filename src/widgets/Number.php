@@ -3,7 +3,6 @@
 namespace barrelstrength\sproutreports\widgets;
 
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutbase\web\assets\sproutfields\notes\QuillAsset;
 use Craft;
 use craft\base\Widget;
 

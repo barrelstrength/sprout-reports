@@ -10,12 +10,12 @@
 
 namespace barrelstrength\sproutreports;
 
-use barrelstrength\sproutbase\base\BaseSproutTrait;
+use barrelstrength\sproutbase\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutreports\widgets\Number as NumberWidget;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomTwigTemplate;
 use barrelstrength\sproutreports\models\Settings;
-use barrelstrength\sproutbase\services\sproutreports\DataSources;
+use barrelstrength\sproutbase\sproutreports\services\DataSources;
 use barrelstrength\sproutbase\SproutBaseHelper;
 use barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomQuery;
 use barrelstrength\sproutreports\services\App;

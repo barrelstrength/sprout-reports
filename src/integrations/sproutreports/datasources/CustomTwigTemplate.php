@@ -2,8 +2,8 @@
 
 namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 
-use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
-use barrelstrength\sproutbase\elements\sproutreports\Report;
+use barrelstrength\sproutbase\sproutreports\contracts\BaseDataSource;
+use barrelstrength\sproutbase\sproutreports\elements\Report;
 use barrelstrength\sproutreports\SproutReports;
 use Craft;
 use craft\helpers\DateTimeHelper;

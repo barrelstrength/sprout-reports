@@ -3,7 +3,7 @@
 namespace barrelstrength\sproutreports\migrations;
 
 use craft\db\Migration;
-use barrelstrength\sproutbase\migrations\sproutreports\m180307_042132_craft3_schema_changes as SproutReportsCraft2toCraft3Migration;
+use barrelstrength\sproutbase\sproutreports\migrations\m180307_042132_craft3_schema_changes as SproutReportsCraft2toCraft3Migration;
 
 /**
  * m180307_042132_craft3_schema_changes migration.

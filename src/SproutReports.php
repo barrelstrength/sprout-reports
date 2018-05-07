@@ -93,18 +93,18 @@ class SproutReports extends Plugin
 
         Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function(RegisterUrlRulesEvent $event) {
 
-            $event->rules['sprout-reports/reports'] = 'sprout-base/reports/index';
-            $event->rules['sprout-reports/reports/<groupId:\d+>'] = 'sprout-base/reports/index';
+            $event->rules['sprout-reports/reports'] = 'sprout-base/sprout-reports/index';
+            $event->rules['sprout-reports/reports/<groupId:\d+>'] = 'sprout-base/sprout-reports/index';
 
-            $event->rules['sprout-reports/reports/<dataSourceId>-<dataSourceSlug>/new'] = 'sprout-base/reports/edit-report';
-            $event->rules['sprout-reports/reports/<dataSourceId>-<dataSourceSlug>/edit/<reportId:\d+>'] = 'sprout-base/reports/edit-report';
+            $event->rules['sprout-reports/reports/<dataSourceId>-<dataSourceSlug>/new'] = 'sprout-base/sprout-reports/edit-report';
+            $event->rules['sprout-reports/reports/<dataSourceId>-<dataSourceSlug>/edit/<reportId:\d+>'] = 'sprout-base/sprout-reports/edit-report';
 
             $event->rules['sprout-reports/datasources'] = ['template' => 'sprout-reports/datasources/index'];
 
-            $event->rules['sprout-reports/reports/view/<reportId:\d+>'] = 'sprout-base/reports/results-index';
+            $event->rules['sprout-reports/reports/view/<reportId:\d+>'] = 'sprout-base/sprout-reports/results-index';
 
-            $event->rules['sprout-reports/settings'] = 'sprout-base/settings/edit-settings';
-            $event->rules['sprout-reports/settings/general'] = 'sprout-base/settings/edit-settings';
+            $event->rules['sprout-reports/settings'] = 'sprout-base/sprout-base-settings/edit-settings';
+            $event->rules['sprout-reports/settings/general'] = 'sprout-base/sprout-base-settings/edit-settings';
         });
 
         if (Craft::$app->getEdition() === Craft::Pro) {

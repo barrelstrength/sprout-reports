@@ -70,6 +70,11 @@ class SproutReports extends Plugin
      */
     public $hasCpSettings = true;
 
+    /**
+     * @var string
+     */
+    public $schemaVersion = '1.0.1';
+
     public function init()
     {
         parent::init();

@@ -2,8 +2,8 @@
 
 namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
 
-use barrelstrength\sproutbase\sproutreports\contracts\BaseDataSource;
-use barrelstrength\sproutbase\sproutreports\elements\Report;
+use barrelstrength\sproutbase\app\reports\contracts\BaseDataSource;
+use barrelstrength\sproutbase\app\reports\elements\Report;
 use Craft;
 
 /**

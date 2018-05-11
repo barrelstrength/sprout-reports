@@ -1,6 +1,6 @@
 {%- import "_includes/forms" as forms -%}
 {% import 'sprout-base/_includes/sproutcp' as sprout %}
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\sproutbase\\web\\assets\\cp\\CpAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\cp\\CpAsset") %}
 
 {%- set resultsTemplate = settings.resultsTemplate is defined ? settings.resultsTemplate : "" -%}
 {%- set settingsTemplate = settings.settingsTemplate is defined ? settings.settingsTemplate : "" -%}
@@ -29,7 +29,7 @@
     {{ sprout.mediaBox({
         heading: "Give your users options"|t('sprout-reports'),
         body: boxBody,
-        resourcePath: '@sproutbase/sproutreports/web/assets/base/dist/images/icon.svg'
+        resourcePath: '@sproutbase/app/reports/web/assets/base/dist/images/icon.svg'
     }) }}
 
 {%- endif -%}

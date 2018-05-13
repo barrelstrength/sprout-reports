@@ -1,8 +1,8 @@
 <?php
 
-namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
+namespace barrelstrength\sproutreports\datasources;
 
-use barrelstrength\sproutbase\app\reports\contracts\BaseDataSource;
+use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\app\reports\elements\Report;
 use Craft;
 
@@ -11,7 +11,7 @@ use Craft;
  *
  * @package Craft
  */
-class CustomQuery extends BaseDataSource
+class CustomQuery extends DataSource
 {
     /**
      * @inheritdoc
@@ -63,7 +63,7 @@ class CustomQuery extends BaseDataSource
         $settingsErrors = $this->report->getErrors('settings');
         $settingsErrors = array_shift($settingsErrors);
 
-        return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_settings/query', [
+        return Craft::$app->getView()->renderTemplate('sprout-base-reports/_components/datasources/CustomQuery/settings', [
             'settings' => count($settings) ? $settings : $this->report->getSettings(),
             'errors' => $settingsErrors
         ]);

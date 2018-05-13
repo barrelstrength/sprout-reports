@@ -1,6 +1,6 @@
 <?php
 
-namespace barrelstrength\sproutreports\variables;
+namespace barrelstrength\sproutreports\web\twig\variables;
 
 use barrelstrength\sproutbase\models\sproutreports\Report;
 use barrelstrength\sproutbase\SproutBase;

@@ -58,7 +58,7 @@ class Number extends Widget
     {
         $reportOptions = SproutBase::$app->reports->getReportsAsSelectFieldOptions();
 
-        return Craft::$app->getView()->renderTemplate('sprout-reports/widgets/Number/settings', [
+        return Craft::$app->getView()->renderTemplate('sprout-base-reports/_components/widgets/Number/settings', [
                 'widget' => $this,
                 'reportOptions' => $reportOptions
             ]
@@ -78,7 +78,7 @@ class Number extends Widget
             if ($dataSource) {
                 $result = $dataSource->getResults($report);
 
-                return Craft::$app->getView()->renderTemplate('sprout-reports/widgets/Number/body',
+                return Craft::$app->getView()->renderTemplate('sprout-base-reports/_components/widgets/Number/body',
                     [
                         'widget' => $this,
                         'result' => $this->getScalarValue($result)
@@ -87,7 +87,7 @@ class Number extends Widget
             }
         }
 
-        return Craft::$app->getView()->renderTemplate('sprout-reports/widgets/Number/body',
+        return Craft::$app->getView()->renderTemplate('sprout-base-reports/_components/widgets/Number/body',
             [
                 'widget' => $this,
                 'result' => Craft::t('sprout-reports', 'NaN')

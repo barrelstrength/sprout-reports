@@ -1,9 +1,9 @@
 <?php
 
-namespace barrelstrength\sproutreports\integrations\sproutreports\datasources;
+namespace barrelstrength\sproutreports\datasources;
 
-use barrelstrength\sproutbase\sproutreports\contracts\BaseDataSource;
-use barrelstrength\sproutbase\sproutreports\elements\Report;
+use barrelstrength\sproutbase\app\reports\base\DataSource;
+use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutreports\SproutReports;
 use Craft;
 use craft\helpers\DateTimeHelper;
@@ -13,7 +13,7 @@ use craft\helpers\DateTimeHelper;
  *
  * @package Craft
  */
-class CustomTwigTemplate extends BaseDataSource
+class CustomTwigTemplate extends DataSource
 {
     /**
      * @inheritdoc
@@ -122,7 +122,7 @@ class CustomTwigTemplate extends BaseDataSource
             }
         }
 
-        return Craft::$app->getView()->renderTemplate('sprout-reports/datasources/_settings/twig', [
+        return Craft::$app->getView()->renderTemplate('sprout-base-reports/_components/datasources/CustomTwigTemplate/settings', [
             'settings' => $this->report->getSettings(),
             'errors' => $settingsErrors,
             'settingsContents' => $customSettingsHtml ?? null

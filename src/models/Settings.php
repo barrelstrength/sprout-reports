@@ -22,7 +22,7 @@ class Settings extends Model
                 'label' => Craft::t('sprout-reports', 'General'),
                 'url' => 'sprout-reports/settings/general',
                 'selected' => 'general',
-                'template' => 'sprout-reports/_settings/general'
+                'template' => 'sprout-base-reports/settings/general'
             ]
         ];
     }

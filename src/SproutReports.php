@@ -58,7 +58,7 @@ class SproutReports extends Plugin
      *
      * @var string
      */
-    public static $pluginId = 'sprout-reports';
+    public static $pluginHandle = 'sprout-reports';
 
     /**
      * @var bool
@@ -73,7 +73,12 @@ class SproutReports extends Plugin
     /**
      * @var string
      */
-    public $schemaVersion = '1.0.1';
+    public $schemaVersion = '1.0.2';
+
+    /**
+     * @var string
+     */
+    public $minVersionRequired = '0.9.3';
 
     /**
      * @throws \yii\base\InvalidConfigException

@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0-beta.8 - 2018-05-15
+
+### Added
+- Added minVersionRequired as Sprout Reports v0.9.3
+
+### Changed
+- Updated folder structure
+- Moved schema and component definitions to Plugin class
+- Moved templates to Sprout Base
+- Moved asset bundles to Sprout Base
+
+### Fixed
+- Fixed Twig Template report display issue
+
 ## 1.0.0-beta.7 - 2018-04-17
 
 ### Fixed

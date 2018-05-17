@@ -106,6 +106,7 @@ class SproutReports extends Plugin
 
         Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function(RegisterUrlRulesEvent $event) {
 
+            $event->rules['sprout-reports'] = 'sprout-base/reports/index';
             $event->rules['sprout-reports/reports'] = 'sprout-base/reports/index';
             $event->rules['sprout-reports/reports/<groupId:\d+>'] = 'sprout-base/reports/index';
 

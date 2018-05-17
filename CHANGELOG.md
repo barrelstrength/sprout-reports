@@ -8,6 +8,7 @@
 - Added minVersionRequired as Sprout Reports v0.9.3
 
 ### Changed
+- Updated URL pattern for editing Report Elements
 - Updated folder structure
 - Moved schema and component definitions to Plugin class
 - Moved templates to Sprout Base

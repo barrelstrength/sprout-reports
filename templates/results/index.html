@@ -84,7 +84,7 @@
 									<td>
 										<div class="item_content">
 											{% if report.allowHtml %}
-												{{ property|raw }}
+												{{ property|nl2br|raw }}
 											{% else %}
 												{{ property }}
 											{% endif %}

@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.0-beta.11 - 2018-07-24
+
+### Added
+- Added support for Data Sources in Modules
+- Added support for consistent line breaks between HTML & CSV output ([#26])
+
+### Changed
+- Updated Sprout Base requirement to v2.0.9
+
+[#26]: https://github.com/barrelstrength/craft-sprout-reports/issues/26
+
 ## 1.0.0-beta.10 - 2018-05-17
 
 ### Fixed

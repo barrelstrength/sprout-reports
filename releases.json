@@ -1,0 +1,160 @@
+[
+  {
+    "version": "0.10.0",
+    "downloadUrl": "https://github.com/barrelstrength/craft-sprout-reports/archive/v0.10.0.zip",
+    "date": "2018-07-28T08:00:00+00:00",
+    "notes": [
+      "[Improved] Moved release feed to Github"
+    ]
+  },
+  {
+    "version": "0.9.3",
+    "downloadUrl": "https://github.com/barrelstrength/craft-sprout-reports/releases",
+    "date": "2018-01-08T08:00:00+00:00",
+    "notes": [
+      "[Fixed] Fixed incorrect template paths"
+    ]
+  },
+  {
+    "version": "0.9.1",
+    "downloadUrl": "https://github.com/barrelstrength/craft-sprout-reports/releases",
+    "date": "2017-12-19T08:00:00+00:00",
+    "notes": [
+      "[Added] Added Twig Data Source",
+      "[Added] Added support for DateTime fields in Twig Reports",
+      "[Added] Added Twig Report example files",
+      "[Added] Added support for naming reports dynamically with the Name Format setting",
+      "[Added] Added craft.sproutReports.addHeaderRow variable",
+      "[Added] Added craft.sproutReports.addRow variable",
+      "[Added] Added craft.sproutReports.addRows variable",
+      "[Added] Added PHP 5.6 compatibility",
+      "[Improved] Updated Report Groups to be ordered alphabetically",
+      "[Fixed] Fixed method signature in SproutReportsQueryDataSource",
+      "[Fixed] Fixed migration bug"
+    ]
+  },
+  {
+    "version": "0.8.9",
+    "downloadUrl": "https://github.com/barrelstrength/craft-sprout-reports/releases",
+    "date": "2016-11-30T08:00:00+00:00",
+    "notes": [
+      "[Fixed] Fixed a potential XSS vulnerability that could occur with custom Data Source integrations"
+    ]
+  },
+  {
+    "version": "0.8.8",
+    "downloadUrl": "https://github.com/barrelstrength/craft-sprout-reports/releases",
+    "date": "2016-11-11T08:00:00+00:00",
+    "notes": [
+      "[Fixed] Fixed a migration bug in where the incorrect log class was used"
+    ]
+  },
+  {
+    "version": "0.8.7",
+    "downloadUrl": "https://github.com/barrelstrength/craft-sprout-reports/releases",
+    "date": "2016-11-10T08:00:00+00:00",
+    "notes": [
+      "[Added] Added Data Source column to reports",
+      "[Added] Added &#039;Edit Data Sources&#039; Permission",
+      "[Added] Added Data Source &#039;Allow New?&#039; option to allow access to whether Reports can be created from a particular Data Source",
+      "[Improved] Updated display of Report index page",
+      "[Fixed] Fixed &#039;Edit Reports&#039; permission on some pages where it was not in use",
+      "[Fixed] Fixed &#039;Download&#039; button on Results page",
+      "[Fixed] Fixed bug where dynamically editing Report settings from Results page didn&#039;t save settings",
+      "[Fixed] Fixed &#039;Save and Continue Editing&#039; option when saving a Report",
+      "[Fixed] Fixed horizontal scroll on Results page"
+    ]
+  },
+  {
+    "version": "0.8.4",
+    "downloadUrl": "https://github.com/barrelstrength/craft-sprout-reports/releases",
+    "date": "2016-06-02T00:00:00+00:00",
+    "notes": [
+      "[Improved] Added New Report button with dropdown of all report options on Report index page",
+      "[Improved] Improved workflow around creating and deleting Report Groups",
+      "[Fixed] Fixed bug where updating a Report dynamically did not reflect the updated settings in the results",
+      "[Fixed] Fixed bug where User Report would throw an error on installations using Craft Personal"
+    ]
+  },
+  {
+    "version": "0.8.3",
+    "downloadUrl": "https://github.com/barrelstrength/craft-sprout-reports/releases",
+    "date": "2016-04-07T07:30:00+00:00",
+    "notes": [
+      "[Added] Added support for update options on the fly when running a report on the Report page",
+      "[Added] Added Fields Datasource which can generate reports to help manage fields",
+      "[Improved] Updated settings settings to be managed in plugin&#039;s Settings section",
+      "[Improved] Updates SproutReportsBaseDataSource::getDefaultLabels method signature to accept a SproutReports_ReportModel and options."
+    ]
+  },
+  {
+    "version": "0.8.1",
+    "downloadUrl": "https://github.com/barrelstrength/craft-sprout-reports/releases",
+    "date": "2016-03-30T15:00:00+00:00",
+    "notes": [
+      "[Added] Added PHP 7 compatibility",
+      "[Fixed] Fixed bug where editing a report didn&#039;t load the selected Report Group",
+      "[Fixed] Fixed grid layout on Report edit page for large screens"
+    ]
+  },
+  {
+    "version": "0.8.0",
+    "downloadUrl": "https://github.com/barrelstrength/craft-sprout-reports/releases",
+    "date": "2016-01-14T08:00:00+00:00",
+    "notes": [
+      "# Custom Reports &amp; DataSources",
+      "Sprout Reports now supports custom Reports, Report Options, and Data Sources. Reports have full control over what options they allow a user to select. Additional Reports and Data Sources can be added by plugins. Data Sources can define data available within Craft or beyond!",
+      "[Added] Added support for custom DataSources",
+      "[Added] Added support for custom Reports",
+      "[Added] Added support for custom Report Options",
+      "[Added] Added Custom Query DataSource",
+      "[Added] Added Users DataSource",
+      "[Added] Added Category Usage by Section DataSource",
+      "[Added] Added Users and User Groups Report",
+      "[Added] Added option for Reports now display a description",
+      "[Added] Added registerSproutReportsDataSources hook",
+      "[Added] Added SproutReports_ReportsService::registerReports method",
+      "[Improved] Updated behavior of Number widget to return the result count if a result set has multiple records",
+      "# General Updates",
+      "[Added] Control Panel has been updated to work with Craft 2.5",
+      "[Added] Added Plugin icon",
+      "[Added] Added Plugin description",
+      "[Added] Added link to documentation",
+      "[Added] Added link to plugin settings",
+      "[Added] Added link to release feed",
+      "[Added] Added subnav in place of tabs for top level navigation",
+      "[Added] Added support for CSRF protection",
+      "[Added] Export CSV button on results page",
+      "[Added] Adds sproutReports-editReports permission",
+      "[Added] Adds sproutReports-editSettings permission",
+      "[Improved] Updated CSV export to use `league/csv` (Requires PHP &gt;= 5.5.0 and the mbstring extension)",
+      "[Improved] Various UI updates and improvements"
+    ]
+  },
+  {
+    "version": "0.4.4",
+    "downloadUrl": "https://github.com/barrelstrength/craft-sprout-reports/releases",
+    "date": "2014-03-24T15:32:00+00:00",
+    "notes": [
+      "[Added] Added query validation by disallowing unsafe commands",
+      "[Added] Added modifier flag for table prefix replacement and command escaping",
+      "[Added] Added better error reporting on report edit and result pages",
+      "[Added] Added ability to &#039;Save and Continue&#039; or &#039;Save and Add Another&#039; report",
+      "[Added] Added support for Cmd+S to save reports",
+      "[Added] Added ability to add and filter reports by groups",
+      "[Added] Added ability to add, update, rename, and delete report groups",
+      "[Improved] Integrated Single Number Report widget with reports",
+      "[Improved] Improved code spacing, organization, and conventions",
+      "[Fixed] Fixed an issue where the edit page would throw an error for new reports",
+      "[Fixed] Fixed the way CDbExceptions are handled in the service layer"
+    ]
+  },
+  {
+    "version": "0.4.0",
+    "downloadUrl": "https://github.com/barrelstrength/craft-sprout-reports/releases",
+    "date": "2014-03-04T15:24:00+00:00",
+    "notes": [
+      "[Added] Private beta"
+    ]
+  }
+]

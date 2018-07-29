@@ -63,7 +63,7 @@ class SproutReportsPlugin extends BasePlugin
 	 */
 	public function getVersion()
 	{
-		return '0.9.3';
+		return '0.10.0';
 	}
 
 	/**
@@ -95,7 +95,7 @@ class SproutReportsPlugin extends BasePlugin
 	 */
 	public function getDocumentationUrl()
 	{
-		return "http://sprout.barrelstrengthdesign.com/craft-plugins/results/docs";
+		return "https://sprout.barrelstrengthdesign.com/docs/reports";
 	}
 
 	/**
@@ -103,7 +103,7 @@ class SproutReportsPlugin extends BasePlugin
 	 */
 	public function getReleaseFeedUrl()
 	{
-		return 'https://sprout.barrelstrengthdesign.com/craft-plugins/reports/releases.json';
+		return 'https://raw.githubusercontent.com/barrelstrength/craft-sprout-reports/v0/releases.json';
 	}
 
 	/**

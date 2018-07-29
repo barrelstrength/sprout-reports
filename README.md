@@ -2,16 +2,15 @@ Sprout Reports!
 
 Here are some online resources you might find useful:
 
-
 Sprout Reports Docs
 ------------------------------------------------------------
 Code examples, tags, common questions:
-http://sprout.barrelstrengthdesign.com/craft-plugins/reports
+https://sprout.barrelstrengthdesign.com/docs/reports
 
 
 Sprout Reports Updates
 ------------------------------------------------------------
-http://sprout.barrelstrengthdesign.com/craft-plugins/reports/updates
+https://sprout.barrelstrengthdesign.com/docs/support/changelog.html
 
 
 Sprout Reports Support
@@ -22,9 +21,3 @@ https://craftcms.stackexchange.com/
 
 Via Email:
 Send us a note at: sprout@barrelstrengthdesign.com
-
-
-Sprout Reports License Terms
-------------------------------------------------------------
-Use of Sprout Reports is subject to the license agreement available here:
-http://sprout.barrelstrengthdesign.com/license

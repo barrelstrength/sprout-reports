@@ -196,11 +196,11 @@ Additionally, you can set a Default Date value for your datepicker field. Below,
     $timePickerStartDate.timepicker($.extend({}, Craft.timepickerOptions));
     $timePickerEndDate.timepicker($.extend({}, Craft.timepickerOptions));
 
-    {% if settings.datetimeStartDate and settings.datetimeStartDate.format is defined %}
+    {% if settings.datetimeStartDate is defined and settings.datetimeStartDate.format is defined %}
         $timePicker.timepicker('setTime', {{ settings.datetimeStartDate|date('G') }}*3600 + {{ settings.datetimeStartDate|date('i') }}*60 + {{ settings.datetimeStartDate|date('s') }});
     {% endif %}
 
-    {% if settings.datetimeEndDate and settings.datetimeEndDate.format is defined %}
+    {% if settings.datetimeEndDate is defined and settings.datetimeEndDate.format is defined %}
         $timePicker.timepicker('setTime', {{ settings.datetimeEndDate|date('G') }}*3600 + {{ settings.datetimeEndDate|date('i') }}*60 + {{ settings.datetimeEndDate|date('s') }});
     {% endif %}
 

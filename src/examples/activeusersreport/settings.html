@@ -3,55 +3,55 @@
 {% set limitByDateRange = settings.limitByDateRange is defined ? settings.limitByDateRange : false %}
 
 {{ forms.lightswitchField({
-label: "Limit Results By Date Range"|t,
-name: 'limitByDateRange',
-on: limitByDateRange,
-value: 1,
-toggle: "toggle-dateRangeFields",
-first: true
+    label: "Limit Results By Date Range"|t,
+    name: 'limitByDateRange',
+    on: limitByDateRange,
+    value: 1,
+    toggle: "toggle-dateRangeFields",
+    first: true
 }) }}
 
 <div id='toggle-dateRangeFields' class="{% if not limitByDateRange %}hidden{% endif %}">
     {{ forms.dateTimeField({
-    label: "Start Date"|t,
-    instructions: "The start date of the date range you wish to display in your report."|t,
-    id: 'datetimeStartDate',
-    name: 'datetimeStartDate',
-    value: settings.datetimeStartDate is defined ? settings.datetimeStartDate : now|date_modify("-30 days")
+        label: "Start Date"|t,
+        instructions: "The start date of the date range you wish to display in your report."|t,
+        id: 'datetimeStartDate',
+        name: 'datetimeStartDate',
+        value: settings.datetimeStartDate is defined ? settings.datetimeStartDate : now|date_modify("-30 days")
     }) }}
 
     {{ forms.dateTimeField({
-    label: "End Date"|t,
-    instructions: "The end date of the date range you wish to display in your report."|t,
-    id: 'datetimeEndDate',
-    name: 'datetimeEndDate',
-    value: (settings.datetimeEndDate is defined ? settings.datetimeEndDate : now)
+        label: "End Date"|t,
+        instructions: "The end date of the date range you wish to display in your report."|t,
+        id: 'datetimeEndDate',
+        name: 'datetimeEndDate',
+        value: (settings.datetimeEndDate is defined ? settings.datetimeEndDate : now)
     }) }}
 
 </div>
 
 {%- includejs %}
 
-$('#settings-datetimeStartDate-field .datewrapper input:first-of-type').datepicker($.extend({
-defaultDate: new Date({{ now.year }}, {{ now.month-1 }}, {{ now.day }})
-}, Craft.datepickerOptions));
+    $('#settings-datetimeStartDate-field .datewrapper input:first-of-type').datepicker($.extend({
+        defaultDate: new Date({{ now.year }}, {{ now.month-1 }}, {{ now.day }})
+    }, Craft.datepickerOptions));
 
-$('#settings-datetimeEndDate-field .datewrapper input:first-of-type').datepicker($.extend({
-defaultDate: new Date({{ now.year }}, {{ now.month }}, {{ now.day }})
-}, Craft.datepickerOptions));
+    $('#settings-datetimeEndDate-field .datewrapper input:first-of-type').datepicker($.extend({
+        defaultDate: new Date({{ now.year }}, {{ now.month }}, {{ now.day }})
+    }, Craft.datepickerOptions));
 
-var $timePickerStartDate = $('#settings-datetimeStartDate-field .timewrapper input:first-of-type');
-var $timePickerEndDate = $('#settings-datetimeEndDate-field .timewrapper input:first-of-type');
+    var $timePickerStartDate = $('#settings-datetimeStartDate-field .timewrapper input:first-of-type');
+    var $timePickerEndDate = $('#settings-datetimeEndDate-field .timewrapper input:first-of-type');
 
-$timePickerStartDate.timepicker($.extend({}, Craft.timepickerOptions));
-$timePickerEndDate.timepicker($.extend({}, Craft.timepickerOptions));
+    $timePickerStartDate.timepicker($.extend({}, Craft.timepickerOptions));
+    $timePickerEndDate.timepicker($.extend({}, Craft.timepickerOptions));
 
-{% if settings.datetimeStartDate is defined and settings.datetimeStartDate.format is defined %}
-$timePicker.timepicker('setTime', {{ settings.datetimeStartDate|date('G') }}*3600 + {{ settings.datetimeStartDate|date('i') }}*60 + {{ settings.datetimeStartDate|date('s') }});
-{% endif %}
+    {% if settings.datetimeStartDate is defined and settings.datetimeStartDate is defined %}
+        $timePicker.timepicker('setTime', {{ settings.datetimeStartDate|date('G') }}*3600 + {{ settings.datetimeStartDate|date('i') }}*60 + {{ settings.datetimeStartDate|date('s') }});
+    {% endif %}
 
-{% if settings.datetimeEndDate is defined and settings.datetimeEndDate.format is defined %}
-$timePicker.timepicker('setTime', {{ settings.datetimeEndDate|date('G') }}*3600 + {{ settings.datetimeEndDate|date('i') }}*60 + {{ settings.datetimeEndDate|date('s') }});
-{% endif %}
+    {% if settings.datetimeEndDate is defined and settings.datetimeEndDate is defined %}
+        $timePicker.timepicker('setTime', {{ settings.datetimeEndDate|date('G') }}*3600 + {{ settings.datetimeEndDate|date('i') }}*60 + {{ settings.datetimeEndDate|date('s') }});
+    {% endif %}
 
 {%- endincludejs %}

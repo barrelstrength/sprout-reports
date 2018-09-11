@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.0.0-beta.13 - 2018-09-10
+
+### Added
+- Added Delete Report bulk actions
+
+### Changed
+- Improved Postgres support ([#22])
+- Updated Sprout Base requirement to v3.0.4
+	
+### Fixed
+- Fixed bug where some New Report links were broken ([#2])
+- Fixed foreign key support for Report Elements
+- Fixed date field errors in Twig Report example templates ([#28])
+
+[#2]: https://github.com/barrelstrength/craft-sprout-reports/issues/2
+[#22]: https://github.com/barrelstrength/craft-sprout-reports/issues/22
+[#28]: https://github.com/barrelstrength/craft-sprout-reports/issues/28
+
 ## 1.0.0-beta.12 - 2018-07-26
 
 ## Changed

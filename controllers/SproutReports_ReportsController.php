@@ -94,7 +94,7 @@ class SproutReports_ReportsController extends BaseController
 		$report   = sproutReports()->reports->getReport($reportId);
 
 		$options = craft()->request->getPost('options');
-		$options = count($options) ? $options : array();
+		$options = is_array($options) && count($options) ? $options : array();
 
 		if ($report)
 		{
@@ -152,7 +152,7 @@ class SproutReports_ReportsController extends BaseController
 		$report   = sproutReports()->reports->getReport($reportId);
 
 		$options = craft()->request->getPost('options');
-		$options = count($options) ? $options : array();
+		$options = is_array($options) && count($options) ? $options : array();
 
 		if ($report)
 		{

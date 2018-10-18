@@ -162,8 +162,8 @@ abstract class SproutReportsBaseDataSource
 	 *
 	 * @return null|string
 	 */
-	public function getOptionsHtml()
-	{
+    public function getOptionsHtml(array $options = array())
+    {
 		return null;
 	}
 

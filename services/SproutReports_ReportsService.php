@@ -217,18 +217,20 @@ class SproutReports_ReportsService extends BaseApplicationComponent
 
 		$options = craft()->request->getPost('options');
 
-		// Check if field is dateTime
-		foreach ($options as $key => $option)
-		{
-			$datetime = strpos($key, 'datetime');
+		if ($options) {
+            // Check if field is dateTime
+            foreach ($options as $key => $option)
+            {
+                $datetime = strpos($key, 'datetime');
 
-			if ($datetime === 0)
-			{
-				$dateTime = DateTime::createFromString($option);
-				$newDatetime = DateTimeHelper::formatTimeForDb($dateTime->getTimestamp());
-				$options[$key] = $newDatetime;
-			}
-		}
+                if ($datetime === 0)
+                {
+                    $dateTime = DateTime::createFromString($option);
+                    $newDatetime = DateTimeHelper::formatTimeForDb($dateTime->getTimestamp());
+                    $options[$key] = $newDatetime;
+                }
+            }
+        }
 
 		$instance->name         = craft()->request->getPost('name');
 		$instance->nameFormat   = craft()->request->getPost('nameFormat');

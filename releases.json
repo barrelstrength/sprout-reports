@@ -1,5 +1,13 @@
 [
   {
+    "version": "0.10.2",
+    "downloadUrl": "https://github.com/barrelstrength/craft-sprout-reports/archive/v0.10.2.zip",
+    "date": "2018-10-23T08:00:00+00:00",
+    "notes": [
+      "[Fixed] Fixed issue where Custom Data Sources required options, even if they were unnecessary"
+    ]
+  },
+  {
     "version": "0.10.1",
     "downloadUrl": "https://github.com/barrelstrength/craft-sprout-reports/archive/v0.10.1.zip",
     "date": "2018-09-14T08:00:00+00:00",

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0-beta.14 - 2018-10-23
+### Fixed
+- Fixed error "unknown column nameFormat" when migrating from Craft 2 to Craft3
+
 ## 1.0.0-beta.13 - 2018-09-10
 
 ### Added

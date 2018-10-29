@@ -1,6 +1,12 @@
 # Changelog
 
+## 1.0.0-beta.15 - 2018-10-27
+
+### Changed
+- Updated Sprout Base requirement to v3.0.10
+
 ## 1.0.0-beta.14 - 2018-10-23
+
 ### Fixed
 - Fixed error "unknown column nameFormat" when migrating from Craft 2 to Craft3
 

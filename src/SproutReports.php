@@ -73,7 +73,7 @@ class SproutReports extends Plugin
     /**
      * @var string
      */
-    public $schemaVersion = '1.0.2';
+    public $schemaVersion = '1.1.0';
 
     /**
      * @var string
@@ -126,9 +126,14 @@ class SproutReports extends Plugin
 
                 $name = Craft::t('sprout-reports', 'Sprout Reports');
 
-                $event->permissions[$name]['sproutReports-editReports'] = ['label' => Craft::t('sprout-reports', 'Edit Reports')];
-                $event->permissions[$name]['sproutReports-editDataSources'] = ['label' => Craft::t('sprout-reports', 'Edit Data Sources')];
-                $event->permissions[$name]['sproutReports-editSettings'] = ['label' => Craft::t('sprout-reports', 'Edit Plugin Settings')];
+                $event->permissions[$name] = [
+                    'sproutReports-editReports' => [
+                        'label' => Craft::t('sprout-reports', 'Edit Reports')
+                    ],
+                    'sproutReports-editDataSources' => [
+                        'label' => Craft::t('sprout-reports', 'Edit Data Sources')
+                    ]
+                ];
             });
         }
 

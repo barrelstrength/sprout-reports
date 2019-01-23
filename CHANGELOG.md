@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.0 - 2019-01-23
+
+### Added
+- Stable release.
+
+### Changes
+- Removed sproutReports-editSettings permissions. Access to Settings now follows Craft's convention and requires Admin level privileges
+- Updated league/csv library to require v9.0.0
+- Updated barrelstrength/sprout-base to require v4.0.4
+
 ## 1.0.0-beta.16 - 2018-10-29
 
 ### Changed

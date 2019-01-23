@@ -22,8 +22,6 @@ use barrelstrength\sproutreports\services\App;
 use Craft;
 use craft\base\Plugin;
 use barrelstrength\sproutreports\web\twig\variables\SproutReportsVariable;
-use craft\db\Migration;
-use craft\db\Query;
 use craft\helpers\UrlHelper;
 use craft\services\Dashboard;
 use craft\web\twig\variables\CraftVariable;

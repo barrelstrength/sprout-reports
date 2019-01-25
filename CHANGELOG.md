@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.1 - 2019-01-25
+
+### Added
+- Added initial support for Craft 3.1
+
+### Changed
+- Updated Craft CMS requirement to v3.1.0
+- Updated Sprout Base requirement to v4.0.5
+- Reverted league/csv library to require v8.2.0 to ensure compatibility with Craft
+
 ## 1.1.0 - 2019-01-23
 
 ### Added

@@ -1,5 +1,13 @@
 [
   {
+    "version": "0.10.3",
+    "downloadUrl": "https://github.com/barrelstrength/craft-sprout-reports/archive/v0.10.3.zip",
+    "date": "2019-02-06T08:00:00+00:00",
+    "notes": [
+      "[Updated] Updated reports to have consistent line breaks between HTML and CSV"
+    ]
+  },
+  {
     "version": "0.10.2",
     "downloadUrl": "https://github.com/barrelstrength/craft-sprout-reports/archive/v0.10.2.zip",
     "date": "2018-10-23T08:00:00+00:00",

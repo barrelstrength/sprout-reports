@@ -63,7 +63,7 @@ class SproutReportsPlugin extends BasePlugin
 	 */
 	public function getVersion()
 	{
-		return '0.10.2';
+		return '0.10.3';
 	}
 
 	/**

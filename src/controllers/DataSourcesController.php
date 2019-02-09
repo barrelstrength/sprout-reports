@@ -2,7 +2,7 @@
 
 namespace barrelstrength\sproutreports\controllers;
 
-use barrelstrength\sproutbase\app\reports\models\DataSource as DataSourceModel;
+use barrelstrength\sproutbasereports\models\DataSource as DataSourceModel;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\web\Controller;
@@ -32,7 +32,7 @@ class DataSourcesController extends Controller
         $dataSource->id = $dataSourceId;
         $dataSource->allowNew = $allowNew;
 
-        if (SproutBase::$app->dataSources->saveDataSource($dataSource)) {
+        if (SproutBaseReports::$app->dataSources->saveDataSource($dataSource)) {
             return $this->asJson(true);
         }
 

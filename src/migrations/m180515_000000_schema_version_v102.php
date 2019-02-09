@@ -2,8 +2,8 @@
 
 namespace barrelstrength\sproutreports\migrations;
 
-use barrelstrength\sproutbase\app\reports\migrations\m180515_000000_update_datasources_types;
-use barrelstrength\sproutbase\app\reports\migrations\m180515_000001_rename_datasources_pluginId_column;
+use barrelstrength\sproutbasereports\migrations\m180515_000000_update_datasources_types;
+use barrelstrength\sproutbasereports\migrations\m180515_000001_rename_datasources_pluginId_column;
 use craft\db\Migration;
 
 /**

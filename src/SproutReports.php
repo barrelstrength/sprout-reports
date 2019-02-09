@@ -12,10 +12,11 @@ namespace barrelstrength\sproutreports;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutbasereports\SproutBaseReportsHelper;
 use barrelstrength\sproutreports\widgets\Number as NumberWidget;
 use barrelstrength\sproutreports\datasources\CustomTwigTemplate;
 use barrelstrength\sproutreports\models\Settings;
-use barrelstrength\sproutbase\app\reports\services\DataSources;
+use barrelstrength\sproutbasereports\services\DataSources;
 use barrelstrength\sproutbase\SproutBaseHelper;
 use barrelstrength\sproutreports\datasources\CustomQuery;
 use barrelstrength\sproutreports\services\App;
@@ -86,6 +87,7 @@ class SproutReports extends Plugin
         parent::init();
 
         SproutBaseHelper::registerModule();
+        SproutBaseReportsHelper::registerModule();
 
         $this->setComponents([
             'app' => App::class
@@ -104,16 +106,16 @@ class SproutReports extends Plugin
 
         Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function(RegisterUrlRulesEvent $event) {
 
-            $event->rules['sprout-reports'] = 'sprout/reports/index';
-            $event->rules['sprout-reports/reports'] = 'sprout/reports/index';
-            $event->rules['sprout-reports/reports/<groupId:\d+>'] = 'sprout/reports/index';
+            $event->rules['sprout-reports'] = 'sprout-base-reports/reports/index';
+            $event->rules['sprout-reports/reports'] = 'sprout-base-reports/reports/index';
+            $event->rules['sprout-reports/reports/<groupId:\d+>'] = 'sprout-base-reports/reports/index';
 
-            $event->rules['sprout-reports/reports/<dataSourceId>/new'] = 'sprout/reports/edit-report';
-            $event->rules['sprout-reports/reports/<dataSourceId>/edit/<reportId:\d+>'] = 'sprout/reports/edit-report';
+            $event->rules['sprout-reports/reports/<dataSourceId>/new'] = 'sprout-base-reports/reports/edit-report';
+            $event->rules['sprout-reports/reports/<dataSourceId>/edit/<reportId:\d+>'] = 'sprout-base-reports/reports/edit-report';
 
             $event->rules['sprout-reports/datasources'] = ['template' => 'sprout-base-reports/datasources/index'];
 
-            $event->rules['sprout-reports/reports/view/<reportId:\d+>'] = 'sprout/reports/results-index';
+            $event->rules['sprout-reports/reports/view/<reportId:\d+>'] = 'sprout-base-reports/reports/results-index';
 
             $event->rules['sprout-reports/settings'] = 'sprout/settings/edit-settings';
             $event->rules['sprout-reports/settings/general'] = 'sprout/settings/edit-settings';
@@ -203,6 +205,6 @@ class SproutReports extends Plugin
             CustomTwigTemplate::class
         ];
 
-        SproutBase::$app->dataSources->installDataSources($dataSourceClasses);
+        SproutBaseReports::$app->dataSources->installDataSources($dataSourceClasses);
     }
 }

@@ -14,7 +14,7 @@ class SproutReportsVariable
      */
     public function getDataSources()
     {
-        return SproutBase::$app->dataSources->getAllDataSources();
+        return SproutBaseReports::$app->dataSources->getAllDataSources();
     }
 
     /**
@@ -22,7 +22,7 @@ class SproutReportsVariable
      */
     public function getReports()
     {
-        return SproutBase::$app->reports->getAllReports();
+        return SproutBaseReports::$app->reports->getAllReports();
     }
 
     /**
@@ -30,7 +30,7 @@ class SproutReportsVariable
      */
     public function getReportGroups()
     {
-        return SproutBase::$app->reportGroups->getAllReportGroups();
+        return SproutBaseReports::$app->reportGroups->getAllReportGroups();
     }
 
     /**
@@ -41,7 +41,7 @@ class SproutReportsVariable
      */
     public function getReportsByGroupId($groupId)
     {
-        return SproutBase::$app->reports->getReportsByGroupId($groupId);
+        return SproutBaseReports::$app->reports->getReportsByGroupId($groupId);
     }
 
     /**

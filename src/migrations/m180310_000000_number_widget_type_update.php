@@ -13,7 +13,7 @@ class m180310_000000_number_widget_type_update extends Migration
     /**
      * @inheritdoc
      */
-    public function safeUp()
+    public function safeUp(): bool
     {
         /** @noinspection ClassConstantCanBeUsedInspection */
         $numberReportClass = 'barrelstrength\sproutreports\widgets\Number';
@@ -38,7 +38,7 @@ class m180310_000000_number_widget_type_update extends Migration
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m180310_000000_number_widget_type_update cannot be reverted.\n";
         return false;

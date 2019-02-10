@@ -2,8 +2,8 @@
 
 namespace barrelstrength\sproutreports\web\twig\variables;
 
-use barrelstrength\sproutbase\models\sproutreports\Report;
-use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutbasereports\elements\Report;
+use barrelstrength\sproutbasereports\SproutBaseReports;
 use barrelstrength\sproutreports\SproutReports;
 
 class SproutReportsVariable
@@ -12,15 +12,15 @@ class SproutReportsVariable
      * @return array
      * @throws \yii\db\Exception
      */
-    public function getDataSources()
+    public function getDataSources(): array
     {
         return SproutBaseReports::$app->dataSources->getAllDataSources();
     }
 
     /**
-     * @return null|Report[]
+     * @return Report[]
      */
-    public function getReports()
+    public function getReports(): array
     {
         return SproutBaseReports::$app->reports->getAllReports();
     }
@@ -39,7 +39,7 @@ class SproutReportsVariable
      * @return array
      * @throws \yii\base\Exception
      */
-    public function getReportsByGroupId($groupId)
+    public function getReportsByGroupId($groupId): array
     {
         return SproutBaseReports::$app->reports->getReportsByGroupId($groupId);
     }

@@ -11,7 +11,7 @@
 namespace barrelstrength\sproutreports;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
-use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutbasereports\SproutBaseReports;
 use barrelstrength\sproutbasereports\SproutBaseReportsHelper;
 use barrelstrength\sproutreports\widgets\Number as NumberWidget;
 use barrelstrength\sproutreports\datasources\CustomTwigTemplate;
@@ -40,6 +40,9 @@ use craft\events\RegisterUserPermissionsEvent;
  * @author    Barrelstrength
  * @package   SproutReports
  * @since     3
+ *
+ * @property null|array $cpNavItem
+ * @property mixed      $settingsResponse
  */
 class SproutReports extends Plugin
 {

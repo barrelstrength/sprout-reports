@@ -16,7 +16,7 @@ class CustomQuery extends DataSource
     /**
      * @inheritdoc
      */
-    public function getName()
+    public function getName(): string
     {
         return Craft::t('sprout-reports', 'Custom Query');
     }
@@ -24,7 +24,7 @@ class CustomQuery extends DataSource
     /**
      * @inheritdoc
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return Craft::t('sprout-reports', 'Create reports using a custom database query');
     }
@@ -32,7 +32,7 @@ class CustomQuery extends DataSource
     /**
      * @inheritdoc
      */
-    public function isAllowHtmlEditable()
+    public function isAllowHtmlEditable(): bool
     {
         return true;
     }
@@ -40,7 +40,7 @@ class CustomQuery extends DataSource
     /**
      * @inheritdoc
      */
-    public function getResults(Report $report, array $settings = [])
+    public function getResults(Report $report, array $settings = []): array
     {
         $query = $report->getSetting('query');
 
@@ -57,6 +57,9 @@ class CustomQuery extends DataSource
 
     /**
      * @inheritdoc
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function getSettingsHtml(array $settings = [])
     {
@@ -72,7 +75,7 @@ class CustomQuery extends DataSource
     /**
      * @inheritdoc
      */
-    public function validateSettings(array $settings = [], array &$errors)
+    public function validateSettings(array $settings = [], array &$errors = []): bool
     {
         if (empty($settings['query'])) {
             $errors['query'][] = Craft::t('sprout-reports', 'Query cannot be blank.');

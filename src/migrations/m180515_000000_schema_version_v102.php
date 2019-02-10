@@ -13,8 +13,10 @@ class m180515_000000_schema_version_v102 extends Migration
 {
     /**
      * @inheritdoc
+     *
+     * @throws \yii\base\NotSupportedException
      */
-    public function safeUp()
+    public function safeUp(): bool
     {
         $dataSourceTypesMigration = new m180515_000000_update_datasources_types();
 
@@ -34,7 +36,7 @@ class m180515_000000_schema_version_v102 extends Migration
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m180515_000000_schema_version_v102 cannot be reverted.\n";
         return false;

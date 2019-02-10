@@ -3,7 +3,7 @@
 namespace barrelstrength\sproutreports\controllers;
 
 use barrelstrength\sproutbasereports\models\DataSource as DataSourceModel;
-use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutbasereports\SproutBaseReports;
 use Craft;
 use craft\web\Controller;
 use yii\web\Response;

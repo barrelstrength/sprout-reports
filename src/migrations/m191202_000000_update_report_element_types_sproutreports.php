@@ -6,9 +6,9 @@ use barrelstrength\sproutbasereports\migrations\m191202_000002_update_report_ele
 use craft\db\Migration;
 
 /**
- * m191202_000000_sproutreports_update_report_element_types migration.
+ * m191202_000000_update_report_element_types_sproutreports migration.
  */
-class m191202_000000_sproutreports_update_report_element_types extends Migration
+class m191202_000000_update_report_element_types_sproutreports extends Migration
 {
     /**
      * @inheritdoc
@@ -29,7 +29,7 @@ class m191202_000000_sproutreports_update_report_element_types extends Migration
      */
     public function safeDown(): bool
     {
-        echo "m191202_000000_sproutreports_update_report_element_types cannot be reverted.\n";
+        echo "m191202_000000_update_report_element_types_sproutreports cannot be reverted.\n";
         return false;
     }
 }

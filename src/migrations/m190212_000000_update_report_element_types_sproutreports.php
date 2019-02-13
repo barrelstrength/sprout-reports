@@ -2,7 +2,7 @@
 
 namespace barrelstrength\sproutreports\migrations;
 
-use barrelstrength\sproutbasereports\migrations\m191202_000002_update_report_element_types;
+use barrelstrength\sproutbasereports\migrations\m190212_000002_update_report_element_types;
 use craft\db\Migration;
 
 /**
@@ -15,7 +15,7 @@ class m190212_000000_update_report_element_types_sproutreports extends Migration
      */
     public function safeUp(): bool
     {
-        $migration = new m191202_000002_update_report_element_types();
+        $migration = new m190212_000002_update_report_element_types();
 
         ob_start();
         $migration->safeUp();

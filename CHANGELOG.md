@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.2 - 2019-02-13
+
+### Changed
+- Improved translation support
+- Updated settings to implement SproutSettingsInterface
+- Updated barrelstrength/sprout-base requirement to v4.0.6
+- Added barrelstrength/sprout-base-reports requirement v1.0.0
+
 ## 1.1.1 - 2019-01-25
 
 ### Added

@@ -3,7 +3,7 @@
 namespace barrelstrength\sproutreports\migrations;
 
 use craft\db\Migration;
-use barrelstrength\sproutbase\app\reports\migrations\m180307_042132_craft3_schema_changes as SproutReportsCraft2toCraft3Migration;
+use barrelstrength\sproutbasereports\migrations\m180307_042132_craft3_schema_changes as SproutReportsCraft2toCraft3Migration;
 
 /**
  * m180307_042132_craft3_schema_changes migration.
@@ -12,8 +12,10 @@ class m180307_042132_craft3_schema_changes extends Migration
 {
     /**
      * @inheritdoc
+     *
+     * @throws \yii\base\NotSupportedException
      */
-    public function safeUp()
+    public function safeUp(): bool
     {
         $migration = new SproutReportsCraft2toCraft3Migration();
 
@@ -27,7 +29,7 @@ class m180307_042132_craft3_schema_changes extends Migration
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m180307_042132_craft3_schema_changes cannot be reverted.\n";
         return false;

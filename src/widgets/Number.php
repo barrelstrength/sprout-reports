@@ -2,10 +2,16 @@
 
 namespace barrelstrength\sproutreports\widgets;
 
-use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutbasereports\SproutBaseReports;
 use Craft;
 use craft\base\Widget;
 
+/**
+ *
+ * @property mixed  $bodyHtml
+ * @property mixed  $settingsHtml
+ * @property string $title
+ */
 class Number extends Widget
 {
     /**
@@ -53,10 +59,13 @@ class Number extends Widget
 
     /**
      * @inheritdoc
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function getSettingsHtml()
     {
-        $reportOptions = SproutBase::$app->reports->getReportsAsSelectFieldOptions();
+        $reportOptions = SproutBaseReports::$app->reports->getReportsAsSelectFieldOptions();
 
         return Craft::$app->getView()->renderTemplate('sprout-base-reports/_components/widgets/Number/settings', [
                 'widget' => $this,
@@ -67,13 +76,16 @@ class Number extends Widget
 
     /**
      * @inheritdoc
+     *            
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function getBodyHtml()
     {
-        $report = SproutBase::$app->reports->getReport($this->reportId);
+        $report = SproutBaseReports::$app->reports->getReport($this->reportId);
 
         if ($report) {
-            $dataSource = SproutBase::$app->dataSources->getDataSourceById($report->dataSourceId);
+            $dataSource = SproutBaseReports::$app->dataSources->getDataSourceById($report->dataSourceId);
 
             if ($dataSource) {
                 $result = $dataSource->getResults($report);

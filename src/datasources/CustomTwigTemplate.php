@@ -2,8 +2,8 @@
 
 namespace barrelstrength\sproutreports\datasources;
 
-use barrelstrength\sproutbase\app\reports\base\DataSource;
-use barrelstrength\sproutbase\app\reports\elements\Report;
+use barrelstrength\sproutbasereports\base\DataSource;
+use barrelstrength\sproutbasereports\elements\Report;
 use barrelstrength\sproutreports\SproutReports;
 use Craft;
 use craft\helpers\DateTimeHelper;
@@ -18,7 +18,7 @@ class CustomTwigTemplate extends DataSource
     /**
      * @inheritdoc
      */
-    public function getName()
+    public function getName(): string
     {
         return Craft::t('sprout-reports', 'Twig Template');
     }
@@ -26,7 +26,7 @@ class CustomTwigTemplate extends DataSource
     /**
      * @inheritdoc
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return Craft::t('sprout-reports', 'Create a report using Twig in your templates folder.');
     }
@@ -34,15 +34,18 @@ class CustomTwigTemplate extends DataSource
     /**
      * @inheritdoc
      */
-    public function isAllowHtmlEditable()
+    public function isAllowHtmlEditable(): bool
     {
         return true;
     }
 
     /**
      * @inheritdoc
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
-    public function getDefaultLabels(Report $report, array $settings = [])
+    public function getDefaultLabels(Report $report, array $settings = []): array
     {
         if (!SproutReports::$app->twigDataSource->hasRun) {
             $this->processFrontEndResultsTemplate($report, $settings);
@@ -55,13 +58,16 @@ class CustomTwigTemplate extends DataSource
             return $labels;
         }
 
-        return false;
+        return [];
     }
 
     /**
      * @inheritdoc
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
-    public function getResults(Report $report, array $settings = [])
+    public function getResults(Report $report, array $settings = []): array
     {
         if (!SproutReports::$app->twigDataSource->hasRun) {
             $this->processFrontEndResultsTemplate($report, $settings);
@@ -76,11 +82,15 @@ class CustomTwigTemplate extends DataSource
             return $rows;
         }
 
-        return false;
+        return [];
     }
 
     /**
      * @inheritdoc
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
+     * @throws \Exception
      */
     public function getSettingsHtml(array $settings = [])
     {
@@ -131,6 +141,8 @@ class CustomTwigTemplate extends DataSource
 
     /**
      * @inheritdoc
+     *
+     * @throws \Exception
      */
     public function prepSettings(array $settings)
     {
@@ -150,7 +162,7 @@ class CustomTwigTemplate extends DataSource
     /**
      * @inheritdoc
      */
-    public function validateSettings(array $settings = [], array &$errors)
+    public function validateSettings(array $settings = [], array &$errors = []): bool
     {
         if (empty($settings['resultsTemplate'])) {
             $errors['resultsTemplate'][] = Craft::t('sprout-reports', 'Results template cannot be blank.');
@@ -173,6 +185,7 @@ class CustomTwigTemplate extends DataSource
      *
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
+     * @throws \Exception
      */
     public function processFrontEndResultsTemplate(Report $report, array $settings = [])
     {

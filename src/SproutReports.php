@@ -82,6 +82,20 @@ class SproutReports extends Plugin
      */
     public $minVersionRequired = '0.9.3';
 
+    const EDITION_LITE = 'lite';
+    const EDITION_PRO = 'pro';
+
+    /**
+     * @inheritdoc
+     */
+    public static function editions(): array
+    {
+        return [
+            self::EDITION_LITE,
+            self::EDITION_PRO,
+        ];
+    }
+
     /**
      * @throws \yii\base\InvalidConfigException
      */
@@ -102,43 +116,17 @@ class SproutReports extends Plugin
             $event->types[] = NumberWidget::class;
         });
 
-        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
-            $variable = $event->sender;
-            $variable->set('sproutReports', SproutReportsVariable::class);
-        });
-
         Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function(RegisterUrlRulesEvent $event) {
-
-            $event->rules['sprout-reports'] = 'sprout-base-reports/reports/index';
-            $event->rules['sprout-reports/reports'] = 'sprout-base-reports/reports/index';
-            $event->rules['sprout-reports/reports/<groupId:\d+>'] = 'sprout-base-reports/reports/index';
-
-            $event->rules['sprout-reports/reports/<dataSourceId>/new'] = 'sprout-base-reports/reports/edit-report';
-            $event->rules['sprout-reports/reports/<dataSourceId>/edit/<reportId:\d+>'] = 'sprout-base-reports/reports/edit-report';
-
-            $event->rules['sprout-reports/datasources'] = ['template' => 'sprout-base-reports/datasources/index'];
-
-            $event->rules['sprout-reports/reports/view/<reportId:\d+>'] = 'sprout-base-reports/reports/results-index';
-
-            $event->rules['sprout-reports/settings'] = 'sprout/settings/edit-settings';
-            $event->rules['sprout-reports/settings/general'] = 'sprout/settings/edit-settings';
+            $event->rules = array_merge($event->rules, $this->getCpUrlRules());
         });
 
-        if (Craft::$app->getEdition() === Craft::Pro) {
-            Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
+        Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
+            $event->permissions['Sprout Reports'] = $this->getUserPermissions();
+        });
 
-                $name = Craft::t('sprout-reports', 'Sprout Reports');
-
-                $event->permissions[$name] = [
-                    'sproutReports-editReports' => [
-                        'label' => Craft::t('sprout-reports', 'Edit Reports')
-                    ],
-                    'sproutReports-editDataSources' => [
-                        'label' => Craft::t('sprout-reports', 'Edit Data Sources')
-                    ]
-                ];
-            });
-        }
+        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
+            $event->sender->set('sproutReports', SproutReportsVariable::class);
+        });
 
         Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent $event) {
             $event->types[] = CustomQuery::class;
@@ -194,6 +182,47 @@ class SproutReports extends Plugin
                 ]
             ]
         ]);
+    }
+
+    private function getCpUrlRules(): array
+    {
+        return [
+            'sprout-reports' => 'sprout-base-reports/reports/index',
+            'sprout-reports/reports' => 'sprout-base-reports/reports/index',
+            'sprout-reports/reports/<groupId:\d+>' => 'sprout-base-reports/reports/index',
+
+            'sprout-reports/reports/<dataSourceId>/new' => 'sprout-base-reports/reports/edit-report',
+            'sprout-reports/reports/<dataSourceId>/edit/<reportId:\d+>' => 'sprout-base-reports/reports/edit-report',
+
+            'sprout-reports/datasources' => [
+                'template' => 'sprout-base-reports/datasources/index'
+            ],
+
+            'sprout-reports/reports/view/<reportId:\d+>' => 'sprout-base-reports/reports/results-index',
+
+            'sprout-reports/settings' => 'sprout/settings/edit-settings',
+            'sprout-reports/settings/general' => 'sprout/settings/edit-settings'
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getUserPermissions(): array
+    {
+        return [
+            'sproutReports-viewReports' => [
+                'label' => Craft::t('sprout-reports', 'View Reports'),
+                'nested' => [
+                    'sproutReports-editReports' => [
+                        'label' => Craft::t('sprout-email', 'Edit Reports')
+                    ]
+                ]
+            ],
+            'sproutReports-editDataSources' => [
+                'label' => Craft::t('sprout-reports', 'Edit Data Sources')
+            ]
+        ];
     }
 
     /**

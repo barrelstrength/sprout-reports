@@ -215,7 +215,7 @@ class SproutReports extends Plugin
                 'label' => Craft::t('sprout-reports', 'View Reports'),
                 'nested' => [
                     'sproutReports-editReports' => [
-                        'label' => Craft::t('sprout-email', 'Edit Reports')
+                        'label' => Craft::t('sprout-reports', 'Edit Reports')
                     ]
                 ]
             ],

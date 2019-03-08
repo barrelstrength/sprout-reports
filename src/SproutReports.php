@@ -166,22 +166,28 @@ class SproutReports extends Plugin
             $parent['label'] = $this->getSettings()->pluginNameOverride;
         }
 
-        return array_merge($parent, [
-            'subnav' => [
-                'reports' => [
-                    'label' => Craft::t('sprout-reports', 'Reports'),
-                    'url' => 'sprout-reports/reports'
-                ],
-                'datasources' => [
-                    'label' => Craft::t('sprout-reports', 'Data Sources'),
-                    'url' => 'sprout-reports/datasources'
-                ],
-                'settings' => [
-                    'label' => Craft::t('sprout-reports', 'Settings'),
-                    'url' => 'sprout-reports/settings/general'
-                ]
-            ]
-        ]);
+        if (Craft::$app->getUser()->checkPermission('sproutReports-viewReports')) {
+            $parent['subnav']['reports'] = [
+                'label' => Craft::t('sprout-reports', 'Reports'),
+                'url' => 'sprout-reports/reports'
+            ];
+        }
+
+        if (Craft::$app->getUser()->checkPermission('sproutReports-editDataSources')) {
+
+            $parent['subnav']['datasources'] = [
+                'label' => Craft::t('sprout-reports', 'Data Sources'),
+                'url' => 'sprout-reports/datasources'
+            ];
+
+        }
+        if (Craft::$app->getUser()->checkPermission('sproutReports-editSettings')) {
+            $parent['subnav']['settings'] = [
+                'label' => Craft::t('sprout-reports', 'Settings'),
+                'url' => 'sprout-reports/settings/general'
+            ];
+        }
+        return $parent;
     }
 
     private function getCpUrlRules(): array
@@ -221,7 +227,10 @@ class SproutReports extends Plugin
             ],
             'sproutReports-editDataSources' => [
                 'label' => Craft::t('sprout-reports', 'Edit Data Sources')
-            ]
+            ],
+            'sproutReports-editSettings' => [
+                'label' => Craft::t('sprout-reports', 'Edit Settings')
+            ],
         ];
     }
 

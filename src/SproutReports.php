@@ -181,7 +181,7 @@ class SproutReports extends Plugin
             ];
 
         }
-        if (Craft::$app->getUser()->checkPermission('sproutReports-editSettings')) {
+        if (Craft::$app->getUser()->getIsAdmin()) {
             $parent['subnav']['settings'] = [
                 'label' => Craft::t('sprout-reports', 'Settings'),
                 'url' => 'sprout-reports/settings/general'
@@ -227,10 +227,7 @@ class SproutReports extends Plugin
             ],
             'sproutReports-editDataSources' => [
                 'label' => Craft::t('sprout-reports', 'Edit Data Sources')
-            ],
-            'sproutReports-editSettings' => [
-                'label' => Craft::t('sprout-reports', 'Edit Settings')
-            ],
+            ]
         ];
     }
 

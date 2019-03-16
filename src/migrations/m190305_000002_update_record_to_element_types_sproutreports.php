@@ -12,6 +12,9 @@ class m190305_000002_update_record_to_element_types_sproutreports extends Migrat
 {
     /**
      * @return bool
+     * @throws \Throwable
+     * @throws \craft\errors\ElementNotFoundException
+     * @throws \yii\base\Exception
      * @throws \yii\db\Exception
      */
     public function safeUp(): bool

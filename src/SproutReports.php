@@ -42,6 +42,8 @@ use craft\events\RegisterUserPermissionsEvent;
  * @since     3
  *
  * @property null|array $cpNavItem
+ * @property array      $userPermissions
+ * @property array      $cpUrlRules
  * @property mixed      $settingsResponse
  */
 class SproutReports extends Plugin
@@ -160,18 +162,19 @@ class SproutReports extends Plugin
         }
 
         if (Craft::$app->getUser()->checkPermission('sproutReports-editDataSources')) {
-
             $parent['subnav']['datasources'] = [
                 'label' => Craft::t('sprout-reports', 'Data Sources'),
                 'url' => 'sprout-reports/datasources'
             ];
         }
+
         if (Craft::$app->getUser()->getIsAdmin()) {
             $parent['subnav']['settings'] = [
                 'label' => Craft::t('sprout-reports', 'Settings'),
                 'url' => 'sprout-reports/settings/general'
             ];
         }
+        
         return $parent;
     }
 

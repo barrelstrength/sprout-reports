@@ -181,19 +181,17 @@ class SproutReports extends Plugin
     private function getCpUrlRules(): array
     {
         return [
-            'sprout-reports' => 'sprout-base-reports/reports/index',
+            'sprout-reports' => [
+                'template' => 'sprout-base-reports/index'
+            ],
             'sprout-reports/reports' => 'sprout-base-reports/reports/index',
             'sprout-reports/reports/<groupId:\d+>' => 'sprout-base-reports/reports/index',
-
-            'sprout-reports/reports/<dataSourceId>/new' => 'sprout-base-reports/reports/edit-report',
-            'sprout-reports/reports/<dataSourceId>/edit/<reportId:\d+>' => 'sprout-base-reports/reports/edit-report',
-
+            'sprout-reports/reports/<dataSourceId:\d+>/new' => 'sprout-base-reports/reports/edit-report',
+            'sprout-reports/reports/<dataSourceId:\d+>/edit/<reportId:\d+>' => 'sprout-base-reports/reports/edit-report',
+            'sprout-reports/reports/view/<reportId:\d+>' => 'sprout-base-reports/reports/results-index',
             'sprout-reports/datasources' => [
                 'template' => 'sprout-base-reports/datasources/index'
             ],
-
-            'sprout-reports/reports/view/<reportId:\d+>' => 'sprout-base-reports/reports/results-index',
-
             'sprout-reports/settings' => 'sprout/settings/edit-settings',
             'sprout-reports/settings/general' => 'sprout/settings/edit-settings'
         ];

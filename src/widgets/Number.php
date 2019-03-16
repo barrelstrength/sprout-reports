@@ -29,8 +29,14 @@ class Number extends Widget
      */
     public $number;
 
+    /**
+     * @var string
+     */
     public $resultPrefix;
 
+    /**
+     * @var int
+     */
     public $reportId;
 
     /**

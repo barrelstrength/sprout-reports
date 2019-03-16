@@ -165,7 +165,6 @@ class SproutReports extends Plugin
                 'label' => Craft::t('sprout-reports', 'Data Sources'),
                 'url' => 'sprout-reports/datasources'
             ];
-
         }
         if (Craft::$app->getUser()->getIsAdmin()) {
             $parent['subnav']['settings'] = [

@@ -4,6 +4,7 @@ namespace barrelstrength\sproutreports\migrations;
 
 use craft\db\Migration;
 use barrelstrength\sproutbasereports\migrations\m190305_000002_update_record_to_element_types as BaseUpdateElements;
+
 /**
  * m190305_000002_update_record_to_element_types_sproutreports migration.
  */

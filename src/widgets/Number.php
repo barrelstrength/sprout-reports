@@ -76,7 +76,7 @@ class Number extends Widget
 
     /**
      * @inheritdoc
-     *            
+     *
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */

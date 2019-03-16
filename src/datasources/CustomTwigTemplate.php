@@ -181,7 +181,7 @@ class CustomTwigTemplate extends DataSource
      * methods we have to check in both places
      *
      * @param Report $report
-     * @param array       $settings
+     * @param array  $settings
      *
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception

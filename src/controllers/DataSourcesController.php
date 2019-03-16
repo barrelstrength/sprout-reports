@@ -17,7 +17,7 @@ class DataSourcesController extends Controller
      * @throws \yii\db\Exception
      * @throws \yii\web\BadRequestHttpException
      */
-    public function actionSaveDataSource() : Response
+    public function actionSaveDataSource(): Response
     {
         $this->requirePostRequest();
 

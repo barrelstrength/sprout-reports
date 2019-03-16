@@ -11,6 +11,15 @@ use yii\web\Response;
 class DataSourcesController extends Controller
 {
     /**
+     * @throws \yii\web\ForbiddenHttpException
+     */
+    public function init()
+    {
+        // All Data Source actions require sproutReports-editDataSources permission
+        $this->requirePermission('sproutReports-editDataSources');
+    }
+
+    /**
      * Save the Data Source
      *
      * @return Response

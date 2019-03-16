@@ -82,20 +82,6 @@ class SproutReports extends Plugin
      */
     public $minVersionRequired = '0.9.3';
 
-    const EDITION_LITE = 'lite';
-    const EDITION_PRO = 'pro';
-
-    /**
-     * @inheritdoc
-     */
-    public static function editions(): array
-    {
-        return [
-            self::EDITION_LITE,
-            self::EDITION_PRO,
-        ];
-    }
-
     /**
      * @throws \yii\base\InvalidConfigException
      */

@@ -5,9 +5,9 @@ namespace barrelstrength\sproutreports\migrations;
 use craft\db\Migration;
 use barrelstrength\sproutbasereports\migrations\m190305_000002_update_record_to_element_types as BaseUpdateElements;
 /**
- * m190305_000002_update_record_to_element_types migration.
+ * m190305_000002_update_record_to_element_types_sproutreports migration.
  */
-class m190305_000002_update_record_to_element_types extends Migration
+class m190305_000002_update_record_to_element_types_sproutreports extends Migration
 {
     /**
      * @return bool
@@ -29,7 +29,7 @@ class m190305_000002_update_record_to_element_types extends Migration
      */
     public function safeDown(): bool
     {
-        echo "m190305_000002_update_record_to_element_types cannot be reverted.\n";
+        echo "m190305_000002_update_record_to_element_types_sproutreports cannot be reverted.\n";
         return false;
     }
 }

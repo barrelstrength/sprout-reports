@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.1.3 - 2019-03-18
+
+### Added
+- Added View Reports permission
+- Added requirement of Admin status to edit settings
+
+### Changed
+- Updated Edit Reports permission to require View Reports permissions
+- Updated Report export naming to use toString method ([#9][#9-sproutbasereports])
+- Updated barrelstrength/sprout-base-reports requirement to v1.0.1
+- Updated barrelstrength/sprout-base requirement to v4.0.7
+
+### Fixed
+- Added Report Element migration ([#44])
+
+[#44]: https://github.com/barrelstrength/craft-sprout-reports/issues/44
+[#9-sproutbasereports]: https://github.com/barrelstrength/craft-sprout-base/pull/9
+
 ## 1.1.2 - 2019-02-13
 
 ### Changed
@@ -51,7 +69,7 @@
 ### Changed
 - Improved Postgres support ([#22])
 - Updated Sprout Base requirement to v3.0.4
-	
+
 ### Fixed
 - Fixed bug where some New Report links were broken ([#2])
 - Fixed foreign key support for Report Elements

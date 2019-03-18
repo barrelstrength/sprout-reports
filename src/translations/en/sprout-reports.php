@@ -55,5 +55,12 @@ return [
     'Create a report using Twig in your templates folder.' => 'Create a report using Twig in your templates folder.',
     'Edit Reports' => 'Edit Reports',
     'Number' => 'Number',
-    'NaN' => 'NaN'
+    'NaN' => 'NaN',
+    'Data Source class not found: {className}' => 'Data Source class not found: {className}',
+    'View Reports' => 'View Reports',
+    'Edit Settings' => 'Edit Settings',
+    'Datasource class not found: {className}' => 'Datasource class not found: {className}',
+    'Datasource Class not found: {className}' => 'Datasource Class not found: {className}',
+    'Datasource not found: {className}' => 'Datasource not found: {className}',
+    'Datasource not found {className}' => 'Datasource not found {className}'
 ];

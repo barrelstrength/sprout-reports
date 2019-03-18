@@ -29,8 +29,14 @@ class Number extends Widget
      */
     public $number;
 
+    /**
+     * @var string
+     */
     public $resultPrefix;
 
+    /**
+     * @var int
+     */
     public $reportId;
 
     /**
@@ -76,7 +82,7 @@ class Number extends Widget
 
     /**
      * @inheritdoc
-     *            
+     *
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */

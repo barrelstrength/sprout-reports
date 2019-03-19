@@ -15,7 +15,7 @@ use barrelstrength\sproutbasereports\SproutBaseReports;
 use barrelstrength\sproutbasereports\SproutBaseReportsHelper;
 use barrelstrength\sproutreports\widgets\Number as NumberWidget;
 use barrelstrength\sproutreports\datasources\CustomTwigTemplate;
-use barrelstrength\sproutreports\models\Settings;
+use barrelstrength\sproutbasereports\models\Settings;
 use barrelstrength\sproutbasereports\services\DataSources;
 use barrelstrength\sproutbase\SproutBaseHelper;
 use barrelstrength\sproutreports\datasources\CustomQuery;
@@ -184,16 +184,23 @@ class SproutReports extends Plugin
             'sprout-reports' => [
                 'template' => 'sprout-base-reports/index'
             ],
-            'sprout-reports/reports' => 'sprout-base-reports/reports/index',
-            'sprout-reports/reports/<groupId:\d+>' => 'sprout-base-reports/reports/index',
-            'sprout-reports/reports/<dataSourceId:\d+>/new' => 'sprout-base-reports/reports/edit-report',
-            'sprout-reports/reports/<dataSourceId:\d+>/edit/<reportId:\d+>' => 'sprout-base-reports/reports/edit-report',
-            'sprout-reports/reports/view/<reportId:\d+>' => 'sprout-base-reports/reports/results-index',
+            '<pluginHandle:sprout-reports>/reports' =>
+                'sprout-base-reports/reports/reports-index-template',
+            '<pluginHandle:sprout-reports>/reports/<groupId:\d+>' =>
+                'sprout-base-reports/reports/reports-index-template',
+            '<pluginHandle:sprout-reports>/reports/<dataSourceId:\d+>/new' =>
+                'sprout-base-reports/reports/edit-report-template',
+            '<pluginHandle:sprout-reports>/reports/<dataSourceId:\d+>/edit/<reportId:\d+>' =>
+                'sprout-base-reports/reports/edit-report-template',
+            '<pluginHandle:sprout-reports>/reports/view/<reportId:\d+>' =>
+                'sprout-base-reports/reports/results-index-template',
             'sprout-reports/datasources' => [
                 'template' => 'sprout-base-reports/datasources/index'
             ],
-            'sprout-reports/settings' => 'sprout/settings/edit-settings',
-            'sprout-reports/settings/general' => 'sprout/settings/edit-settings'
+            'sprout-reports/settings' =>
+                'sprout/settings/edit-settings',
+            'sprout-reports/settings/general' =>
+                'sprout/settings/edit-settings'
         ];
     }
 

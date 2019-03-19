@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.4 - 2019-03-19
+
+### Changed
+- Improves support for Report integrations
+- Updated barrelstrength/sprout-base-reports requirement to v1.0.2
+
+### Fixed
+- Fixed bug where Settings model was not available for Report integrations
+
 ## 1.1.3 - 2019-03-18
 
 ### Added

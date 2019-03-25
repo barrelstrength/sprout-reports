@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.1.5 - 2019-03-22
+
+### Changed
+- Improved permission handling across plugins implementing Sprout Reports
+- Updated barrelstrength/sprout-base-reports requirement to v1.0.3
+- Updated barrelstrength/sprout-base requirement v4.0.8
+
+### Fixed
+- Fixed bug where custom Data Sources could not be registered from Modules ([#49])
+- Fixed incorrect permissions check for non-admin users ([#50])
+
+[#49]: https://github.com/barrelstrength/craft-sprout-reports/issues/49
+[#50]: https://github.com/barrelstrength/craft-sprout-reports/issues/50
+
 ## 1.1.4 - 2019-03-19
 
 ### Changed

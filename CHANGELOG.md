@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.6 - 2019-04-20
+
+### Changed
+- Updated barrelstrength/sprout-base-reports requirement to v1.0.4
+- Updated barrelstrength/sprout-base requirement v5.0.0
+
+### Fixed
+- Improved Postgres support
+- Fixed javascript error on Internet Explorer
+
 ## 1.1.5 - 2019-03-22
 
 ### Changed

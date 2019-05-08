@@ -23,7 +23,7 @@ class TwigDataSource extends Component
      *
      * @var $labels
      */
-    public $labels;
+    public $labels = [];
 
     /**
      * Variable that is used to build reports row by row
@@ -44,7 +44,7 @@ class TwigDataSource extends Component
      *
      * @var $rows array
      */
-    public $rows;
+    public $rows = [];
 
     /**
      * @param array $row

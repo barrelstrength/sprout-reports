@@ -3,7 +3,7 @@
 namespace barrelstrength\sproutreports\migrations;
 
 use craft\db\Migration;
-use barrelstrength\sproutbase\app\reports\migrations\m180417_000000_sproutreports_datasources_pluginid_column as SproutReportsPluginId;
+use barrelstrength\sproutbasereports\migrations\m180417_000000_sproutreports_datasources_pluginid_column as SproutReportsPluginId;
 
 /**
  * m180417_000000_sproutreports_call_datasources_pluginid_column migration.
@@ -12,8 +12,10 @@ class m180417_000000_sproutreports_call_datasources_pluginid_column extends Migr
 {
     /**
      * @inheritdoc
+     *
+     * @throws \yii\base\NotSupportedException
      */
-    public function safeUp()
+    public function safeUp(): bool
     {
         $migration = new SproutReportsPluginId();
 
@@ -27,7 +29,7 @@ class m180417_000000_sproutreports_call_datasources_pluginid_column extends Migr
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m180417_000000_sproutreports_call_datasources_pluginid_column cannot be reverted.\n";
         return false;

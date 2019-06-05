@@ -1,6 +1,103 @@
 # Changelog
 
+## 1.1.7 - 2019-06-05
+
+### Fixed
+- Fixed issue on twig reports with not results ([#54])
+
+[#54]: https://github.com/barrelstrength/craft-sprout-reports/issues/54
+
+## 1.1.6 - 2019-04-20
+
+### Changed
+- Updated barrelstrength/sprout-base-reports requirement to v1.0.4
+- Updated barrelstrength/sprout-base requirement v5.0.0
+
+### Fixed
+- Improved Postgres support
+- Fixed javascript error on Internet Explorer
+
+## 1.1.5 - 2019-03-22
+
+### Changed
+- Improved permission handling across plugins implementing Sprout Reports
+- Updated barrelstrength/sprout-base-reports requirement to v1.0.3
+- Updated barrelstrength/sprout-base requirement v4.0.8
+
+### Fixed
+- Fixed bug where custom Data Sources could not be registered from Modules ([#49])
+- Fixed incorrect permissions check for non-admin users ([#50])
+
+[#49]: https://github.com/barrelstrength/craft-sprout-reports/issues/49
+[#50]: https://github.com/barrelstrength/craft-sprout-reports/issues/50
+
+## 1.1.4 - 2019-03-19
+
+### Changed
+- Improves support for Report integrations
+- Updated barrelstrength/sprout-base-reports requirement to v1.0.2
+
+### Fixed
+- Fixed bug where Settings model was not available for Report integrations
+
+## 1.1.3 - 2019-03-18
+
+### Added
+- Added View Reports permission
+- Added requirement of Admin status to edit settings
+
+### Changed
+- Updated Edit Reports permission to require View Reports permissions
+- Updated Report export naming to use toString method ([#9][#9-sproutbasereports])
+- Updated barrelstrength/sprout-base-reports requirement to v1.0.1
+- Updated barrelstrength/sprout-base requirement to v4.0.7
+
+### Fixed
+- Added Report Element migration ([#44])
+
+[#44]: https://github.com/barrelstrength/craft-sprout-reports/issues/44
+[#9-sproutbasereports]: https://github.com/barrelstrength/craft-sprout-base/pull/9
+
+## 1.1.2 - 2019-02-13
+
+### Changed
+- Improved translation support
+- Updated settings to implement SproutSettingsInterface
+- Updated barrelstrength/sprout-base requirement to v4.0.6
+- Added barrelstrength/sprout-base-reports requirement v1.0.0
+
+## 1.1.1 - 2019-01-25
+
+### Added
+- Added initial support for Craft 3.1
+
+### Changed
+- Updated Craft CMS requirement to v3.1.0
+- Updated Sprout Base requirement to v4.0.5
+- Reverted league/csv library to require v8.2.0 to ensure compatibility with Craft
+
+## 1.1.0 - 2019-01-23
+
+### Added
+- Stable release.
+
+### Changes
+- Removed sproutReports-editSettings permissions. Access to Settings now follows Craft's convention and requires Admin level privileges
+- Updated league/csv library to require v9.0.0
+- Updated barrelstrength/sprout-base to require v4.0.4
+
+## 1.0.0-beta.16 - 2018-10-29
+
+### Changed
+- Updated Sprout Base requirement to v4.0.0
+
+## 1.0.0-beta.15 - 2018-10-27
+
+### Changed
+- Updated Sprout Base requirement to v3.0.10
+
 ## 1.0.0-beta.14 - 2018-10-23
+
 ### Fixed
 - Fixed error "unknown column nameFormat" when migrating from Craft 2 to Craft3
 
@@ -12,7 +109,7 @@
 ### Changed
 - Improved Postgres support ([#22])
 - Updated Sprout Base requirement to v3.0.4
-	
+
 ### Fixed
 - Fixed bug where some New Report links were broken ([#2])
 - Fixed foreign key support for Report Elements

@@ -33,11 +33,11 @@
 {%- includejs %}
 
     $('#settings-datetimeStartDate-field .datewrapper input:first-of-type').datepicker($.extend({
-        defaultDate: new Date({{ now.year }}, {{ now.month-1 }}, {{ now.day }})
+    defaultDate: new Date({{ now.year }}, {{ now.month-1 }}, {{ now.day }})
     }, Craft.datepickerOptions));
 
     $('#settings-datetimeEndDate-field .datewrapper input:first-of-type').datepicker($.extend({
-        defaultDate: new Date({{ now.year }}, {{ now.month }}, {{ now.day }})
+    defaultDate: new Date({{ now.year }}, {{ now.month }}, {{ now.day }})
     }, Craft.datepickerOptions));
 
     var $timePickerStartDate = $('#settings-datetimeStartDate-field .timewrapper input:first-of-type');

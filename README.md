@@ -12,7 +12,7 @@ See Sprout Reports documentation to learn more about Sprout Reports.
 
 ## Documentation
 
-See the [Sprout Website](https://sprout.barrelstrengthdesign.com/craft-plugins/reports/docs) for documentation, guides, and additional resources. 
+See the [Sprout Website](https://sprout.barrelstrengthdesign.com/docs/reports/) for documentation, guides, and additional resources. 
 
 ## Support
 

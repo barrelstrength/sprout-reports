@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.7 - 2019-06-05
+
+### Fixed
+- Fixed issue on twig reports with not results ([#54])
+
+[#54]: https://github.com/barrelstrength/craft-sprout-reports/issues/54
+
 ## 1.1.6 - 2019-04-20
 
 ### Changed

@@ -174,7 +174,7 @@ class SproutReports extends Plugin
                 'url' => 'sprout-reports/settings/general'
             ];
         }
-        
+
         return $parent;
     }
 
@@ -194,9 +194,8 @@ class SproutReports extends Plugin
                 'sprout-base-reports/reports/edit-report-template',
             '<pluginHandle:sprout-reports>/reports/view/<reportId:\d+>' =>
                 'sprout-base-reports/reports/results-index-template',
-            'sprout-reports/datasources' => [
-                'template' => 'sprout-base-reports/datasources/index'
-            ],
+            'sprout-reports/datasources' =>
+                'sprout-reports/data-sources/data-sources-index-template',
             'sprout-reports/settings' =>
                 'sprout/settings/edit-settings',
             'sprout-reports/settings/general' =>
@@ -225,17 +224,15 @@ class SproutReports extends Plugin
     }
 
     /**
-     * Performs actions after the plugin is installed.
-     *
-     * @throws \yii\db\Exception
+     * @inheritDoc
      */
     protected function afterInstall()
     {
-        $dataSourceClasses = [
+        $dataSourceTypes = [
             CustomQuery::class,
             CustomTwigTemplate::class
         ];
 
-        SproutBaseReports::$app->dataSources->installDataSources($dataSourceClasses);
+        SproutBaseReports::$app->dataSources->installDataSources($dataSourceTypes);
     }
 }

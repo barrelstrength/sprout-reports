@@ -16,7 +16,7 @@ class CustomQuery extends DataSource
     /**
      * @inheritdoc
      */
-    public function getName(): string
+    public static function displayName(): string
     {
         return Craft::t('sprout-reports', 'Custom Query');
     }

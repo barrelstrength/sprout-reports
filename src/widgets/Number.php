@@ -58,7 +58,7 @@ class Number extends Widget
     /**
      * @inheritdoc
      */
-    public static function iconPath()
+    public static function icon()
     {
         return Craft::getAlias('@barrelstrength/sproutreports/icon-mask.svg');
     }

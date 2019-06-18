@@ -9,15 +9,6 @@ use barrelstrength\sproutreports\SproutReports;
 class SproutReportsVariable
 {
     /**
-     * @return array
-     * @throws \yii\db\Exception
-     */
-    public function getDataSources(): array
-    {
-        return SproutBaseReports::$app->dataSources->getAllDataSources();
-    }
-
-    /**
      * @return Report[]
      */
     public function getReports(): array

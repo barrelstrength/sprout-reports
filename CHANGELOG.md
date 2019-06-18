@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.1.8 - 2019-06-17
+
+> {note} This release improves Data Source management and registration. Users with Custom Data Sources please review the [upgrade notes](https://sprout.barrelstrengthdesign.com/docs/reports/installing-and-updating-craft-3.html#upgrading-to-v1-1-8) for details on how to update your Custom Data Source.
+
+### Added
+- Added Install Data Source action
+- Added Delete Data Source action
+- Added list of uninstalled Data Sources
+- Added improved messaging around Missing Data Sources
+
+### Changed
+- Improved Data Source management and registration
+- Updated Data Sources to extend SavableComponent
+- Removed DataSource model in favor of DataSource base class
+- Updated DataSource::dataSourceId => DataSource::id
+- Updated barrelstrength/sprout-base-reports requirement v1.2.0
+- Updated barrelstrength/sprout-base requirement to v5.0.1
+
+### Fixed
+- Fixed bug where Report Element query would throw error on Craft 3.2
+- Fixed widget icon path
+
 ## 1.1.7 - 2019-06-05
 
 ### Fixed

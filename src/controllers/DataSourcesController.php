@@ -2,8 +2,9 @@
 
 namespace barrelstrength\sproutreports\controllers;
 
-use barrelstrength\sproutbasereports\models\DataSource as DataSourceModel;
+use barrelstrength\sproutbasereports\base\DataSource;
 use barrelstrength\sproutbasereports\SproutBaseReports;
+use barrelstrength\sproutforms\SproutForms;
 use Craft;
 use craft\web\Controller;
 use yii\web\Response;
@@ -19,6 +20,41 @@ class DataSourcesController extends Controller
         $this->requirePermission('sproutReports-editDataSources');
     }
 
+    public function actionDataSourcesIndexTemplate(): Response
+    {
+        $dataSourceTypes = SproutBaseReports::$app->dataSources->getAllDataSourceTypes();
+
+        $installedDataSources = SproutBaseReports::$app->dataSources->getInstalledDataSources();
+
+        // Get Data Sources that are registered but are not installed
+        $uninstalledDataSources = array_diff($dataSourceTypes, array_keys($installedDataSources));
+
+        return $this->renderTemplate('sprout-base-reports/datasources/index', [
+            'installedDataSources' => $installedDataSources,
+            'uninstalledDataSources' => $uninstalledDataSources
+        ]);
+    }
+
+    /**
+     * @return Response
+     * @throws \craft\errors\MissingComponentException
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function actionInstallDataSource(): Response
+    {
+        $this->requirePostRequest();
+
+        $dataSourceType = Craft::$app->getRequest()->getRequiredBodyParam('type');
+
+        if (!SproutBaseReports::$app->dataSources->installDataSources([$dataSourceType])) {
+            Craft::$app->getSession()->setError(Craft::t('sprout-base-reports', 'Could not install Data Source.'));
+        } else {
+            Craft::$app->getSession()->setNotice(Craft::t('sprout-base-reports', 'Data Source installed.'));
+        }
+
+        return $this->redirectToPostedUrl();
+    }
+
     /**
      * Save the Data Source
      *
@@ -32,13 +68,12 @@ class DataSourcesController extends Controller
 
         $request = Craft::$app->getRequest();
 
-        $dataSourceId = $request->getBodyParam('dataSourceId');
+        $dataSourceType = $request->getBodyParam('dataSourceType');
         $allowNew = $request->getBodyParam('allowNew');
 
         $allowNew = empty($allowNew) ? false : true;
 
-        $dataSource = new DataSourceModel();
-        $dataSource->id = $dataSourceId;
+        $dataSource = new $dataSourceType();
         $dataSource->allowNew = $allowNew;
 
         if (SproutBaseReports::$app->dataSources->saveDataSource($dataSource)) {
@@ -46,5 +81,25 @@ class DataSourcesController extends Controller
         }
 
         return $this->asJson(false);
+    }
+
+    /**
+     * @return Response
+     * @throws \craft\errors\MissingComponentException
+     * @throws \yii\base\Exception
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function actionDeleteDataSource() {
+        $this->requirePostRequest();
+
+        $dataSourceId = Craft::$app->getRequest()->getRequiredBodyParam('dataSourceId');
+
+        if (!SproutBaseReports::$app->dataSources->deleteDataSourceById($dataSourceId)) {
+            Craft::$app->getSession()->setError(Craft::t('sprout-base-reports', 'Could not delete Data Source.'));
+        } else {
+            Craft::$app->getSession()->setNotice(Craft::t('sprout-base-reports', 'Data Source deleted.'));
+        }
+
+        return $this->redirectToPostedUrl();
     }
 }

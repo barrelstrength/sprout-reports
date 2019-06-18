@@ -6,7 +6,7 @@ Sprout Reports allows you to create and group custom reports. Sprout Reports com
 - Twig Template - _Create reports using Twig Templates_
 - [Sprout Reports - Categories](https://github.com/barrelstrength/craft-sprout-reports-categories)
 - [Sprout Reports - Users](https://github.com/barrelstrength/craft-sprout-reports-users)
-- Sprout Reports for Craft Commerce - _Available after Craft Commerce 2 is released_
+- [Sprout Reports for Craft Commerce](https://github.com/barrelstrength/craft-sprout-reports-commerce)
 
 See Sprout Reports documentation to learn more about Sprout Reports.
 

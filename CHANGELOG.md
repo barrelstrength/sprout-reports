@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.9 - 2019-06-28
+
+### Changed
+- Updated barrelstrength/sprout-base-reports requirement to 1.2.1
+
+### Fixed
+- Fixed bug where Data Source grouping could cause reports to disappear from the UI ([#297][#297-sproutforms], [#286][#286-sproutforms])
+
+[#286-sproutforms]: https://github.com/barrelstrength/craft-sprout-forms/issues/286
+[#297-sproutforms]: https://github.com/barrelstrength/craft-sprout-forms/issues/297
+
 ## 1.1.8 - 2019-06-17
 
 > {note} This release improves Data Source management and registration. Users with Custom Data Sources please review the [upgrade notes](https://sprout.barrelstrengthdesign.com/docs/reports/installing-and-updating-craft-3.html#upgrading-to-v1-1-8) for details on how to update your Custom Data Source.

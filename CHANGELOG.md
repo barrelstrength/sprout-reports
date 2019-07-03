@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.2.0 - 2019-07-03
+
+> {note} This release adds a new, interactive results page for your reports including search, ordering columns, and pagination. Enjoy!
+
+### Added
+- Added support for search, ordering columns, and pagination on results pages
+
+### Changed
+- Updated barrelstrength/sprout-base-reports requirement to 1.3.0
+
 ## 1.1.9 - 2019-06-28
 
 ### Changed

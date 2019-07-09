@@ -1,8 +1,18 @@
 # Changelog
 
+## 1.2.1 - 2019-07-09
+
+### Changed
+- Updated Report Name to be dynamic
+- Updated barrelstrength/sprout-base-reports requirement to 1.3.1
+
+### Fixed
+- Fixed display bug where column headers could be incorrect width
+- Fixed display bug where column header order arrow would repeat in Safari
+
 ## 1.2.0 - 2019-07-03
 
-> {note} This release adds a new, interactive results page for your reports including search, ordering columns, and pagination. Enjoy!
+> {tip} This release adds a new, interactive results page for your reports including search, ordering columns, and pagination. Enjoy!
 
 ### Added
 - Added support for search, ordering columns, and pagination on results pages
@@ -23,7 +33,7 @@
 
 ## 1.1.8 - 2019-06-17
 
-> {note} This release improves Data Source management and registration. Users with Custom Data Sources please review the [upgrade notes](https://sprout.barrelstrengthdesign.com/docs/reports/installing-and-updating-craft-3.html#upgrading-to-v1-1-8) for details on how to update your Custom Data Source.
+> {warning} This release improves Data Source management and registration. Users with Custom Data Sources please review the [upgrade notes](https://sprout.barrelstrengthdesign.com/docs/reports/installing-and-updating-craft-3.html#upgrading-to-v1-1-8) for details on how to update your Custom Data Source.
 
 ### Added
 - Added Install Data Source action

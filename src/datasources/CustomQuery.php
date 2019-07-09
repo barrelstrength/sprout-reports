@@ -5,6 +5,10 @@ namespace barrelstrength\sproutreports\datasources;
 use barrelstrength\sproutbasereports\base\DataSource;
 use barrelstrength\sproutbasereports\elements\Report;
 use Craft;
+use Exception;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class SproutReportsQueryDataSource
@@ -48,7 +52,7 @@ class CustomQuery extends DataSource
 
         try {
             $result = Craft::$app->getDb()->createCommand($query)->queryAll();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $report->setResultsError($e->getMessage());
         }
 
@@ -56,10 +60,12 @@ class CustomQuery extends DataSource
     }
 
     /**
-     * @inheritdoc
+     * @param array $settings
      *
-     * @throws \Twig_Error_Loader
-     * @throws \yii\base\Exception
+     * @return string|null
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function getSettingsHtml(array $settings = [])
     {

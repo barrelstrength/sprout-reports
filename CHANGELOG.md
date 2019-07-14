@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.3 - 2019-07-14
+
+### Added
+- Added `isExport` variable to use in Twig Template reports
+
+### Changed
+- Updated Twig Data Source to use Auto Suggest Field for template settings
+- Updated barrelstrength/sprout-base-reports requirement to 1.3.3
+
 ## 1.2.2 - 2019-07-14
 
 ### Added
@@ -10,7 +19,6 @@
 - Updated pagination footer to be styled like Craft 3.2
 - Updated pagination length to include options to display 10 and 25 results
 - Updated pagination length to default to 10 results
-- Updated barrelstrength/sprout-base-reports requirement to 1.3.2
 
 ## 1.2.1 - 2019-07-09
 

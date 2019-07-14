@@ -7,6 +7,8 @@ use barrelstrength\sproutbasereports\elements\Report;
 use barrelstrength\sproutreports\SproutReports;
 use Craft;
 use craft\helpers\DateTimeHelper;
+use Exception;
+use Twig_Error_Loader;
 
 /**
  * Class SproutReportsTwigDataSource
@@ -42,7 +44,6 @@ class CustomTwigTemplate extends DataSource
     /**
      * @inheritdoc
      *
-     * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
     public function getDefaultLabels(Report $report, array $settings = []): array
@@ -64,7 +65,6 @@ class CustomTwigTemplate extends DataSource
     /**
      * @inheritdoc
      *
-     * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
     public function getResults(Report $report, array $settings = []): array
@@ -88,9 +88,8 @@ class CustomTwigTemplate extends DataSource
     /**
      * @inheritdoc
      *
-     * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
-     * @throws \Exception
+     * @throws Exception
      */
     public function getSettingsHtml(array $settings = [])
     {
@@ -142,7 +141,7 @@ class CustomTwigTemplate extends DataSource
     /**
      * @inheritdoc
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function prepSettings(array $settings)
     {
@@ -183,9 +182,8 @@ class CustomTwigTemplate extends DataSource
      * @param Report $report
      * @param array  $settings
      *
-     * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
-     * @throws \Exception
+     * @throws Exception
      */
     public function processFrontEndResultsTemplate(Report $report, array $settings = [])
     {
@@ -203,6 +201,7 @@ class CustomTwigTemplate extends DataSource
         // sproutReports()->reports->twigReportRows;
 
         $view->renderTemplate($resultsTemplate, [
+            'isExport' => $this->isExport,
             'settings' => $settings
         ]);
 

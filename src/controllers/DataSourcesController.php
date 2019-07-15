@@ -6,13 +6,17 @@ use barrelstrength\sproutbasereports\base\DataSource;
 use barrelstrength\sproutbasereports\SproutBaseReports;
 use barrelstrength\sproutforms\SproutForms;
 use Craft;
+use craft\errors\MissingComponentException;
 use craft\web\Controller;
+use yii\base\Exception;
+use yii\web\BadRequestHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 
 class DataSourcesController extends Controller
 {
     /**
-     * @throws \yii\web\ForbiddenHttpException
+     * @throws ForbiddenHttpException
      */
     public function init()
     {
@@ -37,8 +41,8 @@ class DataSourcesController extends Controller
 
     /**
      * @return Response
-     * @throws \craft\errors\MissingComponentException
-     * @throws \yii\web\BadRequestHttpException
+     * @throws MissingComponentException
+     * @throws BadRequestHttpException
      */
     public function actionInstallDataSource(): Response
     {
@@ -59,8 +63,7 @@ class DataSourcesController extends Controller
      * Save the Data Source
      *
      * @return Response
-     * @throws \yii\db\Exception
-     * @throws \yii\web\BadRequestHttpException
+     * @throws BadRequestHttpException
      */
     public function actionSaveDataSource(): Response
     {
@@ -85,9 +88,9 @@ class DataSourcesController extends Controller
 
     /**
      * @return Response
-     * @throws \craft\errors\MissingComponentException
-     * @throws \yii\base\Exception
-     * @throws \yii\web\BadRequestHttpException
+     * @throws MissingComponentException
+     * @throws Exception
+     * @throws BadRequestHttpException
      */
     public function actionDeleteDataSource() {
         $this->requirePostRequest();

@@ -32,6 +32,7 @@ use craft\web\UrlManager;
 use craft\events\RegisterUrlRulesEvent;
 use craft\services\UserPermissions;
 use craft\events\RegisterUserPermissionsEvent;
+use yii\base\InvalidConfigException;
 
 /**
  * https://craftcms.com/docs/plugins/introduction
@@ -85,7 +86,7 @@ class SproutReports extends Plugin
     public $minVersionRequired = '0.9.3';
 
     /**
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidConfigException
      */
     public function init()
     {

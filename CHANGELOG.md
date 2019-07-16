@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.4 - 2019-07-16
+
+### Changed
+- Improves Data Source integration support
+- Updated barrelstrength/sprout-base-reports requirement to 1.3.4
+
 ## 1.2.3 - 2019-07-14
 
 ### Added

@@ -182,21 +182,24 @@ class SproutReports extends Plugin
     private function getCpUrlRules(): array
     {
         return [
-            'sprout-reports' => [
+            '<pluginHandle:sprout-reports>' => [
                 'template' => 'sprout-base-reports/index'
             ],
-            'sprout-reports/reports' =>
+            '<pluginHandle:sprout-reports>/reports' => [
+                'route' => 'sprout-base-reports/reports/reports-index-template'
+            ],
+            '<pluginHandle:sprout-reports>/reports/<groupId:\d+>' =>
                 'sprout-base-reports/reports/reports-index-template',
-            'sprout-reports/reports/<groupId:\d+>' =>
-                'sprout-base-reports/reports/reports-index-template',
-            'sprout-reports/reports/<dataSourceId:\d+>/new' =>
+            '<pluginHandle:sprout-reports>/reports/<dataSourceId:\d+>/new' =>
                 'sprout-base-reports/reports/edit-report-template',
-            'sprout-reports/reports/<dataSourceId:\d+>/edit/<reportId:\d+>' =>
+            '<pluginHandle:sprout-reports>/reports/<dataSourceId:\d+>/edit/<reportId:\d+>' =>
                 'sprout-base-reports/reports/edit-report-template',
-            'sprout-reports/reports/view/<reportId:\d+>' =>
+            '<pluginHandle:sprout-reports>/reports/view/<reportId:\d+>' =>
                 'sprout-base-reports/reports/results-index-template',
-            'sprout-reports/datasources' =>
+            '<pluginHandle:sprout-reports>/datasources' =>
                 'sprout-reports/data-sources/data-sources-index-template',
+
+            // Settings
             'sprout-reports/settings' =>
                 'sprout/settings/edit-settings',
             'sprout-reports/settings/general' =>

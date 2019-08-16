@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.2.6 - 2019-08-15
+
+### Changed
+- Updated barrelstrength/sprout-base requirement v5.0.7
+- Updated barrelstrength/sprout-base-reports requirement v1.3.7
+
+### Fixed
+- Fixed bug where 'View Reports' permission did not allow a user to export reports ([#50])
+- Fixed bug where `pluginHandle` column may not be found in Data Sources migration ([#315][#315sproutforms], [#318][#318sproutforms])
+
+[#50]: https://github.com/barrelstrength/craft-sprout-reports/issues/50
+[#315sproutforms]: https://github.com/barrelstrength/craft-sprout-forms/issues/315
+[#318sproutforms]: https://github.com/barrelstrength/craft-sprout-forms/issues/318
+
 ## 1.2.5 - 2019-07-26
 
 ### Changed

@@ -21,7 +21,7 @@ class SproutReportsVariable
      */
     public function getReportGroups()
     {
-        return SproutBaseReports::$app->reportGroups->getAllReportGroups();
+        return SproutBaseReports::$app->reportGroups->getReportGroups();
     }
 
     /**

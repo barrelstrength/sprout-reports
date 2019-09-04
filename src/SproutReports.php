@@ -14,11 +14,12 @@ use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbasereports\SproutBaseReports;
 use barrelstrength\sproutbasereports\SproutBaseReportsHelper;
 use barrelstrength\sproutreports\widgets\Number as NumberWidget;
-use barrelstrength\sproutreports\datasources\CustomTwigTemplate;
+use barrelstrength\sproutbasereports\datasources\CustomTwigTemplate;
 use barrelstrength\sproutbasereports\models\Settings;
 use barrelstrength\sproutbasereports\services\DataSources;
 use barrelstrength\sproutbase\SproutBaseHelper;
-use barrelstrength\sproutreports\datasources\CustomQuery;
+use barrelstrength\sproutbasereports\datasources\CustomQuery;
+use barrelstrength\sproutbasereports\datasources\Users;
 use barrelstrength\sproutreports\services\App;
 use Craft;
 use craft\base\Plugin;
@@ -162,6 +163,13 @@ class SproutReports extends Plugin
             ];
         }
 
+//        if (Craft::$app->getUser()->checkPermission('sproutReports-viewSegments')) {
+//            $parent['subnav']['segments'] = [
+//                'label' => Craft::t('sprout-reports', 'Segments'),
+//                'url' => 'sprout-reports/segments'
+//            ];
+//        }
+
         if (Craft::$app->getUser()->checkPermission('sproutReports-editDataSources')) {
             $parent['subnav']['datasources'] = [
                 'label' => Craft::t('sprout-reports', 'Data Sources'),
@@ -182,22 +190,59 @@ class SproutReports extends Plugin
     private function getCpUrlRules(): array
     {
         return [
-            '<pluginHandle:sprout-reports>' => [
-                'template' => 'sprout-base-reports/index'
+            '<pluginHandle:sprout-reports>/reports/<groupId:\d+>' => [
+                'route' => 'sprout-base-reports/reports/reports-index-template'
+            ],
+            '<pluginHandle:sprout-reports>/reports/<dataSourceId:\d+>/new' => [
+                'route' => 'sprout-base-reports/reports/edit-report-template'
+            ],
+            '<pluginHandle:sprout-reports>/reports/<dataSourceId:\d+>/edit/<reportId:\d+>' => [
+                'route' => 'sprout-base-reports/reports/edit-report-template'
+            ],
+            '<pluginHandle:sprout-reports>/reports/view/<reportId:\d+>' => [
+                'route' => 'sprout-base-reports/reports/results-index-template'
             ],
             '<pluginHandle:sprout-reports>/reports' => [
                 'route' => 'sprout-base-reports/reports/reports-index-template'
             ],
-            '<pluginHandle:sprout-reports>/reports/<groupId:\d+>' =>
-                'sprout-base-reports/reports/reports-index-template',
-            '<pluginHandle:sprout-reports>/reports/<dataSourceId:\d+>/new' =>
-                'sprout-base-reports/reports/edit-report-template',
-            '<pluginHandle:sprout-reports>/reports/<dataSourceId:\d+>/edit/<reportId:\d+>' =>
-                'sprout-base-reports/reports/edit-report-template',
-            '<pluginHandle:sprout-reports>/reports/view/<reportId:\d+>' =>
-                'sprout-base-reports/reports/results-index-template',
-            '<pluginHandle:sprout-reports>/datasources' =>
-                'sprout-reports/data-sources/data-sources-index-template',
+            '<pluginHandle:sprout-reports>' => [
+                'template' => 'sprout-base-reports/index'
+            ],
+            '<pluginHandle:sprout-reports>/datasources' => [
+                'route' => 'sprout-reports/data-sources/data-sources-index-template'
+            ],
+
+            // Segments
+//            '<pluginHandle:sprout-reports>/segments/<dataSourceId:\d+>/new' => [
+//                'route' => 'sprout-base-reports/reports/edit-report-template',
+//                'params' => [
+//                    'viewContext' => 'segments',
+//                ]
+//            ],
+//            '<pluginHandle:sprout-reports>/segments/<dataSourceId:\d+>/edit/<reportId:\d+>' => [
+//                'route' => 'sprout-base-reports/reports/edit-report-template',
+//                'params' => [
+//                    'viewContext' => 'segments',
+//                ]
+//            ],
+//            '<pluginHandle:sprout-reports>/segments/view/<reportId:\d+>' => [
+//                'route' => 'sprout-base-reports/reports/results-index-template',
+//                'params' => [
+//                    'viewContext' => 'segments',
+//                ]
+//            ],
+//            '<pluginHandle:sprout-reports>/segments/<dataSourceId:\d+>' => [
+//                'route' => 'sprout-base-reports/reports/reports-index-template',
+//                'params' => [
+//                    'viewContext' => 'segments'
+//                ]
+//            ],
+//            '<pluginHandle:sprout-reports>/segments' => [
+//                'route' => 'sprout-base-reports/reports/reports-index-template',
+//                'params' => [
+//                    'viewContext' => 'segments'
+//                ]
+//            ],
 
             // Settings
             'sprout-reports/settings' =>
@@ -234,7 +279,8 @@ class SproutReports extends Plugin
     {
         $dataSourceTypes = [
             CustomQuery::class,
-            CustomTwigTemplate::class
+            CustomTwigTemplate::class,
+            Users::class
         ];
 
         SproutBaseReports::$app->dataSources->installDataSources($dataSourceTypes);

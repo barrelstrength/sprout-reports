@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.7 - 2019-09-04
+
+### Changed
+- Updated barrelstrength/sprout-base-reports requirement v1.3.8
+
+### Fixed
+- Fixed migration bug where `viewContext` column may not be found
+
 ## 1.2.6 - 2019-08-15
 
 ### Changed

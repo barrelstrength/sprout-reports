@@ -4,6 +4,7 @@ namespace barrelstrength\sproutreports\migrations;
 
 use barrelstrength\sproutbasereports\migrations\m180515_000000_update_datasources_types;
 use barrelstrength\sproutbasereports\migrations\m180515_000001_rename_datasources_pluginId_column;
+use barrelstrength\sproutbasereports\migrations\m180515_000002_update_report_element_types;
 use craft\db\Migration;
 
 /**
@@ -28,6 +29,12 @@ class m180515_000000_schema_version_v102 extends Migration
 
         ob_start();
         $dataSourcePluginIdMigration->safeUp();
+        ob_end_clean();
+
+        $updateReportElementTypesMigration = new m180515_000002_update_report_element_types();
+
+        ob_start();
+        $updateReportElementTypesMigration->safeUp();
         ob_end_clean();
 
         return true;

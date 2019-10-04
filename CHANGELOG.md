@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.2.8 - 2019-10-04
+
+### Changed
+- Updated craftcms/cms requirement to v3.3.7
+
+### Fixed 
+- Fixed `renderString` breaking change introduced by Craft and resolved in Craft CMS v3.3.7 ([#63]) 
+
+[#63]: https://github.com/barrelstrength/craft-sprout-reports/issues/63
+
+## 1.2.7 - 2019-09-04
+
+### Changed
+- Updated barrelstrength/sprout-base-reports requirement v1.3.8
+
+### Fixed
+- Fixed migration bug where `viewContext` column may not be found
+
 ## 1.2.6 - 2019-08-15
 
 ### Changed

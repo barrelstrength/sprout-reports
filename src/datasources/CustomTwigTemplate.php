@@ -124,7 +124,7 @@ class CustomTwigTemplate extends DataSource
                 $customSettingsHtmlWithExtras = $customSettingsFileContent;
 
                 $settings = $this->prepSettings($settings);
-                
+
                 $customSettingsHtml = Craft::$app->getView()->renderString($customSettingsHtmlWithExtras, [
                     'settings' => count($settings) ? $settings : $this->report->getSettings(),
                     'errors' => $settingsErrors

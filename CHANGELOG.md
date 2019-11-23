@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.2.11 - 2019-11-22
+
+### Changed
+- Updated barrelstrength/sprout-base-reports requirement v1.3.10
+
+### Fixed
+- Fixed bug where Report may not exist when loading Dashboard widget ([#64])
+- Fixed bug when running console requests ([#66])
+- Fixed horizontal scroll on some screen sizes ([#67])
+
+[#64]: https://github.com/barrelstrength/craft-sprout-reports/issues/64
+[#66]: https://github.com/barrelstrength/craft-sprout-reports/issues/66
+[#67]: https://github.com/barrelstrength/craft-sprout-reports/issues/67
+
 ## 1.2.8 - 2019-10-04
 
 ### Changed

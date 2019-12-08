@@ -117,11 +117,6 @@ class SproutReports extends Plugin
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
             $event->sender->set('sproutReports', SproutReportsVariable::class);
         });
-
-        Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent $event) {
-            $event->types[] = CustomQuery::class;
-            $event->types[] = CustomTwigTemplate::class;
-        });
     }
 
     /**

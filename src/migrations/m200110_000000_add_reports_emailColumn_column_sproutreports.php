@@ -2,14 +2,14 @@
 
 namespace barrelstrength\sproutreports\migrations;
 
-use barrelstrength\sproutbasereports\migrations\m191206_000000_add_reports_emailColumn_column;
+use barrelstrength\sproutbasereports\migrations\m200110_000000_add_reports_emailColumn_column;
 use craft\db\Migration;
 use yii\base\NotSupportedException;
 
 /**
- * m191206_000000_add_reports_emailColumn_column_sproutreports migration.
+ * m200110_000000_add_reports_emailColumn_column_sproutreports migration.
  */
-class m191206_000000_add_reports_emailColumn_column_sproutreports extends Migration
+class m200110_000000_add_reports_emailColumn_column_sproutreports extends Migration
 {
     /**
      * @inheritdoc
@@ -18,7 +18,7 @@ class m191206_000000_add_reports_emailColumn_column_sproutreports extends Migrat
      */
     public function safeUp(): bool
     {
-        $migration = new m191206_000000_add_reports_emailColumn_column();
+        $migration = new m200110_000000_add_reports_emailColumn_column();
 
         ob_start();
         $migration->safeUp();
@@ -32,7 +32,7 @@ class m191206_000000_add_reports_emailColumn_column_sproutreports extends Migrat
      */
     public function safeDown(): bool
     {
-        echo "m191206_000000_add_reports_emailColumn_column_sproutreports cannot be reverted.\n";
+        echo "m200110_000000_add_reports_emailColumn_column_sproutreports cannot be reverted.\n";
         return false;
     }
 }

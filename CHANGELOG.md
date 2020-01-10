@@ -1,5 +1,33 @@
 # Changelog
 
+## UNRELEASED
+
+### Added 
+- Added Mailing List Reports
+- Added support for Notification Emails to send to Mailing List Reports
+- Added Email Column setting, to identify the `email` column of a Mailing List report
+- Added 'All mailing lists' source
+- Added Users Data Source
+- Added Report Groups
+- Added `barrelstrength\sproutbasereports\elements\Report::$emailColumn`
+- Added `barrelstrength\sproutbasereports\elements\Report::canBeDeleted()`
+- Added `barrelstrength\sproutbasereports\base\DataSource::isEmailColumnEditable()`
+- Added `barrelstrength\sproutbasereports\base\DataSource::getDefaultEmailColumn()`
+
+### Changed
+- Move registering Data Sources to Base Reports ?? DOCUMENT.
+- Updated `barrelstrength/sprout-base-reports` requirement vXYZ???
+- Updated `barrelstrength/sprout-base-reports/base/DataSource::DEFAULT_VIEW_CONTEXT` default to `sprout-reports`
+
+### Fixed
+- Fixed bug where `Command+S` save action did not reload current page
+
+### Removed
+- Removed support for Sprout Lists integration (use Mailing List Reports)
+
+### Fixed
+- Fixed bug in Users Data Source where error was thrown if no user group was selected
+
 ## 1.2.11 - 2019-11-22
 
 ### Changed

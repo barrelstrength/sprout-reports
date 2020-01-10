@@ -78,7 +78,7 @@ class SproutReports extends Plugin
     /**
      * @var string
      */
-    public $schemaVersion = '1.2.0';
+    public $schemaVersion = '1.2.0.1';
 
     /**
      * @var string

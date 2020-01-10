@@ -92,7 +92,8 @@ class DataSourcesController extends Controller
      * @throws Exception
      * @throws BadRequestHttpException
      */
-    public function actionDeleteDataSource() {
+    public function actionDeleteDataSource()
+    {
         $this->requirePostRequest();
 
         $dataSourceId = Craft::$app->getRequest()->getRequiredBodyParam('dataSourceId');

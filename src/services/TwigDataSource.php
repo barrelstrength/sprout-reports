@@ -65,12 +65,13 @@ class TwigDataSource extends Component
     /**
      * Add multiple rows of data to your report
      *
-     * @example array(
-     *   array( ... ),
-     *   array( ... )
-     * )
-     *
      * @param array $rows
+     *
+     * @example array(
+     *          array( ... ),
+     *          array( ... )
+     *          )
+     *
      */
     public function addRows(array $rows)
     {

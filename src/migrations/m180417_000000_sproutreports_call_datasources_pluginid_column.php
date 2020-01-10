@@ -4,6 +4,7 @@ namespace barrelstrength\sproutreports\migrations;
 
 use craft\db\Migration;
 use barrelstrength\sproutbasereports\migrations\m180417_000000_sproutreports_datasources_pluginid_column as SproutReportsPluginId;
+use yii\base\NotSupportedException;
 
 /**
  * m180417_000000_sproutreports_call_datasources_pluginid_column migration.
@@ -13,7 +14,7 @@ class m180417_000000_sproutreports_call_datasources_pluginid_column extends Migr
     /**
      * @inheritdoc
      *
-     * @throws \yii\base\NotSupportedException
+     * @throws NotSupportedException
      */
     public function safeUp(): bool
     {

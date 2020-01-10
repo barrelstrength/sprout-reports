@@ -6,6 +6,7 @@ use barrelstrength\sproutbasereports\migrations\m180515_000000_update_datasource
 use barrelstrength\sproutbasereports\migrations\m180515_000001_rename_datasources_pluginId_column;
 use barrelstrength\sproutbasereports\migrations\m180515_000002_update_report_element_types;
 use craft\db\Migration;
+use yii\base\NotSupportedException;
 
 /**
  * m180515_000000_schema_version_v102 migration.
@@ -15,7 +16,7 @@ class m180515_000000_schema_version_v102 extends Migration
     /**
      * @inheritdoc
      *
-     * @throws \yii\base\NotSupportedException
+     * @throws NotSupportedException
      */
     public function safeUp(): bool
     {

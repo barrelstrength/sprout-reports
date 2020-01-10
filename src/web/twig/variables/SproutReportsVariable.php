@@ -5,6 +5,7 @@ namespace barrelstrength\sproutreports\web\twig\variables;
 use barrelstrength\sproutbasereports\elements\Report;
 use barrelstrength\sproutbasereports\SproutBaseReports;
 use barrelstrength\sproutreports\SproutReports;
+use yii\base\Exception;
 
 class SproutReportsVariable
 {
@@ -28,7 +29,7 @@ class SproutReportsVariable
      * @param $groupId
      *
      * @return array
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function getReportsByGroupId($groupId): array
     {

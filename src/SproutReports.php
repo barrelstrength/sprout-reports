@@ -16,7 +16,6 @@ use barrelstrength\sproutbasereports\SproutBaseReportsHelper;
 use barrelstrength\sproutreports\widgets\Number as NumberWidget;
 use barrelstrength\sproutbasereports\datasources\CustomTwigTemplate;
 use barrelstrength\sproutbasereports\models\Settings;
-use barrelstrength\sproutbasereports\services\DataSources;
 use barrelstrength\sproutbase\SproutBaseHelper;
 use barrelstrength\sproutbasereports\datasources\CustomQuery;
 use barrelstrength\sproutbasereports\datasources\Users;
@@ -102,7 +101,7 @@ class SproutReports extends Plugin
 
         self::$app = $this->get('app');
 
-        Event::on(Dashboard::class, Dashboard::EVENT_REGISTER_WIDGET_TYPES, function(RegisterComponentTypesEvent $event) {
+        Event::on(Dashboard::class, Dashboard::EVENT_REGISTER_WIDGET_TYPES, static function(RegisterComponentTypesEvent $event) {
             $event->types[] = NumberWidget::class;
         });
 
@@ -114,7 +113,7 @@ class SproutReports extends Plugin
             $event->permissions['Sprout Reports'] = $this->getUserPermissions();
         });
 
-        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
+        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, static function(Event $event) {
             $event->sender->set('sproutReports', SproutReportsVariable::class);
         });
     }

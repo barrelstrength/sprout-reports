@@ -4,6 +4,7 @@ namespace barrelstrength\sproutreports\migrations;
 
 use craft\db\Migration;
 use barrelstrength\sproutbasereports\migrations\m180307_042132_craft3_schema_changes as SproutReportsCraft2toCraft3Migration;
+use yii\base\NotSupportedException;
 
 /**
  * m180307_042132_craft3_schema_changes migration.
@@ -13,7 +14,7 @@ class m180307_042132_craft3_schema_changes extends Migration
     /**
      * @inheritdoc
      *
-     * @throws \yii\base\NotSupportedException
+     * @throws NotSupportedException
      */
     public function safeUp(): bool
     {

@@ -5,6 +5,9 @@ namespace barrelstrength\sproutreports\widgets;
 use barrelstrength\sproutbasereports\SproutBaseReports;
 use Craft;
 use craft\base\Widget;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  *
@@ -66,10 +69,12 @@ class Number extends Widget
     /**
      * @inheritdoc
      *
-     * @throws \Twig_Error_Loader
-     * @throws \yii\base\Exception
+     * @return string
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): string
     {
         $reportOptions = SproutBaseReports::$app->reports->getReportsAsSelectFieldOptions();
 
@@ -83,10 +88,12 @@ class Number extends Widget
     /**
      * @inheritdoc
      *
-     * @throws \Twig_Error_Loader
-     * @throws \yii\base\Exception
+     * @return string
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function getBodyHtml()
+    public function getBodyHtml(): string
     {
         $report = SproutBaseReports::$app->reports->getReport($this->reportId);
 

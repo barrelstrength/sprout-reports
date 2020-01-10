@@ -4,6 +4,7 @@ namespace barrelstrength\sproutreports\migrations;
 
 use barrelstrength\sproutbasereports\migrations\m190628_000000_fix_data_sources;
 use craft\db\Migration;
+use Throwable;
 
 /**
  * m190628_000000_fix_data_sources_sproutreports migration.
@@ -12,7 +13,7 @@ class m190628_000000_fix_data_sources_sproutreports extends Migration
 {
     /**
      * @return bool
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function safeUp(): bool
     {

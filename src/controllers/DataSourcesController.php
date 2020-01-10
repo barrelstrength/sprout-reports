@@ -2,9 +2,7 @@
 
 namespace barrelstrength\sproutreports\controllers;
 
-use barrelstrength\sproutbasereports\base\DataSource;
 use barrelstrength\sproutbasereports\SproutBaseReports;
-use barrelstrength\sproutforms\SproutForms;
 use Craft;
 use craft\errors\MissingComponentException;
 use craft\web\Controller;
@@ -92,7 +90,7 @@ class DataSourcesController extends Controller
      * @throws Exception
      * @throws BadRequestHttpException
      */
-    public function actionDeleteDataSource()
+    public function actionDeleteDataSource(): Response
     {
         $this->requirePostRequest();
 

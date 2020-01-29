@@ -1,11 +1,8 @@
 <?php
 /**
- * Sprout Reports plugin for Craft CMS 3.x
- *
- * Powerful custom reports.
- *
- * @link      barrelstrengthdesign.com
- * @copyright Copyright (c) 2017 Barrelstrength
+ * @link https://sprout.barrelstrengthdesign.com
+ * @copyright Copyright (c) Barrel Strength Design LLC
+ * @license https://craftcms.github.io/license
  */
 
 /**

@@ -36,6 +36,4 @@ return [
     'Number' => 'Number',
     'NaN' => 'NaN',
     'View Reports' => 'View Reports',
-    'Queries attendees registered for conferences' => 'Queries attendees registered for conferences',
-    'Registered Attendees' => 'Registered Attendees'
 ];

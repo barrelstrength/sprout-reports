@@ -33,6 +33,7 @@ class m190714_000000_add_context_column_sproutreports extends Migration
     public function safeDown(): bool
     {
         echo "m190714_000000_add_context_column_sproutreports cannot be reverted.\n";
+
         return false;
     }
 }

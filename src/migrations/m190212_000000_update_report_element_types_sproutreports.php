@@ -30,6 +30,7 @@ class m190212_000000_update_report_element_types_sproutreports extends Migration
     public function safeDown(): bool
     {
         echo "m190212_000000_update_report_element_types_sproutreports cannot be reverted.\n";
+
         return false;
     }
 }

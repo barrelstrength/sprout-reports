@@ -11,27 +11,27 @@
 namespace barrelstrength\sproutreports;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
-use barrelstrength\sproutbasereports\SproutBaseReports;
-use barrelstrength\sproutbasereports\SproutBaseReportsHelper;
-use barrelstrength\sproutreports\widgets\Number as NumberWidget;
-use barrelstrength\sproutbasereports\datasources\CustomTwigTemplate;
-use barrelstrength\sproutbasereports\models\Settings;
 use barrelstrength\sproutbase\SproutBaseHelper;
 use barrelstrength\sproutbasereports\datasources\CustomQuery;
+use barrelstrength\sproutbasereports\datasources\CustomTwigTemplate;
 use barrelstrength\sproutbasereports\datasources\Users;
+use barrelstrength\sproutbasereports\models\Settings;
+use barrelstrength\sproutbasereports\SproutBaseReports;
+use barrelstrength\sproutbasereports\SproutBaseReportsHelper;
 use barrelstrength\sproutreports\services\App;
+use barrelstrength\sproutreports\web\twig\variables\SproutReportsVariable;
+use barrelstrength\sproutreports\widgets\Number as NumberWidget;
 use Craft;
 use craft\base\Plugin;
-use barrelstrength\sproutreports\web\twig\variables\SproutReportsVariable;
+use craft\events\RegisterComponentTypesEvent;
+use craft\events\RegisterUrlRulesEvent;
+use craft\events\RegisterUserPermissionsEvent;
 use craft\helpers\UrlHelper;
 use craft\services\Dashboard;
-use craft\web\twig\variables\CraftVariable;
-use yii\base\Event;
-use craft\events\RegisterComponentTypesEvent;
-use craft\web\UrlManager;
-use craft\events\RegisterUrlRulesEvent;
 use craft\services\UserPermissions;
-use craft\events\RegisterUserPermissionsEvent;
+use craft\web\twig\variables\CraftVariable;
+use craft\web\UrlManager;
+use yii\base\Event;
 use yii\base\InvalidConfigException;
 
 /**
@@ -119,14 +119,6 @@ class SproutReports extends Plugin
     }
 
     /**
-     * @inheritdoc
-     */
-    protected function createSettingsModel()
-    {
-        return new Settings();
-    }
-
-    /**
      * Redirect to Sprout Reports settings
      *
      * @inheritdoc
@@ -179,6 +171,48 @@ class SproutReports extends Plugin
         }
 
         return $parent;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUserPermissions(): array
+    {
+        return [
+            'sproutReports-viewReports' => [
+                'label' => Craft::t('sprout-reports', 'View Reports'),
+                'nested' => [
+                    'sproutReports-editReports' => [
+                        'label' => Craft::t('sprout-reports', 'Edit Reports')
+                    ]
+                ]
+            ],
+            'sproutReports-editDataSources' => [
+                'label' => Craft::t('sprout-reports', 'Edit Data Sources')
+            ]
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function createSettingsModel()
+    {
+        return new Settings();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function afterInstall()
+    {
+        $dataSourceTypes = [
+            CustomQuery::class,
+            CustomTwigTemplate::class,
+            Users::class
+        ];
+
+        SproutBaseReports::$app->dataSources->installDataSources($dataSourceTypes);
     }
 
     private function getCpUrlRules(): array
@@ -244,39 +278,5 @@ class SproutReports extends Plugin
             'sprout-reports/settings/general' =>
                 'sprout/settings/edit-settings'
         ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getUserPermissions(): array
-    {
-        return [
-            'sproutReports-viewReports' => [
-                'label' => Craft::t('sprout-reports', 'View Reports'),
-                'nested' => [
-                    'sproutReports-editReports' => [
-                        'label' => Craft::t('sprout-reports', 'Edit Reports')
-                    ]
-                ]
-            ],
-            'sproutReports-editDataSources' => [
-                'label' => Craft::t('sprout-reports', 'Edit Data Sources')
-            ]
-        ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function afterInstall()
-    {
-        $dataSourceTypes = [
-            CustomQuery::class,
-            CustomTwigTemplate::class,
-            Users::class
-        ];
-
-        SproutBaseReports::$app->dataSources->installDataSources($dataSourceTypes);
     }
 }

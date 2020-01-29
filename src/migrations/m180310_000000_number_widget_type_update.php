@@ -41,6 +41,7 @@ class m180310_000000_number_widget_type_update extends Migration
     public function safeDown(): bool
     {
         echo "m180310_000000_number_widget_type_update cannot be reverted.\n";
+
         return false;
     }
 }

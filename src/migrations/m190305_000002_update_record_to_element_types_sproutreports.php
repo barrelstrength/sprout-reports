@@ -2,8 +2,8 @@
 
 namespace barrelstrength\sproutreports\migrations;
 
-use craft\db\Migration;
 use barrelstrength\sproutbasereports\migrations\m190305_000002_update_record_to_element_types as BaseUpdateElements;
+use craft\db\Migration;
 use craft\errors\ElementNotFoundException;
 use Throwable;
 use yii\db\Exception;
@@ -37,6 +37,7 @@ class m190305_000002_update_record_to_element_types_sproutreports extends Migrat
     public function safeDown(): bool
     {
         echo "m190305_000002_update_record_to_element_types_sproutreports cannot be reverted.\n";
+
         return false;
     }
 }

@@ -47,6 +47,7 @@ class m180515_000000_schema_version_v102 extends Migration
     public function safeDown(): bool
     {
         echo "m180515_000000_schema_version_v102 cannot be reverted.\n";
+
         return false;
     }
 }

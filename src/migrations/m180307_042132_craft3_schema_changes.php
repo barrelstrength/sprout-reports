@@ -2,8 +2,8 @@
 
 namespace barrelstrength\sproutreports\migrations;
 
-use craft\db\Migration;
 use barrelstrength\sproutbasereports\migrations\m180307_042132_craft3_schema_changes as SproutReportsCraft2toCraft3Migration;
+use craft\db\Migration;
 use yii\base\NotSupportedException;
 
 /**
@@ -33,6 +33,7 @@ class m180307_042132_craft3_schema_changes extends Migration
     public function safeDown(): bool
     {
         echo "m180307_042132_craft3_schema_changes cannot be reverted.\n";
+
         return false;
     }
 }

@@ -53,17 +53,17 @@ class Number extends Widget
     /**
      * @inheritdoc
      */
-    public function getTitle(): string
+    public static function icon()
     {
-        return $this->heading;
+        return Craft::getAlias('@barrelstrength/sproutreports/icon-mask.svg');
     }
 
     /**
      * @inheritdoc
      */
-    public static function icon()
+    public function getTitle(): string
     {
-        return Craft::getAlias('@barrelstrength/sproutreports/icon-mask.svg');
+        return $this->heading;
     }
 
     /**
@@ -73,6 +73,8 @@ class Number extends Widget
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws \yii\base\Exception
+     * @throws \yii\base\Exception
      */
     public function getSettingsHtml(): string
     {
@@ -92,6 +94,9 @@ class Number extends Widget
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws \yii\base\Exception
+     * @throws \yii\base\Exception
+     * @throws \yii\base\Exception
      */
     public function getBodyHtml(): string
     {

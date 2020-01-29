@@ -32,6 +32,7 @@ class m200110_000001_update_dataSource_viewContext_column_values_sproutreports e
     public function safeDown(): bool
     {
         echo "m200110_000001_update_dataSource_viewContext_column_values_sproutreports cannot be reverted.\n";
+
         return false;
     }
 }

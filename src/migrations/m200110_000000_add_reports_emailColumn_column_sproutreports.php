@@ -33,6 +33,7 @@ class m200110_000000_add_reports_emailColumn_column_sproutreports extends Migrat
     public function safeDown(): bool
     {
         echo "m200110_000000_add_reports_emailColumn_column_sproutreports cannot be reverted.\n";
+
         return false;
     }
 }

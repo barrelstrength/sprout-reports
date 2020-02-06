@@ -1,10 +1,10 @@
 # Changelog
 
-## UNRELEASED
+## 1.3.0 - 2020-02-05
 
 ### Added 
-- Added Mailing List Reports
-- Added support for Notification Emails to send to Mailing List Reports
+- Added Mailing List Reports integration
+- Added support for Notification Emails to be sent to Mailing List Reports
 - Added Email Column setting, to identify the `email` column of a Mailing List report
 - Added 'All mailing lists' source
 - Added Users Data Source
@@ -13,13 +13,18 @@
 - Added `barrelstrength\sproutbasereports\elements\Report::canBeDeleted()`
 - Added `barrelstrength\sproutbasereports\base\DataSource::isEmailColumnEditable()`
 - Added `barrelstrength\sproutbasereports\base\DataSource::getDefaultEmailColumn()`
+- Added `barrelstrength\sproutbasereports\elements\Report::pluralDisplayName()`
 
 ### Changed
-- Move registering Data Sources to Base Reports ?? DOCUMENT.
-- Updated `barrelstrength/sprout-base-reports` requirement vXYZ???
+- Updated Results UI to match look and field of Craft 3.4
+- Added 'autofocus` behavior to Search box on results page
+- Improved logic when displaying Rename Group dropdown
 - Updated `barrelstrength/sprout-base-reports/base/DataSource::DEFAULT_VIEW_CONTEXT` default to `sprout-reports`
+- Updated `barrelstrength/sprout-base-reports` requirement to v1.4.0
+- Updated `barrelstrength/sprout-base` requirement to v5.1.0
 
 ### Fixed
+- Fixed several bugs introduced in Craft 3.4
 - Fixed bug where `Command+S` save action did not reload current page
 
 ### Removed

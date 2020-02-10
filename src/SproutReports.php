@@ -9,6 +9,7 @@ namespace barrelstrength\sproutreports;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\SproutBaseHelper;
+use barrelstrength\sproutbasefields\SproutBaseFieldsHelper;
 use barrelstrength\sproutbasereports\datasources\CustomQuery;
 use barrelstrength\sproutbasereports\datasources\CustomTwigTemplate;
 use barrelstrength\sproutbasereports\datasources\Users;
@@ -90,6 +91,7 @@ class SproutReports extends Plugin
         parent::init();
 
         SproutBaseHelper::registerModule();
+        SproutBaseFieldsHelper::registerModule();
         SproutBaseReportsHelper::registerModule();
 
         $this->setComponents([

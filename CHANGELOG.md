@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.2 - 2020-02-10
+
+### Fixed 
+- Fixed bug where Sprout Base Fields was not registered properly ([#77])
+
+[#77]: https://github.com/barrelstrength/craft-sprout-reports/issues/77
+
 ## 1.3.1 - 2020-02-07
 
 ### Changed 

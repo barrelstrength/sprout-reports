@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutreports\widgets;
 
+use barrelstrength\sproutbasereports\elements\Report;
 use barrelstrength\sproutbasereports\SproutBaseReports;
 use Craft;
 use craft\base\Widget;
@@ -105,7 +106,7 @@ class Number extends Widget
      */
     public function getBodyHtml(): string
     {
-        $report = SproutBaseReports::$app->reports->getReport($this->reportId);
+        $report = Craft::$app->elements->getElementById($this->reportId, Report::class);
 
         if ($report) {
             $dataSource = SproutBaseReports::$app->dataSources->getDataSourceById($report->dataSourceId);

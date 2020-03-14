@@ -1,12 +1,19 @@
 # Changelog
 
-## UNRELEASED
+## 1.3.3 - 2020-03-14
+
+### Added
+- Added support for setting default Sort Order and Sort Column on Reports ([#60], [#71])
 
 ### Changed
-- Updated `barrelstrength/sprout-base-reports` requirement to v1.4.3
+- Updated `barrelstrength/sprout-base-reports` requirement to v1.4.4
 
 ### Fixed
+- Fixed behavior where Report would default to ordering by first column instead of simply displaying the default report query results ([#71])
 - Fixed bug where `dataSourceBaseUrl` was not defined after editing a report with validation errors
+
+[#60]: https://github.com/barrelstrength/craft-sprout-reports/issues/60
+[#71]: https://github.com/barrelstrength/craft-sprout-reports/issues/71
 
 ## 1.3.2 - 2020-02-10
 

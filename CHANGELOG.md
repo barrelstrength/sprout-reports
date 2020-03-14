@@ -1,5 +1,13 @@
 # Changelog
 
+## UNRELEASED
+
+### Changed
+- Updated `barrelstrength/sprout-base-reports` requirement to v1.4.3
+
+### Fixed
+- Fixed bug where `dataSourceBaseUrl` was not defined after editing a report with validation errors
+
 ## 1.3.2 - 2020-02-10
 
 ### Fixed 

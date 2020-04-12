@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutreports;
 
-use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\SproutBaseHelper;
 use barrelstrength\sproutbasefields\SproutBaseFieldsHelper;
 use barrelstrength\sproutbasereports\datasources\CustomQuery;
@@ -47,7 +46,6 @@ use yii\base\InvalidConfigException;
  */
 class SproutReports extends Plugin
 {
-    use BaseSproutTrait;
 
     /**
      * Enable use of SproutReports::$app-> in place of Craft::$app->
@@ -55,13 +53,6 @@ class SproutReports extends Plugin
      * @var App
      */
     public static $app;
-
-    /**
-     * Identify our plugin for BaseSproutTrait
-     *
-     * @var string
-     */
-    public static $pluginHandle = 'sprout-reports';
 
     /**
      * @var bool

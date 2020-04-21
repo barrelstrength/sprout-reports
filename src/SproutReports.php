@@ -7,6 +7,8 @@
 
 namespace barrelstrength\sproutreports;
 
+use barrelstrength\sproutbase\base\SproutDependencyInterface;
+use barrelstrength\sproutbase\base\SproutDependencyTrait;
 use barrelstrength\sproutbase\SproutBaseHelper;
 use barrelstrength\sproutbasefields\SproutBaseFieldsHelper;
 use barrelstrength\sproutbasereports\datasources\CustomQuery;
@@ -32,20 +34,15 @@ use yii\base\Event;
 use yii\base\InvalidConfigException;
 
 /**
- * https://craftcms.com/docs/plugins/introduction
- *
- *
- * @author    Barrelstrength
- * @package   SproutReports
- * @since     3
- *
  * @property null|array $cpNavItem
  * @property array      $userPermissions
  * @property array      $cpUrlRules
+ * @property array      $sproutDependencies
  * @property mixed      $settingsResponse
  */
-class SproutReports extends Plugin
+class SproutReports extends Plugin implements SproutDependencyInterface
 {
+    use SproutDependencyTrait;
 
     /**
      * Enable use of SproutReports::$app-> in place of Craft::$app->
@@ -184,11 +181,16 @@ class SproutReports extends Plugin
     }
 
     /**
-     * @inheritdoc
+     * @return array
      */
-    protected function createSettingsModel()
+    public function getSproutDependencies(): array
     {
-        return new Settings();
+        return [
+            SproutDependencyInterface::SPROUT_BASE,
+            SproutDependencyInterface::SPROUT_BASE_REPORTS
+        ];
+    }
+
     }
 
     /**

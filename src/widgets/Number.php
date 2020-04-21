@@ -14,6 +14,7 @@ use craft\base\Widget;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use yii\base\Exception;
 
 /**
  *
@@ -79,8 +80,8 @@ class Number extends Widget
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws \yii\base\Exception
-     * @throws \yii\base\Exception
+     * @throws Exception
+     * @throws Exception
      */
     public function getSettingsHtml(): string
     {
@@ -100,9 +101,9 @@ class Number extends Widget
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws \yii\base\Exception
-     * @throws \yii\base\Exception
-     * @throws \yii\base\Exception
+     * @throws Exception
+     * @throws Exception
+     * @throws Exception
      */
     public function getBodyHtml(): string
     {

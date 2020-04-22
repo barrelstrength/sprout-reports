@@ -1,8 +1,8 @@
 <?php
 /**
- * @link https://sprout.barrelstrengthdesign.com
+ * @link      https://sprout.barrelstrengthdesign.com
  * @copyright Copyright (c) Barrel Strength Design LLC
- * @license https://craftcms.github.io/license
+ * @license   https://craftcms.github.io/license
  */
 
 /**
@@ -33,4 +33,6 @@ return [
     'Number' => 'Number',
     'NaN' => 'NaN',
     'View Reports' => 'View Reports',
+    'Queries attendees registered for conferences' => 'Queries attendees registered for conferences',
+    'Registered Attendees' => 'Registered Attendees'
 ];

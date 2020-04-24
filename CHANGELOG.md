@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.4.0 - UNRELEASED
+
+### Added
+- Added example config file `src/config.php`
+- Added `barrelstrength\sproutbase\base\SproutDependencyTrait`
+- Added `barrelstrength\sproutbase\base\SproutDependencyInterface`
+- Added `barrelstrength\sproutbase\records\Settings`
+- Added `barrelstrength\sproutbase\migrations\Install::safeDown()`
+- Added support for config overrides in base settings models
+
+### Changed
+- Improved uninstall migration
+- Updated `barrelstrength/sprout-base` requirement v5.2.0
+- Updated `barrelstrength/sprout-base-reports` requirement v1.5.0
+
+### Removed
+- Removed `barrelstrength\sproutbase\services\Settings::getPluginSettings()`
+- Removed `barrelstrength\sproutbase\base\BaseSproutTrait`
+
 ## 1.3.3 - 2020-03-14
 
 ### Added

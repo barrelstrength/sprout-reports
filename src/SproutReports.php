@@ -209,6 +209,7 @@ class SproutReports extends Plugin implements SproutDependencyInterface
     private function getCpUrlRules(): array
     {
         return [
+            // Reports
             '<pluginHandle:sprout-reports>/<pluginSection:reports>/<groupId:\d+>' => [
                 'route' => 'sprout-base-reports/reports/reports-index-template'
             ],
@@ -230,6 +231,8 @@ class SproutReports extends Plugin implements SproutDependencyInterface
                     'pluginSection' => 'reports'
                 ]
             ],
+
+            // Data Sources
             '<pluginHandle:sprout-reports>/datasources' => [
                 'route' => 'sprout-reports/data-sources/data-sources-index-template'
             ],

@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.4.0 - UNRELEASED
+## 1.4.0 - 2020-04-27
 
 ### Added
 - Added example config file `src/config.php`

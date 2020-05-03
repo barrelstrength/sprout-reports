@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.5.1 - 2020-05-03
+
+### Changed
+- Updated `barrelstrength/sprout-base-reports` requirement v1.5.1
+
+### Fixed
+- Fixed migration scenario where base table wasn't installed correctly ([#83])
+
+- https://github.com/barrelstrength/craft-sprout-reports/issues/83
+
 ## 1.5.0 - 2020-04-28
 
 ### Changed

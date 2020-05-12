@@ -24,5 +24,8 @@ return [
     'pluginNameOverride' => 'Sprout Reports',
 
     // Set the number of results to initially display when a report is run
-    'defaultPageLength' => 50
+    'defaultPageLength' => 50,
+
+    // Set the default export delimiter setting when creating new reports
+    'defaultExportDelimiter' => ','
 ];

@@ -64,7 +64,7 @@ class SproutReports extends Plugin implements SproutDependencyInterface
     /**
      * @var string
      */
-    public $schemaVersion = '1.5.1';
+    public $schemaVersion = '1.5.1.1';
 
     /**
      * @var string

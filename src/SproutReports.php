@@ -238,10 +238,20 @@ class SproutReports extends Plugin implements SproutDependencyInterface
             ],
 
             // Settings
-            'sprout-reports/settings' =>
-                'sprout/settings/edit-settings',
-            'sprout-reports/settings/general' =>
-                'sprout/settings/edit-settings'
+            'sprout-reports/settings' => [
+                'route' => 'sprout/settings/edit-settings',
+                'params' => [
+                    'sproutBaseSettingsType' => SproutBaseReportsSettings::class,
+                    'pluginHandle' => $this->handle
+                ]
+            ],
+            'sprout-reports/settings/general' => [
+                'route' => 'sprout/settings/edit-settings',
+                'params' => [
+                    'sproutBaseSettingsType' => SproutBaseReportsSettings::class,
+                    'pluginHandle' => $this->handle
+                ]
+            ]
         ];
     }
 }

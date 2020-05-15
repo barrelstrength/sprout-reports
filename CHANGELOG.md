@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.5.2 - 2020-05-15
+
+## Added
+- Added Report export delimiter setting and support for comma, semi-colon, and tab-delimited exports
+- Added Default Export Delimiter setting
+- Added `barrelstrength\sproutbasereports\elements\Report::$delimiter`
+- Added `barrelstrength\sproutbasereports\models\Settings::$defaultExportDelimiter`
+
+### Changed
+- Updated `barrelstrength/sprout-base-reports` requirement v1.5.2
+
+### Fixed
+- Fixed bug where settings weren’t saved to `sprout_settings` table
+- Fixed translation categories in report settings
+
 ## 1.5.1 - 2020-05-03
 
 ### Changed

@@ -124,9 +124,11 @@ class SproutReports extends Plugin implements SproutDependencyInterface
     {
         $parent = parent::getCpNavItem();
 
+        $settings = SproutBaseReports::$app->getReportsSettings();
+
         // Allow user to override plugin name in sidebar
-        if ($this->getSettings()->pluginNameOverride) {
-            $parent['label'] = $this->getSettings()->pluginNameOverride;
+        if ($settings->pluginNameOverride) {
+            $parent['label'] = $settings->pluginNameOverride;
         }
 
         if (Craft::$app->getUser()->checkPermission('sproutReports-viewReports')) {

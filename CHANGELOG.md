@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5.3 - 2020-05-16
+
+### Fixed
+- Fixed Plugin Name setting behavior
+
 ## 1.5.2 - 2020-05-15
 
 ## Added

@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.5.4 - 2020-05-21
+
+### Changed
+- Updated Report delete behavior to consistently Hard Delete	
+- Updated `barrelstrength/sprout-base-reports` requirement v1.5.3
+
+### Fixed
+- Added migration to cleanup User Report value in `sproutreports_reports.dataSourceId`
+- Added migration to ensure `dataSourceId` column type is correct in PostgreSQL
+- Added migration to cleanup orphaned Reports and ensure Report Elements have a foreign key
+
 ## 1.5.3 - 2020-05-16
 
 ### Fixed

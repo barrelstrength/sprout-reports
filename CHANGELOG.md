@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.5.5 - 2020-05-27
+
+### Changed
+- Updated `barrelstrength/sprout-base-reports` requirement v1.5.5
+
+### Fixed
+- Fixed migration data type bug that could occur in some scenarios 
+
 ## 1.5.4 - 2020-05-21
 
 ### Changed

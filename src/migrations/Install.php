@@ -7,29 +7,36 @@
 
 namespace barrelstrength\sproutreports\migrations;
 
-use barrelstrength\sproutbase\config\base\DependencyInterface;
-use barrelstrength\sproutbase\migrations\Install as SproutBaseInstall;
-use barrelstrength\sproutbase\app\reports\migrations\Install as SproutBaseReportsInstall;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutreports\SproutReports;
 use craft\db\Migration;
+use ReflectionException;
+use yii\base\ErrorException;
+use yii\base\Exception;
+use yii\base\NotSupportedException;
+use yii\web\ServerErrorHttpException;
 
 class Install extends Migration
 {
     /**
-     * @inheritdoc
+     * @return bool
+     * @throws ReflectionException
+     * @throws ErrorException
+     * @throws Exception
+     * @throws NotSupportedException
+     * @throws ServerErrorHttpException
      */
     public function safeUp(): bool
     {
         SproutBase::$app->config->runInstallMigrations(SproutReports::getInstance());
-
-        return true;
     }
 
+    /**
+     * @return bool
+     * @throws ReflectionException
+     */
     public function safeDown(): bool
     {
         SproutBase::$app->config->runUninstallMigrations(SproutReports::getInstance());
-
-        return true;
     }
 }

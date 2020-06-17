@@ -10,15 +10,22 @@ namespace barrelstrength\sproutreports;
 use barrelstrength\sproutbase\app\reports\datasources\CustomQuery;
 use barrelstrength\sproutbase\app\reports\datasources\CustomTwigTemplate;
 use barrelstrength\sproutbase\app\reports\datasources\Users;
-use barrelstrength\sproutbase\config\base\SproutCentralInterface;
-use barrelstrength\sproutbase\config\configs\GeneralConfig;
+use barrelstrength\sproutbase\app\reports\widgets\Number;
+use barrelstrength\sproutbase\app\reports\widgets\Visualization;
+use barrelstrength\sproutbase\config\base\SproutBasePlugin;
+use barrelstrength\sproutbase\config\configs\ControlPanelConfig;
 use barrelstrength\sproutbase\config\configs\ReportsConfig;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\SproutBaseHelper;
-use craft\base\Plugin;
+use craft\events\RegisterComponentTypesEvent;
+use craft\services\Dashboard;
+use yii\base\Event;
 
-class SproutReports extends Plugin implements SproutCentralInterface
+class SproutReports extends SproutBasePlugin
 {
+    const EDITION_LITE = 'lite';
+    const EDITION_PRO = 'pro';
+
     /**
      * @var string
      */
@@ -27,12 +34,23 @@ class SproutReports extends Plugin implements SproutCentralInterface
     /**
      * @var string
      */
-    public $minVersionRequired = '0.9.3';
+    public $minVersionRequired = '1.5.6';
+
+    /**
+     * @inheritdoc
+     */
+    public static function editions(): array
+    {
+        return [
+            self::EDITION_LITE,
+            self::EDITION_PRO,
+        ];
+    }
 
     public static function getSproutConfigs(): array
     {
         return [
-            GeneralConfig::class,
+            ControlPanelConfig::class,
             ReportsConfig::class
         ];
     }
@@ -42,6 +60,11 @@ class SproutReports extends Plugin implements SproutCentralInterface
         parent::init();
 
         SproutBaseHelper::registerModule();
+
+        Event::on(Dashboard::class, Dashboard::EVENT_REGISTER_WIDGET_TYPES, static function(RegisterComponentTypesEvent $event) {
+            $event->types[] = Number::class;
+            $event->types[] = Visualization::class;
+        });
     }
 
     /**

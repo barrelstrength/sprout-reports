@@ -6,60 +6,60 @@ This example is unrealistic, and just outputs each setting into a Report so that
 #}
 
 {# You can define your Header Row column values anywhere in your template. If no Header Row is set, the first row of your results will be used for your header column values. #}
-{% do craft.sproutReports.addHeaderRow([
+{% do sprout.reports.addHeaderRow([
     "Setting Name",
     "Setting Value"
 ]) %}
 
 {# Add several settings to our report one by one #}
-{% do craft.sproutReports.addRow([
+{% do sprout.reports.addRow([
     "Example Text Field",
     settings.exampleTextField is defined ? settings.exampleTextField : null
 ]) %}
 
-{% do craft.sproutReports.addRow([
+{% do sprout.reports.addRow([
     "Example Textarea Field",
     settings.exampleTextareaField is defined ? settings.exampleTextareaField : null
 ]) %}
 
-{% do craft.sproutReports.addRow([
+{% do sprout.reports.addRow([
     "Example Number Field",
     settings.exampleNumberField is defined ? settings.exampleNumberField : null
 ]) %}
 
-{% do craft.sproutReports.addRow([
+{% do sprout.reports.addRow([
     "Example Dropdown Field (Text)",
     settings.exampleDropdownFieldText is defined ? settings.exampleDropdownFieldText : null
 ]) %}
 
-{% do craft.sproutReports.addRow([
+{% do sprout.reports.addRow([
     "Example Dropdown Field (Numbers)",
     settings.exampleDropdownFieldNumbers is defined ? settings.exampleDropdownFieldNumbers : null
 ]) %}
 
-{% do craft.sproutReports.addRow([
+{% do sprout.reports.addRow([
     "Example Radio Buttons Field",
     settings.exampleRadioButtonsField is defined ? settings.exampleRadioButtonsField : null
 ]) %}
 
-{% do craft.sproutReports.addRow([
+{% do sprout.reports.addRow([
     "Example Standalone Checkbox Field",
     settings.exampleStandaloneCheckboxField is defined ? settings.exampleStandaloneCheckboxField : null
 ]) %}
 
 {# We can output all the values of an array in a cell using Twig's 'join' function #}
-{% do craft.sproutReports.addRow([
+{% do sprout.reports.addRow([
     "Example Checkbox Select Field",
     settings.exampleCheckboxSelectField is defined ? settings.exampleCheckboxSelectField|join(', ') : null
 ]) %}
 
-{% do craft.sproutReports.addRow([
+{% do sprout.reports.addRow([
     "Example Display Conditional Options Field",
     settings.exampleDisplayConditionalSettings is defined ? settings.exampleDisplayConditionalSettings : null
 ]) %}
 
 {# Display Multiple Rows using an array #}
-{% do craft.sproutReports.addRows([
+{% do sprout.reports.addRows([
     [
         "Example Hidden Number Field",
         settings.exampleHiddenNumberField is defined ? settings.exampleHiddenNumberField : null
@@ -71,7 +71,7 @@ This example is unrealistic, and just outputs each setting into a Report so that
 ]) %}
 
 {# Display Multiple Rows using a hash #}
-{% do craft.sproutReports.addRows([
+{% do sprout.reports.addRows([
     {
         optionName: "Example Start Date Field",
         optionValue: settings.datetimeStartDate is defined ? settings.datetimeStartDate|date('F d, Y') : null

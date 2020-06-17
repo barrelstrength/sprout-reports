@@ -20,9 +20,6 @@
  */
 
 return [
-    // The name to display in the control panel in place of the plugin name
-    'pluginNameOverride' => 'Sprout Reports',
-
     // Set the number of results to initially display when a report is run
     'defaultPageLength' => 50,
 

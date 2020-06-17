@@ -4,14 +4,14 @@
     {% set users = users.lastLoginDate('and, >= ' ~ settings.datetimeStartDate.date ~ ', <= ' ~ settings.datetimeEndDate.date) %}
 {% endif %}
 
-{{ craft.sproutReports.addHeaderRow([
+{{ sprout.reports.addHeaderRow([
     'Username',
     'Name',
     'Email'
 ]) }} #}
 
 {% for user in users %}
-    {% do craft.sproutReports.addRow([
+    {% do sprout.reports.addRow([
         user.username,
         user.name,
         user.email

@@ -10,6 +10,7 @@ namespace barrelstrength\sproutreports;
 use barrelstrength\sproutbase\app\reports\datasources\CustomQuery;
 use barrelstrength\sproutbase\app\reports\datasources\CustomTwigTemplate;
 use barrelstrength\sproutbase\app\reports\datasources\Users;
+use barrelstrength\sproutbase\app\reports\services\DataSources;
 use barrelstrength\sproutbase\app\reports\widgets\Number;
 use barrelstrength\sproutbase\app\reports\widgets\Visualization;
 use barrelstrength\sproutbase\config\base\SproutBasePlugin;
@@ -50,7 +51,6 @@ class SproutReports extends SproutBasePlugin
     public static function getSproutConfigs(): array
     {
         return [
-            ControlPanelConfig::class,
             ReportsConfig::class
         ];
     }

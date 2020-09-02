@@ -25,6 +25,8 @@ class DataSourcesController extends Controller
     {
         // All Data Source actions require sproutReports-editDataSources permission
         $this->requirePermission('sproutReports-editDataSources');
+
+        parent::init();
     }
 
     public function actionDataSourcesIndexTemplate(): Response

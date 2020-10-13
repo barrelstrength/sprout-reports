@@ -1,7 +1,7 @@
 {
     "name": "barrelstrength/sprout-reports",
     "description": "Powerful custom reports.",
-    "version": "1.5.6",
+    "version": "1.5.7",
     "type": "craft-plugin",
     "keywords": [
         "craft",
@@ -25,9 +25,9 @@
         "rss": "https://github.com/barrelstrength/sprout-reports/commits/v2.atom"
     },
     "require": {
-        "craftcms/cms": "^3.4.0",
-        "barrelstrength/sprout-base": "^6.0.0",
-        "barrelstrength/sprout-base-reports": "^1.5.6"
+        "craftcms/cms": "^3.5.0",
+        "barrelstrength/sprout-base": "^6.0.2",
+        "barrelstrength/sprout-base-reports": "^1.5.7"
     },
     "autoload": {
         "psr-4": {

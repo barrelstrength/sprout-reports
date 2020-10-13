@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.5.7 - 2020-10-13
+
+### Changed
+- Updated `craftcms/cms` requirement v3.5.0
+- Updated `barrelstrength/sprout-base-reports` requirement v1.5.7
+- Updated `barrelstrength/sprout-base` requirement v6.0.2
+- Updated `league/csv` to allow optional requirement v9.6.1
+
+### Fixed
+- Fixed DataSourcesController init behavior in Craft 3.5
+- Fixed Settings init behavior in Craft 3.5
+
 ## 1.5.6 - 2020-05-28
 
 ### Changed

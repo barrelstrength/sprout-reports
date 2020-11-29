@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.5.8 - UNRELEASED
+
+### Fixed
+- Fixed database migration column references ([#95], [#97])
+
+[#95]: https://github.com/barrelstrength/craft-sprout-reports/issues/95
+[#97]: https://github.com/barrelstrength/craft-sprout-reports/issues/97
+
 ## 1.5.7 - 2020-10-13
 
 ### Changed

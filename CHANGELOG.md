@@ -1,9 +1,13 @@
 # Changelog
 
-## 1.5.8 - UNRELEASED
+## 1.5.8 - 2021-02-10
+
+### Changed
+- Updated `barrelstrength/sprout-base-reports` requirement v1.5.8
 
 ### Fixed
 - Fixed database migration column references ([#95], [#97])
+- Improved data source schema tedium in Craft 2 to Craft 3 migration
 
 [#95]: https://github.com/barrelstrength/craft-sprout-reports/issues/95
 [#97]: https://github.com/barrelstrength/craft-sprout-reports/issues/97

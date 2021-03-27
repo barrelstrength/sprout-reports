@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.10 - 2021-03-27
+
+### Fixed
+- Update migration to conditionally address `pluginHandle` column ([#111])
+
+[#111]: https://github.com/barrelstrength/craft-sprout-reports/issues/111
+
 ## 1.5.9 - 2021-02-10
 
 ### Changed

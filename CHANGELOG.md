@@ -1,14 +1,21 @@
 # Changelog
 
+## 1.5.13 - 2022-06-06
+
+### Fixed
+- Fixed bug where TimePicker is no longer loaded on Report settings page ([#115])
+
+[#115]: https://github.com/barrelstrength/craft-sprout-reports/issues/115
+
 ## 1.5.12 - 2021-11-12
 
 ### Changed
 - Updated `barrelstrength/sprout-base-reports` requirement v1.5.12
 
 ### Fixed
-- Fixed bug where TimePicker is no longer loaded on Report settings page ([#115])
+- Fixed pagination styles on results page ([#117])
 
-[#115]: https://github.com/barrelstrength/craft-sprout-reports/issues/115
+[#117]: https://github.com/barrelstrength/craft-sprout-reports/issues/117
 
 ## 1.5.10 - 2021-03-27
 

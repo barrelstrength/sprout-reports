@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.14 - 2022-11-04
+
+### Fixed
+- Added Support for exporting Unicode characters ([#127])
+
+[#127]: https://github.com/barrelstrength/craft-sprout-reports/issues/127
+
 ## 1.5.13 - 2022-06-06
 
 ### Fixed

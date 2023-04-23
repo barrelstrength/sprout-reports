@@ -25,7 +25,7 @@ Support for all Sprout Marketing Suite plugins is managed in the [main Sprout Fr
 - Share a [Feature Request][#features]
 - Submit a [Pull Request][#pullrequests]
 
-_Select the "Data Studio Module" for any Sprout Reports issues.
+_Select the "Data Studio Module" for any Sprout Reports issues._
 
 <a href="https://sprout.barrelstrengthdesign.com" target="_blank">
   <img src="https://s3.amazonaws.com/sprout.barrelstrengthdesign.com-assets/content/plugins/sprout-icon.svg" width="72" height="72" align="right">

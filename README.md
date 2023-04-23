@@ -1,9 +1,9 @@
 
-Sprout Reports is now [Sprout Data Studio](https://github.com/barrelstrength/sprout-data-studio).
+### Sprout Reports is now [Sprout Data Studio](https://github.com/barrelstrength/sprout-data-studio).
 
 We will continue to support Sprout Reports for Craft 3 with critical bug fixes however any new features will only be added to Sprout Data Studio for Craft 4. 
 
-Any license holders who purchase Sprout Reports for Craft 3 after April 15, 2023 will need to reach out to support when upgrading to Craft 4 and we'll grant you a Data Studio Pro license for your upgrade.
+Any **license holders who purchase Sprout Reports for Craft 3 after April 15, 2023** will need to reach out to support when upgrading to Craft 4 and we'll grant you a Data Studio Pro license for your upgrade.
 
 ----
 

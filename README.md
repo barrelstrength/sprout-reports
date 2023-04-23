@@ -1,5 +1,5 @@
 
-### Sprout Reports is now [Sprout Data Studio](https://github.com/barrelstrength/sprout-data-studio).
+### Sprout Reports is now [Sprout Data Studio](https://github.com/barrelstrength/sprout-data-studio)
 
 We will continue to support Sprout Reports for Craft 3 with critical bug fixes however any new features will only be added to Sprout Data Studio for Craft 4. 
 
